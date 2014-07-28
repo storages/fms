@@ -25,6 +25,22 @@ public class Scmcoc extends BaseEntity{
 	 */
 	private String name;
 	/**
+	 * 供应商联系电话
+	 */
+	private String linkPhone;
+	/**
+	 * 供应商网络联系方式
+	 */
+	private String networkLink;
+	/**
+	 * 供应商地址
+	 */
+	private String address;
+	/**
+	 * 供应商联系人
+	 */
+	private String linkMan;
+	/**
 	 * 结账截止日期
 	 */
 	private Date endDate;
@@ -66,6 +82,30 @@ public class Scmcoc extends BaseEntity{
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public String getLinkPhone() {
+		return linkPhone;
+	}
+	public void setLinkPhone(String linkPhone) {
+		this.linkPhone = linkPhone;
+	}
+	public String getNetworkLink() {
+		return networkLink;
+	}
+	public void setNetworkLink(String networkLink) {
+		this.networkLink = networkLink;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getLinkMan() {
+		return linkMan;
+	}
+	public void setLinkMan(String linkMan) {
+		this.linkMan = linkMan;
 	}
 	
 	

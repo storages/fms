@@ -15,6 +15,10 @@
 		<property name="code" column="CODE" />
 		<property name="name" column="NAME" />
 		<property name="endDate" column="ENDDATE" />
+		<property name="linkPhone" column="LINKPHONE" />
+		<property name="networkLink" column="NETWORKLINK" />
+		<property name="address" column="ADDRESS" />
+		<property name="linkMan" column="LINKMAN" />
 		<property name="isCustom" column="ISCUSTOM" />
 		<property name="note" column="NOTE" />
 	</class>

@@ -23,7 +23,7 @@
 	-->
 <style type="text/css">
 	.buttLeft{
-		float:left;
+		
 	}
 </style>
 </head>
@@ -40,7 +40,7 @@
 			<div class="widget-header">
 			<!-- 按钮区 -->
 			<p style="width:100%; height: auto;">
-				<button class="btn btn-small btn-danger buttLeft" data-toggle="button" type="button">保存</button>
+				<button class="btn btn-small btn-danger" data-toggle="button" type="button">保存</button>&nbsp;&nbsp;
 				<button class="btn btn-small btn-danger buttLeft" data-toggle="button" type="button">修改</button>
 				<button class="btn btn-small btn-danger buttLeft" data-toggle="button" type="button">取消</button>
 			</p>

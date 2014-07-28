@@ -45,7 +45,10 @@ public class Scmcoc extends BaseEntity{
 	 */
 	private Date endDate;
 	/**
-	 *	是否是客户
+	 *	是否是客户 
+	 *	true 表示是客户
+	 *	false 表示是供应商
+	 *
 	 */
 	public Boolean isCustom;
 	/**

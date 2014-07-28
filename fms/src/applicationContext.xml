@@ -78,6 +78,7 @@
 	
 	<!-- =======================Dao类========================== -->
 	
+	<!-- AclUser -->
 	<bean id="userDao" class="com.fms.user.dao.AclUserDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
@@ -85,10 +86,34 @@
 	</bean>
 	
 	
+	<!-- Scmcoc -->
+	
+	<bean id="scmcocDao" class="com.fms.scmcoc.dao.ScmcocDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
 	<!-- ======================Logic类=========================== -->
+	
+	<!-- AclUser -->
 	<bean id="userLogic" class="com.fms.user.logic.AclUserLogicImpl">
 		<property name="userDao">
 			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	
+	
+	<!-- Scmcoc -->
+	<bean id="scmcocLogic" class="com.fms.scmcoc.logic.ScmcocLogicImpl">
+		<property name="scmcocDao">
+			<ref bean="scmcocDao"/>
 		</property>
 	</bean>
 </beans>

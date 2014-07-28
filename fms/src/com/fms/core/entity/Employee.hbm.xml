@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="Employee" table="EMPLOYEE">
+		<id name="id" column="ID">
+			<generator class="uuid"/>
+		</id>
+		<property name="createDate" column="CREATEDATE"/>
+		<property name="modifyDate" column="MODIFYDATE"/>
+		
+		
+		<property name="name" column="NAME"/>
+		<property name="nickName" column="NICKNAME"/>
+		<property name="age" column="AGE"/>
+		<property name="gender" column="GENDER" />
+		<property name="DoB" column="DOB" />
+		<property name="identityCard" column="IDENTITYCARD" />
+		<property name="nation" column="NATION" />
+		<property name="origo" column="ORIGO" />
+		<property name="diploma" column="DIPLOMA" />
+		<property name="address" column="ADDRESS" />
+		<property name="currentResidence" column="CURRENTRESIDENCE" />
+		<property name="linkPhone" column="LINKPHONE" />
+		<property name="networkLink" column="NETWORKLINK" />
+		<property name="photo" column="PHOTO" />
+		<property name="entryDate" column="ENTRYDATE" />
+		<property name="jobStatus" column="JOBSTATUS" />
+		<many-to-one  fetch="join" lazy="false"   name="department" column="DEPARTMENT" 
+			class="com.fms.core.entity.Department" />
+		<property name="positionName" column="POSITIONNAME" />
+		
+		<many-to-one  fetch="join" lazy="false"   name="behaviorRecord" column="BEHAVIORRECORD" 
+			class="com.fms.core.entity.BehaviorRecord" />
+		<property name="note" column="NOTE" />
+	</class>
+</hibernate-mapping>

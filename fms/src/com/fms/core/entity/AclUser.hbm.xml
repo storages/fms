@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="AclUser" table="ACLUSER">
+		<id name="id" column="ID">
+			<generator class="uuid"/>
+		</id>
+		<property name="createDate" column="CREATEDATE"/>
+		<property name="modifyDate" column="MODIFYDATE"/>
+		
+		<property name="loginName" column="LOGINNAME"/>
+		<property name="password" column="PASSWORD"/>
+		<property name="userName" column="USERNAME"/>
+		<property name="lastlogin" column="LASTLOGIN" />
+		<property name="userFlag" column="USERFLAG" />
+		<property name="isForbid" column="ISFORBID" />
+	</class>
+</hibernate-mapping>

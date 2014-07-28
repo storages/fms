@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="default" extends="struts-default">
+		<default-action-ref name="notFound" />
+		<action name="notFound">
+			<result>/pages/error/404page.html</result>
+		</action>
+	</package>
+
+
+	<package name="usersActionPackage" extends="struts-default">
+
+		<!-- 跳转到登录页面 -->
+		<action name="loginAction_*" class="com.fms.user.action.AclUserAction" method="{1}">
+			<result name="login">/pages/login.jsp</result>
+		</action>
+
+		<!-- AclUser的Action配置 -->
+		<action name="users_*" class="com.fms.user.action.AclUserAction" method="{1}">
+			<result name="edit">/pages/main.jsp</result>  
+			<result name="authority">/pages/aclusermanage/userAuthority.jsp</result>
+			<result name="del" type="chain">users_findAllUser</result>
+		</action>
+	</package>
+
+
+</struts>    

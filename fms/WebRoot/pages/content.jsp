@@ -41,6 +41,7 @@
 			<ul>
 				<li><span class="file"><a href="">供应商管理</a></span></li>
 				<li><span class="file"><a href="">客户管理</a></span></li>
+				<li><span class="file"><a href="">部门管理</a></span></li>
 				<li><span class="file"><a href="">交易货币管理</a></span></li>
 				<li><span class="file"><a href="">计量单位管理</a></span></li>
 				<li><span class="file"><a href="">仓库管理</a></span></li>

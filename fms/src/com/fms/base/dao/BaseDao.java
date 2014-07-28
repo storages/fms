@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -447,9 +448,11 @@ public class BaseDao extends HibernateDaoSupport {
 		if (obj == null) {
 			return;
 		}
-		if(obj instanceof BaseEntity && StringUtils.isNotBlank(((BaseEntity)obj).getId())){						
+		if(obj instanceof BaseEntity && StringUtils.isNotBlank(((BaseEntity)obj).getId())){
+			((BaseEntity)obj).setModifyDate(new Date());
 			this.getHibernateTemplate().merge(obj);				
 		}else{
+			((BaseEntity)obj).setCreateDate(new Date());
 			this.getHibernateTemplate().save(obj);
 		}		
 

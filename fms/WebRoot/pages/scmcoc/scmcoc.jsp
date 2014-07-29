@@ -77,10 +77,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 
 			<div class="modal-footer">
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/pages/scmcoc/addscmcoc.jsp');">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delList()">
 					批量删除
 				</button>
-
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
 				<!-- 分页 -->
 				<!-- <div class="pagination pull-right no-margin">
 					<ul>

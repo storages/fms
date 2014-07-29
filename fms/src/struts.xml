@@ -26,6 +26,7 @@
 		<!-- Scmcoc的Action配置 -->
 		<action name="scmcoc_*" class="com.fms.scmcoc.action.ScmcocAction" method="{1}">
 			<result name="success">/pages/scmcoc/scmcoc.jsp</result>
+			<result name="save" type="chain">scmcoc_findAllScmcoc</result>
 		</action>
 	</package>
 

@@ -17,9 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+	
 	<style type="text/css">
 		.addcss{
 			width:200px;
@@ -32,41 +30,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			margin-left:5px;
 		}
 	</style>
-  </head>
   
   <body>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
 		<h5>基础资料＞＞供应商管理＞＞新增</h5>
 	</div>
+	<form id="scm" name="scm" method="post" action="${pageContext.request.contextPath}/scmcoc_saveScmcoc.action">
+	<div class="modal-footer">
+		<input type="submit" class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="保存"/>
+		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">取消</button>
+	</div> 
 	<div class="row-fluid">
-				<div class="span12">
-					<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
-						<tr>
-							<td class="captioncss">编码</td>
-							<td class="hidden-480 addcss"><input type="text" value="${scmcoc.code}"/></td>
-							<td class="captioncss">名称</td>
-							<td class="hidden-480 addcss"><input type="text" value="${scmcoc.name}"/></td>
-						</tr>
-						<tr>
-							<td class="captioncss">联系电话</td>
-							<td class="hidden-480 addcss"><input type="text" value="${scmcoc.linkPhone}"/>
-							<td class="captioncss">网络联系方式</td>
-							<td class="hidden-480 addcss"><input type="text" value="${scmcoc.networkLink}"/></td>
-						</tr>
-						<tr>
-							<td class="captioncss">联系人</td>
-							<td class="hidden-480 addcss"><input type="text" value="${scmcoc.linkMan}"/></td>
-							<td class="captioncss">地址</td>
-							<td class="hidden-480 addcss"><input type="text" value="${scmcoc.address}"/></td>
-						</tr>
-						<tr>
-							<td class="captioncss">约定结算日期</td>
-							<td class="hidden-480 addcss"><input type="text" value="${scmcoc.endDate}"/></td>
-							<td class="captioncss">备注</td>
-							<td class="hidden-480 addcss"><input type="text" value="${scmcoc.note}"/></td>
-						</tr>
-					</table>
-				</div>
-			</div>
+		<div class="span12">
+			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
+				<tr>
+					<td class="captioncss" style="text-align: right;">编码</td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.code}" name="scmcoc.code" style="height:25px;"/><span style="color:red";>*</span></td>
+					<td class="captioncss" style="text-align: right;">名称</td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.name}" name="scmcoc.name" style="height:25px;"/><span style="color:red";>*</span></td>
+				</tr>
+				<tr>
+					<td class="captioncss" style="text-align: right;">联系电话</td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.linkPhone}" name="scmcoc.linkPhone" style="height:25px;"/>
+					<td class="captioncss" style="text-align: right;">网络联系方式</td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.networkLink}" name="scmcoc.networkLink" style="height:25px;"/></td>
+				</tr>
+				<tr>
+					<td class="captioncss" style="text-align: right;">联系人</td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.linkMan}" name="scmcoc.linkMan" style="height:25px;"/></td>
+					<td class="captioncss" style="text-align: right;">地址</td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.address}" name="scmcoc.address" style="height:25px;"/></td>
+				</tr>
+				<tr>
+					<td class="captioncss" style="text-align: right;">约定结算日期</td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.endDate}" name="scmcoc.endDate" style="height:25px;" id="datepicker"/></td>
+					<td class="captioncss" style="text-align: right;">备注</td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.note}" name="scmcoc.note" style="height:25px;"/></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	</form>
   </body>
+  
+  <script>
+	</script>
 </html>

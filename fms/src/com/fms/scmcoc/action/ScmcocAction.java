@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class ScmcocAction extends BaseAction {
 
 	private ScmcocLogic scmcocLogic;
 	private Scmcoc scmcoc;
+	private String ids;
 	private String code;
 	private String name;
 	private String linkPhone;
@@ -46,6 +46,14 @@ public class ScmcocAction extends BaseAction {
 
 	public void setScmcoc(Scmcoc scmcoc) {
 		this.scmcoc = scmcoc;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 	public String getCode() {
@@ -214,4 +222,36 @@ public class ScmcocAction extends BaseAction {
 		return null;
 	}
 
+	/**
+	 * 删除供应商或客户
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String del() throws Exception {
+		if (null != ids && "".equals(ids)) {
+			String[] arrIds = ids.split("/");
+
+		}
+		return null;
+	}
+
+	/**
+	 * 根据id来查询供应商或客户
+	 * @return
+	 * @throws Exception
+	 */
+	public String findScmcocById() throws Exception {
+		if (null != ids && !"".equals(ids)) {
+			String[] arrIds = ids.split("/");
+			if (null != arrIds && arrIds.length > 0) {
+				String id = arrIds[0];
+				Scmcoc scm = this.scmcocLogic.findScmcocById(id);
+				if (null != scm) {
+					this.request.put("scmcoc", scm);
+				}
+			}
+		}
+		return "find";
+	}
 }

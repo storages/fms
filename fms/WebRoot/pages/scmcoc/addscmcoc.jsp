@@ -38,8 +38,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   </head>
   <body>
+  	<input type="hidden" value="${scmcoc.id}" id="flag"/>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
-		<h5>基础资料＞＞供应商管理＞＞新增</h5>
+    	<c:if test="${scmcoc.id==null}">
+			<h5>基础资料＞＞供应商管理＞＞新增</h5>
+		</c:if>
+    	<c:if test="${scmcoc.id!=null}">
+			<h5>基础资料＞＞供应商管理＞＞修改</h5>
+		</c:if>
 	</div>
 	<div class="modal-footer">
 		<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="保存" onclick="save()"/>
@@ -83,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			changeYear: false,
 			changeMonth: true,
 			yearRange: '1900:', 
-			dateFormat: 'm-d'
+			dateFormat: 'd'
 		});
 	});
 	
@@ -99,7 +105,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var networkLink =  $(":input[name='scmcoc.networkLink']").val(); 
 		//联系人
 		var linkMan = $(":input[name='scmcoc.linkMan']").val(); 
-		alert(linkMan);
 		//地址
 		var address = $(":input[name='scmcoc.address']").val(); 
 		//约定结算时间
@@ -117,23 +122,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			return false;
 		}
 		//编码是否可用
-		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocByCode.action?code="+code;
-		$.ajax({
-	     type: "POST",
-	     url:url,
-	     async: false,
-	     cache: false,
-	     success:function(data){
-	     	if("false"==data){
-	     		alert("编码已使用过！");
-	     	}else{
-	     		isPass = true;
-	     	}
-	     },error:function(){
-	        	$("#mess").html("程序异常，请重新启动程序！");
-	        	return false;
-	      }
-	  	});
+		var isEdit = $("#flag").val();
+		if(isEdit==""){
+			var url = "${pageContext.request.contextPath}/scmcoc_findScmcocByCode.action?code="+code;
+			$.ajax({
+		     type: "POST",
+		     url:url,
+		     async: false,
+		     cache: false,
+		     success:function(data){
+		     	if("false"==data){
+		     		alert("编码已使用过！");
+		     	}else{
+		     		isPass = true;
+		     	}
+		     },error:function(){
+		        	$("#mess").html("程序异常，请重新启动程序！");
+		        	return false;
+		      }
+		  	});
+	  	}
 	  	if(isPass){
 		  	var str = "code="+parse(code)+
 		  			  "&name="+parse(name)+

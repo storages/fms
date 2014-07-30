@@ -27,6 +27,7 @@
 		<action name="scmcoc_*" class="com.fms.scmcoc.action.ScmcocAction" method="{1}">
 			<result name="success">/pages/scmcoc/scmcoc.jsp</result>
 			<result name="save" type="chain">scmcoc_findAllScmcoc</result>
+			<result name="find">/pages/scmcoc/addscmcoc.jsp</result>
 		</action>
 	</package>
 

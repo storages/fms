@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<style type="text/css">
 		.addcss{
-			width:200px;
+			width:220px;
 		}
 		.captioncss{
 			width:80px;
@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 				<tr>
 					<td class="captioncss" style="text-align: right;">约定结算日期</td>
-					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.endDate}" name="scmcoc.endDate" style="height:25px;" id="datepicker" readonly="readonly" /><span> 月-日</span></td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.endDate}" name="scmcoc.endDate" style="height:25px;" id="datepicker" readonly="readonly" /><span>m-d</span></td>
 					<td class="captioncss" style="text-align: right;">备注</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.note}" name="scmcoc.note" style="height:25px;"/></td>
 				</tr>
@@ -85,7 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				changeYear: false,
 				changeMonth: true,
 				yearRange: '1900:', 
-				dateFormat: 'm-d',
+				dateFormat: 'm-d'
 			});
 		});
 	</script>

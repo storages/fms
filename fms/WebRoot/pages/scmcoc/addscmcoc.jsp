@@ -31,6 +31,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 	</style>
   
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
+  
+  </head>
   <body>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
 		<h5>基础资料＞＞供应商管理＞＞新增</h5>
@@ -63,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 				<tr>
 					<td class="captioncss" style="text-align: right;">约定结算日期</td>
-					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.endDate}" name="scmcoc.endDate" style="height:25px;" id="datepicker"/></td>
+					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.endDate}" name="scmcoc.endDate" style="height:25px;" id="datepicker" readonly="readonly" /><span> 月-日</span></td>
 					<td class="captioncss" style="text-align: right;">备注</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.note}" name="scmcoc.note" style="height:25px;"/></td>
 				</tr>
@@ -73,6 +79,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</form>
   </body>
   
-  <script>
+  <script language="javascript">
+		$(document).ready(function(){
+			$("#datepicker").datepicker({
+				changeYear: false,
+				changeMonth: true,
+				yearRange: '1900:', 
+				dateFormat: 'm-d',
+			});
+		});
 	</script>
 </html>

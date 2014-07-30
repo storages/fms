@@ -185,6 +185,7 @@ public class ScmcocAction extends BaseAction {
 		scmcoc.setCode(parse(code));
 		scmcoc.setName(parse(name));
 		scmcoc.setLinkPhone(parse(linkPhone));
+		scmcoc.setLinkMan(parse(linkMan));
 		scmcoc.setNetworkLink(parse(networkLink));
 		scmcoc.setAddress(parse(address));
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");

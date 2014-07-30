@@ -99,6 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var networkLink =  $(":input[name='scmcoc.networkLink']").val(); 
 		//联系人
 		var linkMan = $(":input[name='scmcoc.linkMan']").val(); 
+		alert(linkMan);
 		//地址
 		var address = $(":input[name='scmcoc.address']").val(); 
 		//约定结算时间
@@ -109,7 +110,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			alert("编码不能为空！");
 			return false;
 		}
-		if(name=""){
+		if(name==""){
 			alert("供应商名称不能为空！");
 			return false;
 		}
@@ -139,14 +140,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  			  "&endDate="+parse(endDate)+
 	  			  "&note="+parse(note)+
 	  			  "&isCustom=false";
+	  			  alert(parse(linkMan));
 	  	var submitUrl = "${pageContext.request.contextPath}/scmcoc_saveScmcoc.action?"+str;
 	  	toMain(submitUrl);
 	}
 	
 	function parse(str){
-	alert(str);
 		return encodeURI(encodeURI(str));  
-	alert(str);
 	}
 	</script>
 </html>

@@ -20,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
   </head>
   
   <body>
@@ -68,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="hidden-480 center">${scmcoc.note}</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids=${scmcoc.id}')">修改</a>｜
-										<a href="javascript:void(0);" onclick="delSingleObject('${user.id}')">删除</a>
+										<a href="javascript:void(0);" onclick="delSingleScmcoc('${scmcoc.id}')">删除</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -78,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/pages/scmcoc/addscmcoc.jsp');">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delList()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>

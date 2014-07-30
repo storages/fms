@@ -56,7 +56,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
 				<tr>
 					<td class="captioncss" style="text-align: right;">编码</td>
-					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.code}" name="scmcoc.code" style="height:25px;"/><span style="color:red;">*</span></td>
+					<c:if test="${scmcoc.id==null}">
+						<td class="hidden-480 addcss"><input type="text" value="${scmcoc.code}" name="scmcoc.code" style="height:25px;"/><span style="color:red;">*</span></td>
+					</c:if>
+					<c:if test="${scmcoc.id!=null}">
+						<td class="hidden-480 addcss"><input type="text" value="${scmcoc.code}" name="scmcoc.code" style="height:25px;" disabled="disabled"/><span style="color:red;">*</span></td>
+					</c:if>
 					<td class="captioncss" style="text-align: right;">名称</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.name}" name="scmcoc.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
@@ -89,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			changeYear: false,
 			changeMonth: true,
 			yearRange: '1900:', 
-			dateFormat: 'd'
+			dateFormat: 'm-d'
 		});
 	});
 	
@@ -111,8 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var endDate = $(":input[name='scmcoc.endDate']").val(); 
 		//备注
 		var note = $(":input[name='scmcoc.note']").val(); 
-		
-		var isPass = false;
+		var isPass = true;
 		if(code==""){
 			alert("编码不能为空！");
 			return false;
@@ -133,8 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     success:function(data){
 		     	if("false"==data){
 		     		alert("编码已使用过！");
-		     	}else{
-		     		isPass = true;
+		     		isPass = false;
 		     	}
 		     },error:function(){
 		        	$("#mess").html("程序异常，请重新启动程序！");
@@ -153,6 +156,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			  "&note="+parse(note)+
 		  			  "&isCustom=false";
 		  	var submitUrl = "${pageContext.request.contextPath}/scmcoc_saveScmcoc.action?"+str;
+		  	if(isEdit!=""){
+		  		submitUrl = submitUrl +"&ids="+isEdit;
+		  	}
 	  	toMain(submitUrl);
 	  	}
 	}

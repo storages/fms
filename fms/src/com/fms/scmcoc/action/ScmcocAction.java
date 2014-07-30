@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -190,6 +191,9 @@ public class ScmcocAction extends BaseAction {
 	 * @return
 	 */
 	private Scmcoc setProperty(Scmcoc scmcoc) {
+		if(null!=ids && !"".equals(ids)){
+			scmcoc.setId(ids);
+		}
 		scmcoc.setCode(parse(code));
 		scmcoc.setName(parse(name));
 		scmcoc.setLinkPhone(parse(linkPhone));
@@ -229,11 +233,17 @@ public class ScmcocAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public String del() throws Exception {
-		if (null != ids && "".equals(ids)) {
-			String[] arrIds = ids.split("/");
-
+		if (null != ids && !"".equals(ids)) {
+			String[] arrIds = ids.split(",");
+			if(null!=arrIds && arrIds.length>0){
+				List<String> list = new ArrayList<String>();
+				for(String id:arrIds){
+					list.add(id);
+				}
+				this.scmcocLogic.delete(list);
+			}
 		}
-		return null;
+		return "save";
 	}
 
 	/**
@@ -243,7 +253,7 @@ public class ScmcocAction extends BaseAction {
 	 */
 	public String findScmcocById() throws Exception {
 		if (null != ids && !"".equals(ids)) {
-			String[] arrIds = ids.split("/");
+			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
 				Scmcoc scm = this.scmcocLogic.findScmcocById(id);

@@ -41,6 +41,10 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		return this.scmcocDao.findScmcocByCode(code);
 	}
 
+	public void delete(List<String> ids) {
+		this.scmcocDao.delete(ids);
+	}
+
 	
 	
 }

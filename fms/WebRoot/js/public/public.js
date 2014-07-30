@@ -23,3 +23,30 @@ function delSingleObject(ids){
 		toMain(url);
 	}
 }
+
+function delSingleScmcoc(ids){
+	if(confirm("你确认要删除吗？")){
+		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+ids;
+		toMain(url);
+	}
+}
+
+function delMoreScmcoc(){
+	var splitStr = "";
+	$('input[name="sid"]:checked').each(function(){
+		splitStr+=$(this).val()+',';
+	  }); 
+	if(splitStr==""){
+		alert("请选择要删除的内容!");
+		return;
+	}
+	/*for(var i = 0 ; i < arr.length ; i++){
+		splitStr+=ids[i].value+",";
+	}*/
+	splitStr = splitStr.substring(0, splitStr.length-1);
+	alert(splitStr);
+	if(confirm("你确认要删除吗？")){
+		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+splitStr;
+		toMain(url);
+	}
+}

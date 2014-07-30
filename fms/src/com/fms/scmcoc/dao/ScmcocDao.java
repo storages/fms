@@ -39,5 +39,11 @@ public interface ScmcocDao {
 	 * @return
 	 */
 	public Scmcoc findScmcocByCode(String code);
+	
+	/**
+	 * 批量删除供应商或客户
+	 * @param data
+	 */
+	public void delete(List<String> ids);
 }
 

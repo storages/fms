@@ -36,6 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<thead>
 							<tr align="center">
 								<th class="center" style="width:30px;">选择</th>
+								<th class="center">序号</th>
 								<th class="center">编号</th>
 								<th class="center">供应商名称</th>
 								<th class="hidden-480 center">供应商联系电话</th>

@@ -32,4 +32,12 @@ public interface ScmcocDao {
 	 * @param id
 	 */
 	public void deleteScmcocById(String id);
+	
+	/**
+	 * 根据编码查询供应商或客户
+	 * @param code
+	 * @return
+	 */
+	public Scmcoc findScmcocByCode(String code);
 }
+

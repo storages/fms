@@ -37,4 +37,11 @@ public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
 		this.batchUpdateOrDelete(hql,param.toArray());
 	}
 
+	public Scmcoc findScmcocByCode(String code) {
+		String hql = "select a from Scmcoc a where a.code = ? ";
+		List param = new ArrayList();
+		param.add(code);
+		return (Scmcoc) this.findUniqueResult(hql, param.toArray());
+	}
+
 }

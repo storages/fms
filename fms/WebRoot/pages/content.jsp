@@ -39,7 +39,7 @@
 		</li>
 		<li  class="closed"><span class="folder directer">基础资料</span>
 			<ul>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/scmcoc/scmcoc_findAllScmcoc.action')">供应商管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/scmcoc/scmcoc_findAllScmcoc.action?isCustom=false')">供应商管理</a></span></li>
 				<li><span class="file"><a href="">客户管理</a></span></li>
 				<li><span class="file"><a href="">部门管理</a></span></li>
 				<li><span class="file"><a href="">交易货币管理</a></span></li>

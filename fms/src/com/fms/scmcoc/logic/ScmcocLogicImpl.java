@@ -37,6 +37,10 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		this.scmcocDao = scmcocDao;
 	}
 
+	public Scmcoc findScmcocByCode(String code) {
+		return this.scmcocDao.findScmcocByCode(code);
+	}
+
 	
 	
 }

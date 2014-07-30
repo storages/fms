@@ -29,7 +29,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/login/login.js"></script>
 <head>
 <meta charset="utf-8" />
-<title>用户登录</title>
+<title>用户 登录</title>
 
 <meta name="description" content="User login page" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />

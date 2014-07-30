@@ -106,6 +106,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var endDate = $(":input[name='scmcoc.endDate']").val(); 
 		//备注
 		var note = $(":input[name='scmcoc.note']").val(); 
+		
+		var isPass = false;
 		if(code==""){
 			alert("编码不能为空！");
 			return false;
@@ -124,25 +126,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	     success:function(data){
 	     	if("false"==data){
 	     		alert("编码已使用过！");
-	     		return false;
+	     	}else{
+	     		isPass = true;
 	     	}
 	     },error:function(){
 	        	$("#mess").html("程序异常，请重新启动程序！");
 	        	return false;
 	      }
 	  	});
-	  	var str = "code="+parse(code)+
-	  			  "&name="+parse(name)+
-	  			  "&linkPhone="+parse(linkPhone)+
-	  			  "&networkLink="+parse(networkLink)+
-	  			  "&linkMan="+parse(linkMan)+
-	  			  "&address="+parse(address)+
-	  			  "&endDate="+parse(endDate)+
-	  			  "&note="+parse(note)+
-	  			  "&isCustom=false";
-	  			  alert(parse(linkMan));
-	  	var submitUrl = "${pageContext.request.contextPath}/scmcoc_saveScmcoc.action?"+str;
+	  	if(isPass){
+		  	var str = "code="+parse(code)+
+		  			  "&name="+parse(name)+
+		  			  "&linkPhone="+parse(linkPhone)+
+		  			  "&networkLink="+parse(networkLink)+
+		  			  "&linkMan="+parse(linkMan)+
+		  			  "&address="+parse(address)+
+		  			  "&endDate="+parse(endDate)+
+		  			  "&note="+parse(note)+
+		  			  "&isCustom=false";
+		  			  alert(parse(linkMan));
+		  	var submitUrl = "${pageContext.request.contextPath}/scmcoc_saveScmcoc.action?"+str;
 	  	toMain(submitUrl);
+	  	}
 	}
 	
 	function parse(str){

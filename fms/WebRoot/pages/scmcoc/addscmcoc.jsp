@@ -144,7 +144,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			  "&endDate="+parse(endDate)+
 		  			  "&note="+parse(note)+
 		  			  "&isCustom=false";
-		  			  alert(parse(linkMan));
 		  	var submitUrl = "${pageContext.request.contextPath}/scmcoc_saveScmcoc.action?"+str;
 	  	toMain(submitUrl);
 	  	}

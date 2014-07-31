@@ -9,8 +9,8 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 
 	private ScmcocDao scmcocDao;
 	 
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom) {
-		return scmcocDao.findAllScmcoc(isCustom);
+	public List<Scmcoc> findAllScmcoc(Boolean isCustom,Integer index,Integer length) {
+		return scmcocDao.findAllScmcoc(isCustom,index,length);
 	}
 
 	public Scmcoc findScmcocById(String id) {

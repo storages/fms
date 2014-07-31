@@ -22,6 +22,8 @@ public class ScmcocAction extends BaseAction {
 
 	private ScmcocLogic scmcocLogic;
 	private Scmcoc scmcoc;
+	
+	/****客户供应商属性*****/
 	private String ids;
 	private String code;
 	private String name;
@@ -32,102 +34,13 @@ public class ScmcocAction extends BaseAction {
 	private String endDate;
 	private String isCustom;
 	private String note;
-
-	public ScmcocLogic getScmcocLogic() {
-		return scmcocLogic;
-	}
-
-	public void setScmcocLogic(ScmcocLogic scmcocLogic) {
-		this.scmcocLogic = scmcocLogic;
-	}
-
-	public Scmcoc getScmcoc() {
-		return scmcoc;
-	}
-
-	public void setScmcoc(Scmcoc scmcoc) {
-		this.scmcoc = scmcoc;
-	}
-
-	public String getIds() {
-		return ids;
-	}
-
-	public void setIds(String ids) {
-		this.ids = ids;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLinkPhone() {
-		return linkPhone;
-	}
-
-	public void setLinkPhone(String linkPhone) {
-		this.linkPhone = linkPhone;
-	}
-
-	public String getNetworkLink() {
-		return networkLink;
-	}
-
-	public void setNetworkLink(String networkLink) {
-		this.networkLink = networkLink;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getLinkMan() {
-		return linkMan;
-	}
-
-	public void setLinkMan(String linkMan) {
-		this.linkMan = linkMan;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getIsCustom() {
-		return isCustom;
-	}
-
-	public void setIsCustom(String isCustom) {
-		this.isCustom = isCustom;
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
+	
+	
+	/*********分页用的属性***********/
+	private String pageCount;
+	private String currIndex = "0";
+	private String maxIndex = "15";
+	
 
 	/**
 	 * 查询所有供应商或客户
@@ -136,7 +49,7 @@ public class ScmcocAction extends BaseAction {
 	 */
 	public String findAllScmcoc() {
 		// 是客户
-		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom));
+		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),0,2);
 		this.request.put("scmcocs", scmcocs);
 		return this.SUCCESS;
 	}
@@ -263,5 +176,127 @@ public class ScmcocAction extends BaseAction {
 			}
 		}
 		return "find";
+	}
+	
+	
+	/*********Getter and Setter method*********/
+	public ScmcocLogic getScmcocLogic() {
+		return scmcocLogic;
+	}
+
+	public void setScmcocLogic(ScmcocLogic scmcocLogic) {
+		this.scmcocLogic = scmcocLogic;
+	}
+
+	public Scmcoc getScmcoc() {
+		return scmcoc;
+	}
+
+	public void setScmcoc(Scmcoc scmcoc) {
+		this.scmcoc = scmcoc;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLinkPhone() {
+		return linkPhone;
+	}
+
+	public void setLinkPhone(String linkPhone) {
+		this.linkPhone = linkPhone;
+	}
+
+	public String getNetworkLink() {
+		return networkLink;
+	}
+
+	public void setNetworkLink(String networkLink) {
+		this.networkLink = networkLink;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getLinkMan() {
+		return linkMan;
+	}
+
+	public void setLinkMan(String linkMan) {
+		this.linkMan = linkMan;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getIsCustom() {
+		return isCustom;
+	}
+
+	public void setIsCustom(String isCustom) {
+		this.isCustom = isCustom;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public String getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(String pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public String getCurrIndex() {
+		return currIndex;
+	}
+
+	public void setCurrIndex(String currIndex) {
+		this.currIndex = currIndex;
+	}
+
+	public String getMaxIndex() {
+		return maxIndex;
+	}
+
+	public void setMaxIndex(String maxIndex) {
+		this.maxIndex = maxIndex;
 	}
 }

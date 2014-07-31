@@ -9,7 +9,7 @@
 <div class="navbar">
 	<div class="navbar-inner" id="setcss">
 		<!-- <div class="container-fluid"></div> -->
-			<img alt="公司标志" src="${pageContext.request.contextPath}/imges/ls_logo.png" style="width: 60px;float: left;">
+			<img alt="公司标志" src="${pageContext.request.contextPath}/imges/ls_logo.png" style="width: 60px; height:50px; margin-top:5px; margin-bottom:5px;  margin-left:25px; float:left;">
 				<!--/.brand-->
 				
 				<ul style="float: right;height:auto; margin: 0px 5px 0px 0px; padding:0px;">

@@ -12,7 +12,9 @@ import org.apache.struts2.ServletActionContext;
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.AclUser;
 import com.fms.user.logic.AclUserLogic;
+import com.fms.utils.AjaxResult;
 import com.opensymphony.xwork2.ActionContext;
+import com.url.ajax.json.JSONObject;
 
 public class AclUserAction extends BaseAction {
 
@@ -44,14 +46,20 @@ public class AclUserAction extends BaseAction {
 	 */
 	@SuppressWarnings("unchecked")
 	public void loginUser() throws Exception {
+		
 		PrintWriter out = null;
+		AjaxResult  result=new AjaxResult();
+		
 		try {
-			AclUser aclUser = userLogic.loginAclUser(userName, password);
+			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			out = response.getWriter();
-			if (null != aclUser) {
-				out.write("true");
+			AclUser aclUser = userLogic.loginAclUser(userName, password);
+			if(aclUser==null){
+				result.setSuccess(false);
+				result.setMsg("用户名或密码不正确");
+			}else{
+				result.setSuccess(true);
 				session.put("user", aclUser);
 				if("true"==forget){
 					Cookie user = new Cookie("user",aclUser.getLoginName()+"/"+aclUser.getPassword());
@@ -59,15 +67,15 @@ public class AclUserAction extends BaseAction {
 					Cookie user = new Cookie("user",null);
 					user.setMaxAge(-1);
 				}
-			} else {
-				out.write("false");
 			}
-
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			out.close();
+			result.setMsg("对不起出错了："+e.getMessage());
 		}
+		JSONObject json=new JSONObject(result);
+		 out.println(json.toString());
+		 out.flush();
+		 out.close();
+		
 	}
 
 	/**

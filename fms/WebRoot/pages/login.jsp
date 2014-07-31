@@ -18,8 +18,9 @@
 	background-color: #1D3647;
 }
 </style>
-    <link href="<%=path%>/css/login/login.css" rel="stylesheet" type="text/css" />
-</head>
+<script    src="<%=path%>/js/jquery-1.8.2.min.js"></script>
+<script src="<%=path%>/js/login/login.js"></script>
+    <link href="<%=path%>/css/page/login.css" rel="stylesheet" type="text/css" />
 <body>
 <table width="100%" height="166" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -62,30 +63,30 @@
                     <td height="164" colspan="2" align="middle"><form name="myform" action="index.html" method="post">
                         <table cellSpacing="0" cellPadding="0" width="100%" border="0" height="143" id="table212">
                           <tr>
-                            <td width="13%" height="38" class="top_hui_text"><span class="login_txt">管理员：&nbsp;&nbsp; </span></td>
-                            <td height="38" colspan="2" class="top_hui_text"><input name="username" class="editbox4" value="" size="20">                            </td>
+                            <td width="13%" height="38" class="top_hui_text"><span class="login_txt">用户名：&nbsp;&nbsp; </span></td>
+                            <td height="38" colspan="2" class="top_hui_text"><input name="username" class="editbox4" value="" size="20" />                            </td>
                           </tr>
                           <tr>
                             <td width="13%" height="35" class="top_hui_text"><span class="login_txt"> 密 码： &nbsp;&nbsp; </span></td>
-                            <td height="35" colspan="2" class="top_hui_text"><input class="editbox4" type="password" size="20" name="password">
-                              <img src="images/luck.gif" width="19" height="18"> </td>
+                            <td height="35" colspan="2" class="top_hui_text"><input class="editbox4" type="password" size="20" name="password" />
+                              <img src="<%=path %>/images/login/luck.gif" width="19" height="18" /> </td>
                           </tr>
                           <tr>
                             <td width="13%" height="35" ><span class="login_txt">验证码：</span></td>
-                            <td height="35" colspan="2" class="top_hui_text"><input class=wenbenkuang name=verifycode type=text value="" maxLength=4 size=10>
+                            <td height="35" colspan="2" class="top_hui_text"><input class=wenbenkuang name=verifycode type=text value="" maxLength=4 size=10 />
                               </td>
                           </tr>
                           <tr>
-                            <td height="35" >&nbsp;</td>
-                            <td width="20%" height="35" ><input name="Submit" type="submit" class="button" id="Submit" value="登 陆"> </td>
-                            <td width="67%" class="top_hui_text"><input name="cs" type="button" class="button" id="cs" value="取 消" onClick="showConfirmMsg1()"></td>
+                            <td height="35" ><input id="remenber" type="checkbox" /> 记住密码</td>
+                            <td width="20%" height="35" ><input name="Submit" type="button" class="button" id="login" value="登 陆"/> </td>
+                            <td width="67%" class="top_hui_text"><input name="cs" type="reset" class="button" id="cs" value="取 消" /></td>
                           </tr>
                         </table>
-                        <br>
+                        <br/>
                     </form></td>
                   </tr>
                   <tr>
-                    <td width="433" height="164" align="right" valign="bottom"></td>
+                    <td width="433" height="164" align="left" valign="top"><span style="color: red;" id="error"></span></td>
                     <td width="57" align="right" valign="bottom">&nbsp;</td>
                   </tr>
               </table></td>
@@ -104,6 +105,4 @@
   </tr>
 </table>
 </body>
-<script src="<%=path%>/js/login/login.js">
-
 </html>

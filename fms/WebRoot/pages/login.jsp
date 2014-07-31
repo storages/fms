@@ -22,6 +22,7 @@
 <script src="<%=path%>/js/login/login.js"></script>
     <link href="<%=path%>/css/page/login.css" rel="stylesheet" type="text/css" />
 <body>
+<div id="maincentent" style="height: 100%; height: 100%; background-color: #1D3647;" >
 <table width="100%" height="166" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td height="42" valign="top"><table width="100%" height="42" border="0" cellpadding="0" cellspacing="0" class="login_top_bg">
@@ -105,5 +106,6 @@
     </table></td>
   </tr>
 </table>
+</div>
 </body>
 </html>

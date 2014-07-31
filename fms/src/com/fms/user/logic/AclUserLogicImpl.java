@@ -24,7 +24,6 @@ public class AclUserLogicImpl implements AclUserLogic {
 
 	public AclUser loginAclUser(String userName, String password) {
 		String descPassword = MD5Util.encryptData(password);
-		System.out.println(password+"--------"+descPassword+"---------");
 		AclUser user = userDao.loginAclUser(userName, descPassword);
 		return user;
 	}

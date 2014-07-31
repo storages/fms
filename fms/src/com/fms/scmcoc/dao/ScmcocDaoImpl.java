@@ -13,8 +13,8 @@ public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
 		List param = new ArrayList();
 		param.add(isCustom);
 		if(null!=likeStr && !"".equals(likeStr)){
-			hql+=" and a.name like ? ";
-			param.add("'%"+ likeStr +"%'");
+			hql+=" and a.name like '%"+likeStr+"%'";
+			//param.add("'%"+ likeStr +"%'");
 		}
 		return this.findPageList(hql, param.toArray(),index,length);
 	}
@@ -59,12 +59,12 @@ public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
 	}
 
 	public Integer findDataCount(String className,Boolean isCustom,String name) {
-		String hql = "select count(id) from "+className.trim() +" a where a.isCustom = ?";
+		String hql = "select count(id) from "+className.trim() +" a where a.isCustom = ? ";
 		List param = new ArrayList();
 		param.add(isCustom);
 		if(null!=name && !"".equals(name)){
-			hql+=" and a.name like ? ";
-			param.add("'%"+name+"'%");
+			hql+=" and a.name like '%"+name+"%'";
+			//param.add("'%"+name+"%'");
 		}
 		return this.count(hql, param.toArray());
 	}

@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<h5>基础资料＞＞供应商管理</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
-		<span class="">供应商名称</span><input type="text" id="search" style="height:25px;" class=""/>
+		<span class="">供应商名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:35px; margin-top:-10px;"/>
 	</div> 
 	<div class="row-fluid" >
@@ -137,7 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function gotoPage(pageNum, pageSize) {
 		var likeStr = $("#search").val(); 
 		// 拼接URL
-		var url = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr);
+		var url = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+"&isCustom=false";
 		// 在本窗口中显示指定URL的页面
 		toMain(url);
 	}

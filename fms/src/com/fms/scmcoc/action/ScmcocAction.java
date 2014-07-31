@@ -54,7 +54,7 @@ public class ScmcocAction extends BaseAction {
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
 		dataTotal = this.scmcocLogic.findDataCount(className,Boolean.parseBoolean(isCustom),parse(searchStr));
-		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),parse(searchStr),curr-1,max);
+		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),parse(searchStr),curr-1,DEFAULT_PAGESIZE);
 		this.request.put("scmcocs", scmcocs);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);

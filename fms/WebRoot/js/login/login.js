@@ -21,8 +21,10 @@ $(function(){
 		     async: false,
 		     cache: false,
 		     success:function(data){
-		     	if("false"==data){
-		     		$("#error").html("用户名或密码不正确！");
+		    var result=jQuery.parseJSON(data);
+
+		     	if(!result.success){
+		     		$("#error").html(result.msg);
 		     		return;
 		     	}else{
 		           window.location.href="/fms/pages/main.jsp";

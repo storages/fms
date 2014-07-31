@@ -87,7 +87,7 @@
                     </form></td>
                   </tr>
                   <tr>
-                    <td width="433" height="164" align="left" valign="top"><span style="color: red;" id="error"></span></td>
+                    <td width="433" height="164" align="left" valign="top"><span style="color: red; size:12px;" id="error"></span></td>
                     <td width="57" align="right" valign="bottom">&nbsp;</td>
                   </tr>
               </table></td>

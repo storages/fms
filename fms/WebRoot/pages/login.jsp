@@ -78,7 +78,7 @@
                               </td>
                           </tr>
                           <tr>
-                            <td height="35" ><input id="remenber" type="checkbox" /> 记住密码</td>
+                            <td height="35" ><input id="remenber" type="checkbox" /><span style="font-size:13px;">记住密码</span> </td>
                             <td width="20%" height="35" ><input name="Submit" type="button" class="button" id="login" value="登 陆"/> </td>
                             <td width="67%" class="top_hui_text"><input name="cs" type="reset" class="button" id="cs" value="取 消" /></td>
                           </tr>

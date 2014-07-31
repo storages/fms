@@ -4,7 +4,7 @@ $(function(){
 	var clientHeight=window.screen.availHeight;
 	$("#maincentent").css("height",clientHeight+"px");
 	
-	
+	//alert(getCookie("password"));
 	$("#login").click(findUserName);  
 	function findUserName(){
 		  	var username = $("input[name='username']").val();

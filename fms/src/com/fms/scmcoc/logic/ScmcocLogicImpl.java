@@ -9,8 +9,8 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 
 	private ScmcocDao scmcocDao;
 	 
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom,Integer index,Integer length) {
-		return scmcocDao.findAllScmcoc(isCustom,index,length);
+	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
+		return scmcocDao.findAllScmcoc(isCustom,likeStr,index,length);
 	}
 
 	public Scmcoc findScmcocById(String id) {
@@ -45,6 +45,8 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		this.scmcocDao.delete(ids);
 	}
 
-	
+	public Integer findDataCount(String className,Boolean isCustom,String name){
+		return this.scmcocDao.findDataCount(className,isCustom,name);
+	}
 	
 }

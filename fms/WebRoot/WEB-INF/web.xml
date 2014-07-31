@@ -46,7 +46,7 @@
   	</filter-class>
   </filter>
   
-	<error-page>
+	<!-- <error-page>
 		<error-code>404</error-code>
 		<location>/pages/error/404page.jsp</location>
 	</error-page>
@@ -54,7 +54,7 @@
 	<error-page>
 		<error-code>500</error-code>
 		<location>/pages/error/500page.jsp</location>
-	</error-page>
+	</error-page> -->
 	
   <filter-mapping>
   	<filter-name>struts2</filter-name>

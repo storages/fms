@@ -45,12 +45,13 @@ public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
 	}
 
 	public void delete(List<String> ids) {
-		String hql = "delete from Scmcoc a where 1=1 ";
+		String hql = "delete Scmcoc a where 1=1 and ";
 		for(int i=0 ; i<ids.size(); i++){
-			hql+=" and a.id = ? or ";
+			hql+=" a.id = ? or ";
 		}
 		hql = hql.substring(0,hql.trim().length()-2);
-		this.batchUpdateOrDelete(hql, ids.toArray());
+		Object [] objs = ids.toArray();
+		this.batchUpdateOrDelete(hql, objs);
 	}
 
 }

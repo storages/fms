@@ -44,7 +44,6 @@ function delMoreScmcoc(){
 		splitStr+=ids[i].value+",";
 	}*/
 	splitStr = splitStr.substring(0, splitStr.length-1);
-	alert(splitStr);
 	if(confirm("你确认要删除吗？")){
 		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+splitStr;
 		toMain(url);

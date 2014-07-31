@@ -19,6 +19,7 @@
 }
 </style>
 <script    src="<%=path%>/js/jquery-1.8.2.min.js"></script>
+<script    src="<%=path%>/js/utils/cookieUtils.js"></script>
 <script src="<%=path%>/js/login/login.js"></script>
     <link href="<%=path%>/css/page/login.css" rel="stylesheet" type="text/css" />
 <body>

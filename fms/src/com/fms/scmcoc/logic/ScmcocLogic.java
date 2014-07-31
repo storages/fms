@@ -15,7 +15,7 @@ public interface ScmcocLogic {
 	 * 获取所有的供应商或客户[分页]
 	 * @return
 	 */
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom,Integer index,Integer length);
+	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length);
 	/**
 	 * 根据id查询供应商或客户
 	 * @param id
@@ -51,4 +51,13 @@ public interface ScmcocLogic {
 	 * @param data
 	 */
 	public void delete(List<String> ids);
+	
+	/**
+	 * 查找数据总条数
+	 * @param className
+	 * @param isCustom
+	 * @param name
+	 * @return
+	 */
+	public Integer findDataCount(String className,Boolean isCustom,String name);
 }

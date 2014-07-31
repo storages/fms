@@ -8,10 +8,14 @@ import com.fms.core.entity.Scmcoc;
 
 public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
 
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom,Integer index,Integer length) {
+	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
 		String hql = "select a from Scmcoc a where a.isCustom = ? ";
 		List param = new ArrayList();
 		param.add(isCustom);
+		if(null!=likeStr && !"".equals(likeStr)){
+			hql+=" and a.name like ? ";
+			param.add("'%"+ likeStr +"%'");
+		}
 		return this.findPageList(hql, param.toArray(),index,length);
 	}
 
@@ -52,6 +56,17 @@ public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
 		hql = hql.substring(0,hql.trim().length()-2);
 		Object [] objs = ids.toArray();
 		this.batchUpdateOrDelete(hql, objs);
+	}
+
+	public Integer findDataCount(String className,Boolean isCustom,String name) {
+		String hql = "select count(id) from "+className.trim() +" a where a.isCustom = ?";
+		List param = new ArrayList();
+		param.add(isCustom);
+		if(null!=name && !"".equals(name)){
+			hql+=" and a.name like ? ";
+			param.add("'%"+name+"'%");
+		}
+		return this.count(hql, param.toArray());
 	}
 
 }

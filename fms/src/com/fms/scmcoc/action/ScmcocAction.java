@@ -35,12 +35,14 @@ public class ScmcocAction extends BaseAction {
 	private String isCustom;
 	private String note;
 	
-	
 	/*********分页用的属性***********/
-	private String pageCount;
-	private String currIndex = "0";
-	private String maxIndex = "15";
-	
+	private Integer dataTotal;//总记录数
+	private String currIndex;//当前页码
+	private String maxIndex;//每页显示最多条数
+	private Integer pageNums;//共有多少页
+	private String className="Scmcoc";//表名称
+	private String searchStr;//搜索条件
+	private static final Integer DEFAULT_PAGESIZE = 1; 
 
 	/**
 	 * 查询所有供应商或客户
@@ -49,8 +51,14 @@ public class ScmcocAction extends BaseAction {
 	 */
 	public String findAllScmcoc() {
 		// 是客户
-		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),0,2);
+		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
+		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
+		dataTotal = this.scmcocLogic.findDataCount(className,Boolean.parseBoolean(isCustom),parse(searchStr));
+		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),parse(searchStr),curr-1,max);
 		this.request.put("scmcocs", scmcocs);
+		this.request.put("currIndex", curr);
+		this.request.put("maxIndex", max);
+		this.request.put("pageNums", pageCount(max, dataTotal));
 		return this.SUCCESS;
 	}
 
@@ -131,10 +139,12 @@ public class ScmcocAction extends BaseAction {
 	 * @return
 	 */
 	private String parse(String value) {
-		try {
-			return URLDecoder.decode(value, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		if(null!=value && !"".equals(value)){
+			try {
+				return URLDecoder.decode(value, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
@@ -178,6 +188,14 @@ public class ScmcocAction extends BaseAction {
 		return "find";
 	}
 	
+	
+	private Integer pageCount(Integer maxIndex,Integer dataTotal){
+		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // 总页数
+		if(pageNums==0){
+			pageNums+=1;
+		}
+		return pageNums;
+	}
 	
 	/*********Getter and Setter method*********/
 	public ScmcocLogic getScmcocLogic() {
@@ -276,14 +294,6 @@ public class ScmcocAction extends BaseAction {
 		this.note = note;
 	}
 
-	public String getPageCount() {
-		return pageCount;
-	}
-
-	public void setPageCount(String pageCount) {
-		this.pageCount = pageCount;
-	}
-
 	public String getCurrIndex() {
 		return currIndex;
 	}
@@ -299,4 +309,13 @@ public class ScmcocAction extends BaseAction {
 	public void setMaxIndex(String maxIndex) {
 		this.maxIndex = maxIndex;
 	}
+
+	public String getSearchStr() {
+		return searchStr;
+	}
+
+	public void setSearchStr(String searchStr) {
+		this.searchStr = searchStr;
+	}
+	
 }

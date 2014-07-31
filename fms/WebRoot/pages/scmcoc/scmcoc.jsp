@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="modal-footer" style="text-align: left;">
 		<span class="">供应商名称</span><input type="text" id="search" style="height:25px;" class=""/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="" style="height:25px; border: 2px; width:35px; margin-top:-10px;"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:35px; margin-top:-10px;"/>
 	</div> 
 	<div class="row-fluid" >
 		<div class="span12">
@@ -88,36 +88,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
 				<!-- 分页 -->
-				<!-- <span style="height:30px; line-height: 30px;" class="next">当前页【1/4】</span> -->
 				<div class="pagination pull-right no-margin">
 					<ul>
-						<li class="next"><a>当前页【1/4】</a>
+						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
 						</li>
+						<li class="next"><a href="javascript: gotoPage( 1, ${pageNums} )">首页</a>
+						</li>
+						<c:if test="${currIndex!=1}">
+							<li class="next"><a href="javascript: gotoPage( ${currIndex - 1}, ${pageNums} )">上一页</a>
+							</li>
+						</c:if>
+						<c:if test="${currIndex!=pageNums}">
+							<li class="next"><a href="javascript: gotoPage( ${currIndex + 1}, ${pageNums} )">下一页 </a>
+							</li>
+						</c:if>
 						
-						<li class="next"><a href="#">首页</a>
-						</li>
-					
-						<li class="next"><a href="#">上一页</a>
-						</li>
-
-						<!-- <li class="active"><a href="#">1</a>
-						</li>
-
-						<li><a href="#">2</a>
-						</li>
-
-						<li><a href="#">3</a>
-						</li> -->
-
-						<li class="next"><a href="#">下一页 </a>
-						<li class="next"><a href="#">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
+						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
 						</li>
 					</ul>
-					<select class="pagination pull-right no-margin" style="width:60px;">
-						<option>1页</option>
-						<option>2页</option>
-						<option>3页</option>
-						<option>4页</option>
+					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum">
+						<c:forEach begin="1" end="${pageNums}" var="pnum">
+							<c:if test="${pnum==currIndex}">
+								<option selected="selected">${pnum}页</option>
+							</c:if>
+							<c:if test="${pnum!=currIndex}">
+								<option>${pnum}页</option>
+							</c:if>
+						</c:forEach>
 					</select>
 				</div>
 			</div>
@@ -125,4 +122,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!--PAGE CONTENT ENDS-->
 	</div>
   </body>
+  	<script type="text/javascript">
+		function gototag(pageSize){
+			var obj = $("#gonum");
+			var n = obj.options[obj.selectedIndex].value;
+			gotoPage(n, pageSize)
+		}
+		
+		/**
+	 * 转到指定页码
+	 * @param {Object} pageNum 要转到第几页        currIndex
+	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
+	 */
+	function gotoPage(pageNum, pageSize) {
+		var likeStr = $("#search").val(); 
+		// 拼接URL
+		var url = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr);
+		// 在本窗口中显示指定URL的页面
+		toMain(url);
+	}
+	
+	function parse(str){
+		return encodeURI(encodeURI(str));  
+	}
+	
+	</script>
 </html>

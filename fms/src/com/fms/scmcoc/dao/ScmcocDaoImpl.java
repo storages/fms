@@ -8,11 +8,11 @@ import com.fms.core.entity.Scmcoc;
 
 public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
 
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom) {
+	public List<Scmcoc> findAllScmcoc(Boolean isCustom,Integer index,Integer length) {
 		String hql = "select a from Scmcoc a where a.isCustom = ? ";
 		List param = new ArrayList();
 		param.add(isCustom);
-		return this.find(hql, param.toArray());
+		return this.findPageList(hql, param.toArray(),index,length);
 	}
 
 	public Scmcoc findScmcocById(String id) {

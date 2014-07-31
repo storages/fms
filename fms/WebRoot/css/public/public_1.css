@@ -10,3 +10,24 @@
   font-weight: 400;
   src: local('Open Sans'), local('OpenSans'), format('woff');
 }
+.splitpage{
+	width:auto;
+}
+.splitpage li{
+	height:25px;
+	width:25px;
+	list-style: none;
+	float: left;
+	border: 1px solid gray;
+	text-align: center;
+	line-height: 25px;
+}
+.up,.down{
+	height:25px;
+	width:100px;
+	list-style: none;
+	float: left;
+	border: 1px solid gray;
+	text-align: center;
+	line-height: 25px;
+}

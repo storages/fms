@@ -27,6 +27,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="page-header position-relative" style="margin-bottom: 0px;">
 		<h5>基础资料＞＞供应商管理</h5>
 	</div>
+	<div class="modal-footer" style="text-align: left;">
+		<span class="">供应商名称</span><input type="text" id="search" style="height:25px;" class=""/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="" style="height:25px; border: 2px; width:35px; margin-top:-10px;"/>
+	</div> 
 	<div class="row-fluid" >
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
@@ -84,26 +88,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
 				<!-- 分页 -->
-				<!-- <div class="pagination pull-right no-margin">
+				<!-- <span style="height:30px; line-height: 30px;" class="next">当前页【1/4】</span> -->
+				<div class="pagination pull-right no-margin">
 					<ul>
-						<li class="prev disabled"><a href="#"> <i
-								class="icon-double-angle-left"></i> </a>
+						<li class="next"><a>当前页【1/4】</a>
+						</li>
+						
+						<li class="next"><a href="#">首页</a>
+						</li>
+					
+						<li class="next"><a href="#">上一页</a>
 						</li>
 
-						<li class="active"><a href="#">1</a>
+						<!-- <li class="active"><a href="#">1</a>
 						</li>
 
 						<li><a href="#">2</a>
 						</li>
 
 						<li><a href="#">3</a>
-						</li>
+						</li> -->
 
-						<li class="next"><a href="#"> <i
-							class="icon-double-angle-right"></i> </a>
+						<li class="next"><a href="#">下一页 </a>
+						<li class="next"><a href="#">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
 						</li>
 					</ul>
-				</div> -->
+					<select class="pagination pull-right no-margin" style="width:60px;">
+						<option>1页</option>
+						<option>2页</option>
+						<option>3页</option>
+						<option>4页</option>
+					</select>
+				</div>
 			</div>
 		</div>
 		<!--PAGE CONTENT ENDS-->

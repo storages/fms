@@ -6,10 +6,10 @@ import com.fms.core.entity.Scmcoc;
 
 public interface ScmcocDao {
 	/**
-	 * 获取所有的供应商或客户
+	 * 获取所有的供应商或客户[分页]
 	 * @return
 	 */
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom);
+	public List<Scmcoc> findAllScmcoc(Boolean isCustom,Integer index,Integer length);
 	/**
 	 * 根据id查询供应商或客户
 	 * @param id

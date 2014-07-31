@@ -1,5 +1,10 @@
 ﻿
 $(function(){
+	//获取屏幕的高度   让HTML 兼容IE 浏览器
+	var clientHeight=window.screen.availHeight;
+	$("#maincentent").css("height",clientHeight+"px");
+	
+	
 	$("#login").click(findUserName);  
 	function findUserName(){
 		  	var username = $("input[name='username']").val();

@@ -9,7 +9,8 @@ $(function(){
 	function findUserName(){
 		  	var username = $("input[name='username']").val();
 		  	var password = $("input[name='password']").val();
-		  	var forget = $("#remenber").attr("checked");
+		  	var forget = $("#remenber").is(":checked");
+		  	
 		  	if(username==""){
 		  		$("#error").html("用户名不能为空");
 		  		return;
@@ -17,6 +18,12 @@ $(function(){
 		  	if(password==""){
 		  		$("#error").html("密码不能为空");
 		  		return;
+		  	}
+		  	if(forget){
+		  		addCookie("username",username);
+		  		addCookie("password" ,username);
+		  	}else{
+		  		
 		  	}
 		  	//$("#mess").html("");
 	  		var url = "${pageContext.request.contextPath}/users_loginUser.action?userName="+username+"&password="+password+"&forget="+forget;

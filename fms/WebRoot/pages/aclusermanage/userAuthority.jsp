@@ -45,7 +45,7 @@
 								<th class="center">登录名</th>
 								<th class="hidden-480 center">用户名</th>
 								<th class="hidden-phone center">是否管理员</th>
-								<th class="hidden-480 center">是否禁用</th>
+								<th class="hidden-480 center">账户状态</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>

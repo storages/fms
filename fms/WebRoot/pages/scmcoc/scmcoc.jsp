@@ -106,13 +106,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
 						</li>
 					</ul>
-					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum">
+					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag(${pageNums})">
 						<c:forEach begin="1" end="${pageNums}" var="pnum">
 							<c:if test="${pnum==currIndex}">
-								<option selected="selected">${pnum}页</option>
+								<option selected="selected" value="${pnum}">${pnum}页</option>
 							</c:if>
 							<c:if test="${pnum!=currIndex}">
-								<option>${pnum}页</option>
+								<option  value="${pnum}">${pnum}页</option>
 							</c:if>
 						</c:forEach>
 					</select>
@@ -124,9 +124,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   	<script type="text/javascript">
 		function gototag(pageSize){
-			var obj = $("#gonum");
-			var n = obj.options[obj.selectedIndex].value;
-			gotoPage(n, pageSize)
+			var n = $("#gonum option:selected").val();
+			gotoPage(n, pageSize);
 		}
 		
 		/**
@@ -145,6 +144,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function parse(str){
 		return encodeURI(encodeURI(str));  
 	}
-	
-	</script>
+</script>
 </html>

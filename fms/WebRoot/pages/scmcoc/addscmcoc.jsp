@@ -127,8 +127,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//约定结算时间
 		//var endDate = $(":input[name='scmcoc.endDate']").val(); 
 		var endDate = $("#endDate option:selected").val(); 
-				      
-		alert(endDate);
 		//备注
 		var note = $(":input[name='scmcoc.note']").val(); 
 		var isPass = true;

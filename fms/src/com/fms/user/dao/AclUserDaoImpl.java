@@ -58,6 +58,7 @@ public class AclUserDaoImpl extends BaseDao implements AclUserDao {
 			hql = "SELECT a FROM AclUser a where a.userFlag = ?";
 			list.add("P");
 		}
+		hql+=" order by a.userFlag ";
 		List<AclUser> users = this.find(hql, list.toArray());
 		return users;
 	}
@@ -71,5 +72,11 @@ public class AclUserDaoImpl extends BaseDao implements AclUserDao {
 			list.add(ids[i]);
 		}
 		this.batchUpdateOrDelete(hql, list.toArray());
+	}
+	
+	public AclUser findUserById(String id){
+		String hql = "select a from AclUser a where a.id = ? ";
+		AclUser aclUser = (AclUser) this.findUniqueResult(hql, new Object[]{id});
+		return aclUser;
 	}
 }

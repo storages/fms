@@ -29,8 +29,10 @@ public class AclUserLogicImpl implements AclUserLogic {
 	}
 
 	public void saveAclUser(AclUser aclUser) {
-		String descPassword = MD5Util.encryptData(aclUser.getPassword());
-		aclUser.setPassword(descPassword);
+		if(null==aclUser.getPassword() && "".equals(aclUser.getPassword())){
+			String descPassword = MD5Util.encryptData(aclUser.getPassword());
+			aclUser.setPassword(descPassword);
+		}
 		this.userDao.saveAclUser(aclUser);
 	}
 
@@ -40,6 +42,10 @@ public class AclUserLogicImpl implements AclUserLogic {
 
 	public void deleteAclUser(String[] ids) {
 		this.userDao.deleteAclUser(ids);		
+	}
+
+	public AclUser findUserById(String id) {
+		return this.userDao.findUserById(id);
 	}
 
 }

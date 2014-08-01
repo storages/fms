@@ -34,4 +34,11 @@ public interface AclUserDao {
 	 */
 	public void deleteAclUser(String [] ids);
 	
+	/**
+	 * 根据用户id来查询用户
+	 * @param id
+	 * @return
+	 */
+	public AclUser findUserById(String id);
+	
 }

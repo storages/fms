@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.fms.base.action.BaseAction;
+import com.fms.commons.CommonConstant;
 import com.fms.core.entity.AclUser;
 import com.fms.user.logic.AclUserLogic;
 import com.fms.utils.AjaxResult;
@@ -67,7 +68,7 @@ public class AclUserAction extends BaseAction {
 				result.setMsg("对不起，该账户已被禁用，请联系管理员！");
 			}else{
 				result.setSuccess(true);
-				session.put("user", aclUser);
+				session.put(CommonConstant.LOGINUSER,aclUser);
 			}
 		} catch (Exception e) {
 			result.setMsg("对不起出错了："+e.getMessage());

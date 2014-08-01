@@ -48,7 +48,6 @@
 				<li><span class="file"><a href="">交易货币管理</a></span></li>
 				<li><span class="file"><a href="">计量单位管理</a></span></li>
 				<li><span class="file"><a href="">仓库管理</a></span></li>
-				<li><span class="file"><a href="">物料管理</a></span></li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">职员管理</span>

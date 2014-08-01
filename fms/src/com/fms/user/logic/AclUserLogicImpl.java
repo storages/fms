@@ -34,8 +34,8 @@ public class AclUserLogicImpl implements AclUserLogic {
 		this.userDao.saveAclUser(aclUser);
 	}
 
-	public List<AclUser> findAllUser() {
-		return this.userDao.findAllUser();
+	public List<AclUser> findAllUser(String userflag) {
+		return this.userDao.findAllUser(userflag);
 	}
 
 	public void deleteAclUser(String[] ids) {

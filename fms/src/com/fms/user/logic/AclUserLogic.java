@@ -30,7 +30,7 @@ public interface AclUserLogic {
 	 * 获取所有用户
 	 * @return
 	 */
-	public List<AclUser> findAllUser();
+	public List<AclUser> findAllUser(String userflag);
 	
 	/**
 	 * 删除用户

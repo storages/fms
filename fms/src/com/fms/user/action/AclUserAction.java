@@ -23,6 +23,7 @@ public class AclUserAction extends BaseAction {
 	private String userName;
 	private String password;
 	protected String ids;
+	private String userflag;
 	protected String forget;//¼Ç×¡ÃÜÂë
 
 	/**
@@ -102,7 +103,7 @@ public class AclUserAction extends BaseAction {
 	 * @return
 	 */
 	public String findAllUser() {
-		List<AclUser> users = this.userLogic.findAllUser();
+		List<AclUser> users = this.userLogic.findAllUser(userflag);
 		request.put("users", users);
 		return "authority";
 	}
@@ -156,6 +157,22 @@ public class AclUserAction extends BaseAction {
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+	public String getUserflag() {
+		return userflag;
+	}
+
+	public void setUserflag(String userflag) {
+		this.userflag = userflag;
+	}
+
+	public String getForget() {
+		return forget;
+	}
+
+	public void setForget(String forget) {
+		this.forget = forget;
 	}
 
 }

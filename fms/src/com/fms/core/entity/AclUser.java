@@ -34,7 +34,7 @@ public class AclUser extends BaseEntity {
 	 */
 	private Date lastlogin = null;
 	/**
-	 * 为"S"时为管理员
+	 * "L"为超级用户;"S"时为管理员;"P"为普通用户
 	 */
 	private String userFlag = null;
 	/**

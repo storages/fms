@@ -61,10 +61,13 @@
 									</td>
 									<td class="center">${user.loginName}</td>
 									<td class="hidden-480 center">${user.userName}</td>
+									<c:if test="${'L'==user.userFlag}">
+										<td class="center">超级用户</td>
+									</c:if>
 									<c:if test="${'S'==user.userFlag}">
 										<td class="center">管理员</td>
 									</c:if>
-									<c:if test="${'S'!=user.userFlag}">
+									<c:if test="${'P'==user.userFlag}">
 										<td class="center">普通用户</td>
 									</c:if>
 									<c:if test="${user.isForbid}">

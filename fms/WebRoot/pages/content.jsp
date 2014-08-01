@@ -14,10 +14,13 @@
 				
 				<ul style="float: right;height:auto; margin: 0px 5px 0px 0px; padding:0px;">
 					<li style="list-style: none; line-height:60px; color: white; font-size: 12px; float: left;">欢迎您：${user.loginName}</li>
+					<c:if test="${user.userFlag=='L'}">
+						<li style="list-style: none; line-height:60px; color: white; font-size: 12px;float: left;">　　您是【超级用户】　<a href="" style="color:white;">注销</a></li>
+					</c:if>
 					<c:if test="${user.userFlag=='S'}">
 						<li style="list-style: none; line-height:60px; color: white; font-size: 12px;float: left;">　　您是【管理员】　<a href="" style="color:white;">注销</a></li>
 					</c:if>
-					<c:if test="${user.userFlag!='S'}">
+					<c:if test="${user.userFlag=='P'}">
 						<li style="list-style: none; line-height:60px; color: white; font-size: 12px;float: left;">　　您是【普通用户】　<a href="" style="color:white;">注销</a></li>
 					</c:if>
 				</ul>
@@ -31,7 +34,7 @@
 		<li  class="closed"><span class="folder directer" >用户管理</span>
 			<ul>
 				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/register.jsp')">添加用户</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/users_findAllUser.action')"">用户权限</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" onclick="findAllUserByFlag('${user.userFlag}')">用户权限</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="">用户分组</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="">操作日志</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="">系统参数设置</a></span></li>
@@ -91,5 +94,15 @@
 </div>
 <!--/.page-content-->
 
-
+<script type="text/javascript">
+	function findAllUserByFlag(flag){
+		if("P"==flag){
+			alert("对不起，你没有权限查看！");
+			return;
+		}
+		var str = "userflag="+flag;
+		var url = "${pageContext.request.contextPath}/users_findAllUser.action?"+str;
+		toMain(url);
+	}
+</script>
 

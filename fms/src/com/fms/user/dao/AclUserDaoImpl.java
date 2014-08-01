@@ -49,9 +49,15 @@ public class AclUserDaoImpl extends BaseDao implements AclUserDao {
 		this.saveOrUpdate(aclUser);
 	}
 
-	public List<AclUser> findAllUser() {
+	public List<AclUser> findAllUser(String userflag) {
 		List list = new ArrayList();
-		String hql = "SELECT a FROM AclUser a ";
+		String hql = "";
+		if("L".equals(userflag)){
+			hql = "SELECT a FROM AclUser a ";
+		}else if("S".equals(userflag)){
+			hql = "SELECT a FROM AclUser a where a.userFlag = ?";
+			list.add("P");
+		}
 		List<AclUser> users = this.find(hql, list.toArray());
 		return users;
 	}

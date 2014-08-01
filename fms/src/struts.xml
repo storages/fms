@@ -7,9 +7,22 @@
 			<result>/pages/error/404page.html</result>
 		</action>
 	</package> -->
-
-
+           
 	<package name="usersActionPackage" extends="struts-default">
+<!-- 拦截器配置 -->
+<interceptors>
+<interceptor name="loginInterceptor" class="com.fms.interceptor.AclLoginInterceptor">
+</interceptor>
+<interceptor-stack name="aclInterceptor">
+<interceptor-ref name="loginInterceptor"  />
+<interceptor-ref name="defaultStack" />
+</interceptor-stack>
+</interceptors>
+<!-- 这是全局拦截器 -->
+<default-interceptor-ref name="aclInterceptor"/>
+<global-results>
+<result name="tologin" type="redirectAction">loginAction_gologin</result>
+</global-results>
 
 		<!-- 跳转到登录页面 -->
 		<action name="loginAction_*" class="com.fms.user.action.AclUserAction" method="{1}">

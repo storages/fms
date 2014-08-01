@@ -174,7 +174,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  	if(isEdit!=""){
 		  		submitUrl = submitUrl +"&ids="+isEdit;
 		  	}
-		  	alert(submitUrl);
 	  	toMain(submitUrl);
 	  	}
 	}

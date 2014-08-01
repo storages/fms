@@ -42,7 +42,7 @@ public class ScmcocAction extends BaseAction {
 	private Integer pageNums;//共有多少页
 	private String className="Scmcoc";//表名称
 	private String searchStr;//搜索条件
-	private static final Integer DEFAULT_PAGESIZE = 15; 
+	private static final Integer DEFAULT_PAGESIZE = 11; 
 
 	/**
 	 * 查询所有供应商或客户
@@ -54,7 +54,7 @@ public class ScmcocAction extends BaseAction {
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
 		dataTotal = this.scmcocLogic.findDataCount(className,Boolean.parseBoolean(isCustom),parse(searchStr));
-		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),parse(searchStr),curr-1,DEFAULT_PAGESIZE);
+		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),parse(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		this.request.put("scmcocs", scmcocs);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
@@ -69,7 +69,7 @@ public class ScmcocAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String saveScmcoc() throws Exception {
+	public String saveScmcoc() {
 		Scmcoc scmcoc = new Scmcoc();
 		// 是客户
 		if ("true".equals(isCustom)) {
@@ -122,13 +122,7 @@ public class ScmcocAction extends BaseAction {
 		scmcoc.setLinkMan(parse(linkMan));
 		scmcoc.setNetworkLink(parse(networkLink));
 		scmcoc.setAddress(parse(address));
-		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
-		try {
-			Date date = sdf.parse(endDate);
-			scmcoc.setEndDate(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		scmcoc.setEndDate(endDate);
 		scmcoc.setNote(parse(note));
 		return scmcoc;
 	}

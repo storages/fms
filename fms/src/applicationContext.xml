@@ -60,7 +60,7 @@
 	</bean>
 
 	<aop:config>
-		<aop:pointcut expression="execution(* com.fms.user.dao.*.*(..))"
+		<aop:pointcut expression="execution(* com.fms.*.action.*(..))"
 			id="cutlocation" />
 		<aop:advisor advice-ref="advice" pointcut-ref="cutlocation" />
 	</aop:config>

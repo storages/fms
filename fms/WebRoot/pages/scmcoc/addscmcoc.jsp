@@ -55,31 +55,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="span12">
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
 				<tr>
-					<td class="captioncss" style="text-align: right;">编码</td>
+					<td class="captioncss" style="text-align: right; width:100px;">编码</td>
 					<c:if test="${scmcoc.id==null}">
 						<td class="hidden-480 addcss"><input type="text" value="${scmcoc.code}" name="scmcoc.code" style="height:25px;"/><span style="color:red;">*</span></td>
 					</c:if>
 					<c:if test="${scmcoc.id!=null}">
 						<td class="hidden-480 addcss"><input type="text" value="${scmcoc.code}" name="scmcoc.code" style="height:25px;" disabled="disabled"/><span style="color:red;">*</span></td>
 					</c:if>
-					<td class="captioncss" style="text-align: right;">名称</td>
+					<td class="captioncss" style="text-align: right; width:100px;">名称</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.name}" name="scmcoc.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right;">联系电话</td>
+					<td class="captioncss" style="text-align: right; width:100px;">联系电话</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.linkPhone}" name="scmcoc.linkPhone" style="height:25px;"/>
 					<td class="captioncss" style="text-align: right;">网络联系方式</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.networkLink}" name="scmcoc.networkLink" style="height:25px;"/></td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right;">联系人</td>
+					<td class="captioncss" style="text-align: right; width:100px;">联系人</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.linkMan}" name="scmcoc.linkMan" id="link" style="height:25px;"/></td>
 					<td class="captioncss" style="text-align: right;">地址</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.address}" name="scmcoc.address" style="height:25px;"/></td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right;">约定结算日期</td>
-					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.endDate}" name="scmcoc.endDate" style="height:25px;" id="datepicker" readonly="readonly" /><span>m-d</span></td>
+					<td class="captioncss" style="text-align: right; width:100px;">约定结算日期  每月</td>
+					<td class="hidden-480 addcss">
+						<%-- <input type="text" value="${scmcoc.endDate}" name="scmcoc.endDate" style="height:25px;" id="datepicker" readonly="readonly" />日<span>m-d</span> --%>
+						<select id="endDate" style="width:200px;">
+							<c:forEach var="day" begin="1" end="28" step="1">
+								<c:if test="${scmcoc.endDate==day}">
+									<option selected="selected">${day}</option>
+								</c:if>
+								<c:if test="${scmcoc.endDate!=day}">
+									<option value="${day}">${day}</option>
+								</c:if>
+							</c:forEach>
+						</select>日 <span style="color:red;">*</span>
+					</td>
 					<td class="captioncss" style="text-align: right;">备注</td>
 					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.note}" name="scmcoc.note" style="height:25px;"/></td>
 				</tr>
@@ -113,7 +125,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//地址
 		var address = $(":input[name='scmcoc.address']").val(); 
 		//约定结算时间
-		var endDate = $(":input[name='scmcoc.endDate']").val(); 
+		//var endDate = $(":input[name='scmcoc.endDate']").val(); 
+		var endDate = $("#endDate option:selected").val(); 
+				      
+		alert(endDate);
 		//备注
 		var note = $(":input[name='scmcoc.note']").val(); 
 		var isPass = true;

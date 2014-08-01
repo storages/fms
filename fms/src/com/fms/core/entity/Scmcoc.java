@@ -43,7 +43,7 @@ public class Scmcoc extends BaseEntity{
 	/**
 	 * 结账截止日期
 	 */
-	private Date endDate;
+	private String endDate;
 	/**
 	 *	是否是客户 
 	 *	true 表示是客户
@@ -67,10 +67,10 @@ public class Scmcoc extends BaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	

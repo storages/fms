@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="hidden-480 center">${scmcoc.networkLink}</td>
 									<td class="hidden-480 center">${scmcoc.linkMan}</td>
 									<td class="hidden-480 center">${scmcoc.address}</td>
-									<td class="hidden-480 center">${scmcoc.endDate}</td>
+									<td class="hidden-480 center">每月${scmcoc.endDate}日</td>
 									<td class="hidden-480 center">${scmcoc.note}</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids=${scmcoc.id}')">修改</a>｜

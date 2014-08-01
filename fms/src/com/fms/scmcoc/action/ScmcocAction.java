@@ -42,7 +42,7 @@ public class ScmcocAction extends BaseAction {
 	private Integer pageNums;//共有多少页
 	private String className="Scmcoc";//表名称
 	private String searchStr;//搜索条件
-	private static final Integer DEFAULT_PAGESIZE = 25; 
+	private static final Integer DEFAULT_PAGESIZE = 15; 
 
 	/**
 	 * 查询所有供应商或客户

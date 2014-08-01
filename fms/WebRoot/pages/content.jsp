@@ -96,12 +96,11 @@
 
 <script type="text/javascript">
 	function findAllUserByFlag(flag){
-		if("P"==flag){
+		if("P"==flag || flag==""){
 			alert("对不起，你没有权限查看！");
 			return;
 		}
-		var str = "userflag="+flag;
-		var url = "${pageContext.request.contextPath}/users_findAllUser.action?"+str;
+		var url = "${pageContext.request.contextPath}/users_findAllUser.action";
 		toMain(url);
 	}
 </script>

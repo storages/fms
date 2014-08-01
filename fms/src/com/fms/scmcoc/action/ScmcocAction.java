@@ -60,7 +60,10 @@ public class ScmcocAction extends BaseAction {
 		this.request.put("maxIndex", max);
 		this.request.put("pageNums", pageCount(max, dataTotal));
 		this.request.put("searchStr", parse(searchStr));
-		return this.SUCCESS;
+		if("true".equals(isCustom)){
+			return "cis";//是客户页面请求
+		}
+		return this.SUCCESS;//是供应商请求
 	}
 
 	/**

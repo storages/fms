@@ -23,10 +23,12 @@ public class AclUserDaoImpl extends BaseDao implements AclUserDao {
 	 * 
 	 * @see com.fms.user.dao.AclUserDao#loginAclUser(java.lang.String,
 	 * java.lang.String)
+	 * 用户登录（用户没有被禁用的才可以登录）
 	 */
 	public AclUser loginAclUser(String userName, String password) {
 		List list = new ArrayList();
-		String hql = "SELECT a FROM AclUser a where a.userName=? and a.password=? ";
+		String hql = "SELECT a FROM AclUser a where a.userName=? and a.password=? and a.isForbid = ? ";
+		list.add(Boolean.FALSE);
 		list.add(userName);
 		list.add(password);
 		AclUser aclUser = (AclUser) this.findUniqueResult(hql, list.toArray());

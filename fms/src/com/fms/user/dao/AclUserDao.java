@@ -7,7 +7,7 @@ import com.fms.core.entity.AclUser;
 public interface AclUserDao {
 
 	/**
-	 * 查询用户
+	 * 用户登录（用户没有被禁用的才可以登录）
 	 * 
 	 * @param loginName
 	 * @param password

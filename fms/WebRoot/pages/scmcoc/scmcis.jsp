@@ -88,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
 				<!-- 分页 -->
-				<div class="pagination pull-right no-margin">
+				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
 						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
 						</li>

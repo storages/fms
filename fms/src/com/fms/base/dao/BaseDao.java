@@ -20,7 +20,6 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.fms.base.entity.BaseEntity;
-import com.fms.core.entity.AclUser;
 
 
 /**
@@ -339,7 +338,7 @@ public class BaseDao extends HibernateDaoSupport {
 						q.setParameter(i, objParams[i]);
 					}
 				}
-				List<AclUser> result = q.list();
+				List result = q.list();
 				//q.setFirstResult(0);
 				//q.setMaxResults(1);
 				if(null!=result && result.size()>0){

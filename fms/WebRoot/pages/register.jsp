@@ -52,7 +52,7 @@
 
 <body>
 	<div style="height:8%"></div>
-	<div class="logincss">
+	<div class="logincss" style="width:35%; margin:0 auto; padding:0px;">
 		<div id="signup-box" class="signup-box widget-box no-border">
 			<div class="widget-body">
 				<div class="widget-main">
@@ -82,9 +82,11 @@
 							<span style="color:red; font-size: 12px;margin-right: 40%;"
 								id="regisMess"></span>注：带<span style="color:red;">*</span>必填
 						</p>
+						<div style="width:65%;">
 						<input type="reset" value="重置"
 							class="width-30 pull-left btn btn-small" /> <input type="submit"
 							value="注册" class="width-65 pull-right btn btn-small btn-success" />
+						</div>
 					</form>
 				</div>
 
@@ -99,9 +101,8 @@
 					</button> -->
 				</div>
 				<p>
-				<div class="toolbar center">
-					<a href="${pageContext.request.contextPath}/pages/login.jsp"　class="back-to-login-link">去登录 </a>
-				</div>
+					<a href="${pageContext.request.contextPath}/pages/login.jsp"　class="width-30 pull-left btn btn-small"><div class="toolbar center" style="width:53%; margin-left: 15px;">去登录</div> </a>
+				</p>
 			</div>
 			<!--/widget-body-->
 		</div>

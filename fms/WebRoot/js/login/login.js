@@ -3,27 +3,36 @@ $(function(){
 	//获取屏幕的高度   让HTML 兼容IE 浏览器
 	var clientHeight=window.screen.availHeight;
 	$("#maincentent").css("height",clientHeight+"px");
+	//初始化判断是否保存了cookie
+	if(getCookie("username")!=null){
+		$("input[name='username']").val(getCookie("username"));
+	}
+	if(getCookie("password")!=null){
+	$("input[name='password']").val(getCookie("password"));
+	$("#remenber").prop("checked",true);
+	}
 	
-	//alert(getCookie("password"));
+	 // 登陆按钮
 	$("#login").click(findUserName);  
 	function findUserName(){
 		  	var username = $("input[name='username']").val();
 		  	var password = $("input[name='password']").val();
 		  	var forget = $("#remenber").is(":checked");
 		  	
-		  	if(username==""){
+		  	if(username.trim().length<=0||username.trim()==""){
 		  		$("#error").html("用户名不能为空");
 		  		return;
 		  	}
-		  	if(password==""){
+		  	if(password.trim().length<=0||password.trim()==""){
 		  		$("#error").html("密码不能为空");
 		  		return;
 		  	}
-		  	if(forget){
+		  	if(forget){//保存
 		  		addCookie("username",username);
 		  		addCookie("password" ,username);
-		  	}else{
-		  		
+		  	}else{//删除
+		  		delCookie("username");
+		  		delCookie("password");
 		  	}
 		  	//$("#mess").html("");
 	  		var url = "${pageContext.request.contextPath}/users_loginUser.action?userName="+username+"&password="+password+"&forget="+forget;
@@ -49,3 +58,12 @@ $(function(){
 	  	}
 
 });
+String.prototype.trim=function(){
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+ };
+ String.prototype.ltrim=function(){
+    return this.replace(/(^\s*)/g,"");
+ };
+ String.prototype.rtrim=function(){
+    return this.replace(/(\s*$)/g,"");
+ };

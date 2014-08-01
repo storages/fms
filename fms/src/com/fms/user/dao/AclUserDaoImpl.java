@@ -27,10 +27,9 @@ public class AclUserDaoImpl extends BaseDao implements AclUserDao {
 	 */
 	public AclUser loginAclUser(String userName, String password) {
 		List list = new ArrayList();
-		String hql = "SELECT a FROM AclUser a where a.userName=? and a.password=? and a.isForbid = ? ";
+		String hql = "SELECT a FROM AclUser a where a.userName=? and a.password=? ";
 		list.add(userName);
 		list.add(password);
-		list.add(Boolean.FALSE);
 		AclUser aclUser = (AclUser) this.findUniqueResult(hql, list.toArray());
 		return aclUser;
 	}

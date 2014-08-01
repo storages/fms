@@ -58,6 +58,9 @@ public class AclUserAction extends BaseAction {
 			if(aclUser==null){
 				result.setSuccess(false);
 				result.setMsg("用户名或密码不正确");
+			}else if(aclUser.getIsForbid()){
+				result.setSuccess(false);
+				result.setMsg("对不起，该账户已被禁用，请联系管理员！");
 			}else{
 				result.setSuccess(true);
 				session.put("user", aclUser);

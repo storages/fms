@@ -72,8 +72,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="hidden-480 center">每月${scmcoc.endDate}日</td>
 									<td class="hidden-480 center">${scmcoc.note}</td>
 									<td class="center">
-										<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids=${scmcoc.id}')">修改</a>｜
-										<a href="javascript:void(0);" onclick="delSingleScmcoc('${scmcoc.id}')">删除</a>
+										<a href="javascript:void(0);" onclick="toedit('${scmcoc.id}')">修改</a>｜
+										<a href="javascript:void(0);" onclick="delSingleScmcoc('${scmcoc.id}','true')">删除</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -143,6 +143,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	function parse(str){
 		return encodeURI(encodeURI(str));  
+	}
+	
+	function toedit(id){
+		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids="+id+"&isCustom=true";
+		toMain(url);
 	}
 </script>
 </html>

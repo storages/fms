@@ -68,16 +68,6 @@ public class AclUserAction extends BaseAction {
 			}else{
 				result.setSuccess(true);
 				session.put("user", aclUser);
-				if("true"==forget){
-					Cookie user = new Cookie("user",aclUser.getLoginName()+"/"+aclUser.getPassword());
-				}else{
-					Cookie ucookie=new Cookie("username",userName);
-					ucookie.setMaxAge(60*60*24*365);
-					response.addCookie(ucookie);
-					Cookie pcookie=new Cookie("password", password);
-					pcookie.setMaxAge(60*60*24*365);
-					response.addCookie(pcookie);
-				}
 			}
 		} catch (Exception e) {
 			result.setMsg("对不起出错了："+e.getMessage());

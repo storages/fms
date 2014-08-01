@@ -24,6 +24,10 @@ public class AclUserAction extends BaseAction {
 	private String password;
 	protected String ids;
 	protected String forget;//记住密码
+	/**
+	 *是否禁用或启用用户账户：【"false"表示启用;"true"表示禁用】 
+	 */
+	private String userForbid;//是否禁用或启用用户账户：【"false"表示启用;"true"表示禁用】
 
 	/**
 	 * 
@@ -119,6 +123,27 @@ public class AclUserAction extends BaseAction {
 		return "del";
 	}
 
+	/**
+	 * 禁用或启用用户账号
+	 * @return
+	 * @throws Exception
+	 */
+	public String stopOrOpenUser() throws Exception{
+		if (null != ids && !"".equals(ids)) {
+			String[] arr = ids.split(",");
+			AclUser editUser = this.userLogic.findUserById(arr[0]);
+			if(null!=editUser){
+				if("false".equals(userForbid)){
+					editUser.setIsForbid(Boolean.FALSE);
+				}else if("true".equals(userForbid)){
+					editUser.setIsForbid(Boolean.TRUE);
+				}
+				this.userLogic.saveAclUser(editUser);
+			}
+		}
+		return "del";
+	}
+	
 	public AclUser getUser() {
 		return user;
 	}
@@ -157,6 +182,14 @@ public class AclUserAction extends BaseAction {
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+	public String getUserForbid() {
+		return userForbid;
+	}
+
+	public void setUserForbid(String userForbid) {
+		this.userForbid = userForbid;
 	}
 
 	public String getForget() {

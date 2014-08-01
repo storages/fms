@@ -1,4 +1,4 @@
-package com.fms.scmcoc.action;
+package com.fms.action;
 
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Scmcoc;
-import com.fms.scmcoc.logic.ScmcocLogic;
+import com.fms.logic.ScmcocLogic;
 
 public class ScmcocAction extends BaseAction {
 

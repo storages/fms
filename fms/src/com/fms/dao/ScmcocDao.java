@@ -1,16 +1,10 @@
-package com.fms.scmcoc.logic;
+package com.fms.dao;
 
 import java.util.List;
 
 import com.fms.core.entity.Scmcoc;
 
-/**
- * 供应商或客户逻辑中心接口
- * @author Administrator
- *
- */
-public interface ScmcocLogic {
-
+public interface ScmcocDao {
 	/**
 	 * 获取所有的供应商或客户[分页]
 	 * @return
@@ -61,3 +55,4 @@ public interface ScmcocLogic {
 	 */
 	public Integer findDataCount(String className,Boolean isCustom,String name);
 }
+

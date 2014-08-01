@@ -1,9 +1,10 @@
-package com.fms.scmcoc.logic;
+package com.fms.logic;
 
 import java.util.List;
 
 import com.fms.core.entity.Scmcoc;
-import com.fms.scmcoc.dao.ScmcocDao;
+import com.fms.dao.ScmcocDao;
+
 
 public class ScmcocLogicImpl implements ScmcocLogic {
 

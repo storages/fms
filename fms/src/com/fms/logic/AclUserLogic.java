@@ -1,4 +1,4 @@
-package com.fms.user.logic;
+package com.fms.logic;
 
 import java.util.List;
 

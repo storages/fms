@@ -1,20 +1,16 @@
-package com.fms.user.action;
+package com.fms.action;
 
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.fms.base.action.BaseAction;
 import com.fms.commons.CommonConstant;
 import com.fms.core.entity.AclUser;
-import com.fms.user.logic.AclUserLogic;
+import com.fms.logic.AclUserLogic;
 import com.fms.utils.AjaxResult;
-import com.opensymphony.xwork2.ActionContext;
 import com.url.ajax.json.JSONObject;
 
 public class AclUserAction extends BaseAction {

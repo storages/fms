@@ -1,4 +1,4 @@
-package com.fms.user.dao;
+package com.fms.dao;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
-package com.fms.user.logic;
+package com.fms.logic;
 
 import java.util.List;
 
 import com.fms.core.entity.AclUser;
-import com.fms.user.dao.AclUserDao;
+import com.fms.dao.AclUserDao;
 import com.fms.utils.MD5Util;
 
 public class AclUserLogicImpl implements AclUserLogic {

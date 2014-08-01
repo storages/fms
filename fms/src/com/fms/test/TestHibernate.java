@@ -8,8 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.fms.core.entity.AclUser;
+import com.fms.logic.AclUserLogic;
 import com.fms.resouce.config.HibernateSessionFactory;
-import com.fms.user.logic.AclUserLogic;
 import com.fms.utils.MD5Util;
 
 public class TestHibernate {

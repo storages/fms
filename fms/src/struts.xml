@@ -25,19 +25,19 @@
 </global-results>
 
 		<!-- 跳转到登录页面 -->
-		<action name="loginAction_*" class="com.fms.user.action.AclUserAction" method="{1}">
+		<action name="loginAction_*" class="com.fms.action.AclUserAction" method="{1}">
 			<result name="login">/pages/login.jsp</result>
 		</action>
 
 		<!-- AclUser的Action配置 -->
-		<action name="users_*" class="com.fms.user.action.AclUserAction" method="{1}">
+		<action name="users_*" class="com.fms.action.AclUserAction" method="{1}">
 			<result name="edit">/pages/main.jsp</result>  
 			<result name="authority">/pages/aclusermanage/userAuthority.jsp</result>
 			<result name="del" type="chain">users_findAllUser</result>
 		</action>
 		
 		<!-- Scmcoc的Action配置 -->
-		<action name="scmcoc_*" class="com.fms.scmcoc.action.ScmcocAction" method="{1}">
+		<action name="scmcoc_*" class="com.fms.action.ScmcocAction" method="{1}">
 			<result name="success">/pages/scmcoc/scmcoc.jsp</result>
 			<result name="save" type="chain">scmcoc_findAllScmcoc</result>
 			<result name="find">/pages/scmcoc/addscmcoc.jsp</result>

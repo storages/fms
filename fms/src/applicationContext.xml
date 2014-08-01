@@ -60,7 +60,7 @@
 	</bean>
 
 	<aop:config>
-		<aop:pointcut expression="execution(* com.fms.*.logic.*(..))"
+		<aop:pointcut expression="execution(* com.fms.*.*(..))"
 			id="cutlocation" />
 		<aop:advisor advice-ref="advice" pointcut-ref="cutlocation" />
 	</aop:config>
@@ -79,7 +79,7 @@
 	<!-- =======================Dao类========================== -->
 	
 	<!-- AclUser -->
-	<bean id="userDao" class="com.fms.user.dao.AclUserDaoImpl">
+	<bean id="userDao" class="com.fms.dao.AclUserDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
 		</property>
@@ -88,7 +88,7 @@
 	
 	<!-- Scmcoc -->
 	
-	<bean id="scmcocDao" class="com.fms.scmcoc.dao.ScmcocDaoImpl">
+	<bean id="scmcocDao" class="com.fms.dao.ScmcocDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
 		</property>
@@ -102,7 +102,7 @@
 	<!-- ======================Logic类=========================== -->
 	
 	<!-- AclUser -->
-	<bean id="userLogic" class="com.fms.user.logic.AclUserLogicImpl">
+	<bean id="userLogic" class="com.fms.logic.AclUserLogicImpl">
 		<property name="userDao">
 			<ref bean="userDao"/>
 		</property>
@@ -111,7 +111,7 @@
 	
 	
 	<!-- Scmcoc -->
-	<bean id="scmcocLogic" class="com.fms.scmcoc.logic.ScmcocLogicImpl">
+	<bean id="scmcocLogic" class="com.fms.logic.ScmcocLogicImpl">
 		<property name="scmcocDao">
 			<ref bean="scmcocDao"/>
 		</property>

@@ -66,10 +66,10 @@
 					<form action="${pageContext.request.contextPath}/users_saveUser.action"
 						method="post" onsubmit="return checkInfo()">
 						登&nbsp;录&nbsp;名:<input type="text" style="height:30px;"
-							placeholder="登录用" name="user.loginName" id="loginName"/><span
+							placeholder="登录后显示昵称" name="user.loginName" id="loginName"/><span
 							id="loginNamemess" style="color:red;">*</span><br />
 						用&nbsp;户&nbsp;名:<input type="text" style="height:30px;"
-							placeholder="登录后显示" name="user.userName" id="userName"/><span id="userNamemess"
+							placeholder="登录用" name="user.userName" id="userName"/><span id="userNamemess"
 							style="color:red;">*</span><br /> 
 							密 　&nbsp;码:<input type="password" style="height:30px;" placeholder="密码"
 							name="user.password" id="password"/><span id="passwordmess"

@@ -46,51 +46,60 @@
 								<th class="hidden-480 center">用户名</th>
 								<th class="hidden-phone center">是否管理员</th>
 								<th class="hidden-480 center">账户状态</th>
+								<th class="hidden-480 center">最后登录时间</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<c:forEach var="user" items="${users}" varStatus="index" step="1">
-								<tr>
-									<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-										<input type="checkbox" value="${user.id}" name="uid" style="width:30px;"/>
-									</td>
-
-									<td class="center"><a href="#">${index.index+1}</a>
-									</td>
-									<td class="center">${user.loginName}</td>
-									<td class="hidden-480 center">${user.userName}</td>
-									<c:if test="${'L'==user.userFlag}">
-										<td class="center">超级用户</td>
-									</c:if>
-									<c:if test="${'S'==user.userFlag}">
-										<td class="center">管理员</td>
-									</c:if>
-									<c:if test="${'P'==user.userFlag}">
-										<td class="center">普通用户</td>
-									</c:if>
-									<c:if test="${user.isForbid}">
-										<td class="hidden-480 center">
-											已禁用
+								<c:if test="${u.userFlag!=user.userFlag}">
+									<tr>
+										<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+											<input type="checkbox" value="${user.id}" name="uid" style="width:30px;"/>
 										</td>
-									</c:if>
-									<c:if test="${!user.isForbid}">
-										<td class="hidden-480 center">
-											正常
+	
+										<td class="center"><a href="#">${index.index+1}</a>
 										</td>
-									</c:if>
-									<td class="center">
-										<a href="javascript:void(0);" onclick="">修改权限</a>｜<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/aclusermanage/edituser.jsp')">修改信息</a>｜
-										<a href="javascript:void(0);" onclick="delSingleObject('${user.id}')">删除</a>|
-										<c:if test="${!user.isForbid}">
-											<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/users_stopOrOpenUser.action?userForbid=true&ids=${user.id}')">禁用</a>
+										<td class="center">${user.loginName}</td>
+										<td class="hidden-480 center">${user.userName}</td>
+										<c:if test="${'L'==user.userFlag}">
+											<td class="center">超级用户</td>
+										</c:if>
+										<c:if test="${'S'==user.userFlag}">
+											<td class="center">管理员</td>
+										</c:if>
+										<c:if test="${'P'==user.userFlag}">
+											<td class="center">普通用户</td>
 										</c:if>
 										<c:if test="${user.isForbid}">
-											<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/users_stopOrOpenUser.action?userForbid=false&ids=${user.id}')">启用</a>
+											<td class="hidden-480 center">
+												已禁用
+											</td>
 										</c:if>
-									</td>
-								</tr>
+										<c:if test="${!user.isForbid}">
+											<td class="hidden-480 center">
+												正常
+											</td>
+										</c:if>
+										<c:if test="${user.lastlogin==null}">
+											<td class="hidden-480 center">从未登录</td>
+										</c:if>
+										<c:if test="${user.lastlogin!=null}">
+											<td class="hidden-480 center">${user.lastlogin}</td>
+										</c:if>
+										<td class="center">
+											<a href="javascript:void(0);" onclick="">修改权限</a>｜<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/aclusermanage/edituser.jsp')">修改信息</a>｜
+											<a href="javascript:void(0);" onclick="delSingleObject('${user.id}')">删除</a>|
+											<c:if test="${!user.isForbid}">
+												<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/users_stopOrOpenUser.action?userForbid=true&ids=${user.id}')">禁用</a>
+											</c:if>
+											<c:if test="${user.isForbid}">
+												<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/users_stopOrOpenUser.action?userForbid=false&ids=${user.id}')">启用</a>
+											</c:if>
+										</td>
+									</tr>
+								</c:if>
 							</c:forEach>
 					</table>
 				</div>

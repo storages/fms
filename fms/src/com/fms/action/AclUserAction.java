@@ -1,6 +1,7 @@
 ﻿package com.fms.action;
 
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,6 +12,7 @@ import com.fms.commons.CommonConstant;
 import com.fms.core.entity.AclUser;
 import com.fms.logic.AclUserLogic;
 import com.fms.utils.AjaxResult;
+import com.fms.utils.MD5Util;
 import com.url.ajax.json.JSONObject;
 
 public class AclUserAction extends BaseAction {
@@ -65,6 +67,12 @@ public class AclUserAction extends BaseAction {
 			}else{
 				result.setSuccess(true);
 				session.put(CommonConstant.LOGINUSER,aclUser);
+				//登录成功后，要记录最后的登录时间
+				if(null!=aclUser){
+					aclUser.setLastlogin(new Date());
+					aclUser.setPassword(MD5Util.encryptData(password));
+					this.userLogic.saveAclUser(aclUser);
+				}
 			}
 		} catch (Exception e) {
 			result.setMsg("对不起出错了："+e.getMessage());
@@ -83,6 +91,7 @@ public class AclUserAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public String saveUser() throws Exception {
+		user.setPassword(MD5Util.encryptData(user.getPassword().trim()));
 		userLogic.saveAclUser(user);
 		return "edit";
 	}
@@ -93,7 +102,7 @@ public class AclUserAction extends BaseAction {
 	 * @return
 	 */
 	public String findAllUser() {
-		String userflag =((AclUser)ServletActionContext.getRequest().getSession().getAttribute("user")).getUserFlag();
+		String userflag =((AclUser)ServletActionContext.getRequest().getSession().getAttribute("u")).getUserFlag();
 		List<AclUser> users = this.userLogic.findAllUser(userflag);
 		request.put("users", users);
 		return "authority";

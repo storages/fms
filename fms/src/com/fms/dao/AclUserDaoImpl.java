@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.AclUser;
+import com.fms.utils.MD5Util;
 
 /**
  * 用户 访问数据库类

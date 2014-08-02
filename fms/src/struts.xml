@@ -44,6 +44,12 @@
 			<result name="findcis">/pages/scmcoc/addscmcis.jsp</result>
 			<result name="cis">/pages/scmcoc/scmcis.jsp</result>
 		</action>
+		
+		<!-- Department的Action配置 -->
+		<action name="dept_*" class="com.fms.action.DeptAction" method="{1}">
+			<result name="success">/pages/basicdata/department.jsp</result>
+			<result name="find">/pages/basicdata/addDept.jsp</result>
+		</action>
 	</package>
 
 

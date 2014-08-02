@@ -12,6 +12,8 @@
 		<property name="modifyDate" column="MODIFYDATE"/>
 		
 		
+		<property name="code" column="CODE"/>
 		<property name="name" column="NAME"/>
+		<property name="note" column="NOTE"/>
 	</class>
 </hibernate-mapping>

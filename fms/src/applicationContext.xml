@@ -95,7 +95,13 @@
 	</bean>
 	
 	
+	<!-- Department -->
 	
+	<bean id="deptDao" class="com.fms.dao.DeptDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
 	
 	
 	
@@ -114,6 +120,15 @@
 	<bean id="scmcocLogic" class="com.fms.logic.ScmcocLogicImpl">
 		<property name="scmcocDao">
 			<ref bean="scmcocDao"/>
+		</property>
+	</bean>
+	
+	
+	<!-- Department -->
+	
+	<bean id="deptLogic" class="com.fms.logic.DeptLogicImpl">
+		<property name="deptDao">
+			<ref bean="deptDao"/>
 		</property>
 	</bean>
 </beans>

@@ -49,3 +49,10 @@ function delMoreScmcoc(flag){
 		toMain(url);
 	}
 }
+
+function delSingleDept(ids){
+	if(confirm("你确认要删除吗？")){
+		var url = "${pageContext.request.contextPath}/dept_deleteDept.action?ids="+ids;
+		toMain(url);
+	}
+}

@@ -40,7 +40,8 @@
 		<action name="scmcoc_*" class="com.fms.action.ScmcocAction" method="{1}">
 			<result name="success">/pages/scmcoc/scmcoc.jsp</result>
 			<result name="save" type="chain">scmcoc_findAllScmcoc</result>
-			<result name="find">/pages/scmcoc/addscmcoc.jsp</result>
+			<result name="findcoc">/pages/scmcoc/addscmcoc.jsp</result>
+			<result name="findcis">/pages/scmcoc/addscmcis.jsp</result>
 			<result name="cis">/pages/scmcoc/scmcis.jsp</result>
 		</action>
 	</package>

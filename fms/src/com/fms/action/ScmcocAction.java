@@ -1,4 +1,4 @@
-package com.fms.action;
+ï»¿package com.fms.action;
 
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -23,7 +23,7 @@ public class ScmcocAction extends BaseAction {
 	private ScmcocLogic scmcocLogic;
 	private Scmcoc scmcoc;
 	
-	/****¿Í»§¹©Ó¦ÉÌÊôĞÔ*****/
+	/****å®¢æˆ·ä¾›åº”å•†å±æ€§*****/
 	private String ids;
 	private String code;
 	private String name;
@@ -35,24 +35,24 @@ public class ScmcocAction extends BaseAction {
 	private String isCustom;
 	private String note;
 	
-	/*********·ÖÒ³ÓÃµÄÊôĞÔ***********/
-	private Integer dataTotal;//×Ü¼ÇÂ¼Êı
-	private String currIndex;//µ±Ç°Ò³Âë
-	private String maxIndex;//Ã¿Ò³ÏÔÊ¾×î¶àÌõÊı
-	private Integer pageNums;//¹²ÓĞ¶àÉÙÒ³
-	private String className="Scmcoc";//±íÃû³Æ
-	private String searchStr;//ËÑË÷Ìõ¼ş
+	/*********åˆ†é¡µç”¨çš„å±æ€§***********/
+	private Integer dataTotal;//æ€»è®°å½•æ•°
+	private String currIndex;//å½“å‰é¡µç 
+	private String maxIndex;//æ¯é¡µæ˜¾ç¤ºæœ€å¤šæ¡æ•°
+	private Integer pageNums;//å…±æœ‰å¤šå°‘é¡µ
+	private String className="Scmcoc";//è¡¨åç§°
+	private String searchStr;//æœç´¢æ¡ä»¶
 	private static final Integer DEFAULT_PAGESIZE = 11; 
 
 	/**
-	 * ²éÑ¯ËùÓĞ¹©Ó¦ÉÌ»ò¿Í»§
+	 * æŸ¥è¯¢æ‰€æœ‰ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * 
 	 * @return
 	 */
 	public String findAllScmcoc() {
-		// ÊÇ¿Í»§
-		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//µ±Ç°µÚ¼¸Ò³
-		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//Ã¿Ò³×î¶àÏÔÊ¾ÌõÊı
+		// æ˜¯å®¢æˆ·
+		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//å½“å‰ç¬¬å‡ é¡µ
+		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//æ¯é¡µæœ€å¤šæ˜¾ç¤ºæ¡æ•°
 		dataTotal = this.scmcocLogic.findDataCount(className,Boolean.parseBoolean(isCustom),parse(searchStr));
 		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),parse(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		this.request.put("scmcocs", scmcocs);
@@ -61,23 +61,23 @@ public class ScmcocAction extends BaseAction {
 		this.request.put("pageNums", pageCount(max, dataTotal));
 		this.request.put("searchStr", parse(searchStr));
 		if("true".equals(isCustom)){
-			return "cis";//ÊÇ¿Í»§Ò³ÃæÇëÇó
+			return "cis";//æ˜¯å®¢æˆ·é¡µé¢è¯·æ±‚
 		}
-		return this.SUCCESS;//ÊÇ¹©Ó¦ÉÌÇëÇó
+		return this.SUCCESS;//æ˜¯ä¾›åº”å•†è¯·æ±‚
 	}
 
 	/**
-	 * ±£´æ¹©Ó¦ÉÌ»ò¿Í»§
+	 * ä¿å­˜ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String saveScmcoc() {
 		Scmcoc scmcoc = new Scmcoc();
-		// ÊÇ¿Í»§
+		// æ˜¯å®¢æˆ·
 		if ("true".equals(isCustom)) {
 			scmcoc.setIsCustom(Boolean.TRUE);
-			// ÊÇ¹©Ó¦ÉÌ
+			// æ˜¯ä¾›åº”å•†
 		} else if ("false".equals(isCustom)) {
 			scmcoc.setIsCustom(Boolean.FALSE);
 		}
@@ -86,7 +86,7 @@ public class ScmcocAction extends BaseAction {
 	}
 
 	/**
-	 * ¸ù¾İ±àÂëÀ´²éÑ¯¹©Ó¦ÉÌ»ò¿Í»§
+	 * æ ¹æ®ç¼–ç æ¥æŸ¥è¯¢ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * 
 	 * @return
 	 */
@@ -110,7 +110,7 @@ public class ScmcocAction extends BaseAction {
 	}
 
 	/**
-	 * Ìî³ä¶ÔÏó
+	 * å¡«å……å¯¹è±¡
 	 * 
 	 * @param scmcoc
 	 * @return
@@ -131,7 +131,7 @@ public class ScmcocAction extends BaseAction {
 	}
 
 	/**
-	 * ·­Òë×Ö·û±àÂë
+	 * ç¿»è¯‘å­—ç¬¦ç¼–ç 
 	 * 
 	 * @param value
 	 * @return
@@ -148,7 +148,7 @@ public class ScmcocAction extends BaseAction {
 	}
 
 	/**
-	 * É¾³ı¹©Ó¦ÉÌ»ò¿Í»§
+	 * åˆ é™¤ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * 
 	 * @return
 	 * @throws Exception
@@ -164,11 +164,14 @@ public class ScmcocAction extends BaseAction {
 				this.scmcocLogic.delete(list);
 			}
 		}
-		return "save";
+		if("true".equals(isCustom)){
+			return "cis";//æ˜¯å®¢æˆ·é¡µé¢è¯·æ±‚
+		}
+		return "save";//æ˜¯ä¾›åº”å•†è¯·æ±‚
 	}
 
 	/**
-	 * ¸ù¾İidÀ´²éÑ¯¹©Ó¦ÉÌ»ò¿Í»§
+	 * æ ¹æ®idæ¥æŸ¥è¯¢ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * @return
 	 * @throws Exception
 	 */
@@ -183,12 +186,15 @@ public class ScmcocAction extends BaseAction {
 				}
 			}
 		}
-		return "find";
+		if("true".equals(isCustom)){
+			return "findcis";//æ˜¯å®¢æˆ·é¡µé¢è¯·æ±‚
+		}
+		return "findcoc";//æ˜¯ä¾›åº”å•†è¯·æ±‚
 	}
 	
 	
 	private Integer pageCount(Integer maxIndex,Integer dataTotal){
-		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // ×ÜÒ³Êı
+		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // æ€»é¡µæ•°
 		if(pageNums==0){
 			pageNums+=1;
 		}

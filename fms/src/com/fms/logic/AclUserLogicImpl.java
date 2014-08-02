@@ -1,4 +1,4 @@
-package com.fms.logic;
+锘縫ackage com.fms.logic;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import com.fms.utils.MD5Util;
 public class AclUserLogicImpl implements AclUserLogic {
 
 	/**
-	 * 数据访问对象
+	 * 鏁版嵁璁块棶瀵硅薄
 	 */
 	private AclUserDao userDao = null;
 	

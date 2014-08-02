@@ -1,4 +1,4 @@
-package com.fms.dao;
+ï»¿package com.fms.dao;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import com.fms.core.entity.AclUser;
 public interface AclUserDao {
 
 	/**
-	 * ÓÃ»§µÇÂ¼£¨ÓÃ»§Ã»ÓĞ±»½ûÓÃµÄ²Å¿ÉÒÔµÇÂ¼£©
+	 * ç”¨æˆ·ç™»å½•ï¼ˆç”¨æˆ·æ²¡æœ‰è¢«ç¦ç”¨çš„æ‰å¯ä»¥ç™»å½•ï¼‰
 	 * 
 	 * @param loginName
 	 * @param password
@@ -16,26 +16,26 @@ public interface AclUserDao {
 	public abstract AclUser loginAclUser(String userName, String password);
 
 	/**
-	 * ±£´æÓÃ»§
+	 * ä¿å­˜ç”¨æˆ·
 	 * @param aclUser
 	 */
 	
 	public abstract void saveAclUser(AclUser aclUser);
 
 	/**
-	 * »ñÈ¡ËùÓĞÓÃ»§
+	 * è·å–æ‰€æœ‰ç”¨æˆ·
 	 * @return
 	 */
 	public List<AclUser> findAllUser(String userflag);
 	
 	/**
-	 * É¾³ıÓÃ»§
+	 * åˆ é™¤ç”¨æˆ·
 	 * @param ids
 	 */
 	public void deleteAclUser(String [] ids);
 	
 	/**
-	 * ¸ù¾İÓÃ»§idÀ´²éÑ¯ÓÃ»§
+	 * æ ¹æ®ç”¨æˆ·idæ¥æŸ¥è¯¢ç”¨æˆ·
 	 * @param id
 	 * @return
 	 */

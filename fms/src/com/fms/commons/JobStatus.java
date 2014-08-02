@@ -1,63 +1,63 @@
-package com.fms.commons;
+ï»¿package com.fms.commons;
 
 /**
- * ¹¤×÷×´Ì¬
+ * å·¥ä½œçŠ¶æ€
  * @author Administrator
  *
  */
 public class JobStatus {
 
 	/**
-	 * ÊÔÓÃÆÚ
+	 * è¯•ç”¨æœŸ
 	 */
 	public final static String PROBATION = "0";
 	/**
-	 * ×ªÕı
+	 * è½¬æ­£
 	 */
 	public final static String POSITIVE = "1";
 	/**
-	 * ÀëÖ°
+	 * ç¦»èŒ
 	 */
 	public final static String QUIT = "2";
 	/**
-	 * Ğİ¼Ù
+	 * ä¼‘å‡
 	 */
 	public final static String VACATION = "3";
 	
 	
 	/**
-	  * °ÑÖµ×ª»»³É¶ÔÓ¦µÄÃû³Æ
+	  * æŠŠå€¼è½¬æ¢æˆå¯¹åº”çš„åç§°
 	  * @param value
 	  * @return
 	  */
 	 public static String valueToKey(String value){
 		 String returnKey = "";
 		 if(JobStatus.PROBATION.equals(value)){
-			 returnKey = " ÊÔÓÃÆÚ";
+			 returnKey = " è¯•ç”¨æœŸ";
 		 }else if(JobStatus.POSITIVE.equals(value)){
-			 returnKey = "×ªÕı";
+			 returnKey = "è½¬æ­£";
 		 }else if(JobStatus.QUIT.equals(value)){
-			 returnKey = "ÀëÖ°";
+			 returnKey = "ç¦»èŒ";
 		 }else if(JobStatus.VACATION.equals(value)){
-			 returnKey = "Ğİ¼Ù";
+			 returnKey = "ä¼‘å‡";
 		 }
 		 return returnKey;
 	 }
 	 
 	 /**
-	  * °ÑÃû³Æ×ª»»³É¶ÔÓ¦µÄÖµ
+	  * æŠŠåç§°è½¬æ¢æˆå¯¹åº”çš„å€¼
 	  * @param key
 	  * @return
 	  */
 	 public static String keyToValue(String key){
 		 String returnValue = "";
-		 if("ÊÔÓÃÆÚ".equals(key)){
+		 if("è¯•ç”¨æœŸ".equals(key)){
 			 returnValue = JobStatus.PROBATION;
-		 }else if("×ªÕı".equals(key)){
+		 }else if("è½¬æ­£".equals(key)){
 			 returnValue = JobStatus.POSITIVE;
-		 }else if("ÀëÖ°".equals(key)){
+		 }else if("ç¦»èŒ".equals(key)){
 			 returnValue = JobStatus.QUIT;
-		 }else if("Ğİ¼Ù".equals(key)){
+		 }else if("ä¼‘å‡".equals(key)){
 			 returnValue = JobStatus.VACATION;
 		 }
 		 return returnValue;

@@ -1,4 +1,4 @@
-package com.fms.action;
+ï»¿package com.fms.action;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,11 +20,11 @@ public class AclUserAction extends BaseAction {
 	private String userName;
 	private String password;
 	protected String ids;
-	protected String forget;//¼Ç×¡ÃÜÂë
+	protected String forget;//è®°ä½å¯†ç 
 	/**
-	 *ÊÇ·ñ½ûÓÃ»òÆôÓÃÓÃ»§ÕË»§£º¡¾"false"±íÊ¾ÆôÓÃ;"true"±íÊ¾½ûÓÃ¡¿ 
+	 *æ˜¯å¦ç¦ç”¨æˆ–å¯ç”¨ç”¨æˆ·è´¦æˆ·ï¼šã€"false"è¡¨ç¤ºå¯ç”¨;"true"è¡¨ç¤ºç¦ç”¨ã€‘ 
 	 */
-	private String userForbid;//ÊÇ·ñ½ûÓÃ»òÆôÓÃÓÃ»§ÕË»§£º¡¾"false"±íÊ¾ÆôÓÃ;"true"±íÊ¾½ûÓÃ¡¿
+	private String userForbid;//æ˜¯å¦ç¦ç”¨æˆ–å¯ç”¨ç”¨æˆ·è´¦æˆ·ï¼šã€"false"è¡¨ç¤ºå¯ç”¨;"true"è¡¨ç¤ºç¦ç”¨ã€‘
 
 	/**
 	 * 
@@ -32,7 +32,7 @@ public class AclUserAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ²âÊÔAction
+	 * æµ‹è¯•Action
 	 * 
 	 * @return
 	 */
@@ -41,7 +41,7 @@ public class AclUserAction extends BaseAction {
 	}
 
 	/**
-	 * ÓÃ»§µÇÂ¼¡¾Í¨¹ıajax¡¿
+	 * ç”¨æˆ·ç™»å½•ã€é€šè¿‡ajaxã€‘
 	 * 
 	 * @throws Exception
 	 */
@@ -58,16 +58,16 @@ public class AclUserAction extends BaseAction {
 			AclUser aclUser = userLogic.loginAclUser(userName, password);
 			if(aclUser==null){
 				result.setSuccess(false);
-				result.setMsg("ÓÃ»§Ãû»òÃÜÂë²»ÕıÈ·");
+				result.setMsg("ç”¨æˆ·åæˆ–å¯†ç ä¸æ­£ç¡®");
 			}else if(aclUser.getIsForbid()){
 				result.setSuccess(false);
-				result.setMsg("¶Ô²»Æğ£¬¸ÃÕË»§ÒÑ±»½ûÓÃ£¬ÇëÁªÏµ¹ÜÀíÔ±£¡");
+				result.setMsg("å¯¹ä¸èµ·ï¼Œè¯¥è´¦æˆ·å·²è¢«ç¦ç”¨ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼");
 			}else{
 				result.setSuccess(true);
 				session.put(CommonConstant.LOGINUSER,aclUser);
 			}
 		} catch (Exception e) {
-			result.setMsg("¶Ô²»Æğ³ö´íÁË£º"+e.getMessage());
+			result.setMsg("å¯¹ä¸èµ·å‡ºé”™äº†ï¼š"+e.getMessage());
 		}
 		JSONObject json=new JSONObject(result);
 		 out.println(json.toString());
@@ -77,7 +77,7 @@ public class AclUserAction extends BaseAction {
 	}
 
 	/**
-	 * ±£´æÓÃ»§¡¾×¢²á¡¢ĞŞ¸Ä¡¿
+	 * ä¿å­˜ç”¨æˆ·ã€æ³¨å†Œã€ä¿®æ”¹ã€‘
 	 * 
 	 * @return
 	 * @throws Exception
@@ -88,7 +88,7 @@ public class AclUserAction extends BaseAction {
 	}
 
 	/**
-	 * »ñÈ¡ËùÓĞµÄÓÃ»§
+	 * è·å–æ‰€æœ‰çš„ç”¨æˆ·
 	 * 
 	 * @return
 	 */
@@ -100,7 +100,7 @@ public class AclUserAction extends BaseAction {
 	}
 
 	/**
-	 * É¾³ıÓÃ»§
+	 * åˆ é™¤ç”¨æˆ·
 	 */
 	public String deleteUser() throws Exception {
 		if (null != ids && !"".equals(ids)) {
@@ -111,7 +111,7 @@ public class AclUserAction extends BaseAction {
 	}
 
 	/**
-	 * ½ûÓÃ»òÆôÓÃÓÃ»§ÕËºÅ
+	 * ç¦ç”¨æˆ–å¯ç”¨ç”¨æˆ·è´¦å·
 	 * @return
 	 * @throws Exception
 	 */

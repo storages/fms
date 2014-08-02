@@ -1,4 +1,4 @@
-package com.fms.core.entity;
+ï»¿package com.fms.core.entity;
 
 import com.fms.base.entity.BaseEntity;
 
@@ -10,15 +10,15 @@ public class Stock extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ²Ö¿â±àÂë
+	 * ä»“åº“ç¼–ç 
 	 */
 	private String code;
 	/**
-	 * ²Ö¿âÃû³Æ
+	 * ä»“åº“åç§°
 	 */
 	private String name;
 	/**
-	 * ±¸×¢
+	 * å¤‡æ³¨
 	 */
 	private String note;
 	

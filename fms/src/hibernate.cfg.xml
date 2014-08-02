@@ -7,14 +7,14 @@
 <hibernate-configuration>
 
 <session-factory>
-	<!-- <property name="dialect">
+	<property name="dialect">
 		org.hibernate.dialect.MySQLDialect
-		</property> -->
+		</property>
 	<property name="hbm2ddl.auto">update</property>
 	<property name="show_sql">true</property>
-	<property name="dialect">
+	<!-- <property name="dialect">
 		org.hibernate.dialect.SQLServerDialect
-	</property>
+	</property> -->
 
 	<!-- 实体类映射开始 -->
 	<mapping resource="com/fms/core/entity/AclUser.hbm.xml" />
@@ -22,8 +22,8 @@
 	<mapping resource="com/fms/core/entity/Department.hbm.xml" />
 	<mapping resource="com/fms/core/entity/Employee.hbm.xml" />
 	<mapping resource="com/fms/core/entity/Stock.hbm.xml" />
-	<!-- 实体类映射结束-->
 	<mapping resource="com/fms/core/entity/Scmcoc.hbm.xml" />
+	<!-- 实体类映射结束-->
 
 </session-factory>
 

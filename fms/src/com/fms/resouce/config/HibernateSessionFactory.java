@@ -1,4 +1,4 @@
-package com.fms.resouce.config;
+﻿package com.fms.resouce.config;
 
 import javax.persistence.Entity;
 import org.hibernate.HibernateException;

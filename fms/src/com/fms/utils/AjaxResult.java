@@ -1,14 +1,14 @@
-package com.fms.utils;
+锘縫ackage com.fms.utils;
 
 /**
- * 用于AJax 返回对象
+ * 鐢ㄤ簬AJax 杩斿洖瀵硅薄
  * @author Administrator
  *
  */
 public class AjaxResult {
-	private boolean success;  //是否成功
-	private String msg;      //存储消息
-	private Object  obj;    //存储对象
+	private boolean success;  //鏄惁鎴愬姛
+	private String msg;      //瀛樺偍娑堟伅
+	private Object  obj;    //瀛樺偍瀵硅薄
 	
 	public boolean isSuccess() {
 		return success;

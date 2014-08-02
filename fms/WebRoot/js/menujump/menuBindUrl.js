@@ -1,4 +1,4 @@
-function toMain(url){
+﻿function toMain(url){
 	$("#tomain").load(url);
 }
 

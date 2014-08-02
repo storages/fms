@@ -1,55 +1,55 @@
-package com.fms.commons;
+ï»¿package com.fms.commons;
 
 /**
- * Ô±¹¤ĞÔ±ğ
+ * å‘˜å·¥æ€§åˆ«
  * @author Administrator
  *
  */
 public class EmployeeGender {
 
 	/**
-	 * Å®ĞÔ
+	 * å¥³æ€§
 	 */
 	public final static String FEMALE ="0";
 	/**
-	 * ÄĞĞÔ
+	 * ç”·æ€§
 	 */
 	 public final static String MALE ="1";
 	 /**
-	  * ÆäËü
+	  * å…¶å®ƒ
 	  */
 	 public final static String OTHER = "2";
 	 
 	 
 	 /**
-	  * °ÑÖµ×ª»»³É¶ÔÓ¦µÄÃû³Æ
+	  * æŠŠå€¼è½¬æ¢æˆå¯¹åº”çš„åç§°
 	  * @param value
 	  * @return
 	  */
 	 public static String valueToKey(String value){
 		 String returnKey = "";
 		 if(EmployeeGender.FEMALE.equals(value)){
-			 returnKey = "Å®ĞÔ";
+			 returnKey = "å¥³æ€§";
 		 }else if(EmployeeGender.MALE.equals(value)){
-			 returnKey = "ÄĞĞÔ";
+			 returnKey = "ç”·æ€§";
 		 }else if(EmployeeGender.OTHER.equals(value)){
-			 returnKey = "ÆäËûĞÔ±ğ";
+			 returnKey = "å…¶ä»–æ€§åˆ«";
 		 }
 		 return returnKey;
 	 }
 	 
 	 /**
-	  * °ÑÃû³Æ×ª»»³É¶ÔÓ¦µÄÖµ
+	  * æŠŠåç§°è½¬æ¢æˆå¯¹åº”çš„å€¼
 	  * @param key
 	  * @return
 	  */
 	 public static String keyToValue(String key){
 		 String returnValue = "";
-		 if("Å®ĞÔ".equals(key)){
+		 if("å¥³æ€§".equals(key)){
 			 returnValue = EmployeeGender.FEMALE;
-		 }else if("ÄĞĞÔ".equals(key)){
+		 }else if("ç”·æ€§".equals(key)){
 			 returnValue = EmployeeGender.MALE;
-		 }else if("ÆäËûĞÔ±ğ".equals(key)){
+		 }else if("å…¶ä»–æ€§åˆ«".equals(key)){
 			 returnValue = EmployeeGender.OTHER;
 		 }
 		 return returnValue;

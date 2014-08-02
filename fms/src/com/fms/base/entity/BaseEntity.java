@@ -1,10 +1,10 @@
-package com.fms.base.entity;
+锘縫ackage com.fms.base.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 父类公共实体
+ * 鐖剁被鍏叡瀹炰綋
  * @author Administrator
  *
  */
@@ -16,17 +16,17 @@ public class BaseEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 实体类ID
+	 * 瀹炰綋绫籌D
 	 */
 	private String id;
 	
 	/**
-	 * 创建日期
+	 * 鍒涘缓鏃ユ湡
 	 */
 	private Date createDate;
 	
 	/**
-	 * 修改日期
+	 * 淇敼鏃ユ湡
 	 */
 	private Date modifyDate;
 

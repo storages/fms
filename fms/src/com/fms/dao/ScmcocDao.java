@@ -1,4 +1,4 @@
-package com.fms.dao;
+ï»¿package com.fms.dao;
 
 import java.util.List;
 
@@ -6,48 +6,48 @@ import com.fms.core.entity.Scmcoc;
 
 public interface ScmcocDao {
 	/**
-	 * »ñÈ¡ËùÓĞµÄ¹©Ó¦ÉÌ»ò¿Í»§[·ÖÒ³]
+	 * è·å–æ‰€æœ‰çš„ä¾›åº”å•†æˆ–å®¢æˆ·[åˆ†é¡µ]
 	 * @return
 	 */
 	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length);
 	/**
-	 * ¸ù¾İid²éÑ¯¹©Ó¦ÉÌ»ò¿Í»§
+	 * æ ¹æ®idæŸ¥è¯¢ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * @param id
 	 * @return
 	 */
 	public Scmcoc findScmcocById(String id);
 	/**
-	 * ±£´æµ¥¸ö¹©Ó¦ÉÌ»ò¿Í»§
+	 * ä¿å­˜å•ä¸ªä¾›åº”å•†æˆ–å®¢æˆ·
 	 * @param scmcoc
 	 */
 	public void saveScmcoc(Scmcoc scmcoc);
 	
 	/**
-	 * ÅúÁ¿±£´æ¹©Ó¦ÉÌ»ò¿Í»§
+	 * æ‰¹é‡ä¿å­˜ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * @param data
 	 */
 	public void betchSaveScmcoc(List<Scmcoc> data);
 	/**
-	 * ¸ù¾İidÉ¾³ı¹©Ó¦ÉÌ»ò¿Í»§
+	 * æ ¹æ®idåˆ é™¤ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * @param id
 	 */
 	public void deleteScmcocById(String id);
 	
 	/**
-	 * ¸ù¾İ±àÂë²éÑ¯¹©Ó¦ÉÌ»ò¿Í»§
+	 * æ ¹æ®ç¼–ç æŸ¥è¯¢ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * @param code
 	 * @return
 	 */
 	public Scmcoc findScmcocByCode(String code);
 	
 	/**
-	 * ÅúÁ¿É¾³ı¹©Ó¦ÉÌ»ò¿Í»§
+	 * æ‰¹é‡åˆ é™¤ä¾›åº”å•†æˆ–å®¢æˆ·
 	 * @param data
 	 */
 	public void delete(List<String> ids);
 	
 	/**
-	 * ²éÕÒÊı¾İ×ÜÌõÊı
+	 * æŸ¥æ‰¾æ•°æ®æ€»æ¡æ•°
 	 * @param className
 	 * @param isCustom
 	 * @param name

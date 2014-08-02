@@ -1,4 +1,4 @@
-package com.fms.base.action;
+ï»¿package com.fms.base.action;
 
 import java.util.Map;
 
@@ -16,22 +16,22 @@ public class BaseAction extends ActionSupport {
 	protected static final long serialVersionUID = 1L;
 
 	/**
-	 * ¸¸Àà»ñÈ¡ÉÏÏÂÎÄ
+	 * çˆ¶ç±»è·å–ä¸Šä¸‹æ–‡
 	 */
 	protected ActionContext context = ActionContext.getContext();
 	
 	/**
-	 * ¸¸Àà»ñÈ¡Session
+	 * çˆ¶ç±»è·å–Session
 	 */
 	protected Map session = context.getSession();
 	
 	/**
-	 * ¸¸Àà»ñÈ¡Request
+	 * çˆ¶ç±»è·å–Request
 	 */
 	protected Map request = (Map) this.context.get("request");
 	
 	/**
-	 * ¸¸Àà»ñÈ¡HttpServletResponse
+	 * çˆ¶ç±»è·å–HttpServletResponse
 	 */
 	protected HttpServletResponse response = ServletActionContext.getResponse();
 

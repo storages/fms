@@ -1,11 +1,11 @@
-package com.fms.core.entity;
+ï»¿package com.fms.core.entity;
 
 import java.util.Date;
 
 import com.fms.base.entity.BaseEntity;
 
 /**
- * ĞĞÎª¼ÇÂ¼Àà
+ * è¡Œä¸ºè®°å½•ç±»
  * @author Administrator
  *
  */
@@ -17,12 +17,12 @@ public class BehaviorRecord extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	private String content;
 	
 	/**
-	 * ·¢ÉúÈÕÆÚ
+	 * å‘ç”Ÿæ—¥æœŸ
 	 */
 	private Date occurrenceDate;
 

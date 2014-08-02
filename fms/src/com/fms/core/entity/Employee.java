@@ -1,4 +1,4 @@
-package com.fms.core.entity;
+ï»¿package com.fms.core.entity;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ import com.fms.commons.EmployeeGender;
 import com.fms.commons.JobStatus;
 
 /**
- * Ô±¹¤Àà
+ * å‘˜å·¥ç±»
  * 
  * @author Administrator
  * 
@@ -20,86 +20,86 @@ public class Employee extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ĞÕÃû
+	 * å§“å
 	 */
 	private String name;
 
 	/**
-	 * ±ğÃû
+	 * åˆ«å
 	 */
 	private String nickName;
 	/**
-	 * ÄêÁä
+	 * å¹´é¾„
 	 */
 	private Integer age = 18;
 	/**
-	 * ĞÔ±ğ¡¾³£Á¿Àà£ºEmployeeGender¡¿
+	 * æ€§åˆ«ã€å¸¸é‡ç±»ï¼šEmployeeGenderã€‘
 	 */
 	private String gender = EmployeeGender.FEMALE;
 	/**
-	 * ³öÉúÈÕÆÚ¡¾ËõĞ´¡¿
+	 * å‡ºç”Ÿæ—¥æœŸã€ç¼©å†™ã€‘
 	 */
 	private Date DoB;
 	/**
-	 * Éí·İÖ¤
+	 * èº«ä»½è¯
 	 */
 	private String identityCard;
 	/**
-	 * Ãñ×å
+	 * æ°‘æ—
 	 */
 	private String nation;
 
 	/**
-	 * ¼®¹á
+	 * ç±è´¯
 	 */
 	private String origo;
 	/**
-	 * Ñ§Àú
+	 * å­¦å†
 	 */
 	private String diploma;
 	/**
-	 * ¼ÒÍ¥×¡Ö·
+	 * å®¶åº­ä½å€
 	 */
 	private String address;
 	/**
-	 * ÏÖ×¡µØ
+	 * ç°ä½åœ°
 	 */
 	private String currentResidence;
 	/**
-	 * ÁªÏµÊÖ»ú
+	 * è”ç³»æ‰‹æœº
 	 */
 	private String linkPhone;
 	/**
-	 * ÍøÂçÁªÏµ·½Ê½
+	 * ç½‘ç»œè”ç³»æ–¹å¼
 	 */
 	private String networkLink;
 	/**
-	 * ÕÕÆ¬¡¢Í·Ïñ¡¾´æ´¢ÕÕÆ¬Â·¾¶¡¿
+	 * ç…§ç‰‡ã€å¤´åƒã€å­˜å‚¨ç…§ç‰‡è·¯å¾„ã€‘
 	 */
 	private String photo;
 	/**
-	 * ÈëÖ°ÈÕÆÚ
+	 * å…¥èŒæ—¥æœŸ
 	 */
 	private Date entryDate;
 	/**
-	 * ¹¤×÷×´Ì¬¡¾³£Á¿Àà£ºJobStatus¡¿
+	 * å·¥ä½œçŠ¶æ€ã€å¸¸é‡ç±»ï¼šJobStatusã€‘
 	 */
 	private String jobStatus = JobStatus.PROBATION;
 	/**
-	 * ËùÊô²¿ÃÅ¡¾¶ÔÏó¡¿
+	 * æ‰€å±éƒ¨é—¨ã€å¯¹è±¡ã€‘
 	 */
 	private Department department;
 	/**
-	 * Ö°Î»Ãû³Æ
+	 * èŒä½åç§°
 	 */
 	private String positionName;
 
 	/**
-	 * ĞĞÎª¼ÇÂ¼¡¾¶ÔÏó¡¿
+	 * è¡Œä¸ºè®°å½•ã€å¯¹è±¡ã€‘
 	 */
 	private BehaviorRecord behaviorRecord;
 	/**
-	 * ±¸×¢
+	 * å¤‡æ³¨
 	 */
 	private String note;
 
@@ -124,7 +124,7 @@ public class Employee extends BaseEntity {
 	}
 
 	/**
-	 * Ä¬ÈÏÊÇ18
+	 * é»˜è®¤æ˜¯18
 	 * @param age
 	 */
 	public void setAge(Integer age) {
@@ -140,7 +140,7 @@ public class Employee extends BaseEntity {
 	}
 
 	/**
-	 * Ä¬ÈÏÊÇÄĞĞÔ
+	 * é»˜è®¤æ˜¯ç”·æ€§
 	 * @return
 	 */
 	public void setGender(String gender) {
@@ -224,7 +224,7 @@ public class Employee extends BaseEntity {
 	}
 
 	/**
-	 * ÕÕÆ¬¡¢Í·Ïñ¡¾´æ´¢ÕÕÆ¬Â·¾¶¡¿
+	 * ç…§ç‰‡ã€å¤´åƒã€å­˜å‚¨ç…§ç‰‡è·¯å¾„ã€‘
 	 * @param photo
 	 */
 	public void setPhoto(String photo) {

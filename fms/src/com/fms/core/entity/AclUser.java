@@ -1,11 +1,11 @@
-package com.fms.core.entity;
+ï»¿package com.fms.core.entity;
 
 import java.util.Date;
 
 import com.fms.base.entity.BaseEntity;
 
 /**
- * ÓÃ»§ĞÅÏ¢
+ * ç”¨æˆ·ä¿¡æ¯
  *
  * @author Administrator
  *
@@ -18,27 +18,27 @@ public class AclUser extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * µÇÂ½Ãû³Æ
+	 * ç™»é™†åç§°
 	 */
 	private String loginName = null;
 	/**
-	 * ÃÜÂë
+	 * å¯†ç 
 	 */
 	private String password = null;
 	/**
-	 * ÓÃ»§Ãû³Æ
+	 * ç”¨æˆ·åç§°
 	 */
 	private String userName = null;
 	/**
-	 * ×îºóµÇÂ¼ÈÕÆÚ
+	 * æœ€åç™»å½•æ—¥æœŸ
 	 */
 	private Date lastlogin = null;
 	/**
-	 * "L"Îª³¬¼¶ÓÃ»§;"S"Ê±Îª¹ÜÀíÔ±;"P"ÎªÆÕÍ¨ÓÃ»§
+	 * "L"ä¸ºè¶…çº§ç”¨æˆ·;"S"æ—¶ä¸ºç®¡ç†å‘˜;"P"ä¸ºæ™®é€šç”¨æˆ·
 	 */
 	private String userFlag = null;
 	/**
-	 * ÊÇ·ñ½ûÓÃ
+	 * æ˜¯å¦ç¦ç”¨
 	 */
 	private Boolean isForbid = false;
 	
@@ -82,9 +82,9 @@ public class AclUser extends BaseEntity {
 	
 	public String getUserFlagCN() {
         if ((userFlag != null) && userFlag.trim().equals("S")) {
-            return "³¬¼¶ÓÃ»§";
+            return "è¶…çº§ç”¨æˆ·";
         } else {
-            return "ÆÕÍ¨ÓÃ»§";
+            return "æ™®é€šç”¨æˆ·";
         }
     }
 }

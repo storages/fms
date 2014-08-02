@@ -1,4 +1,4 @@
-package com.fms.logic;
+ï»¿package com.fms.logic;
 
 import java.util.List;
 
@@ -6,14 +6,14 @@ import com.fms.core.entity.AclUser;
 
 
 /**
- * ÓÃ»§   Âß¼­´¦ÀíÀà
+ * ç”¨æˆ·   é€»è¾‘å¤„ç†ç±»
  * @author Administrator
  *
  */
 public interface AclUserLogic {
 
 	/**
-	 * µÇÂ¼
+	 * ç™»å½•
 	 * @param loginName
 	 * @param password
 	 * @return
@@ -21,25 +21,25 @@ public interface AclUserLogic {
 	public AclUser loginAclUser(String userName, String password);
 	
 	/**
-	 * ±£´æÓÃ»§
+	 * ä¿å­˜ç”¨æˆ·
 	 * @param aclUser
 	 */
 	public void saveAclUser(AclUser aclUser);
 	
 	/**
-	 * »ñÈ¡ËùÓĞÓÃ»§
+	 * è·å–æ‰€æœ‰ç”¨æˆ·
 	 * @return
 	 */
 	public List<AclUser> findAllUser(String userflag);
 	
 	/**
-	 * É¾³ıÓÃ»§
+	 * åˆ é™¤ç”¨æˆ·
 	 * @param ids
 	 */
 	public void deleteAclUser(String [] ids);
 	
 	/**
-	 * ¸ù¾İÓÃ»§idÀ´²éÑ¯ÓÃ»§
+	 * æ ¹æ®ç”¨æˆ·idæ¥æŸ¥è¯¢ç”¨æˆ·
 	 * @param id
 	 * @return
 	 */

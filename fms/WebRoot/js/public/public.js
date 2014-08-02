@@ -24,14 +24,14 @@ function delSingleObject(ids){
 	}
 }
 
-function delSingleScmcoc(ids){
+function delSingleScmcoc(ids,flag){
 	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+ids;
+		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+ids+"&isCustom="+flag;
 		toMain(url);
 	}
 }
 
-function delMoreScmcoc(){
+function delMoreScmcoc(flag){
 	var splitStr = "";
 	$('input[name="sid"]:checked').each(function(){
 		splitStr+=$(this).val()+',';
@@ -45,7 +45,7 @@ function delMoreScmcoc(){
 	}*/
 	splitStr = splitStr.substring(0, splitStr.length-1);
 	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+splitStr;
+		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+splitStr+"&isCustom="+flag;
 		toMain(url);
 	}
 }

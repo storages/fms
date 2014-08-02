@@ -1,4 +1,4 @@
-package com.fms.dao;
+ï»¿package com.fms.dao;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,7 +11,7 @@ import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.AclUser;
 
 /**
- * ÓÃ»§ ·ÃÎÊÊı¾İ¿âÀà
+ * ç”¨æˆ· è®¿é—®æ•°æ®åº“ç±»
  * 
  * @author Administrator
  * 
@@ -23,7 +23,7 @@ public class AclUserDaoImpl extends BaseDao implements AclUserDao {
 	 * 
 	 * @see com.fms.user.dao.AclUserDao#loginAclUser(java.lang.String,
 	 * java.lang.String)
-	 * ÓÃ»§µÇÂ¼£¨ÓÃ»§Ã»ÓĞ±»½ûÓÃµÄ²Å¿ÉÒÔµÇÂ¼£©
+	 * ç”¨æˆ·ç™»å½•ï¼ˆç”¨æˆ·æ²¡æœ‰è¢«ç¦ç”¨çš„æ‰å¯ä»¥ç™»å½•ï¼‰
 	 */
 	public AclUser loginAclUser(String userName, String password) {
 		List list = new ArrayList();

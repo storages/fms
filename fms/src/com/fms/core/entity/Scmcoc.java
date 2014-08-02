@@ -1,11 +1,11 @@
-package com.fms.core.entity;
+ï»¿package com.fms.core.entity;
 
 import java.util.Date;
 
 import com.fms.base.entity.BaseEntity;
 
 /**
- * ¹©Ó¦ÉÌÀà
+ * ä¾›åº”å•†ç±»
  * @author GDC
  *
  */
@@ -17,42 +17,42 @@ public class Scmcoc extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	private String code;
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	private String name;
 	/**
-	 * ¹©Ó¦ÉÌÁªÏµµç»°
+	 * ä¾›åº”å•†è”ç³»ç”µè¯
 	 */
 	private String linkPhone;
 	/**
-	 * ¹©Ó¦ÉÌÍøÂçÁªÏµ·½Ê½
+	 * ä¾›åº”å•†ç½‘ç»œè”ç³»æ–¹å¼
 	 */
 	private String networkLink;
 	/**
-	 * ¹©Ó¦ÉÌµØÖ·
+	 * ä¾›åº”å•†åœ°å€
 	 */
 	private String address;
 	/**
-	 * ¹©Ó¦ÉÌÁªÏµÈË
+	 * ä¾›åº”å•†è”ç³»äºº
 	 */
 	private String linkMan;
 	/**
-	 * ½áÕË½ØÖ¹ÈÕÆÚ
+	 * ç»“è´¦æˆªæ­¢æ—¥æœŸ
 	 */
 	private String endDate;
 	/**
-	 *	ÊÇ·ñÊÇ¿Í»§ 
-	 *	true ±íÊ¾ÊÇ¿Í»§
-	 *	false ±íÊ¾ÊÇ¹©Ó¦ÉÌ
+	 *	æ˜¯å¦æ˜¯å®¢æˆ· 
+	 *	true è¡¨ç¤ºæ˜¯å®¢æˆ·
+	 *	false è¡¨ç¤ºæ˜¯ä¾›åº”å•†
 	 *
 	 */
 	public Boolean isCustom;
 	/**
-	 * ±¸×¢
+	 * å¤‡æ³¨
 	 */
 	private String note;
 	public String getCode() {

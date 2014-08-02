@@ -1,9 +1,9 @@
-package com.fms.core.entity;
+ï»¿package com.fms.core.entity;
 
 import com.fms.base.entity.BaseEntity;
 
 /**
- * ²¿ÃÅÀà
+ * éƒ¨é—¨ç±»
  * @author Administrator
  *
  */
@@ -15,7 +15,7 @@ public class Department extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 *  ²¿ÃÅÃû³Æ
+	 *  éƒ¨é—¨åç§°
 	 */
 	private String name;
 

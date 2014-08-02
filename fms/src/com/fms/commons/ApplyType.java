@@ -1,47 +1,47 @@
-package com.fms.commons;
+ï»¿package com.fms.commons;
 
 /**
- * ¿Í»§¹©Ó¦ÉÌ³£Á¿Àà
+ * å®¢æˆ·ä¾›åº”å•†å¸¸é‡ç±»
  * @author Administrator
  *
  */
 public class ApplyType {
 
 	/**
-	 * ¹©Ó¦ÉÌ
+	 * ä¾›åº”å•†
 	 */
 	public static final String APPLY = "0";
 	/**
-	 * ¿Í»§
+	 * å®¢æˆ·
 	 */
 	public static final String CUSSTOM = "1";
 	
 	 /**
-	  * °ÑÖµ×ª»»³É¶ÔÓ¦µÄÃû³Æ
+	  * æŠŠå€¼è½¬æ¢æˆå¯¹åº”çš„åç§°
 	  * @param value
 	  * @return
 	  */
 	 public static String valueToKey(String value){
 		 String returnKey = "";
 		 if(ApplyType.APPLY.equals(value)){
-			 returnKey = "¹©Ó¦ÉÌ";
+			 returnKey = "ä¾›åº”å•†";
 		 }else if(ApplyType.CUSSTOM.equals(value)){
-			 returnKey = "¿Í»§";
+			 returnKey = "å®¢æˆ·";
 		 }
 		 return returnKey;
 	 }
 	 
 	 
 	 /**
-	  * °ÑÃû³Æ×ª»»³É¶ÔÓ¦µÄÖµ
+	  * æŠŠåç§°è½¬æ¢æˆå¯¹åº”çš„å€¼
 	  * @param key
 	  * @return
 	  */
 	 public static String keyToValue(String key){
 		 String returnValue = "";
-		 if("¹©Ó¦ÉÌ".equals(key)){
+		 if("ä¾›åº”å•†".equals(key)){
 			 returnValue = ApplyType.APPLY;
-		 }else if("¿Í»§".equals(key)){
+		 }else if("å®¢æˆ·".equals(key)){
 			 returnValue = ApplyType.CUSSTOM;
 		 }
 		 return returnValue;

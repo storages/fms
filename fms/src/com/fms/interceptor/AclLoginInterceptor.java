@@ -1,4 +1,4 @@
-package com.fms.interceptor;
+ï»¿package com.fms.interceptor;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.sun.jmx.snmp.UserAcl;
 /**
- * ÓÃÓÚÀ¹½ØÊÇ·ñµÇÂ¼ºÍÈ¨ÏŞµÄÀ¹½ØÆ÷
+ * ç”¨äºæ‹¦æˆªæ˜¯å¦ç™»å½•å’Œæƒé™çš„æ‹¦æˆªå™¨
  * @author Administrator
  *
  */
@@ -38,14 +38,14 @@ public class AclLoginInterceptor  implements Interceptor{
 	 AclUser user= (AclUser) session.get(CommonConstant.LOGINUSER);
 	HttpServletRequest  request=  ServletActionContext.getRequest();
 	 String path = request.getServletPath();
-	 if(path.contains(loginUrl)){//·ÃÎÊµÇÂ¼µÄÒ³Ãæ
+	 if(path.contains(loginUrl)){//è®¿é—®ç™»å½•çš„é¡µé¢
 		return  context.invoke();
 	 }else{
 	 if(user!=null){
-		 //ÒÑ¾­µÇÂ¼
+		 //å·²ç»ç™»å½•
 		return context.invoke();
 	 }else{
-		 //Î´µÇÂ¼
+		 //æœªç™»å½•
 		 return resultUlr;
 	 }
 	 }

@@ -1,4 +1,4 @@
-package com.fms.utils;
+ï»¿package com.fms.utils;
 
 import java.security.SecureRandom;
 import java.util.logging.Level;
@@ -12,24 +12,24 @@ public class MD5Util {
 
 	 private static final String PASSWORD_CRYPT_KEY = "kEHrDooxWHCWtfeSxvDvgqZq";
 	    /** */
-	    /** ¼ÓÃÜËã·¨,¿ÉÓÃ DES,DESede,Blowfish. */
+	    /** åŠ å¯†ç®—æ³•,å¯ç”¨ DES,DESede,Blowfish. */
 	    private final static String ALGORITHM = "DES";
 
 	    /**
-	     * ½âÃÜ
+	     * è§£å¯†
 	     * @param data
 	     * @return
 	     */
 	    public final static String decryptData(String data) {
 	    	String descString = decryptDataDes(data);
 	        if (descString == null) {
-	            throw new RuntimeException("½âÃÜ³ö´í");
+	            throw new RuntimeException("è§£å¯†å‡ºé”™");
 	        }
 	        return descString;
 	    }
 
 	    /**
-	     * ¼ÓÃÜ
+	     * åŠ å¯†
 	     * @param data
 	     * @return
 	     */
@@ -44,18 +44,18 @@ public class MD5Util {
 
 	    public final static String encryptData(String data) {
 	        if (encryptDataDes(data) == null) {
-	            throw new RuntimeException("¼ÓÃÜ³ö´í");
+	            throw new RuntimeException("åŠ å¯†å‡ºé”™");
 	        }
 	        return encryptDataDes(data);
 	    }
 
 	    /**
-	     * ¶ÔÓÃDES¼ÓÃÜ¹ıµÄÊı¾İ½øĞĞ½âÃÜ.
-	     * @param data DES¼ÓÃÜÊı¾İ
-	     * @return ·µ»Ø½âÃÜºóµÄÊı¾İ
+	     * å¯¹ç”¨DESåŠ å¯†è¿‡çš„æ•°æ®è¿›è¡Œè§£å¯†.
+	     * @param data DESåŠ å¯†æ•°æ®
+	     * @return è¿”å›è§£å¯†åçš„æ•°æ®
 	     * @throws Exception
 	     * @author <a href="mailto:xiexingxing1121@126.com">AmigoXie</a>
-	     * Creation date: 2007-7-31 - ÏÂÎç12:07:54
+	     * Creation date: 2007-7-31 - ä¸‹åˆ12:07:54
 	     */
 	    private final static String encryptDataDes(String data) {
 	        try {
@@ -67,48 +67,48 @@ public class MD5Util {
 	    }
 
 	    private static byte[] encrypt(byte[] data, byte[] key) throws Exception {
-	        // DESËã·¨ÒªÇóÓĞÒ»¸ö¿ÉĞÅÈÎµÄËæ»úÊıÔ´
+	        // DESç®—æ³•è¦æ±‚æœ‰ä¸€ä¸ªå¯ä¿¡ä»»çš„éšæœºæ•°æº
 	        SecureRandom sr = new SecureRandom();
-	        // ´ÓÔ­Ê¼ÃÜ³×Êı¾İ´´½¨DESKeySpec¶ÔÏó
+	        // ä»åŸå§‹å¯†åŒ™æ•°æ®åˆ›å»ºDESKeySpecå¯¹è±¡
 	        DESKeySpec dks = new DESKeySpec(key);
-	        // ´´½¨Ò»¸öÃÜ³×¹¤³§£¬È»ºóÓÃËü°ÑDESKeySpec×ª»»³É
-	        // Ò»¸öSecretKey¶ÔÏó
+	        // åˆ›å»ºä¸€ä¸ªå¯†åŒ™å·¥å‚ï¼Œç„¶åç”¨å®ƒæŠŠDESKeySpecè½¬æ¢æˆ
+	        // ä¸€ä¸ªSecretKeyå¯¹è±¡
 	        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM);
 	        SecretKey securekey = keyFactory.generateSecret(dks);
-	        // Cipher¶ÔÏóÊµ¼ÊÍê³É¼ÓÃÜ²Ù×÷
+	        // Cipherå¯¹è±¡å®é™…å®ŒæˆåŠ å¯†æ“ä½œ
 	        Cipher cipher = Cipher.getInstance(ALGORITHM);
-	        // ÓÃÃÜ³×³õÊ¼»¯Cipher¶ÔÏó
+	        // ç”¨å¯†åŒ™åˆå§‹åŒ–Cipherå¯¹è±¡
 	        cipher.init(Cipher.ENCRYPT_MODE, securekey, sr);
-	        // ÏÖÔÚ£¬»ñÈ¡Êı¾İ²¢¼ÓÃÜ
-	        // ÕıÊ½Ö´ĞĞ¼ÓÃÜ²Ù×÷
+	        // ç°åœ¨ï¼Œè·å–æ•°æ®å¹¶åŠ å¯†
+	        // æ­£å¼æ‰§è¡ŒåŠ å¯†æ“ä½œ
 	        return cipher.doFinal(data);
 	    }
 
 	    /** */
 	    /**
-	     * ÓÃÖ¸¶¨µÄkey¶ÔÊı¾İ½øĞĞDES½âÃÜ.
-	     * @param data ´ı½âÃÜµÄÊı¾İ
-	     * @param key DES½âÃÜµÄkey
-	     * @return ·µ»ØDES½âÃÜºóµÄÊı¾İ
+	     * ç”¨æŒ‡å®šçš„keyå¯¹æ•°æ®è¿›è¡ŒDESè§£å¯†.
+	     * @param data å¾…è§£å¯†çš„æ•°æ®
+	     * @param key DESè§£å¯†çš„key
+	     * @return è¿”å›DESè§£å¯†åçš„æ•°æ®
 	     * @throws Exception
 	     * @author <a href="mailto:xiexingxing1121@126.com">AmigoXie</a>
-	     * Creation date: 2007-7-31 - ÏÂÎç12:10:34
+	     * Creation date: 2007-7-31 - ä¸‹åˆ12:10:34
 	     */
 	    private static byte[] decrypt(byte[] data, byte[] key) throws Exception {
-	        // DESËã·¨ÒªÇóÓĞÒ»¸ö¿ÉĞÅÈÎµÄËæ»úÊıÔ´
+	        // DESç®—æ³•è¦æ±‚æœ‰ä¸€ä¸ªå¯ä¿¡ä»»çš„éšæœºæ•°æº
 	        SecureRandom sr = new SecureRandom();
-	        // ´ÓÔ­Ê¼ÃÜ³×Êı¾İ´´½¨Ò»¸öDESKeySpec¶ÔÏó
+	        // ä»åŸå§‹å¯†åŒ™æ•°æ®åˆ›å»ºä¸€ä¸ªDESKeySpecå¯¹è±¡
 	        DESKeySpec dks = new DESKeySpec(key);
-	        // ´´½¨Ò»¸öÃÜ³×¹¤³§£¬È»ºóÓÃËü°ÑDESKeySpec¶ÔÏó×ª»»³É
-	        // Ò»¸öSecretKey¶ÔÏó
+	        // åˆ›å»ºä¸€ä¸ªå¯†åŒ™å·¥å‚ï¼Œç„¶åç”¨å®ƒæŠŠDESKeySpecå¯¹è±¡è½¬æ¢æˆ
+	        // ä¸€ä¸ªSecretKeyå¯¹è±¡
 	        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM);
 	        SecretKey securekey = keyFactory.generateSecret(dks);
-	        // Cipher¶ÔÏóÊµ¼ÊÍê³É½âÃÜ²Ù×÷
+	        // Cipherå¯¹è±¡å®é™…å®Œæˆè§£å¯†æ“ä½œ
 	        Cipher cipher = Cipher.getInstance(ALGORITHM);
-	        // ÓÃÃÜ³×³õÊ¼»¯Cipher¶ÔÏó
+	        // ç”¨å¯†åŒ™åˆå§‹åŒ–Cipherå¯¹è±¡
 	        cipher.init(Cipher.DECRYPT_MODE, securekey, sr);
-	        // ÏÖÔÚ£¬»ñÈ¡Êı¾İ²¢½âÃÜ
-	        // ÕıÊ½Ö´ĞĞ½âÃÜ²Ù×÷
+	        // ç°åœ¨ï¼Œè·å–æ•°æ®å¹¶è§£å¯†
+	        // æ­£å¼æ‰§è¡Œè§£å¯†æ“ä½œ
 	        return cipher.doFinal(data);
 	    }
 

@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				</tr>
   				<tr>
   					<td>验证码：</td>
-  					<td><input type="text" style="width:70px; float:left;"/><a href=""><img src="" style="width:82px; height:25px;float:right;" title="看不清？点击换一个"/></a></td>
+  					<td><input type="text" style="width:70px; float:left;"/><a href="javascript:void(0);" onclick="changeImg()"><img src="" style="width:82px; height:25px;float:right;" title="看不清？点击换一个"/></a></td>
   				</tr>
   				<tr>
   					<td colspan="3"><input type="checkbox" id="remenber" style="font-size: 12px;"/>记住密码<span class="mess" id="error"></span></td>
@@ -63,18 +63,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		</div>
   	</div>
   </body>
+  
   <script language="javascript">
-function shownotes()
-{
- var w = 500;     //宽度
- var h = 310;   //高度
- var t = (screen.height-h)/2-80; //离顶部距离
- var l = (screen.width-w)/2; //离左边距离
- document.getElementById("loginbg").style.marginLeft = l+"px";
- document.getElementById("loginbg").style.marginTop = t+"px";
- document.getElementById("logininfo").style.left = l+190+"px";
- document.getElementById("logininfo").style.top = t+130+"px";
- 
-}
+  //动态设置登录页面的位置
+	function shownotes()
+	{
+	 var w = 500;     //宽度
+	 var h = 310;   //高度
+	 var t = (screen.height-h)/2-80; //离顶部距离
+	 var l = (screen.width-w)/2; //离左边距离
+	 document.getElementById("loginbg").style.marginLeft = l+"px";
+	 document.getElementById("loginbg").style.marginTop = t+"px";
+	 document.getElementById("logininfo").style.left = l+190+"px";
+	 document.getElementById("logininfo").style.top = t+130+"px";
+	}
+
+	//点击更换验证码
+	function changeImg(){
+		alert('换一张验证码!');
+	}
 </script>
 </html>

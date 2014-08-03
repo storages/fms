@@ -7,7 +7,7 @@
 </style>
 <!-- 左边菜单树 -->
 <div class="navbar">
-	<div class="navbar-inner" style=" background-image: url('${pageContext.request.contextPath}/images/head_bg.png'); " id="setcss">
+	<div class="navbar-inner" style=" background-image: url('${pageContext.request.contextPath}/images/head_bg.png'); background-size:100%; background-repeat:no-repeat;" id="setcss">
 		<!-- <div class="container-fluid"></div> -->
 			<%-- <img alt="公司标志" src="${pageContext.request.contextPath}/imges/ls_logo.png" style="width: 60px; height:50px; margin-top:5px; margin-bottom:5px;  margin-left:25px; float:left;"> --%>
 				<!--/.brand-->

@@ -35,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div class="besidebox">
   		<img src="${pageContext.request.contextPath}/imges/login.png" id="login" style="z-index: 0px;"/>
   		<div class="info" id="logininfo">
-  		<form name="myform" action="${pageContext.request.contextPath}/loginAction_loginUser.action" method="post">
+  		<form name="myform" action="${pageContext.request.contextPath}/loginAction_gologin.action" method="post">
   			<table>
   				<tr>
   					<td>用户名：</td>

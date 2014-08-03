@@ -138,6 +138,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			alert("供应商名称不能为空！");
 			return false;
 		}
+		if(endDate==""){
+			alert("约定结算日期不能为空！");
+			return false;
+		}
 		//编码是否可用
 		var isEdit = $("#flag").val();
 		if(isEdit==""){

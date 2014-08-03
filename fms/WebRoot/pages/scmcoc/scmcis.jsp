@@ -65,12 +65,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</td>
 									<td class="center">${scmcoc.code}</td>
 									<td class="center">${scmcoc.name}</td>
-									<td class="hidden-480 center">${scmcoc.linkPhone}</td>
-									<td class="hidden-480 center">${scmcoc.networkLink}</td>
-									<td class="hidden-480 center">${scmcoc.linkMan}</td>
-									<td class="hidden-480 center">${scmcoc.address}</td>
+									<td class="hidden-480 center">${scmcoc.linkPhone}　</td>
+									<td class="hidden-480 center">${scmcoc.networkLink}　</td>
+									<td class="hidden-480 center">${scmcoc.linkMan}　</td>
+									<td class="hidden-480 center">${scmcoc.address}　</td>
 									<td class="hidden-480 center">每月${scmcoc.endDate}日</td>
-									<td class="hidden-480 center">${scmcoc.note}</td>
+									<td class="hidden-480 center">${scmcoc.note}　</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toedit('${scmcoc.id}')">修改</a>｜
 										<a href="javascript:void(0);" onclick="delSingleScmcoc('${scmcoc.id}','true')">删除</a>

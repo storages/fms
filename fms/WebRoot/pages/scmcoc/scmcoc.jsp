@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="modal-footer" style="text-align: left;">
 		<span class="">供应商名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:35px; margin-top:-10px;"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:40px; margin-top:-10px;"/>
 	</div> 
 	<div class="row-fluid" >
 		<div class="span12">
@@ -65,12 +65,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</td>
 									<td class="center">${scmcoc.code}</td>
 									<td class="center">${scmcoc.name}</td>
-									<td class="hidden-480 center">${scmcoc.linkPhone}</td>
-									<td class="hidden-480 center">${scmcoc.networkLink}</td>
-									<td class="hidden-480 center">${scmcoc.linkMan}</td>
-									<td class="hidden-480 center">${scmcoc.address}</td>
+									<td class="hidden-480 center">${scmcoc.linkPhone}　</td>
+									<td class="hidden-480 center">${scmcoc.networkLink}　</td>
+									<td class="hidden-480 center">${scmcoc.linkMan}　</td>
+									<td class="hidden-480 center">${scmcoc.address}　</td>
 									<td class="hidden-480 center">每月${scmcoc.endDate}日</td>
-									<td class="hidden-480 center">${scmcoc.note}</td>
+									<td class="hidden-480 center">${scmcoc.note}　</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toedit('${scmcoc.id}')">修改</a>｜
 										<a href="javascript:void(0);" onclick="delSingleScmcoc('${scmcoc.id}','false')">删除</a>

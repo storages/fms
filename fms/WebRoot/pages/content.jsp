@@ -29,7 +29,7 @@
 <div class="sidebar" id="sidebar" style="left: 2px; margin-top: 70px;">
 	<div id="main">
 	
-	<p style="font-size:15px; font-weight: bold; margin:5px 0px 0px 5px;">联塑塑胶制品公司</p>
+	<p style="font-size:15px; font-weight: bold; margin:5px 0px 0px 5px;">联硕塑胶制品公司</p>
 	<ul id="browser" class="filetree">
 		<li  class="closed"><span class="folder directer" >用户管理</span>
 			<ul>

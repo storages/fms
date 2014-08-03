@@ -35,6 +35,7 @@ $(function(){
 		  		delCookie("password");
 		  	}
 		  	//$("#mess").html("");
+		  	alert(username);
 	  		var url = "${pageContext.request.contextPath}/users_loginUser.action?userName="+username+"&password="+password+"&forget="+forget;
 	  		$.ajax({
 		     type: "POST",

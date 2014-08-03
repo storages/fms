@@ -45,6 +45,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		密　　码: <input type="password" name="user.password" id="password"/><label  style="color:red; font-size:12px;" id="passwordmess"></label>  <br/>
 		<span style="color:red; font-size:12px;" id="mess"></span><br/>
 		<input type="button" value="登录" onclick="findUserName()"/>
+		
+		<hr/>
+    	<br/>
+    	
+    	<a href="${pageContext.request.contextPath}/pages/loginUser.jsp">New LoginPage</a>
   </body>
   <script type="text/javascript">
   	function findUserName(){

@@ -1131,7 +1131,10 @@ blockquote,blockquote.pull-right {
 	padding-right: 0;
 	min-height: 45px;
 	position: relative;
-	background-image: url("../../images/main-top-bgs.jpg");
+	/* background-image: url("../../images/main-top-bgs.jpg"); */
+	border-bottom: solid #2086C1 2px;
+	z-index: 9999;
+	height:68px;
 }
 
 .navbar .navbar-text,.navbar .navbar-link {

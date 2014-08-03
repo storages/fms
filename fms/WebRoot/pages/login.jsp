@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   <body onload="shownotes()">
   	<div class="besidebox">
-  		<img src="${pageContext.request.contextPath}/imges/login.png" id="login" style="z-index: 0px;"/>
+  		<img src="${pageContext.request.contextPath}/imges/login.png" id="loginbg" style="z-index: 0px;"/>
   		<div class="info" id="logininfo">
   		<form name="myform" action="${pageContext.request.contextPath}/loginAction_gologin.action" method="post">
   			<table>
@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   					<td><input type="text" style="width:70px;"/><img src="" style="width:85px; height:25px;float:right;" /></td>
   				</tr>
   				<tr>
-  					<td colspan="3"><input type="checkbox" id="remenber" style="font-size: 12px;"/>记住密码<span class="mess">　</span></td>
+  					<td colspan="3"><input type="checkbox" id="remenber" style="font-size: 12px;"/>记住密码<span class="mess" id="error"></span></td>
   				</tr>
   				<tr>
   					<td colspan="3">
@@ -70,8 +70,8 @@ function shownotes()
  var h = 310;   //高度
  var t = (screen.height-h)/2-80; //离顶部距离
  var l = (screen.width-w)/2; //离左边距离
- document.getElementById("login").style.marginLeft = l+"px";
- document.getElementById("login").style.marginTop = t+"px";
+ document.getElementById("loginbg").style.marginLeft = l+"px";
+ document.getElementById("loginbg").style.marginTop = t+"px";
  document.getElementById("logininfo").style.left = l+190+"px";
  document.getElementById("logininfo").style.top = t+130+"px";
  

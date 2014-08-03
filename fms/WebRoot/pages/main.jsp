@@ -9,9 +9,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico">
+<link rel="Bookmark" href="${pageContext.request.contextPath}/images/favicon.ico">
 <base href="<%=basePath%>">
 
-<title>联塑塑料制造公司-系统管理</title>
+<title>联硕塑料制造公司-系统管理</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">

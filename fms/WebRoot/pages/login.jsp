@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<style type="text/css">
 		body,div,img,table,tr,td{margin:0 auto; padding:0px;}
 		.besidebox{width:100%;height:100%;position: relative;}
-		.mess{font-size: 12px; color:red;}
+		.mess{font-size: 12px; color:red;font-weight: bold; margin-left: 5px;}
 		.info{position: absolute;}
 	</style>
   </head>
@@ -39,15 +39,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			<table>
   				<tr>
   					<td>用户名：</td>
-  					<td><input type="text" name="username"/></td>
+  					<td><input type="text" name="username" style="width: 155px;"/></td>
   				</tr>
   				<tr>
   					<td>密　码：</td>
-  					<td><input type="password" name="password"/></td>
+  					<td><input type="password" name="password" style="width: 155px;"/></td>
   				</tr>
   				<tr>
   					<td>验证码：</td>
-  					<td><input type="text" style="width:70px;"/><img src="" style="width:85px; height:25px;float:right;" /></td>
+  					<td><input type="text" style="width:70px; float:left;"/><img src="" style="width:82px; height:25px;float:right;" /></td>
   				</tr>
   				<tr>
   					<td colspan="3"><input type="checkbox" id="remenber" style="font-size: 12px;"/>记住密码<span class="mess" id="error"></span></td>

@@ -5,6 +5,8 @@
 	#sidebar{
 	}
 </style>
+
+<a href="javascript:location.replace(url)"></a>
 <!-- 左边菜单树 -->
 <div class="navbar">
 	<div class="navbar-inner" style=" background-image: url('${pageContext.request.contextPath}/images/head_bg.png'); background-size:100%; background-repeat:no-repeat;" id="setcss">

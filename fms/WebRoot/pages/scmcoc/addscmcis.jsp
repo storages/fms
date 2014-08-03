@@ -180,7 +180,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	toMain(submitUrl);
 	  	}
 	}
-	
+	//把传递的参数先转换成URI编码格式，以防中文到后台成了乱码
 	function parse(str){
 		return encodeURI(encodeURI(str));  
 	}

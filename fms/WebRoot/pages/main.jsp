@@ -95,7 +95,7 @@
 						return false;
 					}
 				});
-	})
+	});
 </script>
 
 <script type="text/javascript"

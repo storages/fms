@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				</tr>
   				<tr>
   					<td>验证码：</td>
-  					<td><input type="text" style="width:70px; float:left;"/><a href="javascript:void(0);" onclick="changeImg()"><img src="" style="width:82px; height:25px;float:right;" title="看不清？点击换一个"/></a></td>
+  					<td><input type="text" style="width:70px; float:left;"/><a href="javascript:void(0);" onclick="changeImg()"><img src="" style="width:82px; height:25px;float:right; border: 0px;" title="看不清？点击换一个"/></a></td>
   				</tr>
   				<tr>
   					<td colspan="3"><input type="checkbox" id="remenber" style="font-size: 12px;"/>记住密码<span class="mess" id="error"></span></td>

@@ -7,6 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico">
     <base href="<%=basePath%>">
     
     <title>My JSP 'loginUser.jsp' starting page</title>

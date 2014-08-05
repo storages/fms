@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- <jsp:include page="/pages/head/head.jsp"></jsp:include> --%>
 <style type="text/css">
-	#sidebar{
-	}
+	a:hover{color:green;font-weight: bold;}
 </style>
 
 <a href="javascript:location.replace(url)"></a>

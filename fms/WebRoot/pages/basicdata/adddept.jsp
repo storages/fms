@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="modal-footer">
 		<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="保存" onclick="save()"/>
-		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">取消</button>
+		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="cancel()" title="恢复初始状态">取消</button>
 	</div>
 	<div class="row-fluid" id="mybox">
 		<div class="span12">
@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">备注</td>
-					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="dept.note">${dept.note}</textarea></td>
+					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="dept.note" id="note">${dept.note}</textarea></td>
 				</tr>
 			</table>
 		</div>
@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//名称
 		var name= $(":input[name='dept.name']").val(); 
 		//备注
-		var note= $(":input[name='dept.note']").val(); 
+		var note= $("#note").val(); 
 		var isEdit = $('#flag').val();
 		var isPass = true;
 		if(code==""){
@@ -102,9 +102,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  	});
 		}
 		if(isPass){
-			var param = "code="+code+"&name="+name+"&note="+note;
+			var param = "code="+code+"&name="+parse(name)+"&note="+parse(note);
 			var submitUrl = "${pageContext.request.contextPath}/dept_saveDept.action?"+param;
 			toMain(submitUrl);
+		}
+	}
+	
+	//把传递的参数先转换成URI编码格式，以防中文到后台成了乱码
+	function parse(str){
+		return encodeURI(encodeURI(str));  
+	}
+	
+	//取消按钮
+	function cancel(){
+		var id = $('#flag').val();
+		if(id==""){
+			$(":input[name='dept.code']").val("");
+			$(":input[name='dept.name']").val("");
+			$("#note").val("");
+		}else{
+			var url = "${pageContext.request.contextPath}/dept_findDeptByid.action?ids="+id;
+			toMain(url);
 		}
 	}
 </script>

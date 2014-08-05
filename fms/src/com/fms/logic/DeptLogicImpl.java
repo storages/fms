@@ -40,5 +40,11 @@ public class DeptLogicImpl implements DeptLogic {
 		this.deptDao.saveDept(dept);
 	}
 
+
+
+	public String findDeptByCode(String code) {
+		return this.deptDao.findDeptByCode(code);
+	}
+
 	
 }

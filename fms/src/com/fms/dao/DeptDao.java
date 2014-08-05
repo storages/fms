@@ -35,4 +35,10 @@ public interface DeptDao {
 	 * @param dept
 	 */
 	public void saveDept(Department dept);
+	/**
+	 * 查找部门编码是否重复
+	 * @param code
+	 * @return
+	 */
+	public String findDeptByCode(String code);
 }

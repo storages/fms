@@ -1,5 +1,7 @@
 package com.fms.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
@@ -7,6 +9,8 @@ import java.util.List;
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Department;
 import com.fms.logic.DeptLogic;
+import com.fms.utils.AjaxResult;
+import com.url.ajax.json.JSONObject;
 
 public class DeptAction extends BaseAction {
 
@@ -91,10 +95,14 @@ public class DeptAction extends BaseAction {
 		return "find";
 	}
 	
-	
+	/**
+	 * 保存部门信息
+	 * @return
+	 * @throws Exception
+	 */
 	public String saveDept() throws Exception{
 		this.deptLogic.saveDept(this.setProperty(new Department()));
-		return className;
+		return "save";
 	}
 	
 	
@@ -116,6 +124,35 @@ public class DeptAction extends BaseAction {
 		return dept;
 	}
 
+	/**
+	 * 验证部门编码是否重复
+	 */
+	public void findDeptByCode(){
+		PrintWriter out = null;
+		AjaxResult  result=new AjaxResult();
+		try {
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			String findCode = this.deptLogic.findDeptByCode(code);
+			if(null!=findCode){
+				result.setSuccess(false);
+				result.setMsg("编码已使用过了！");
+			}else{
+				result.setSuccess(true);
+			}			
+			JSONObject json=new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (IOException e) {
+			result.setMsg("对不起出错了：/n"+e.getMessage());
+		}finally{
+			if(out!=null){
+				out.close();
+			}
+		}
+	}
+	
 	public DeptLogic getDeptLogic() {
 		return deptLogic;
 	}

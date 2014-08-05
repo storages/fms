@@ -37,4 +37,11 @@ public class DeptDaoImpl extends BaseDao implements DeptDao {
 	public void saveDept(Department dept){
 		this.saveOrUpdate(dept);
 	}
+
+	public String findDeptByCode(String code) {
+		String hql = "select a.code from Department a where a.code = ? ";
+		List param = new ArrayList();
+		param.add(code);
+		return (String) this.findUniqueResult(hql, param.toArray());
+	}
 }

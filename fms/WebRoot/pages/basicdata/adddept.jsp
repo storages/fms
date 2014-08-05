@@ -21,6 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
   </head>
   
   <body>
@@ -106,11 +107,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var submitUrl = "${pageContext.request.contextPath}/dept_saveDept.action?"+param;
 			toMain(submitUrl);
 		}
-	}
-	
-	//把传递的参数先转换成URI编码格式，以防中文到后台成了乱码
-	function parse(str){
-		return encodeURI(encodeURI(str));  
 	}
 	
 	//取消按钮

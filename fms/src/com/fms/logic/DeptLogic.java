@@ -42,4 +42,9 @@ public interface DeptLogic {
 	 * @return
 	 */
 	public String findDeptByCode(String code);
+	
+	/**
+	 * 根据Id来删除部门信息
+	 */
+	public void delDeptById(String [] ids);
 }

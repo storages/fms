@@ -153,6 +153,20 @@ public class DeptAction extends BaseAction {
 		}
 	}
 	
+	/**
+	 * 删除部门信息
+	 * @return
+	 */
+	public String deleteDept(){
+		if (null != ids && !"".equals(ids)) {
+			String [] idArr = ids.split(",");
+			if(idArr!=null && idArr.length>0){
+				this.deptLogic.delDeptById(idArr);
+			}
+		}
+		return "save";
+	}
+	
 	public DeptLogic getDeptLogic() {
 		return deptLogic;
 	}

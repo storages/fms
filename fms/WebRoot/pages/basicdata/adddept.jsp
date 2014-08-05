@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">备注</td>
-					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="dept.note"></textarea></td>
+					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="dept.note">${dept.note}</textarea></td>
 				</tr>
 			</table>
 		</div>
@@ -104,7 +104,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		if(isPass){
 			var param = "code="+code+"&name="+name+"&note="+note;
 			var submitUrl = "${pageContext.request.contextPath}/dept_saveDept.action?"+param;
-			alert(submitUrl);
 			toMain(submitUrl);
 		}
 	}

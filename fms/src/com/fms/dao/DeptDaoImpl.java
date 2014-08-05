@@ -44,4 +44,15 @@ public class DeptDaoImpl extends BaseDao implements DeptDao {
 		param.add(code);
 		return (String) this.findUniqueResult(hql, param.toArray());
 	}
+
+	public void delDeptById(String [] ids) {
+		String hql = "DELETE FROM Department a where a.id = ? ";
+		List param = new ArrayList();
+		param.add(ids[0]);
+		for(int i = 1 ; i < ids.length ; i++){
+			hql+=" or a.id = ? ";
+			param.add(ids[i]);
+		}
+		this.batchUpdateOrDelete(hql, param.toArray());
+	}
 }

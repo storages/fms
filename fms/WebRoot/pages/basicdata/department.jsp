@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/pages/basicdata/adddept.jsp');">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreDept()">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
@@ -136,7 +136,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	
 	function toedit(id){
-		var url = "${pageContext.request.contextPath}/dept_findDeptById.action?ids="+id;
+		var url = "${pageContext.request.contextPath}/dept_findDeptByid.action?ids="+id;
 		toMain(url);
 	}
 </script>

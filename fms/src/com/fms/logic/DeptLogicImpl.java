@@ -46,5 +46,11 @@ public class DeptLogicImpl implements DeptLogic {
 		return this.deptDao.findDeptByCode(code);
 	}
 
+
+
+	public void delDeptById(String [] ids) {
+		this.deptDao.delDeptById(ids);
+	}
+
 	
 }

@@ -49,6 +49,7 @@
 		<action name="dept_*" class="com.fms.action.DeptAction" method="{1}">
 			<result name="success">/pages/basicdata/department.jsp</result>
 			<result name="find">/pages/basicdata/addDept.jsp</result>
+			<result name="save" type="chain">dept_findAllDept</result>
 		</action>
 	</package>
 

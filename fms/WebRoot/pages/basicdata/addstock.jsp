@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'adddept.jsp' starting page</title>
+    <title>My JSP 'addstock.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -20,18 +20,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+ <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
   </head>
   
   <body>
-  	<input type="hidden" id="flag" value="${dept.id}"/><!-- 为了判断是新增还是修改 -->
-    <div class="page-header position-relative" style="margin-bottom: 0px;">
-    	<c:if test="${dept.id==null}">
-			<h5>基础资料＞＞部门管理＞＞新增</h5>
+  <input type="hidden" id="flag" value="${stock.id}"/><!-- 为了判断是新增还是修改 -->
+  <div class="page-header position-relative" style="margin-bottom: 0px;">
+    	<c:if test="${stock.id==null}">
+			<h5>基础资料＞＞仓库管理＞＞新增</h5>
 		</c:if>
     	<c:if test="${dept.id!=null}">
-			<h5>基础资料＞＞部门管理＞＞修改</h5>
+			<h5>基础资料＞＞仓库管理＞＞修改</h5>
 		</c:if>
 	</div>
 	<div class="modal-footer">
@@ -43,31 +42,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">编码</td>
-					<c:if test="${dept.id==null}">
-						<td class="hidden-480 addcss"><input type="text" value="${dept.code}" name="dept.code" style="height:25px;"/><span style="color:red;">*</span></td>
+					<c:if test="${stock.id==null}">
+						<td class="hidden-480 addcss"><input type="text" value="${stock.code}" name="stock.code" style="height:25px;"/><span style="color:red;">*</span></td>
 					</c:if>
-					<c:if test="${dept.id!=null}">
-						<td class="hidden-480 addcss"><input type="text" value="${dept.code}" name="dept.code" style="height:25px;" disabled="disabled"/><span style="color:red;">*</span></td>
+					<c:if test="${stock.id!=null}">
+						<td class="hidden-480 addcss"><input type="text" value="${stock.code}" name="stock.code" style="height:25px;" disabled="disabled"/><span style="color:red;">*</span></td>
 					</c:if>
 				</tr>
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">名称</td>
-					<td class="hidden-480 addcss"><input type="text" value="${dept.name}" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss"><input type="text" value="${stock.name}" name="stock.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">备注</td>
-					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="dept.note" id="note">${dept.note}</textarea></td>
+					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="stock.note" id="note">${stock.note}</textarea></td>
 				</tr>
 			</table>
 		</div>
-	</div> 
+	</div>
 	
-<script type="text/javascript">
+	<script type="text/javascript">
 	function save(){
 		//编码
-		var code = $(":input[name='dept.code']").val();  
+		var code = $(":input[name='stock.code']").val();  
 		//名称
-		var name= $(":input[name='dept.name']").val(); 
+		var name= $(":input[name='stock.name']").val(); 
 		//备注
 		var note= $("#note").val(); 
 		var isEdit = $('#flag').val();
@@ -84,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		//新增
 		if(isEdit==""){
-			var url = "${pageContext.request.contextPath}/dept_findDeptByCode.action?code="+code;
+			var url = "${pageContext.request.contextPath}/stock_findStockByCode.action?code="+code;
 			$.ajax({
 		     type: "POST",
 		     url:url,
@@ -103,7 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		if(isPass){
 			var param = "code="+code+"&name="+parse(name)+"&note="+parse(note);
-			var submitUrl = "${pageContext.request.contextPath}/dept_saveDept.action?"+param;
+			var submitUrl = "${pageContext.request.contextPath}/stock_saveStock.action?"+param;
 			toMain(submitUrl);
 		}
 	}
@@ -112,14 +111,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function cancel(){
 		var id = $('#flag').val();
 		if(id==""){
-			$(":input[name='dept.code']").val("");
-			$(":input[name='dept.name']").val("");
+			$(":input[name='stock.code']").val("");
+			$(":input[name='stock.name']").val("");
 			$("#note").val("");
 		}else{
-			var url = "${pageContext.request.contextPath}/dept_findDeptByid.action?ids="+id;
+			var url = "${pageContext.request.contextPath}/stock_findStockByid.action?ids="+id;
 			toMain(url);
 		}
 	}
 </script>
+	 
   </body>
 </html>

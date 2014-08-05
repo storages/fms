@@ -29,7 +29,7 @@
 	width:100%;
 	height:100%;
 	background-repeat: no-repeat;
-	margin: 60px 0px 0px 150px;
+	margin: auto 0px 0px 150px;
 }
 </style>
 </head>

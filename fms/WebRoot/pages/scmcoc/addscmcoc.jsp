@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="modal-footer">
 		<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="保存" onclick="save()"/>
-		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">取消</button>
+		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="cancel()" title="恢复初始状态">取消</button>
 	</div> 
 	<div class="row-fluid" id="mybox">
 		<div class="span12">
@@ -182,6 +182,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	function parse(str){
 		return encodeURI(encodeURI(str));  
+	}
+	
+	//取消按钮
+	function cancel(){
+		var id = $('#flag').val();
+		if(id==""){
+			//编码
+			$(":input[name='scmcoc.code']").val("");  
+			//名称
+			$(":input[name='scmcoc.name']").val(""); 
+			//联系电话
+			 $(":input[name='scmcoc.linkPhone']").val(""); 
+			//网络联系方式
+			$(":input[name='scmcoc.networkLink']").val(""); 
+			//联系人
+			$(":input[name='scmcoc.linkMan']").val(""); 
+			//地址
+			$(":input[name='scmcoc.address']").val(""); 
+			//约定结算时间
+			//var endDate = $(":input[name='scmcoc.endDate']").val(); 
+			$("#endDate option:selected").val(""); 
+			//备注
+			$(":input[name='scmcoc.note']").val(""); 
+		}else{
+			var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids="+id+"&isCustom=false";
+			toMain(url);
+		}
 	}
 	</script>
 </html>

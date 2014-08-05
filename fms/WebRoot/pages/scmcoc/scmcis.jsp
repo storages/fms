@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="modal-footer" style="text-align: left;">
 		<span class="">客户名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:35px; margin-top:-10px;"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 	</div> 
 	<div class="row-fluid" >
 		<div class="span12">

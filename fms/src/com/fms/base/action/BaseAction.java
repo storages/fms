@@ -1,5 +1,7 @@
 ﻿package com.fms.base.action;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -34,5 +36,22 @@ public class BaseAction extends ActionSupport {
 	 * 父类获取HttpServletResponse
 	 */
 	protected HttpServletResponse response = ServletActionContext.getResponse();
+	
+	/**
+	 * 翻译字符编码
+	 * 
+	 * @param value
+	 * @return
+	 */
+	protected String parse(String value) {
+		if(null!=value && !"".equals(value)){
+			try {
+				return URLDecoder.decode(value, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
 }

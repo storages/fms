@@ -54,24 +54,6 @@ public class DeptAction extends BaseAction {
 	}
 
 	
-	/**
-	 * 翻译字符编码
-	 * 
-	 * @param value
-	 * @return
-	 */
-	private String parse(String value) {
-		if(null!=value && !"".equals(value)){
-			try {
-				return URLDecoder.decode(value, "utf-8");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-	
-	
 	private Integer pageCount(Integer maxIndex,Integer dataTotal){
 		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // 总页数
 		if(pageNums==0){

@@ -130,22 +130,7 @@ public class ScmcocAction extends BaseAction {
 		return scmcoc;
 	}
 
-	/**
-	 * 翻译字符编码
-	 * 
-	 * @param value
-	 * @return
-	 */
-	private String parse(String value) {
-		if(null!=value && !"".equals(value)){
-			try {
-				return URLDecoder.decode(value, "utf-8");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
+	
 
 	/**
 	 * 删除供应商或客户

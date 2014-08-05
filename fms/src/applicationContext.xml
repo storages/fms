@@ -103,6 +103,12 @@
 		</property>
 	</bean>
 	
+	<!-- Stock -->
+	<bean id="stockDao" class="com.fms.dao.StockDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
 	
 	
 	<!-- ======================Logic类=========================== -->
@@ -129,6 +135,14 @@
 	<bean id="deptLogic" class="com.fms.logic.DeptLogicImpl">
 		<property name="deptDao">
 			<ref bean="deptDao"/>
+		</property>
+	</bean>
+	
+	<!-- Stock -->
+	
+	<bean id="stockLogic" class="com.fms.logic.StockLogicImpl">
+		<property name="stockDao">
+			<ref bean="stockDao"/>
 		</property>
 	</bean>
 </beans>

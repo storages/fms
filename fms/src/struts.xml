@@ -51,6 +51,13 @@
 			<result name="find">/pages/basicdata/adddept.jsp</result>
 			<result name="save" type="chain">dept_findAllDept</result>
 		</action>
+		
+		<!-- Stock的Action配置 -->
+		<action name="stock_*" class="com.fms.action.StockAction" method="{1}">
+			<result name="success">/pages/basicdata/stock.jsp</result>
+			<result name="find">/pages/basicdata/addstock.jsp</result>
+			<result name="save" type="chain">stock_findAllStock</result>
+		</action>
 	</package>
 
 

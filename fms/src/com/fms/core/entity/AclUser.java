@@ -38,7 +38,7 @@ public class AclUser extends BaseEntity {
 	 */
 	private String userFlag = null;
 	/**
-	 * 是否禁用
+	 * 是否禁用;true为禁用； false为正常使用；　默认是false
 	 */
 	private Boolean isForbid = false;
 	

@@ -1,4 +1,8 @@
-﻿function delList(){
+﻿//转换字符编码，以防把参数【中文】传到后台变乱码
+function parse(str){
+	return encodeURI(encodeURI(str));  
+}
+function delList(){
 	var splitStr = "";
 	$('input[name="uid"]:checked').each(function(){
 		splitStr+=$(this).val()+',';

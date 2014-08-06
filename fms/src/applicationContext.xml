@@ -161,4 +161,44 @@
 			<ref bean="settlementDao"/>
 		</property>
 	</bean>
+	
+	
+	
+	<!-- ======================Action类=========================== -->
+	
+	<!-- AclUser -->
+	<bean id="aclUserAction" class="com.fms.action.AclUserAction" scope="prototype">
+		<property name="userLogic">
+			<ref bean="userLogic"/>
+		</property>
+	</bean>
+	
+	<!-- Scmcoc -->
+	<bean id="scmcocAction" class="com.fms.action.ScmcocAction" scope="prototype">
+		<property name="scmcocLogic">
+			<ref bean="scmcocLogic"/>
+		</property>
+	</bean>
+	
+	<!-- Department -->
+	<bean id="deptAction" class="com.fms.action.DeptAction" scope="prototype">
+		<property name="deptLogic">
+			<ref bean="deptLogic"/>
+		</property>
+	</bean>
+	
+	<!-- Stock -->
+	<bean id="stockAction" class="com.fms.action.StockAction" scope="prototype">
+		<property name="scmcocLogic">
+			<ref bean="scmcocLogic"/>
+		</property>
+	</bean>
+	
+	<!-- Settlement -->
+	<bean id="settlementAction" class="com.fms.action.SettlementAction" scope="prototype">
+		<property name="settLogic">
+			<ref bean="settLogic"/>
+		</property>
+	</bean>
+	
 </beans>

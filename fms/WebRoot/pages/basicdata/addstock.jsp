@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<c:if test="${stock.id==null}">
 			<h5>基础资料＞＞仓库管理＞＞新增</h5>
 		</c:if>
-    	<c:if test="${dept.id!=null}">
+    	<c:if test="${stock.id!=null}">
 			<h5>基础资料＞＞仓库管理＞＞修改</h5>
 		</c:if>
 	</div>
@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		if(name==""){
 			alert("名称不能为空！");
 			isPass = false;
-			reutrn;
+			return;
 		}
 		//新增
 		if(isEdit==""){
@@ -101,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  	});
 		}
 		if(isPass){
-			var param = "code="+code+"&name="+parse(name)+"&note="+parse(note);
+			var param = "code="+code+"&name="+parse(name)+"&note="+parse(note)+"&ids="+isEdit;
 			var submitUrl = "${pageContext.request.contextPath}/stock_saveStock.action?"+param;
 			toMain(submitUrl);
 		}

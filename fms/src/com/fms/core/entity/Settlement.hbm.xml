@@ -4,7 +4,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.fms.core.entity">
-	<class name="Scmcoc" table="SCMCOC">
+	<class name="Settlement" table="SETTLEMENT">
 		<id name="id" column="ID">
 			<generator class="uuid" />
 		</id>
@@ -14,13 +14,6 @@
 
 		<property name="code" column="CODE" />
 		<property name="name" column="NAME" />
-		<property name="endDate" column="ENDDATE" />
-		<property name="linkPhone" column="LINKPHONE" />
-		<property name="networkLink" column="NETWORKLINK" />
-		<property name="address" column="ADDRESS" />
-		<property name="linkMan" column="LINKMAN" />
-		<property name="settlement" column="SETTLEMENT" />
-		<property name="isCustom" column="ISCUSTOM" />
 		<property name="note" column="NOTE" />
 	</class>
 </hibernate-mapping>

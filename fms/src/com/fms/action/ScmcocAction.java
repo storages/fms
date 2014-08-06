@@ -166,7 +166,7 @@ public class ScmcocAction extends BaseAction {
 	 */
 	public String findScmcocById() throws Exception {
 		//查询结算方式
-		List<Settlement> settlements = this.settlementLogic.findAllSettlement();
+		List<Settlement> settlements = this.settlementLogic.findAllSettlement(null);
 		this.request.put("settlements", settlements);
 		if (null != ids && !"".equals(ids)) {
 			String[] arrIds = ids.split(",");

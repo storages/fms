@@ -95,3 +95,27 @@ function delMoreStock(){
 		toMain(url);
 	}
 }
+
+
+function delSingleSettl(ids){
+	if(confirm("你确认要删除吗？")){
+		var url = "${pageContext.request.contextPath}/settl_delSettlById.action?ids="+ids;
+		toMain(url);
+	}
+}
+
+function delMoreSettl(){
+	var splitStr = "";
+	$('input[name="sid"]:checked').each(function(){
+		splitStr+=$(this).val()+',';
+	}); 
+	if(splitStr==""){
+		alert("请选择要删除的内容!");
+		return;
+	}
+	splitStr = splitStr.substring(0, splitStr.length-1);
+	if(confirm("你确认要删除吗？")){
+		var url = "${pageContext.request.contextPath}/settl_delSettlById.action?ids="+splitStr;
+		toMain(url);
+	}
+}

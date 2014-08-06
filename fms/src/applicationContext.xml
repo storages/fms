@@ -110,6 +110,13 @@
 		</property>
 	</bean>
 	
+	<!-- Settlement -->
+	<bean id="settlementDao" class="com.fms.dao.SettlementDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
 	
 	<!-- ======================Logic类=========================== -->
 	
@@ -143,6 +150,15 @@
 	<bean id="stockLogic" class="com.fms.logic.StockLogicImpl">
 		<property name="stockDao">
 			<ref bean="stockDao"/>
+		</property>
+	</bean>
+
+
+	<!-- Settlement -->
+	
+	<bean id="settLogic" class="com.fms.logic.SettlementLogicImpl">
+		<property name="settlementDao">
+			<ref bean="settlementDao"/>
 		</property>
 	</bean>
 </beans>

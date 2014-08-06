@@ -58,6 +58,20 @@
 			<result name="find">/pages/basicdata/addstock.jsp</result>
 			<result name="save" type="chain">stock_findAllStock</result>
 		</action>
+		
+		<!-- Settlement的Action配置 -->
+		<action name="settl_*" class="com.fms.action.SettlementAction" method="{1}">
+			<result name="success">/pages/basicdata/settlement.jsp</result>
+			<result name="find">/pages/basicdata/addsettlement.jsp</result>
+			<result name="save" type="chain">settl_findAllSett</result>
+		</action>
+		
+		
+		
+		
+		
+		
+		
 	</package>
 
 

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- <jsp:include page="/pages/head/head.jsp"></jsp:include> --%>
 <style type="text/css">
-	a:hover{color:green;font-weight: bold;}
+	a:hover{color:green;}
 </style>
 
 <a href="javascript:location.replace(url)"></a>
@@ -43,12 +43,13 @@
 		</li>
 		<li  class="closed"><span class="folder directer">基础资料</span>
 			<ul>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/scmcoc/scmcoc_findAllScmcoc.action?isCustom=false')">供应商管理</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/scmcoc/scmcoc_findAllScmcoc.action?isCustom=true')">客户管理</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/basicdata/dept_findAllDept.action')">部门管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?isCustom=false')">供应商管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?isCustom=true')">客户管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/dept_findAllDept.action')">部门管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/settl_findAllSett.action')">结算方式</a></span></li>
 				<li><span class="file"><a href="">交易货币管理</a></span></li>
 				<li><span class="file"><a href="">计量单位管理</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/basicdata/stock_findAllStock.action')">仓库管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/stock_findAllStock.action')">仓库管理</a></span></li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">职员管理</span>

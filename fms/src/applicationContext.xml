@@ -60,7 +60,7 @@
 	</bean>
 
 	<aop:config>
-		<aop:pointcut expression="execution(* com.fms.*.*(..))"
+		<aop:pointcut expression="execution(* com.fms.logic.*.*(..))"
 			id="cutlocation" />
 		<aop:advisor advice-ref="advice" pointcut-ref="cutlocation" />
 	</aop:config>

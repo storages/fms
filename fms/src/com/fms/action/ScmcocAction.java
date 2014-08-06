@@ -1,17 +1,14 @@
 ﻿package com.fms.action;
 
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Scmcoc;
+import com.fms.core.entity.Settlement;
 import com.fms.logic.ScmcocLogic;
+import com.fms.logic.SettlementLogic;
 
 public class ScmcocAction extends BaseAction {
 
@@ -21,6 +18,7 @@ public class ScmcocAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 
 	private ScmcocLogic scmcocLogic;
+	private SettlementLogic settlementLogic;
 	private Scmcoc scmcoc;
 	
 	/****客户供应商属性*****/
@@ -33,6 +31,7 @@ public class ScmcocAction extends BaseAction {
 	private String linkMan;
 	private String endDate;
 	private String isCustom;
+	private String settlementId;
 	private String note;
 	
 	/*********分页用的属性***********/
@@ -127,6 +126,11 @@ public class ScmcocAction extends BaseAction {
 		scmcoc.setAddress(parse(address));
 		scmcoc.setEndDate(endDate);
 		scmcoc.setNote(parse(note));
+		if(null!=settlementId && !"".equals(settlementId)){
+			//查询结算方式
+			Settlement stt = settlementLogic.findSettById(settlementId);
+			scmcoc.setSettlement(stt);
+		}
 		return scmcoc;
 	}
 
@@ -161,6 +165,9 @@ public class ScmcocAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public String findScmcocById() throws Exception {
+		//查询结算方式
+		List<Settlement> settlements = this.settlementLogic.findAllSettlement();
+		this.request.put("settlements", settlements);
 		if (null != ids && !"".equals(ids)) {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
@@ -170,6 +177,8 @@ public class ScmcocAction extends BaseAction {
 					this.request.put("scmcoc", scm);
 				}
 			}
+		}else{
+			this.request.put("scmcoc", new Scmcoc());
 		}
 		if("true".equals(isCustom)){
 			return "findcis";//是客户页面请求
@@ -193,6 +202,14 @@ public class ScmcocAction extends BaseAction {
 
 	public void setScmcocLogic(ScmcocLogic scmcocLogic) {
 		this.scmcocLogic = scmcocLogic;
+	}
+
+	public SettlementLogic getSettlementLogic() {
+		return settlementLogic;
+	}
+
+	public void setSettlementLogic(SettlementLogic settlementLogic) {
+		this.settlementLogic = settlementLogic;
 	}
 
 	public Scmcoc getScmcoc() {
@@ -305,6 +322,14 @@ public class ScmcocAction extends BaseAction {
 
 	public void setSearchStr(String searchStr) {
 		this.searchStr = searchStr;
+	}
+
+	public String getSettlementId() {
+		return settlementId;
+	}
+
+	public void setSettlementId(String settlementId) {
+		this.settlementId = settlementId;
 	}
 	
 }

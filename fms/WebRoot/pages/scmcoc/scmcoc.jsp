@@ -48,6 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<th class="hidden-phone center">供应商网络联系方式</th>
 								<th class="hidden-480 center">供应商联系人</th>
 								<th class="hidden-480 center">供应商地址</th>
+								<th class="hidden-480 center">结算方式</th>
 								<th class="hidden-480 center">约定结算日期</th>
 								<th class="hidden-480 center">备注</th>
 								<th class="center">操作</th>
@@ -69,6 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="hidden-480 center">${scmcoc.networkLink}　</td>
 									<td class="hidden-480 center">${scmcoc.linkMan}　</td>
 									<td class="hidden-480 center">${scmcoc.address}　</td>
+									<td class="hidden-480 center">${scmcoc.settlement.name}　</td>
 									<td class="hidden-480 center">每月${scmcoc.endDate}日</td>
 									<td class="hidden-480 center">${scmcoc.note}　</td>
 									<td class="center">
@@ -82,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/pages/scmcoc/addscmcoc.jsp');">新增</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toedit('')">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
 					批量删除
 				</button>
@@ -141,12 +143,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		toMain(url);
 	}
 	
-	function parse(str){
-		return encodeURI(encodeURI(str));  
-	}
-	
 	function toedit(id){
+	if(id==''){
+		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?isCustom=false";
+	}else{
 		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids="+id+"&isCustom=false";
+	}
 		toMain(url);
 	}
 </script>

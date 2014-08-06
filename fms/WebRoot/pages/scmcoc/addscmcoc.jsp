@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<select id="endDate" style="width:200px;">
 							<c:forEach var="day" begin="1" end="28" step="1">
 								<c:if test="${scmcoc.endDate==day}">
-									<option selected="selected">${day}</option>
+									<option value="${day}" selected="selected">${day}</option>
 								</c:if>
 								<c:if test="${scmcoc.endDate!=day}">
 									<option value="${day}">${day}</option>
@@ -92,8 +92,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</c:forEach>
 						</select>日 <span style="color:red;">*</span>
 					</td>
+					<td class="captioncss" style="text-align: right;">结算方式</td>
+					<td class="hidden-480 addcss">
+						<select style="width:200px;" id="sett">
+							<c:forEach var="settl" items="${settlements}">
+								<c:if test="${scmcoc.settlement.name==settl.name}">
+									<option value="${settl.id}" selected="selected">${settl.name}</option>
+								</c:if>
+								<c:if test="${scmcoc.settlement.name!=settl.name}">
+									<option value="${settl.id}">${settl.name}</option>
+								</c:if>
+									<%-- <option value="${settl.id}">${settl.name}</option> --%>
+							</c:forEach>
+						</select> <span style="color:red;">*</span>
+					</td>
+				</tr>
+				<tr>
 					<td class="captioncss" style="text-align: right;">备注</td>
-					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.note}" name="scmcoc.note" style="height:25px;"/></td>
+					<td colspan="3" class="hidden-480 addcss">
+						<textarea rows="4" cols="10" name="scmcoc.note" id="note" style="width:600px;">${scmcoc.note}</textarea>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -124,11 +142,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var linkMan = $(":input[name='scmcoc.linkMan']").val(); 
 		//地址
 		var address = $(":input[name='scmcoc.address']").val(); 
+		//结算方式【取id,到后台查】
+		var settlementId = $("#sett option:selected").val(); 
 		//约定结算时间
 		//var endDate = $(":input[name='scmcoc.endDate']").val(); 
 		var endDate = $("#endDate option:selected").val(); 
 		//备注
-		var note = $(":input[name='scmcoc.note']").val(); 
+		var note = $("#note").val(); 
 		var isPass = true;
 		if(code==""){
 			alert("编码不能为空！");
@@ -138,12 +158,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			alert("供应商名称不能为空！");
 			return false;
 		}
+		if(settlementId==""){
+			alert("结算方式不能为空！");
+			return false;
+		}
 		if(endDate==""){
 			alert("约定结算日期不能为空！");
 			return false;
 		}
 		//编码是否可用
 		var isEdit = $("#flag").val();
+		alert(isEdit);
 		if(isEdit==""){
 			var url = "${pageContext.request.contextPath}/scmcoc_findScmcocByCode.action?code="+code;
 			$.ajax({
@@ -162,6 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      }
 		  	});
 	  	}
+	  	alert(settlementId);
 	  	if(isPass){
 		  	var str = "code="+parse(code)+
 		  			  "&name="+parse(name)+
@@ -169,6 +195,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			  "&networkLink="+parse(networkLink)+
 		  			  "&linkMan="+parse(linkMan)+
 		  			  "&address="+parse(address)+
+		  			  "&settlementId="+settlementId+
 		  			  "&endDate="+parse(endDate)+
 		  			  "&note="+parse(note)+
 		  			  "&isCustom=false";

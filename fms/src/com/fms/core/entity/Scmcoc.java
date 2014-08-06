@@ -41,7 +41,7 @@ public class Scmcoc extends BaseEntity{
 	 */
 	private String linkMan;
 	/**
-	 * 结账截止日期
+	 * 约定结算日期
 	 */
 	private String endDate;
 	/**
@@ -51,6 +51,11 @@ public class Scmcoc extends BaseEntity{
 	 *
 	 */
 	public Boolean isCustom;
+	
+	/**
+	 * 结算方式
+	 */
+	public Settlement settlement;
 	/**
 	 * 备注
 	 */
@@ -110,6 +115,13 @@ public class Scmcoc extends BaseEntity{
 	public void setLinkMan(String linkMan) {
 		this.linkMan = linkMan;
 	}
+	public Settlement getSettlement() {
+		return settlement;
+	}
+	public void setSettlement(Settlement settlement) {
+		this.settlement = settlement;
+	}
+	
 	
 	
 	

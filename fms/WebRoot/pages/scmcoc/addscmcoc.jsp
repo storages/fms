@@ -168,7 +168,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		//编码是否可用
 		var isEdit = $("#flag").val();
-		alert(isEdit);
 		if(isEdit==""){
 			var url = "${pageContext.request.contextPath}/scmcoc_findScmcocByCode.action?code="+code;
 			$.ajax({
@@ -187,7 +186,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      }
 		  	});
 	  	}
-	  	alert(settlementId);
 	  	if(isPass){
 		  	var str = "code="+parse(code)+
 		  			  "&name="+parse(name)+

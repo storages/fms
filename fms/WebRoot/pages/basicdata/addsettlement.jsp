@@ -69,9 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var name= $(":input[name='settl.name']").val(); 
 		//备注
 		var note= $("#note").val(); 
-		alert(note);
 		var isEdit = $('#flag').val();
-		alert(isEdit);
 		var isPass = true;
 		if(code==""){
 			alert("编码不能为空！");

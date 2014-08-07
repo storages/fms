@@ -145,7 +145,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	function toedit(id){
 	if(id==''){
-	alert(1);
 		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?isCustom=false";
 	}else{
 		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids="+id+"&isCustom=false";

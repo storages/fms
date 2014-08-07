@@ -157,7 +157,7 @@
 
 	<!-- Settlement -->
 	
-	<bean id="settLogic" class="com.fms.logic.impl.SettlementLogicImpl">
+	<bean id="settlementLogic" class="com.fms.logic.impl.SettlementLogicImpl">
 		<property name="settlementDao">
 			<ref bean="settlementDao"/>
 		</property>
@@ -197,8 +197,8 @@
 	
 	<!-- Settlement -->
 	<bean id="settlementAction" class="com.fms.action.SettlementAction" scope="prototype">
-		<property name="settLogic">
-			<ref bean="settLogic"/>
+		<property name="settlementLogic">
+			<ref bean="settlementLogic"/>
 		</property>
 	</bean>
 	

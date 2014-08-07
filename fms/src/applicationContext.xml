@@ -80,7 +80,7 @@
 	<!-- =======================Dao类========================== -->
 	
 	<!-- AclUser -->
-	<bean id="userDao" class="com.fms.dao.AclUserDaoImpl">
+	<bean id="userDao" class="com.fms.dao.impl.AclUserDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
 		</property>
@@ -89,7 +89,7 @@
 	
 	<!-- Scmcoc -->
 	
-	<bean id="scmcocDao" class="com.fms.dao.ScmcocDaoImpl">
+	<bean id="scmcocDao" class="com.fms.dao.impl.ScmcocDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
 		</property>
@@ -98,21 +98,21 @@
 	
 	<!-- Department -->
 	
-	<bean id="deptDao" class="com.fms.dao.DeptDaoImpl">
+	<bean id="deptDao" class="com.fms.dao.impl.DeptDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
 		</property>
 	</bean>
 	
 	<!-- Stock -->
-	<bean id="stockDao" class="com.fms.dao.StockDaoImpl">
+	<bean id="stockDao" class="com.fms.dao.impl.StockDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
 		</property>
 	</bean>
 	
 	<!-- Settlement -->
-	<bean id="settlementDao" class="com.fms.dao.SettlementDaoImpl">
+	<bean id="settlementDao" class="com.fms.dao.impl.SettlementDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
 		</property>
@@ -122,7 +122,7 @@
 	<!-- ======================Logic类=========================== -->
 	
 	<!-- AclUser -->
-	<bean id="userLogic" class="com.fms.logic.AclUserLogicImpl">
+	<bean id="userLogic" class="com.fms.logic.impl.AclUserLogicImpl">
 		<property name="userDao">
 			<ref bean="userDao"/>
 		</property>
@@ -131,7 +131,7 @@
 	
 	
 	<!-- Scmcoc -->
-	<bean id="scmcocLogic" class="com.fms.logic.ScmcocLogicImpl">
+	<bean id="scmcocLogic" class="com.fms.logic.impl.ScmcocLogicImpl">
 		<property name="scmcocDao">
 			<ref bean="scmcocDao"/>
 		</property>
@@ -140,7 +140,7 @@
 	
 	<!-- Department -->
 	
-	<bean id="deptLogic" class="com.fms.logic.DeptLogicImpl">
+	<bean id="deptLogic" class="com.fms.logic.impl.DeptLogicImpl">
 		<property name="deptDao">
 			<ref bean="deptDao"/>
 		</property>
@@ -148,7 +148,7 @@
 	
 	<!-- Stock -->
 	
-	<bean id="stockLogic" class="com.fms.logic.StockLogicImpl">
+	<bean id="stockLogic" class="com.fms.logic.impl.StockLogicImpl">
 		<property name="stockDao">
 			<ref bean="stockDao"/>
 		</property>
@@ -157,7 +157,7 @@
 
 	<!-- Settlement -->
 	
-	<bean id="settLogic" class="com.fms.logic.SettlementLogicImpl">
+	<bean id="settLogic" class="com.fms.logic.impl.SettlementLogicImpl">
 		<property name="settlementDao">
 			<ref bean="settlementDao"/>
 		</property>

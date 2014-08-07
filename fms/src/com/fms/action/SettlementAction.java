@@ -21,7 +21,7 @@ public class SettlementAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private SettlementLogic settLogic;
+	private SettlementLogic settlementLogic;
 	/*********结算方式实体类*************/
 	private Settlement settlement;
 	private String ids;
@@ -32,7 +32,7 @@ public class SettlementAction extends BaseAction {
 	
 	
 	public String findAllSett(){
-		List<Settlement> settlements = this.settLogic.findAllSettlement(this.parse(searhStr));
+		List<Settlement> settlements = this.settlementLogic.findAllSettlement(this.parse(searhStr));
 		this.request.put("settlements", settlements);
 		return this.SUCCESS;
 	}
@@ -42,7 +42,7 @@ public class SettlementAction extends BaseAction {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Settlement settl = this.settLogic.findSettById(id);
+				Settlement settl = this.settlementLogic.findSettById(id);
 				if (null != settl) {
 					this.request.put("settl", settl);
 				}
@@ -61,7 +61,7 @@ public class SettlementAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			String findCode = this.settLogic.findSettByCode(code);
+			String findCode = this.settlementLogic.findSettByCode(code);
 			if(null!=findCode){
 				result.setSuccess(false);
 				result.setMsg("编码已使用过了！");
@@ -85,7 +85,7 @@ public class SettlementAction extends BaseAction {
 	 * @return
 	 */
 	public String saveSettl(){
-		this.settLogic.saveSettlement(setProperty(new Settlement()));
+		this.settlementLogic.saveSettlement(setProperty(new Settlement()));
 		return "save";
 	}
 	
@@ -97,7 +97,7 @@ public class SettlementAction extends BaseAction {
 		if (null != ids && !"".equals(ids)) {
 			String [] idArr = ids.split(",");
 			if(idArr!=null && idArr.length>0){
-				this.settLogic.delSettltById(idArr);
+				this.settlementLogic.delSettltById(idArr);
 			}
 		}
 		return "save";
@@ -120,15 +120,15 @@ public class SettlementAction extends BaseAction {
 	}
 	
 	
-	public SettlementLogic getSettLogic() {
-		return settLogic;
+
+
+	public SettlementLogic getSettlementLogic() {
+		return settlementLogic;
 	}
 
-
-	public void setSettLogic(SettlementLogic settLogic) {
-		this.settLogic = settLogic;
+	public void setSettlementLogic(SettlementLogic settlementLogic) {
+		this.settlementLogic = settlementLogic;
 	}
-
 
 	public Settlement getSettlement() {
 		return settlement;

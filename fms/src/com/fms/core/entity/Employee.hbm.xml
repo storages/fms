@@ -16,7 +16,7 @@
 		<property name="nickName" column="NICKNAME"/>
 		<property name="age" column="AGE"/>
 		<property name="gender" column="GENDER" />
-		<property name="DoB" column="DOB" />
+		<property name="birthday" column="BIRTHDAY" />
 		<property name="identityCard" column="IDENTITYCARD" />
 		<property name="nation" column="NATION" />
 		<property name="origo" column="ORIGO" />

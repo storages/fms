@@ -31,7 +31,7 @@ public class Employee extends BaseEntity {
 	/**
 	 * 年龄
 	 */
-	private Integer age = 18;
+	private Integer age;
 	/**
 	 * 性别【常量类：EmployeeGender】
 	 */
@@ -39,7 +39,7 @@ public class Employee extends BaseEntity {
 	/**
 	 * 出生日期【缩写】
 	 */
-	private Date DoB;
+	private Date birthday;  
 	/**
 	 * 身份证
 	 */
@@ -147,12 +147,14 @@ public class Employee extends BaseEntity {
 		this.gender = gender;
 	}
 
-	public Date getDoB() {
-		return DoB;
+
+
+	public Date getBirthday() {
+		return birthday;
 	}
 
-	public void setDoB(Date doB) {
-		DoB = doB;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 
 	public String getIdentityCard() {

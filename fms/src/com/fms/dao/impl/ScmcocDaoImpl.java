@@ -1,10 +1,11 @@
-﻿package com.fms.dao;
+﻿package com.fms.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.Scmcoc;
+import com.fms.dao.ScmcocDao;
 
 public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
 

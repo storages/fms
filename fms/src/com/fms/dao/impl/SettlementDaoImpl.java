@@ -1,10 +1,11 @@
-package com.fms.dao;
+package com.fms.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.Settlement;
+import com.fms.dao.SettlementDao;
 
 public class SettlementDaoImpl extends BaseDao implements SettlementDao {
 

@@ -1,4 +1,4 @@
-﻿package com.fms.dao;
+﻿package com.fms.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.AclUser;
+import com.fms.dao.AclUserDao;
 import com.fms.utils.MD5Util;
 
 /**

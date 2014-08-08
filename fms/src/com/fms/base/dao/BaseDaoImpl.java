@@ -25,7 +25,7 @@ import com.fms.base.entity.BaseEntity;
 /**
  * 数据访问基础类
  */
-public class BaseDaoImpl extends HibernateDaoSupport {
+public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 
 	protected void initDao() throws Exception {
 		super.initDao();

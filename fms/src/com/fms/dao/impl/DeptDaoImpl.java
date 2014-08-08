@@ -3,11 +3,11 @@ package com.fms.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fms.base.dao.BaseDao;
+import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.Department;
 import com.fms.dao.DeptDao;
 
-public class DeptDaoImpl extends BaseDao implements DeptDao {
+public class DeptDaoImpl extends BaseDaoImpl implements DeptDao {
 
 	public List<Department> findAllDept(String likeStr,Integer index,Integer length) {
 		String hql = "select a from Department a where 1=1 ";

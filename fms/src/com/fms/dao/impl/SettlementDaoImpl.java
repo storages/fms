@@ -3,11 +3,11 @@ package com.fms.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fms.base.dao.BaseDao;
+import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.Settlement;
 import com.fms.dao.SettlementDao;
 
-public class SettlementDaoImpl extends BaseDao implements SettlementDao {
+public class SettlementDaoImpl extends BaseDaoImpl implements SettlementDao {
 
 	public List<Settlement> findAllSettlement(String searhStr) {
 		String hql = "SELECT a FROM Settlement a ";

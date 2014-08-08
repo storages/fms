@@ -15,6 +15,7 @@
 	<property name="format_sql">true</property>
 
 	<!-- 实体类映射开始 -->
+	<mapping resource="com/fms/core/entity/Currencies.hbm.xml" /> 
 	<mapping resource="com/fms/core/entity/AclUser.hbm.xml" />
 	<mapping resource="com/fms/core/entity/BehaviorRecord.hbm.xml" />
 	<mapping resource="com/fms/core/entity/Department.hbm.xml" />

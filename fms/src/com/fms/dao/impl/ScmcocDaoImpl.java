@@ -3,11 +3,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fms.base.dao.BaseDao;
+import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.Scmcoc;
 import com.fms.dao.ScmcocDao;
 
-public class ScmcocDaoImpl extends BaseDao implements ScmcocDao {
+public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 
 	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
 		String hql = "select a from Scmcoc a where a.isCustom = ? ";

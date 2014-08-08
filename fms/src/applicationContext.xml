@@ -117,7 +117,11 @@
 			<ref bean="sessionFactory"/>
 		</property>
 	</bean>
-	
+	<bean id="currenciesDao" class="com.fms.dao.impl.CurrenciesDaoImpl">
+	 	 <property name="sessionFactory">
+	 		 <ref bean="sessionFactory" /> 
+	     </property>
+	  </bean>
 	
 	<!-- ======================Logic类=========================== -->
 	
@@ -153,7 +157,7 @@
 			<ref bean="stockDao"/>
 		</property>
 	</bean>
-
+	
 
 	<!-- Settlement -->
 	
@@ -162,7 +166,12 @@
 			<ref bean="settlementDao"/>
 		</property>
 	</bean>
-	
+	<!--  Currencies --> 
+	 <bean id="currenciesLogic" class="com.fms.logic.impl.CurrenciesLogicImpl">
+		 <property name="currenciesDao">
+		  <ref bean="currenciesDao" /> 
+		  </property>
+	  </bean>
 	
 	
 	<!-- ======================Action类=========================== -->
@@ -201,5 +210,11 @@
 			<ref bean="settlementLogic"/>
 		</property>
 	</bean>
-	
+	 
+	<!--  Currencies --> 
+	<bean id="currenciesAction" class="com.fms.action.CurrenciesAction" scope="prototype">
+		<property name="currenciesLogic">
+			<ref bean="currenciesLogic"/>
+		</property>
+	</bean>
 </beans>

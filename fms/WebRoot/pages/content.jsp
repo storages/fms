@@ -47,7 +47,7 @@
 				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?isCustom=true')">客户管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/dept_findAllDept.action')">部门管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/settl_findAllSett.action')">结算方式</a></span></li>
-				<li><span class="file"><a href="">交易货币管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/currencies_findAllCurrencies.action')">交易货币管理</a></span></li>
 				<li><span class="file"><a href="">计量单位管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/stock_findAllStock.action')">仓库管理</a></span></li>
 			</ul>

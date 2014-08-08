@@ -3,12 +3,12 @@ package com.fms.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fms.base.dao.BaseDao;
+import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.Department;
 import com.fms.core.entity.Stock;
 import com.fms.dao.StockDao;
 
-public class StockDaoImpl extends BaseDao implements StockDao {
+public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 
 	public List<Stock> findAllStock(String likeStr, Integer index,Integer length) {
 		String hql = "select a from Stock a where 1=1 ";

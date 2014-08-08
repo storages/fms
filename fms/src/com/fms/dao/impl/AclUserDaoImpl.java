@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.fms.base.dao.BaseDao;
+import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.AclUser;
 import com.fms.dao.AclUserDao;
 import com.fms.utils.MD5Util;
@@ -18,7 +18,7 @@ import com.fms.utils.MD5Util;
  * @author Administrator
  * 
  */
-public class AclUserDaoImpl extends BaseDao implements AclUserDao {
+public class AclUserDaoImpl extends BaseDaoImpl implements AclUserDao {
 
 	/*
 	 * (non-Javadoc)

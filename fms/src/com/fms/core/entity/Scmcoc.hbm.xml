@@ -19,7 +19,7 @@
 		<property name="networkLink" column="NETWORKLINK" />
 		<property name="address" column="ADDRESS" />
 		<property name="linkMan" column="LINKMAN" />
-		<property name="settlement" column="SETTLEMENT" />
+		<many-to-one name="settlement" class="Settlement" column="SETTLEMENT"/>
 		<property name="isCustom" column="ISCUSTOM" />
 		<property name="note" column="NOTE" />
 	</class>

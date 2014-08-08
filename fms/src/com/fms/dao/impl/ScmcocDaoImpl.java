@@ -10,7 +10,7 @@ import com.fms.dao.ScmcocDao;
 public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 
 	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
-		String hql = "select a from Scmcoc a where a.isCustom = ? ";
+		String hql = "select a from Scmcoc a left join fetch a.settlement where a.isCustom = ? ";
 		List param = new ArrayList();
 		param.add(isCustom);
 		if(null!=likeStr && !"".equals(likeStr)){

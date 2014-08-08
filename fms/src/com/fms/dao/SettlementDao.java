@@ -2,10 +2,11 @@ package com.fms.dao;
 
 import java.util.List;
 
+import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.Settlement;
 
 
-public interface SettlementDao {
+public interface SettlementDao  extends BaseDao{
 	/**
 	 * 查询所有的结算方式
 	 * @return

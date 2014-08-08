@@ -2,9 +2,10 @@ package com.fms.dao;
 
 import java.util.List;
 
+import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.Stock;
 
-public interface StockDao {
+public interface StockDao  extends BaseDao{
 
 	/**
 	 * 查询所有的仓库信息[分页]

@@ -2,9 +2,10 @@ package com.fms.dao;
 
 import java.util.List;
 
+import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.Department;
 
-public interface DeptDao {
+public interface DeptDao extends BaseDao {
 
 	/**
 	 * 查询所有的部门信息[分页]

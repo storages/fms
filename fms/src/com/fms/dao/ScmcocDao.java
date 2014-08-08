@@ -2,9 +2,10 @@
 
 import java.util.List;
 
+import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.Scmcoc;
 
-public interface ScmcocDao {
+public interface ScmcocDao extends BaseDao {
 	/**
 	 * 获取所有的供应商或客户[分页]
 	 * @return

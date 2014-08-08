@@ -1,5 +1,7 @@
 package com.fms.dao;
 
-public interface EmployeeDao  {
+import com.fms.base.dao.BaseDao;
+
+public interface EmployeeDao  extends BaseDao {
 
 }

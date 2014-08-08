@@ -2,9 +2,10 @@
 
 import java.util.List;
 
+import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.AclUser;
 
-public interface AclUserDao {
+public interface AclUserDao extends BaseDao{
 
 	/**
 	 * 用户登录（用户没有被禁用的才可以登录）

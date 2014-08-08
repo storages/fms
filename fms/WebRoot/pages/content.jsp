@@ -13,7 +13,7 @@
 			<%-- <img alt="公司标志" src="${pageContext.request.contextPath}/imges/ls_logo.png" style="width: 60px; height:50px; margin-top:5px; margin-bottom:5px;  margin-left:25px; float:left;"> --%>
 				<!--/.brand-->
 				
-				<ul style="float: right;height:100%; margin: 0px 5px 0px 0px; padding:0px; overflow: scroll;">
+				<ul style="float: right;height:auto; margin: 0px 5px 0px 0px; padding:0px;">
 					<li style="list-style: none; line-height:60px; color: white; font-size: 12px; float: left;">欢迎您：${u.loginName}</li>
 					<c:if test="${u.userFlag=='L'}">
 						<li style="list-style: none; line-height:60px; color: white; font-size: 12px;float: left;">　　您是【超级用户】　<a href="" style="color:white;">注销</a></li>
@@ -28,7 +28,7 @@
 	</div>
 </div>
 <div class="sidebar" id="sidebar" style="left: 2px; margin-top: 70px;">
-	<div id="main">
+	<div id="main" style=" height:100%; overflow:auto;">
 	
 	<p style="font-size:15px; font-weight: bold; margin:5px 0px 0px 5px;">联硕塑胶制品公司</p>
 	<ul id="browser" class="filetree">

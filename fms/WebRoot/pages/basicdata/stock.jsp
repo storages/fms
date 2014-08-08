@@ -58,9 +58,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 									<td class="center"><a href="#">${index.index+1}</a>
 									</td>
-									<td class="center">${stock.code}</td>
-									<td class="center">${stock.name}</td>
-									<td class="hidden-480 center">${stock.note}</td>
+									<td class="center">${stock.code}　</td>
+									<td class="center">${stock.name}　</td>
+									<td class="hidden-480 center">${stock.note}　</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toedit('${stock.id}')">修改</a>｜
 										<a href="javascript:void(0);" onclick="delSingleStock('${stock.id}')">删除</a>

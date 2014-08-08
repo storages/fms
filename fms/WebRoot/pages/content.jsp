@@ -49,7 +49,13 @@
 				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/settl_findAllSett.action')">结算方式</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/currencies_findAllCurrencies.action')">交易货币管理</a></span></li>
 				<li><span class="file"><a href="">计量单位管理</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/stock_findAllStock.action')">仓库管理</a></span></li>
+				<li  class="closed"><span class="folder directer">仓库设置</span>
+					<ul>
+						<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/stock_findAllStock.action')">仓库管理</a></span></li>
+						<li><span class="file"><a href="javascript:void(0);" onclick="">出库</a></span></li>
+						<li><span class="file"><a href="javascript:void(0);" onclick="">入库</a></span></li>
+					</ul>
+				</li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">职员管理</span>

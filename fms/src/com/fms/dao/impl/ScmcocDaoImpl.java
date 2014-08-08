@@ -21,7 +21,7 @@ public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 	}
 
 	public Scmcoc findScmcocById(String id) {
-		String hql = "select a from Scmcoc a where a.id = ? ";
+		String hql = "select a from Scmcoc a left join fetch a.settlement where a.id = ? ";
 		List param = new ArrayList();
 		param.add(id);
 		return (Scmcoc) this.findUniqueResult(hql, param.toArray());
@@ -43,7 +43,7 @@ public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 	}
 
 	public Scmcoc findScmcocByCode(String code) {
-		String hql = "select a from Scmcoc a where a.code = ? ";
+		String hql = "select a from Scmcoc a left join fetch a.settlement where a.code = ? ";
 		List param = new ArrayList();
 		param.add(code);
 		return (Scmcoc) this.findUniqueResult(hql, param.toArray());

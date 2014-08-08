@@ -111,11 +111,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function cancel(){
 		var id = $('#flag').val();
 		if(id==""){
-			$(":input[name='stock.code']").val("");
-			$(":input[name='stock.name']").val("");
+			$(":input[name='settl.code']").val("");
+			$(":input[name='settl.name']").val("");
 			$("#note").val("");
 		}else{
-			var url = "${pageContext.request.contextPath}/stock_findStockByid.action?ids="+id;
+			var url = "${pageContext.request.contextPath}/settl_findSettlById.action?ids="+id;
 			toMain(url);
 		}
 	}

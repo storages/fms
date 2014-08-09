@@ -126,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	if(isPass){
 		  	var str = "code="+parse(code)+
 		  			  "&name="+parse(name)+
-		  			  "&note="+parse(note)+
+		  			  "&note="+parse(note);
 		  	var submitUrl = "${pageContext.request.contextPath}/currencies_saveCurrencies.action?"+str;
 		  	if(isEdit!=""){
 		  		submitUrl = submitUrl +"&ids="+isEdit;

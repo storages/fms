@@ -100,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
 						</li>
 					</ul>
-					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag(${pageNums})">
+					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag('${pageNums}')">
 						<c:forEach begin="1" end="${pageNums}" var="pnum">
 							<c:if test="${pnum==currIndex}">
 								<option selected="selected" value="${pnum}">${pnum}页</option>
@@ -116,13 +116,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!--PAGE CONTENT ENDS-->
 	</div>
   </body>
+
+</html>
   	<script type="text/javascript">
 		function gototag(pageSize){
 			var n = $("#gonum option:selected").val();
 			gotoPage(n, pageSize);
 		}
 		
-		/**
+		/*
 	 * 转到指定页码
 	 * @param {Object} pageNum 要转到第几页        currIndex
 	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
@@ -130,7 +132,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function gotoPage(pageNum, pageSize) {
 		var likeStr = $("#search").val(); 
 		// 拼接URL
-		var url = "${pageContext.request.contextPath}/currencies_findAllCurrencies.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+";
+		var url = "${pageContext.request.contextPath}/currencies_findAllCurrencies.action?currIndex=" +
+		 pageNum + "&maxIndex="+ pageSize + 
+		 "&searchStr="+parse(likeStr);
 		// 在本窗口中显示指定URL的页面
 		toMain(url);
 	}
@@ -140,8 +144,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	
 	function toedit(id){
-		var url = "${pageContext.request.contextPath}/currencies_findCurrenciesById.action?ids="+id+";
+		var url = "${pageContext.request.contextPath}/currencies_findCurrenciesById.action?ids="+id;
 		toMain(url);
 	}
 </script>
-</html>

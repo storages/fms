@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  	<input type="hidden" id="flag" value="${dept.id}"/><!-- 为了判断是新增还是修改 -->
+  <iframe name="send"></iframe>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
     	<c:if test="${dept.id==null}">
 			<h5>基础资料＞＞员工＞＞新增</h5>
@@ -40,6 +40,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="row-fluid" id="mybox">
 		<div class="span12">
+		 <form action="<%=path %>/empl_save" target="send">
+  	<input type="hidden" id="flag" value="${dept.id}"/><!-- 为了判断是新增还是修改 -->
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">编码</td>
@@ -91,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 					<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">所属部门</td>
-					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss"><select><c:forEach items="${depts}" var="item"><option>${item.name}</option></c:forEach></select><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; width:100px;">  职位名称</td>
 					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
@@ -100,9 +102,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="dept.note" id="note">${dept.note}</textarea></td>
 				</tr>
 			</table>
+			</form>
 		</div>
 	</div> 
-	
 <script type="text/javascript">
 	function save(){
 		//编码
@@ -162,5 +164,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 	}
 </script>
+<script type="text/javascript" src="<%=path%>/js/page/employee-page.js"></script>
   </body>
 </html>

@@ -13,7 +13,14 @@ public class DeptLogicImpl implements DeptLogic {
 	public List<Department> findAllDept(String likeStr,Integer index,Integer length) {
 		return this.deptDao.findAllDept(likeStr, index, length);
 	}
-	
+	/**
+	 * 获取所有的部门  在增加员工的时候使用
+	 * @return
+	 */
+	public List<Department> findAllDep(){
+	        //	deptDao.find
+		return null;
+	}
 	
 	
 	public DeptDao getDeptDao() {

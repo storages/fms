@@ -68,6 +68,7 @@
 	src="${pageContext.request.contextPath}/js/dialog/dialog.js"></script>
 
 <script type="text/javascript">
+    var   Global='${pageContext.request.contextPath}';
 	$(function() {
 		$("#browser").treeview();
 		/* $("#add").click(function() {

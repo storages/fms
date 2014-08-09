@@ -34,7 +34,7 @@
 	<ul id="browser" class="filetree">
 		<li  class="closed"><span class="folder directer" >用户管理</span>
 			<ul>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/register.jsp')">添加用户</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/pages/register.jsp" onclick="toMain('${pageContext.request.contextPath}/pages/register.jsp')">添加用户</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="findAllUserByFlag('${u.userFlag}')">用户权限</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="">用户分组</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="">操作日志</a></span></li>
@@ -43,24 +43,24 @@
 		</li>
 		<li  class="closed"><span class="folder directer">基础资料</span>
 			<ul>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?isCustom=false')">供应商管理</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?isCustom=true')">客户管理</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/dept_findAllDept.action')">部门管理</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/settl_findAllSett.action')">结算方式</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/currencies_findAllCurrencies.action')">交易货币管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/scmcoc_findAllScmcoc.action?isCustom=false">供应商管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/scmcoc_findAllScmcoc.action?isCustom=true">客户管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/dept_findAllDept.action" >部门管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/settl_findAllSett.action" >结算方式</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/currencies_findAllCurrencies.action" >交易货币管理</a></span></li>
 				<li><span class="file"><a href="">计量单位管理</a></span></li>
 				<li  class="closed"><span class="folder directer">仓库设置</span>
 					<ul>
-						<li><span class="file"><a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/stock_findAllStock.action')">仓库管理</a></span></li>
-						<li><span class="file"><a href="javascript:void(0);" onclick="">出库</a></span></li>
-						<li><span class="file"><a href="javascript:void(0);" onclick="">入库</a></span></li>
+						<li><span class="file"><a href="javascript:void(0);" data-url="/stock_findAllStock.action" >仓库管理</a></span></li>
+						<li><span class="file"><a href="javascript:void(0);" >出库</a></span></li>
+						<li><span class="file"><a href="javascript:void(0);" >入库</a></span></li>
 					</ul>
 				</li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">职员管理</span>
 			<ul>
-				<li><span class="file"><a href="#">职员信息</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);"   data-url="/empl_employees.action">职员信息</a></span></li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">物料</span>
@@ -102,6 +102,11 @@
 <!--/.page-content-->
 
 <script type="text/javascript">
+  $("a[data-url]").click(function(){
+  var $tag=$(this);
+  var data_url= $tag.attr("data-url");
+  toMain(Global+data_url);
+  });
 	function findAllUserByFlag(flag){
 		if("P"==flag || flag==""){
 			alert("对不起，你没有权限查看！");

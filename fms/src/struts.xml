@@ -74,6 +74,12 @@
 			  <result name="save" type="chain">currencies_findAllcurrencies</result>
 		  </action>
 		
+			<!--  employee的Action配置  --> 
+		 
+		  <action name="empl_*"  class="com.fms.action.EmployeeAction" method="{1}">
+			  <result name="manager">/pages/empl/emplmanager.jsp</result> 
+			  <result name="addemp">/pages/empl/addemployee.jsp</result> 
+		  </action>
 		
 		
 		

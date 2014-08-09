@@ -72,6 +72,7 @@ public class ScmcocAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public String saveScmcoc() {
+		try{
 		Scmcoc scmcoc = new Scmcoc();
 		// 是客户
 		if ("true".equals(isCustom)) {
@@ -81,6 +82,10 @@ public class ScmcocAction extends BaseAction {
 			scmcoc.setIsCustom(Boolean.FALSE);
 		}
 		this.scmcocLogic.saveScmcoc(this.setProperty(scmcoc));
+		System.out.println("保存成功");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return "save";
 	}
 

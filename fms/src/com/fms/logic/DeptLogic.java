@@ -47,4 +47,9 @@ public interface DeptLogic {
 	 * 根据Id来删除部门信息
 	 */
 	public void delDeptById(String [] ids);
+	
+	/**
+	 * 查询所有的部门
+	 */
+	public List<Department> findDept();
 }

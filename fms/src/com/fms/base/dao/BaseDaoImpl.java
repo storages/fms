@@ -448,10 +448,10 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 			return;
 		}
 		if(obj instanceof BaseEntity && StringUtils.isNotBlank(((BaseEntity)obj).getId())){
-			((BaseEntity)obj).setModifyDate(new Date());
+			((BaseEntity)obj).setModifyDate(new Date());//设置修改时间
 			this.getHibernateTemplate().merge(obj);				
 		}else{
-			((BaseEntity)obj).setCreateDate(new Date());
+			((BaseEntity)obj).setCreateDate(new Date());//设置创建时间
 			this.getHibernateTemplate().save(obj);
 		}		
 

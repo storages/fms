@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
 						</li>
 					</ul>
-					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag(${pageNums})">
+					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag('${pageNums}')">
 						<c:forEach begin="1" end="${pageNums}" var="pnum">
 							<c:if test="${pnum==currIndex}">
 								<option selected="selected" value="${pnum}">${pnum}页</option>

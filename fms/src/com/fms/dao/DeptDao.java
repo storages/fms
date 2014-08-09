@@ -17,6 +17,15 @@ public interface DeptDao extends BaseDao {
 	public List<Department> findAllDept(String likeStr,Integer index,Integer length);
 	
 	/**
+	 * 查询所有的部门
+	 * @param likeStr
+	 * @param index
+	 * @param length
+	 * @return
+	 */
+	public List<Department> findAllDept();
+	
+	/**
 	 * 查询数据的条数
 	 * @param className
 	 * @param name

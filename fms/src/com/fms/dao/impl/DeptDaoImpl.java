@@ -56,4 +56,11 @@ public class DeptDaoImpl extends BaseDaoImpl implements DeptDao {
 		}
 		this.batchUpdateOrDelete(hql, param.toArray());
 	}
+
+	public List<Department> findAllDept() {
+		// TODO Auto-generated method stub
+		String hql = "select a from Department a where 1=1 ";
+		List param = new ArrayList();
+		return this.findListNoCache(hql);
+	}
 }

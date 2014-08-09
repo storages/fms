@@ -123,6 +123,11 @@
 	     </property>
 	  </bean>
 	
+	<bean id="employeeDao" class="com.fms.dao.impl.EmployeeDaoImpl">
+	<property name="sessionFactory">
+	 		 <ref bean="sessionFactory" /> 
+	     </property>
+	  </bean>
 	<!-- ======================Logic类=========================== -->
 	
 	<!-- AclUser -->
@@ -173,7 +178,11 @@
 		  </property>
 	  </bean>
 	
-	
+	 <bean id="employeeLogin" class="com.fms.logic.impl.EmployeeLogicImpl">
+		 <property name="employeeDao">
+		  <ref bean="employeeDao" /> 
+		  </property>
+	  </bean>
 	<!-- ======================Action类=========================== -->
 	
 	<!-- AclUser -->
@@ -216,5 +225,12 @@
 		<property name="currenciesLogic">
 			<ref bean="currenciesLogic"/>
 		</property>
+	</bean>
+	
+	<bean id="employeeAction" class="com.fms.action.EmployeeAction" scope="prototype">
+		<property name="emplLogic">
+			<ref bean="employeeLogin"/>
+		</property>
+		<property name="deptLogic"><ref bean="deptLogic" /></property>
 	</bean>
 </beans>

@@ -92,8 +92,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</c:forEach>
 						</select>日 <span style="color:red;">*</span>
 					</td>
+					<td class="captioncss" style="text-align: right;">结算方式</td>
+					<td class="hidden-480 addcss">
+						<select style="width:200px;" id="sett">
+							<c:forEach var="settl" items="${settlements}">
+								<c:if test="${scmcoc.settlement.name==settl.name}">
+									<option value="${settl.id}" selected="selected">${settl.name}</option>
+								</c:if>
+								<c:if test="${scmcoc.settlement.name!=settl.name}">
+									<option value="${settl.id}">${settl.name}</option>
+								</c:if>
+									<%-- <option value="${settl.id}">${settl.name}</option> --%>
+							</c:forEach>
+						</select> <span style="color:red;">*</span>
+					</td>
+				</tr>
+				<tr>
 					<td class="captioncss" style="text-align: right;">备注</td>
-					<td class="hidden-480 addcss"><input type="text" value="${scmcoc.note}" name="scmcoc.note" style="height:25px;"/></td>
+					<td colspan="3" class="hidden-480 addcss">
+						<textarea rows="4" cols="10" name="scmcoc.note" id="note" style="width:600px;">${scmcoc.note}</textarea>
+					</td>
+				</tr>
 				</tr>
 			</table>
 		</div>
@@ -124,6 +143,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var linkMan = $(":input[name='scmcoc.linkMan']").val(); 
 		//地址
 		var address = $(":input[name='scmcoc.address']").val(); 
+		//结算方式【取id,到后台查】
+		var settlementId = $("#sett option:selected").val(); 
 		//约定结算时间
 		//var endDate = $(":input[name='scmcoc.endDate']").val(); 
 		var endDate = $("#endDate option:selected").val(); 
@@ -170,6 +191,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			  "&networkLink="+parse(networkLink)+
 		  			  "&linkMan="+parse(linkMan)+
 		  			  "&address="+parse(address)+
+		  			  "&settlementId="+settlementId+
 		  			  "&endDate="+parse(endDate)+
 		  			  "&note="+parse(note)+
 		  			  "&isCustom=true";

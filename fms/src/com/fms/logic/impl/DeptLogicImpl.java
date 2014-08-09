@@ -59,6 +59,10 @@ public class DeptLogicImpl implements DeptLogic {
 	public void delDeptById(String [] ids) {
 		this.deptDao.delDeptById(ids);
 	}
+	public List<Department> findDept() {
+		// TODO Auto-generated method stub
+		return this.deptDao.findAllDept();
+	}
 
 	
 }

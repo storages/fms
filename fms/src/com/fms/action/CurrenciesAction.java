@@ -34,7 +34,7 @@ public class CurrenciesAction extends BaseAction {
 	private String currIndex;//当前页码
 	private String maxIndex;//每页显示最多条数
 	private Integer pageNums;//共有多少页
-	private String className="Scmcoc";//表名称
+	private String className="Currencies";//表名称
 	private String searchStr;//搜索条件
 	private static final Integer DEFAULT_PAGESIZE = 11; 
 
@@ -65,7 +65,7 @@ public class CurrenciesAction extends BaseAction {
 	 */
 	public String saveCurrencies() throws Exception{
 		this.currenciesLogic.saveCurrencies(this.setProperty(new Currencies()));
-		return className;
+		return "save";
 	}
 	/**
 	 * 根据编码来查询货币
@@ -103,9 +103,9 @@ public class CurrenciesAction extends BaseAction {
 		}
 		currencies.setCode(parse(code));
 		currencies.setName(parse(name));
-		currencies.setCreateDate(createDate);
-		currencies.setModifyDate(modifyDate);
-		currencies.setNote(parse(note));
+/*		currencies.setCreateDate(createDate); 兄弟，在这里不用手动去设置这两个时间，
+		currencies.setModifyDate(modifyDate); 因为，在BaseDao中已经帮你做了，你可以看一下SavaOrUpdate方法
+*/		currencies.setNote(parse(note));
 		return currencies;
 	}
 
@@ -127,7 +127,7 @@ public class CurrenciesAction extends BaseAction {
 			}
 		}
 		
-		return className;//是货币请求
+		return "save";//是货币请求
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class CurrenciesAction extends BaseAction {
 			}
 		}
 		
-		return className;//是货币请求
+		return "find";//是货币请求
 	}
 	
 	

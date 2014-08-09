@@ -60,18 +60,18 @@
 		</li>
 		<li  class="closed"><span class="folder directer">职员管理</span>
 			<ul>
-				<li><span class="file"><a href="">职员信息</a></span></li>
+				<li><span class="file"><a href="#">职员信息</a></span></li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">物料</span>
 			<ul>
-				<li><span class="file"><a href="">物料信息</a></span></li>
-				<li><span class="file"><a href="">物料分类</a></span></li>
+				<li><span class="file"><a href="#">物料信息</a></span></li>
+				<li><span class="file"><a href="#">物料分类</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">订单管理</span>
 			<ul>
-				<li><span class="file"><a href="">订单信息</a></span></li>
+				<li><span class="file"><a href="#">订单信息</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">销售管理</span>
@@ -81,9 +81,9 @@
 		</li>
 		<li class="closed"><span class="folder directer">报表查询</span>
 			<ul>
-				<li><span class="file"><a href="">原料耗用统计</a></span></li>
-				<li><span class="file"><a href="">订单统计</a></span></li>
-				<li><span class="file"><a href="">销售统计</a></span></li>
+				<li><span class="file"><a href="#">原料耗用统计</a></span></li>
+				<li><span class="file"><a href="#">订单统计</a></span></li>
+				<li><span class="file"><a href="#">销售统计</a></span></li>
 			</ul>
 		</li>
 		

@@ -18,11 +18,17 @@ public class Employee extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * 员工号
+	 */
+	private String code;
 
 	/**
 	 * 姓名
 	 */
 	private String name;
+	
 
 	/**
 	 * 别名
@@ -280,5 +286,15 @@ public class Employee extends BaseEntity {
 	public void setNote(String note) {
 		this.note = note;
 	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
 
 }

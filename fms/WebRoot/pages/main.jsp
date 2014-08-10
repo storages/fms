@@ -42,8 +42,6 @@
 <link
 	href="${pageContext.request.contextPath}/css/public/ace-skins.min.css"
 	rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/css/login/login.css"
-	rel="stylesheet" />
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/jquerytree/jquery.treeview.css"
@@ -51,9 +49,6 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/jquerytree/tree.css"
-	type="text/css"></link>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/public/dialog.css"
 	type="text/css"></link>
 
 <script type="text/javascript"
@@ -64,8 +59,6 @@
 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquerytree/jquery.treeview.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/dialog/dialog.js"></script>
 
 <script type="text/javascript">
     var   Global='${pageContext.request.contextPath}';

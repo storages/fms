@@ -1,19 +1,30 @@
 package com.fms.action;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 
 import com.fms.base.action.BaseAction;
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Department;
 import com.fms.core.entity.Employee;
 import com.fms.logic.DeptLogic;
 import com.fms.logic.EmployeeLogic;
 import com.fms.utils.AjaxResult;
+import com.url.ajax.json.JSONObject;
 
 public class EmployeeAction extends BaseAction {
 	/**
 	 * 
 	 */
-	Employee   empl;
+	private  Employee   empl;
+	/**
+	 * 判断是可以登录
+	 */
+	private  boolean isloginUser;
+	
+	private AclUser user;
+	
 	
 
 	private static final long serialVersionUID = 1L;
@@ -34,16 +45,22 @@ public class EmployeeAction extends BaseAction {
     	return "addemp";
     }	
     
-    public AjaxResult   saveEmpl(){
+    public void  saveEmpl() throws IOException{
+    	Writer  writer=	null;
          AjaxResult  result=new AjaxResult();
          try{
-        	 emplLogic.saveEmpl(empl);
-        	 result.setSuccess(false);
+        	 writer= response.getWriter();
+        	 emplLogic.saveEmplAndUser(empl, isloginUser, user);
+        	 result.setSuccess(true);
          }catch(Exception e){
         	 result.setSuccess(false);
+        	 result.setMsg(e.getMessage());
         	 e.printStackTrace();
          }
-    	return result;
+         JSONObject  json=new JSONObject(result);
+         writer.write(json.toString());
+         writer.flush();
+         writer.close();
     }
     
     

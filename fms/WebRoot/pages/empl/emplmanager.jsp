@@ -27,7 +27,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   <script type="text/javascript">
  $("#addEmpl").click(function(){
- alert(Global);
  toMain(Global+"/empl_addEmployee.action");
  });
   </script>

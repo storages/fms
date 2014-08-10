@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  <iframe name="send"></iframe>
+  <iframe name="send" style="display: none;"></iframe>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
     	<c:if test="${dept.id==null}">
 			<h5>基础资料＞＞员工＞＞新增</h5>
@@ -46,25 +46,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">编码</td>
 					<td class="hidden-480 addcss"><c:if test="${dept.id==null}"><input type="text" value="${dept.code}" name="dept.code" style="height:25px;"/><span style="color:red;">*</span></c:if>	<c:if test="${dept.id!=null}"><input type="text" value="${dept.code}" name="dept.code" style="height:25px;" disabled="disabled"/><span style="color:red;">*</span></c:if></td>
-				<td class="captioncss" style="text-align: right; width:100px;">头像</td>
-					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+				    <td class="captioncss" style="text-align: right; width:100px;">姓名</td>
+					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss"  colspan="2" rowspan="2">
+					<center>
+					<img width="100px" height="150px" alt="" src="<%=path%>/images/defaulttopimg.jpg"/><br/>
+					<button class="btn btn-small btn-danger" style="margin-top: 5px;" data-toggle="button" type="button"  title="上传头像">上传</button>
+					</center> 
+					</td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right; width:100px;">姓名</td>
-					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+				
 					<td class="captioncss" style="text-align: right; width:100px;">别名</td>
 					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+				    <td class="captioncss" style="text-align: right; width:100px;">年龄</td>
+					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right; width:100px;">年龄</td>
-					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+					
 					<td class="captioncss" style="text-align: right; width:100px;">性别</td>
-					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-				<tr>
-					<td class="captioncss" style="text-align: right; width:100px;">出身日期</td>
+					<td class="hidden-480 addcss"><select><option>男</option><option>女</option></select><span style="color:red;">*</span></td>
+				    <td class="captioncss" style="text-align: right; width:100px;">出身日期</td>
 					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; width:100px;">身份证</td>
+		     	    <td class="captioncss" style="text-align: right; width:100px;">身份证</td>
 					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
@@ -72,14 +76,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; width:100px;">籍贯</td>
 					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+				    <td class="captioncss" style="text-align: right; width:100px;">学历</td>
+					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right; width:100px;">学历</td>
-					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; width:100px;">家庭住址</td>
 					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-					<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">现住址</td>
 					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; width:100px;">联系电话</td>
@@ -90,16 +92,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td class="hidden-480 addcss"><input type="text"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; width:100px;"> 入职日期</td>
 					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-					<tr>
-					<td class="captioncss" style="text-align: right; width:100px;">所属部门</td>
+				    <td class="captioncss" style="text-align: right; width:100px;">所属部门</td>
 					<td class="hidden-480 addcss"><select><c:forEach items="${depts}" var="item"><option>${item.name}</option></c:forEach></select><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; width:100px;">  职位名称</td>
-					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right; width:100px;">备注</td>
-					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="dept.note" id="note">${dept.note}</textarea></td>
+					<td class="captioncss" style="text-align: right; width:100px;">  职位名称</td>
+					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+			    	<td class="captioncss" style="text-align: right; width:100px;">备注</td>
+					<td class="hidden-480 addcss" colspan="3"><textarea style="width: 450px;" rows="4" name="dept.note" id="note">${dept.note}</textarea></td>
 				</tr>
 			</table>
 			</form>

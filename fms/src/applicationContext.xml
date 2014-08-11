@@ -196,6 +196,9 @@
 		<property name="scmcocLogic">
 			<ref bean="scmcocLogic"/>
 		</property>
+		<property name="settlementLogic">
+			<ref bean="settlementLogic"/>
+		</property>
 	</bean>
 	
 	<!-- Department -->

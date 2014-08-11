@@ -25,19 +25,19 @@
 </global-results>
 
 		<!-- 跳转到登录页面 -->
-		<action name="loginAction_*" class="com.fms.action.AclUserAction" method="{1}">
+		<action name="loginAction_*" class="aclUserAction" method="{1}">
 			<result name="login">/pages/login.jsp</result>
 		</action>
 
 		<!-- AclUser的Action配置 -->
-		<action name="users_*" class="com.fms.action.AclUserAction" method="{1}">
+		<action name="users_*" class="aclUserAction" method="{1}">
 			<result name="edit">/pages/login.jsp</result>  
 			<result name="authority">/pages/aclusermanage/userAuthority.jsp</result>
 			<result name="del" type="chain">users_findAllUser</result>
 		</action>
 		
 		<!-- Scmcoc的Action配置 -->
-		<action name="scmcoc_*" class="com.fms.action.ScmcocAction" method="{1}">
+		<action name="scmcoc_*" class="scmcocAction" method="{1}">
 			<result name="success">/pages/scmcoc/scmcoc.jsp</result>
 			<result name="save" type="chain">scmcoc_findAllScmcoc</result>
 			<result name="findcoc">/pages/scmcoc/addscmcoc.jsp</result>
@@ -46,21 +46,21 @@
 		</action>
 		
 		<!-- Department的Action配置 -->
-		<action name="dept_*" class="com.fms.action.DeptAction" method="{1}">
+		<action name="dept_*" class="deptAction" method="{1}">
 			<result name="success">/pages/basicdata/department.jsp</result>
 			<result name="find">/pages/basicdata/adddept.jsp</result>
 			<result name="save" type="chain">dept_findAllDept</result>
 		</action>
 		
 		<!-- Stock的Action配置 -->
-		<action name="stock_*" class="com.fms.action.StockAction" method="{1}">
+		<action name="stock_*" class="stockAction" method="{1}">
 			<result name="success">/pages/basicdata/stock.jsp</result>
 			<result name="find">/pages/basicdata/addstock.jsp</result>
 			<result name="save" type="chain">stock_findAllStock</result>
 		</action>
 		
 		<!-- Settlement的Action配置 -->
-		<action name="settl_*" class="com.fms.action.SettlementAction" method="{1}">
+		<action name="settl_*" class="settlementAction" method="{1}">
 			<result name="success">/pages/basicdata/settlement.jsp</result>
 			<result name="find">/pages/basicdata/addsettlement.jsp</result>
 			<result name="save" type="chain">settl_findAllSett</result>
@@ -68,7 +68,7 @@
 		
 		<!--  currencies的Action配置  --> 
 		 
-		  <action name="currencies_*" class="com.fms.action.CurrenciesAction" method="{1}">
+		  <action name="currencies_*" class="currenciesAction" method="{1}">
 			  <result name="success">/pages/basicdata/currencies.jsp</result> 
 			  <result name="find">/pages/basicdata/addcurrencies.jsp</result> 
 			  <result name="save" type="chain">currencies_findAllcurrencies</result>
@@ -76,7 +76,7 @@
 		
 			<!--  employee的Action配置  --> 
 		 
-		  <action name="empl_*"  class="com.fms.action.EmployeeAction" method="{1}">
+		  <action name="empl_*"  class="employeeAction" method="{1}">
 			  <result name="manager">/pages/empl/emplmanager.jsp</result> 
 			  <result name="addemp">/pages/empl/addemployee.jsp</result> 
 		  </action>

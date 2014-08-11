@@ -69,11 +69,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 				<tr id="loginuserTR" style="display: none;">
 					<td class="captioncss" style="text-align: right; width:100px;">登录名<br></td>
-					<td class="hidden-480 addcss"><input type="text" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss"><input type="text" name="user.loginName" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				    <td class="captioncss" style="text-align: right; width:100px;">登录密码</td>
-					<td class="hidden-480 addcss"><input type="password"  name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss"><input type="password"  name="user.password" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 		     	    <td class="captioncss" style="text-align: right; width:100px;">确认密码</td>
-					<td class="hidden-480 addcss"><input type="password" name="dept.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss"><input type="password" name="passwordto" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
 					

@@ -178,10 +178,9 @@
 		  </property>
 	  </bean>
 	
-	 <bean id="employeeLogin" class="com.fms.logic.impl.EmployeeLogicImpl">
-		 <property name="employeeDao">
-		  <ref bean="employeeDao" /> 
-		  </property>
+	 <bean id="employeeLogic" class="com.fms.logic.impl.EmployeeLogicImpl">
+		 <property name="employeeDao"><ref bean="employeeDao" /> </property>
+		   <property name="userDao"><ref bean="userDao" /> </property>
 	  </bean>
 	<!-- ======================Action类=========================== -->
 	
@@ -228,9 +227,7 @@
 	</bean>
 	
 	<bean id="employeeAction" class="com.fms.action.EmployeeAction" scope="prototype">
-		<property name="emplLogic">
-			<ref bean="employeeLogin"/>
-		</property>
 		<property name="deptLogic"><ref bean="deptLogic" /></property>
+		<property name="emplLogic"><ref bean="employeeLogic"/></property>
 	</bean>
 </beans>

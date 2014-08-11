@@ -57,8 +57,8 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		//判断用户是否存在
 		List list = new ArrayList();
 		String hql = "SELECT a FROM AclUser a where a.userName=?";
-		list.add(user.getUserName());
 		if(isuser){
+			list.add(user.getUserName());
 			aclUser= (AclUser) userDao.findUniqueResult(hql, list.toArray());
 			if(null!=aclUser){
 				throw new Exception("登录用户名已存在");

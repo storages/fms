@@ -497,5 +497,20 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 			this.delete(iterator.next());
 		}
 	}
-
+	
+/*	*//**
+	 * 
+	 * @param pageIndex
+	 * @param pageRows
+	 * @param condition
+	 * @return
+	 *//*
+	 public List<T> findAll(int pageIndex,int pageRows,String condition){
+		 pageIndex=(pageIndex-1)*pageRows;
+		 if(condition!=null){
+			 return getMySession().createQuery("FROM "+clazz.getSimpleName()+" where "+condition ).setFirstResult(pageIndex).setMaxResults(pageRows).list();
+		 }
+	 return getMySession().createQuery("FROM "+clazz.getSimpleName()).setFirstResult(pageIndex).setMaxResults(pageRows).list();
+   }
+*/
 }

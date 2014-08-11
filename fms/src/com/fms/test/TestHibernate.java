@@ -30,7 +30,6 @@ public class TestHibernate {
 		session.getTransaction().begin();
 		AclUser user = new AclUser();
 		user.setLoginName("esdf");
-		user.setUserName("g");
 		session.save(user);
 		session.getTransaction().commit();
 	}
@@ -48,7 +47,6 @@ public class TestHibernate {
 		session.getTransaction().begin();
 		AclUser user = new AclUser();
 		user.setLoginName("esdf");
-		user.setUserName("g");
 		user.setPassword(MD5Util.encryptData("123456"));
 		System.out.println(user.getPassword());
 		session.save(user);

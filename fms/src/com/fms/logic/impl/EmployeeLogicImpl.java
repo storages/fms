@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Employee;
+import com.fms.core.entity.Scmcoc;
 import com.fms.dao.AclUserDao;
 import com.fms.dao.EmployeeDao;
 import com.fms.logic.EmployeeLogic;
@@ -28,7 +29,9 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	}
 
 
-
+	/*public List<Scmcoc> findAllEmpl(Boolean isCustom,String likeStr,Integer index,Integer length) {
+		return employeeDao.findAllEmpl(isCustom,likeStr,index,length);
+	}*/
 
 
 	public void updateEmpl(Employee modal) {
@@ -58,7 +61,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		List list = new ArrayList();
 		String hql = "SELECT a FROM AclUser a where a.userName=?";
 		if(isuser){
-			list.add(user.getUserName());
+			list.add(user.getLoginName());
 			aclUser= (AclUser) userDao.findUniqueResult(hql, list.toArray());
 			if(null!=aclUser){
 				throw new Exception("登录用户名已存在");
@@ -67,6 +70,8 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		//保存员工
 		employeeDao.saveOrUpdate(empl);
 		if(isuser){
+			user.setUserFlag("P");//普通
+			user.setEmployee(empl);
 			userDao.saveAclUser(user);
 		}
 		

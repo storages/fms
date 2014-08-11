@@ -25,7 +25,13 @@ $(function(){
 	document.getElementById("saveEmpframe").onload=function(){
 		 var thisDocument=this.contentDocument||this.contentWindow.document; 
 	      var html=  $(thisDocument.body).find("pre").html();
-		   alert(html);
+	       var json= jQuery.parseJSON(html);
+	       if(json.success){
+	    	   alert("保存成功");
+	       }else{
+	    	   alert("保存失败"+json.msg);
+	       }
+
 	};
 	
 $("#isloginUser").click(function(){

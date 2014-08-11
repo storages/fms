@@ -30,6 +30,10 @@ public class AclUser extends BaseEntity {
 	 */
 	private String userName = null;
 	/**
+	 * 员工
+	 */
+	private Employee   employee;
+	/**
 	 * 最后登录日期
 	 */
 	private Date lastlogin = null;
@@ -60,6 +64,13 @@ public class AclUser extends BaseEntity {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 	public Date getLastlogin() {
 		return lastlogin;

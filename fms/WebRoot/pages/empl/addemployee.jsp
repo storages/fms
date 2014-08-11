@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td class="hidden-480 addcss"><c:if test="${dept.id==null}"><input type="text" value="${dept.code}" name="empl.code" style="height:25px;"/><span style="color:red;">*</span></c:if>	<c:if test="${dept.id!=null}"><input type="text" value="${dept.code}" name="dept.code" style="height:25px;" disabled="disabled"/><span style="color:red;">*</span></c:if></td>
 				    <td class="captioncss" style="text-align:  right; width:100px;">姓名</td>
 					<td class="hidden-480 addcss" ><input type="text"  name="empl.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="hidden-480 addcss" rowspan="2" style="vertical-align:middle;"><input name="isloginUser" id="isloginUser" type="checkbox" />登录用户</td>
+					<td class="hidden-480 addcss" rowspan="2" style="vertical-align:middle;"><input name="isloginUser" value="true" id="isloginUser" type="checkbox" />登录用户</td>
 					<td class="hidden-480 addcss"  colspan="1" rowspan="2">
 					<center>
 					<img width="100px" height="150px" alt="" src="<%=path%>/images/defaulttopimg.jpg"/><br/>

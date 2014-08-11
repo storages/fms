@@ -32,6 +32,8 @@ public class EmployeeAction extends BaseAction {
     private	EmployeeLogic  emplLogic;
 	
 	public String employees(){
+		emplLogic.loadEmployee();
+		
 		return "manager";
 	}
 	

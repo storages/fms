@@ -17,5 +17,7 @@
 		<property name="lastlogin" column="LASTLOGIN" />
 		<property name="userFlag" column="USERFLAG" />
 		<property name="isForbid" column="ISFORBID" />
+	    <!--  员工一对一单项关联配置-->
+		<many-to-one name="employee" column="EMPLOYEEID" class="Employee" unique="true" />
 	</class>
 </hibernate-mapping>

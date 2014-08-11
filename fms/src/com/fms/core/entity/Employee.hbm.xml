@@ -11,7 +11,7 @@
 		<property name="createDate" column="CREATEDATE"/>
 		<property name="modifyDate" column="MODIFYDATE"/>
 		
-		
+		<property name="code" column="CODE"/>
 		<property name="name" column="NAME"/>
 		<property name="nickName" column="NICKNAME"/>
 		<property name="age" column="AGE"/>

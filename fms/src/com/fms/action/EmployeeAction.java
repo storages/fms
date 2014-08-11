@@ -28,8 +28,8 @@ public class EmployeeAction extends BaseAction {
 	
 
 	private static final long serialVersionUID = 1L;
-	DeptLogic   deptLogic;
-	EmployeeLogic  emplLogic;
+    private	DeptLogic   deptLogic;
+    private	EmployeeLogic  emplLogic;
 	
 	public String employees(){
 		return "manager";
@@ -107,6 +107,22 @@ public class EmployeeAction extends BaseAction {
 
 	public void setDeptLogic(DeptLogic deptLogic) {
 		this.deptLogic = deptLogic;
+	}
+
+	public boolean isIsloginUser() {
+		return isloginUser;
+	}
+
+	public void setIsloginUser(boolean isloginUser) {
+		this.isloginUser = isloginUser;
+	}
+
+	public AclUser getUser() {
+		return user;
+	}
+
+	public void setUser(AclUser user) {
+		this.user = user;
 	}
 
 

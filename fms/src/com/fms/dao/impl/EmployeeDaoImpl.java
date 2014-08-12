@@ -12,10 +12,9 @@ import com.fms.dao.EmployeeDao;
 public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao {
 	
 	
-	public List<Employee> findAllEmpl(Boolean isCustom,String likeStr,Integer index,Integer length) {
+	public List<Employee> findAllEmpl(String likeStr,Integer index,Integer length) {
 		String hql = "select a from Employee a ";
 		List param = new ArrayList();
-		param.add(isCustom);
 		if(null!=likeStr && !"".equals(likeStr)){
 			hql+=" and a.name like '%"+likeStr+"%'";
 			//param.add("'%"+ likeStr +"%'");

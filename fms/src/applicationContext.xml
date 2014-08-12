@@ -233,4 +233,6 @@
 		<property name="deptLogic"><ref bean="deptLogic" /></property>
 		<property name="emplLogic"><ref bean="employeeLogic"/></property>
 	</bean>
+	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils" >
+	</bean>
 </beans>

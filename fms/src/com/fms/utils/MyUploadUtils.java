@@ -4,17 +4,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.fms.base.action.BaseAction;
 import com.opensymphony.xwork2.ActionSupport;
+import com.url.ajax.json.JSONObject;
 /**
  * 文件上传工具
  * @author Administrator
@@ -33,22 +37,35 @@ public class MyUploadUtils extends ActionSupport {
     
     
     
-    public  void  uploadAjax() throws Exception{
-    	//InputStream  is=new FileInputStream(uploadFile);
+    public  void  uploadAjax() {
     	HttpServletRequest request = ServletActionContext.getRequest();
-   //	 String path = scheme+"://"+request.getServerName()+":"+request.getServerPort()+"/photo/";
-
+    	HttpServletResponse response= ServletActionContext.getResponse();
+    	AjaxResult result=new AjaxResult();
+    	Writer writer=null; 
+     try{
+    	 writer= response.getWriter();
     	String scheme= request.getSession().getServletContext().getRealPath("/");
-    	String projectname= request.getContextPath();
-    	scheme.replace(projectname, "webapps");
+    	String projectname= request.getContextPath().replace("/", "\\");
+    	scheme=scheme.replace(projectname, "")+"photo\\";
     	String  uploadPath="";//文件上传目录
-    	String  imageName=scheme+"photo/"+UUID.randomUUID().toString()+".jpg";
-    	File  tofile=new File(uploadPath,imageName);
-    	OutputStream os = new FileOutputStream(tofile);// 创建一个输出流
-    	//byte []buffer=new byte[1024];//设置缓存
-    	//int length=0;
-    	FileUtils.copyDirectory(uploadFile, tofile);
-    	
+    	String  imageName=UUID.randomUUID().toString()+".jpg";
+    	File  tofile=new File(scheme,imageName);
+    	FileUtils.copyFile(uploadFile, tofile);
+    	result.setSuccess(true);
+    	result.setMsg(imageName);
+            }catch(Exception e){
+            	result.setSuccess(false);
+            	result.setMsg(e.getMessage());
+	      System.out.println(e.getMessage());
+             }  
+     JSONObject json=new JSONObject(result);
+     try {
+		writer.write(json.toString());
+		writer.flush();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
     }
 
 	public File getUploadFile() {

@@ -32,8 +32,8 @@ public class EmployeeAction extends BaseAction {
     private	EmployeeLogic  emplLogic;
 	
 	public String employees(){
-		emplLogic.loadEmployee();
-		
+		 List list =emplLogic.findAllEmpl(null, -1, -1);
+		 request.put("empls", list);
 		return "manager";
 	}
 	

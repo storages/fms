@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Department;
@@ -44,6 +48,10 @@ public class EmployeeAction extends BaseAction {
     public String addEmployee(){
     	 List<Department>  depts=deptLogic.findDept();
     	 request.put("depts", depts);
+    	 HttpServletRequest req = ServletActionContext.getRequest();
+    	 String scheme = req.getScheme();
+    	 String path = scheme+"://"+req.getServerName()+":"+req.getServerPort()+"/photo/";
+    	 req.setAttribute("loadPath",path);
     	return "addemp";
     }	
     

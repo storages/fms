@@ -37,6 +37,19 @@ $(function(){
 	       }
 
 	};
+	document.getElementById("uploadimgframe").onload=function(){
+		 var thisDocument=this.contentDocument||this.contentWindow.document; 
+	      var html=  $(thisDocument.body).find("pre").html();
+	       var json= jQuery.parseJSON(html);
+	       if(json.success){
+	    	   $("#photoImg").attr("src",domloadPath+json.msg);
+	    	   $("#emplphoto").val(json.msg);
+	    	   alert("上传成功"+json.msg);
+	       }else{
+	    	   alert("上传失败"+json.msg);
+	       }
+
+	};
 	
 $("#isloginUser").click(function(){
 	var $tag=$(this);

@@ -81,7 +81,9 @@
 			  <result name="addemp">/pages/empl/addemployee.jsp</result> 
 		  </action>
 		
-		
+		<action name="myupload_*" class="uploadUtils" method="{1}">
+		<param name="path">/upload</param>
+		</action>
 		
 		
 	</package>

@@ -22,6 +22,10 @@ $(function(){
 		//检索字段
 		$("form:first").submit();
 	});
+	$("#fileUpload").click(function(){
+		//xxx
+		$("form[name='uploadImg']").submit();
+	});
 	document.getElementById("saveEmpframe").onload=function(){
 		 var thisDocument=this.contentDocument||this.contentWindow.document; 
 	      var html=  $(thisDocument.body).find("pre").html();

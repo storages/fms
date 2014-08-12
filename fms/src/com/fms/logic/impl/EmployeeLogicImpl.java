@@ -29,9 +29,9 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	}
 
 
-	/*public List<Scmcoc> findAllEmpl(Boolean isCustom,String likeStr,Integer index,Integer length) {
-		return employeeDao.findAllEmpl(isCustom,likeStr,index,length);
-	}*/
+	public List<Employee> findAllEmpl(String likeStr,Integer index,Integer length) {
+		return employeeDao.findAllEmpl(likeStr,index,length);
+	}
 
 
 	public void updateEmpl(Employee modal) {

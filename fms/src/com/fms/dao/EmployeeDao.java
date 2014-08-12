@@ -7,6 +7,6 @@ import com.fms.core.entity.Employee;
 
 public interface EmployeeDao  extends BaseDao {
 	
-	public List<Employee> findAllEmpl(Boolean isCustom,String likeStr,Integer index,Integer length) ;
+	public List<Employee> findAllEmpl(String likeStr,Integer index,Integer length) ;
 
 }

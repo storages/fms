@@ -20,6 +20,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<script type="text/javascript">
+	var domloadPath='${loadPath}';
+	</script>
  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
   <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
@@ -56,9 +59,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td class="hidden-480 addcss" rowspan="2" style="vertical-align:middle;"><input name="isloginUser" value="true" id="isloginUser" type="checkbox" />登录用户</td>
 					<td class="hidden-480 addcss"  colspan="1" rowspan="2">
 					<center>
-					<img width="100px" height="150px" alt="" src="<%=path%>/images/defaulttopimg.jpg"/><br/>
+					<img width="100px" height="150px" id="photoImg" alt="" src="<%=path%>/images/defaulttopimg.jpg"/><br/>
 					<button class="btn btn-small btn-danger" style="margin-top: 5px;" data-toggle="button" type="button"  title="上传头像">上传</button>
-					<input type="hidden" name="empl.photo"/>
+					<input type="hidden" id="emplphoto" name="empl.photo"/>
 					</center> 
 					</td>
 				</tr>

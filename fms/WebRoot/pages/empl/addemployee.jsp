@@ -30,6 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </script>
   <body>
   <iframe name="empframe" id="saveEmpframe" style="display: none;"></iframe>
+    <iframe name="imgframe" id="uploadimgframe" style="display: none;"></iframe>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
     	<c:if test="${dept.id==null}">
 			<h5>基础资料＞＞员工＞＞新增</h5>
@@ -117,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td class="captioncss" style="text-align: right; width:100px;"> 入职日期</td>
 					<td class="hidden-480 addcss"><input type="text" name="empl.entryDate" style="height:25px;" id="entryDate" readonly="readonly" /><span style="color:red;">*</span></td>
 				    <td class="captioncss" style="text-align: right; width:100px;">所属部门</td>
-					<td class="hidden-480 addcss"><select name="empl.department.id"><c:forEach items="${depts}" var="item"><option>${item.name}</option></c:forEach></select><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss"><select name="empl.department.id"><c:forEach items="${depts}" var="item"><option value="${item.id}">${item.name}</option></c:forEach></select><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">  职位名称</td>
@@ -129,6 +130,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</form>
 		</div>
 	</div> 
+	<div></div>
+	<div id="ulploddiv">
+	    <div> 
+	    <form name="uploadImg" action="<%=path%>/myupload_uploadAjax.action" method="post" target="imgframe" enctype="multipart/form-data">
+	    <ul>
+	    <li>选择上传文件 : <input name="uploadFile" type="file"/></li>
+	    <li><button class="btn btn-small btn-danger pull-left" id="fileUpload" data-toggle="button" type="button" >上传</button></li>
+	    </ul>
+	    </form>
+	    </div>
+	</div>
 <script type="text/javascript" src="<%=path%>/js/page/employee-page.js"></script>
   </body>
 </html>

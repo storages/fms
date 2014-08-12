@@ -27,10 +27,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
-		<h5>基础资料＞＞客户管理</h5>
+		<h5>基础资料＞＞员工管理</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
-		<span class="">客户名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
+		<span class="">员工名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 	</div> 
 	<div class="row-fluid" >
@@ -45,39 +45,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<th class="center" style="width:30px;">选择</th>
 								<th class="center">序号</th>
 								<th class="center">编号</th>
-								<th class="center">客户名称</th>
-								<th class="hidden-480 center">客户联系电话</th>
-								<th class="hidden-phone center">客户网络联系方式</th>
-								<th class="hidden-480 center">客户联系人</th>
-								<th class="hidden-480 center">客户地址</th>
-								<th class="hidden-480 center">结算方式</th>
-								<th class="hidden-480 center">约定结算日期</th>
-								<th class="hidden-480 center">备注</th>
+								<th class="center">员工名称</th>
+								<th class="hidden-480 center">部门名称</th>
+								<th class="hidden-phone center">性别</th>
+								<th class="hidden-480 center">联系电话</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>
 
 						<tbody>
-							<c:forEach var="scmcoc" items="${scmcocs}" varStatus="index" step="1">
+							<c:forEach var="item" items="${empls}" varStatus="index" step="1">
 								<tr>
 									<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-										<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+										<input type="checkbox" value="${item.id}" name="sid" style="width:30px;"/>
 									</td>
 
 									<td class="center"><a href="#">${index.index+1}</a>
 									</td>
-									<td class="center">${scmcoc.code}</td>
-									<td class="center">${scmcoc.name}</td>
-									<td class="hidden-480 center">${scmcoc.linkPhone}　</td>
-									<td class="hidden-480 center">${scmcoc.networkLink}　</td>
-									<td class="hidden-480 center">${scmcoc.linkMan}　</td>
-									<td class="hidden-480 center">${scmcoc.address}　</td>
-									<td class="hidden-480 center">${scmcoc.settlement.name}　</td>
-									<td class="hidden-480 center">每月${scmcoc.endDate}日</td>
-									<td class="hidden-480 center">${scmcoc.note}　</td>
+									<td class="center">${item.code}</td>
+									<td class="center">${item.name}</td>
+									<td class="hidden-480 center">${item.department.name}　</td>
+									<td class="hidden-480 center">${item.gender}　</td>
+									<td class="hidden-480 center">${item.linkPhone}　</td>
 									<td class="center">
-										<a href="javascript:void(0);" onclick="toedit('${scmcoc.id}')">修改</a>｜
-										<a href="javascript:void(0);" onclick="delSingleScmcoc('${scmcoc.id}','true')">删除</a>
+										<a href="javascript:void(0);" onclick="toedit('${item.id}')">修改</a>｜
+										<a href="javascript:void(0);" onclick="delSingleScmcoc('${item.id}','true')">删除</a>
 									</td>
 								</tr>
 							</c:forEach>

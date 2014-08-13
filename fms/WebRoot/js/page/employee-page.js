@@ -81,7 +81,8 @@ $(function(){
 	       if(json.success){
 	    	   $("#photoImg").attr("src",domloadPath+json.msg);
 	    	   $("#emplphoto").val(json.msg);
-	    	   alert("上传成功"+json.msg);
+	    	   closecanvas();
+	    	   alert("上传成功");
 	       }else{
 	    	   alert("上传失败"+json.msg);
 	       }
@@ -100,6 +101,34 @@ $("#isloginUser").click(function(){
 		tr.css("display","none");	
 	}
 });
+
+function initEmpColums(){
+	//获取所有input
+	var gender $("#gender"); //性别
+	var age=$("#age");//年龄
+	var nation =$("#nation");//名族
+	var diploma=$("diploma");//学历
 	
+	var code=$("#code"); //登录名
+	var name=$("#name");//名称
+	var isloginUser=$("#isloginUser");//是否用户
+	var photoImg=$("#photoImg");//头像
+	var nickName=$("#nickName");
+	var loginName=$("#loginName");
+	var password=$("#password");
+	var passwordto=$("#passwordto");
+	var identityCard=$("#passwordto");
+	var origo=$("#origo");
+	var address=$("#address");
+	var currentResidence=$("#currentResidence");
+	var linkPhone=$("#linkPhone");
+	var networkLink=$("#networkLink");
+	var positionName=$("#positionName");
+	var note=$("#note");
+	var birthday=$("#birthday"); 
+	var entryDate=$("#entryDate"); 
+	  
+	
+};	
 	
 });

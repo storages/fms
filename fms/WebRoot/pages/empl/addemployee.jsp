@@ -58,7 +58,7 @@
 		<input class="btn btn-small btn-danger pull-left" data-toggle="button"
 			type="button" value="保存" id="saveEmpl" />
 		<button class="btn btn-small btn-danger pull-left"
-			data-toggle="button" type="button" onclick="cancel()" title="恢复初始状态">取消</button>
+			data-toggle="button" type="button" id="empreset" title="恢复初始状态">取消</button>
 	</div>
 	<div class="row-fluid" id="mybox">
 		<div class="span12">
@@ -71,24 +71,20 @@
 					style=" font-size: 12px;">
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">员工号</td>
-						<td class="hidden-480 addcss"><c:if test="${dept.id==null}">
-								<input type="text" value="${dept.code}" name="empl.code"
-									style="height:25px;" />
-								<span style="color:red;">*</span>
-							</c:if> <c:if test="${dept.id!=null}">
-								<input type="text" value="${dept.code}" name="dept.code"
+						<td class="hidden-480 addcss">
+								<input type="text" id="code" value="${empl.code}" name="empl.code"
 									style="height:25px;" disabled="disabled" />
 								<span style="color:red;">*</span>
-							</c:if>
 						</td>
 						<td class="captioncss" style="text-align:  right; width:100px;">姓名</td>
-						<td class="hidden-480 addcss"><input type="text"
-							name="empl.name" id="names" style="height:25px;" /><span
+						<td class="hidden-480 addcss">
+						<input type="text"
+							name="empl.name" id="name" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="hidden-480 addcss" rowspan="2"
-							style="vertical-align:middle;"><input name="isloginUser"
-							value="true" id="isloginUser" type="checkbox" />登录用户</td>
+							style="vertical-align:middle;">
+							<input name="isloginUser" value="true"  id="isloginUser" type="checkbox" />登录用户</td>
 						<td class="hidden-480 addcss" colspan="1" rowspan="2">
 							<center>
 								<img width="100px" height="150px" id="photoImg" alt=""
@@ -102,36 +98,36 @@
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">别名</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.nickName" id="names" style="height:25px;" /><span
+							name="empl.nickName" id="nickName" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">年龄</td>
-						<td class="hidden-480 addcss"><select name="empl.age"
-							id="age"></select><span style="color:red;">*</span>
+						<td class="hidden-480 addcss"><select id="age" name="empl.age"
+							id="age"><option value="-1">请选择</option></select><span style="color:red;">*</span>
 						</td>
 					</tr>
 					<tr id="loginuserTR" style="display: none;">
 						<td class="captioncss" style="text-align: right; width:100px;">登录名<br>
 						</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="user.loginName" id="names" style="height:25px;" /><span
+							name="user.loginName" id="loginName" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">登录密码</td>
 						<td class="hidden-480 addcss"><input type="password"
-							name="user.password" id="names" style="height:25px;" /><span
+							name="user.password" id="password" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">确认密码</td>
 						<td class="hidden-480 addcss"><input type="password"
-							name="passwordto" id="names" style="height:25px;" /><span
+							name="passwordto" id="passwordto" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 					</tr>
 					<tr>
 
 						<td class="captioncss" style="text-align: right; width:100px;">性别</td>
-						<td class="hidden-480 addcss"><select name="empl.gender"><option>男</option>
+						<td class="hidden-480 addcss"><select id="gender" name="empl.gender"><option>男</option>
 								<option>女</option>
 						</select><span style="color:red;">*</span>
 						</td>
@@ -142,13 +138,14 @@
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">身份证</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.identityCard" style="height:25px;" /><span
+							name="empl.identityCard" id="identityCard" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 					</tr>
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">名族</td>
-						<td class="hidden-480 addcss"><select name="empl.nation">
+						<td class="hidden-480 addcss"><select id="nation" name="empl.nation">
+						<option value="-1">请选择</option>
 								<option value="汉族">汉族</option>
 								<option value="蒙古族">蒙古族</option>
 								<option value="回族">回族</option>
@@ -208,11 +205,12 @@
 						</select>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">籍贯</td>
-						<td class="hidden-480 addcss"><input type="text"
+						<td class="hidden-480 addcss"><input type="text" id="origo"
 							name="empl.origo" style="height:25px;" /><span style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">学历</td>
-						<td class="hidden-480 addcss"><select name="empl.diploma">
+						<td class="hidden-480 addcss"><select id="diploma" name="empl.diploma">
+						       <option value="-1">请选择</option>
 								<option value="xx">小学</option>
 								<option value="cg">初中</option>
 								<option value="gz">中专/高中</option>
@@ -226,24 +224,24 @@
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">家庭住址</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.address" id="names" style="height:25px;" /><span
+							name="empl.address" id="address" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">现住址</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.currentResidence" id="names" style="height:25px;" /><span
+							name="empl.currentResidence" id="currentResidence" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">联系电话</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.linkPhone" id="names" style="height:25px;" /><span
+							name="empl.linkPhone" id="linkPhone" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 					</tr>
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">网络联系方式</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.networkLink" id="names" style="height:25px;" /><span
+							name="empl.networkLink" id="networkLink" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">
@@ -253,7 +251,7 @@
 							readonly="readonly" /><span style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">所属部门</td>
-						<td class="hidden-480 addcss"><select
+						<td class="hidden-480 addcss"><select id="department"
 							name="empl.department.id"><c:forEach items="${depts}"
 									var="item">
 									<option value="${item.id}">${item.name}</option>
@@ -265,7 +263,7 @@
 						<td class="captioncss" style="text-align: right; width:100px;">
 							职位名称</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.positionName" id="names" style="height:25px;" /><span
+							name="empl.positionName" id="positionName" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">备注</td>
@@ -286,10 +284,8 @@
 				<ul>
 					<li><span>选择照片 :</span> <input style="height: 30px; width: 150px;" name="uploadFile" type="file" /></li>
 					<li>
-					
 					        <button class="btn btn-small btn-danger pull-left buts1" id="fileUpload" data-toggle="button" type="button">确定</button>
 							<button class="btn btn-small btn-danger pull-right buts2"  id="closecanvas" data-toggle="button" type="button">取消</button>
-					
 					</li>
 				</ul>
 			</form>

@@ -22,8 +22,6 @@ import java.util.Date;
 
 import java.util.List;
 
-import javax.swing.JFileChooser;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -267,38 +265,6 @@ public class ReadExcelUtil {
 		}
 
 		return str.substring(0, length);
-
-	}
-
-	
-	/**
-	 * 测试
-	 * @param args
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception {
-		
-		JFileChooser jfc = new JFileChooser();
-		
-		jfc.showOpenDialog(null);  
-		
-		File selectFile = jfc.getSelectedFile(); 
-
-		String[][] result = getData(selectFile, 1);
-
-		int rowLength = result.length;
-
-		for (int i = 0; i < rowLength; i++) {
-
-			for (int j = 0; j < result[i].length; j++) {
-
-				System.out.print(result[i][j] + "\t\t");
-
-			}
-
-			System.out.println();
-
-		}
 
 	}
 }

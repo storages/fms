@@ -36,17 +36,21 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 
 	public void updateEmpl(Employee modal) {
 		// TODO Auto-generated method stub
-		
 	}
 
 
-
-
-
-	public void deleteEmpl(int id) {
+	public void deleteEmpl(String id) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public Employee getEmplById(String id) {
+		// TODO Auto-generated method stub
+		return (Employee) employeeDao.get(Employee.class, id);
+	}
+	
+
+
 	/**
 	 * 创建员工并且创建用户
 	 * @param empl
@@ -98,7 +102,8 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	public void setUserDao(AclUserDao userDao) {
 		this.userDao = userDao;
 	}
-	
+
+
 
 
 

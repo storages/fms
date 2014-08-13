@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="hidden-480 center">${item.gender}　</td>
 									<td class="hidden-480 center">${item.linkPhone}　</td>
 									<td class="center">
-										<a href="javascript:void(0);" onclick="toedit('${item.id}')">修改</a>｜
+										<a href="javascript:void(0);"  edit-emp="${item.id}">修改</a>｜
 										<a href="javascript:void(0);" onclick="delSingleScmcoc('${item.id}','true')">删除</a>
 									</td>
 								</tr>
@@ -119,6 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!--PAGE CONTENT ENDS-->
 	</div>
   </body>
+  <script type="text/javascript" src="<%=path%>/js/page/emplmanager-page.js"> </script>
 	<script type="text/javascript">
 	/**	function gototag(pageSize){
 			var n = $("#gonum option:selected").val();

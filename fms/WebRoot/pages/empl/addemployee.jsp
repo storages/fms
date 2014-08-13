@@ -25,6 +25,16 @@
 	-->
 <script type="text/javascript">
 	var domloadPath ='${loadPath}';
+	var selectAge='${empl.age}';
+	$("#age").val(selectAge);
+	var selectgender='${empl.gender}';
+	$("#gender").val(selectgender);
+	var selectnation='${empl.nation}';
+	$("#nation").val(selectnation);
+	var selectDiploma='${empl.diploma}';
+	$("#diploma").val(selectDiploma);
+	var selectDepartment='${empl.department.id}';
+	$("#department").val(selectDepartment);
 </script>
 <link rel="stylesheet" href="<%=path%>/css/page/canvas.css"  type="text/css" /></link>
 <link rel="stylesheet"
@@ -64,7 +74,7 @@
 		<div class="span12">
 			<form action="<%=path%>/empl_saveEmpl.action" target="empframe"
 				method="post">
-				<input type="hidden" name="id" />
+				<input type="hidden" name="id" value="${empl.id}" />
 				<!-- 为了判断是新增还是修改 -->
 				<table id="sample-table-1"
 					class="table table-striped table-bordered table-hover tablecss"
@@ -73,32 +83,38 @@
 						<td class="captioncss" style="text-align: right; width:100px;">员工号</td>
 						<td class="hidden-480 addcss">
 								<input type="text" id="code" value="${empl.code}" name="empl.code"
-									style="height:25px;" disabled="disabled" />
+									style="height:25px;"  /><!-- disabled="disabled" -->
 								<span style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align:  right; width:100px;">姓名</td>
 						<td class="hidden-480 addcss">
 						<input type="text"
-							name="empl.name" id="name" style="height:25px;" /><span
+							name="empl.name" id="name" style="height:25px;" value="${empl.name}" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="hidden-480 addcss" rowspan="2"
 							style="vertical-align:middle;">
-							<input name="isloginUser" value="true"  id="isloginUser" type="checkbox" />登录用户</td>
+							<input name="wfloginUser" value="true"<c:if test="${empl.wfloginUser}"> checked="checked" </c:if> id="isloginUser" type="checkbox" />登录用户</td>
 						<td class="hidden-480 addcss" colspan="1" rowspan="2">
 							<center>
+							<c:if test="${empl.photo!=null&&empl.photo!=''}">
 								<img width="100px" height="150px" id="photoImg" alt=""
+									src="${loadPath}${empl.photo}" /><br />
+							</c:if>
+							<c:if test="${empl.photo==null||empl.photo==''}">
+							<img width="100px" height="150px" id="photoImg" alt=""
 									src="<%=path%>/images/defaulttopimg.jpg" /><br />
+							</c:if>
 								<button class="btn btn-small btn-danger"
 									style="margin-top: 5px;" id="uploadButton" data-toggle="button" type="button"
 									title="上传头像">上传</button>
-								<input type="hidden" id="emplphoto" name="empl.photo" />
+								<input type="hidden" id="emplphoto"  value="${empl.photo}" name="empl.photo" />
 							</center></td>
 					</tr>
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">别名</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.nickName" id="nickName" style="height:25px;" /><span
+							name="empl.nickName" id="nickName" value="${empl.nickName}" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">年龄</td>
@@ -106,15 +122,16 @@
 							id="age"><option value="-1">请选择</option></select><span style="color:red;">*</span>
 						</td>
 					</tr>
+					<c:if test="${empl.id==null||empl.id!=''}">
 					<tr id="loginuserTR" style="display: none;">
 						<td class="captioncss" style="text-align: right; width:100px;">登录名<br>
 						</td>
-						<td class="hidden-480 addcss"><input type="text"
+						<td class="hidden-480 addcss"><input type="text" 
 							name="user.loginName" id="loginName" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">登录密码</td>
-						<td class="hidden-480 addcss"><input type="password"
+						<td class="hidden-480 addcss"><input type="password" 
 							name="user.password" id="password" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
@@ -124,20 +141,23 @@
 							style="color:red;">*</span>
 						</td>
 					</tr>
+					</c:if>
 					<tr>
 
 						<td class="captioncss" style="text-align: right; width:100px;">性别</td>
-						<td class="hidden-480 addcss"><select id="gender" name="empl.gender"><option>男</option>
-								<option>女</option>
+						<td class="hidden-480 addcss"><select id="gender" name="empl.gender">
+						<option value="-1">请选择</option>
+						<option value="男">男</option>
+						<option value="女">女</option>
 						</select><span style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">出身日期</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.birthday" style="height:25px;" id="birthday"
+							name="empl.birthday" value="${empl.birthday }" style="height:25px;" id="birthday"
 							readonly="readonly" /> <span style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">身份证</td>
-						<td class="hidden-480 addcss"><input type="text"
+						<td class="hidden-480 addcss"><input type="text" value="${empl.identityCard }"
 							name="empl.identityCard" id="identityCard" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
@@ -206,7 +226,7 @@
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">籍贯</td>
 						<td class="hidden-480 addcss"><input type="text" id="origo"
-							name="empl.origo" style="height:25px;" /><span style="color:red;">*</span>
+							name="empl.origo" style="height:25px;" value="${empl.origo}" /><span style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">学历</td>
 						<td class="hidden-480 addcss"><select id="diploma" name="empl.diploma">
@@ -224,16 +244,16 @@
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">家庭住址</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.address" id="address" style="height:25px;" /><span
+							name="empl.address" value="${empl.address}" id="address" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">现住址</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.currentResidence" id="currentResidence" style="height:25px;" /><span
+							name="empl.currentResidence" value="${empl.currentResidence}" id="currentResidence" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">联系电话</td>
-						<td class="hidden-480 addcss"><input type="text"
+						<td class="hidden-480 addcss"><input type="text" value="${empl.linkPhone}"
 							name="empl.linkPhone" id="linkPhone" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
@@ -241,18 +261,20 @@
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">网络联系方式</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.networkLink" id="networkLink" style="height:25px;" /><span
+							name="empl.networkLink" id="networkLink" value="${empl.networkLink}" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">
 							入职日期</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.entryDate" style="height:25px;" id="entryDate"
+							name="empl.entryDate" value="${empl.entryDate}" style="height:25px;" id="entryDate"
 							readonly="readonly" /><span style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">所属部门</td>
 						<td class="hidden-480 addcss"><select id="department"
-							name="empl.department.id"><c:forEach items="${depts}"
+							name="empl.department.id">
+							<option value="-1">请选择</option>
+							<c:forEach items="${depts}"
 									var="item">
 									<option value="${item.id}">${item.name}</option>
 								</c:forEach>
@@ -263,12 +285,12 @@
 						<td class="captioncss" style="text-align: right; width:100px;">
 							职位名称</td>
 						<td class="hidden-480 addcss"><input type="text"
-							name="empl.positionName" id="positionName" style="height:25px;" /><span
+							name="empl.positionName" value="${empl.positionName}" id="positionName" style="height:25px;" /><span
 							style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">备注</td>
 						<td class="hidden-480 addcss" colspan="3"><textarea
-								style="width: 450px;" rows="4" name="empl.note" id="note">${dept.note}</textarea>
+								style="width: 450px;" rows="4" name="empl.note" id="note">${empl.note}</textarea>
 						</td>
 					</tr>
 				</table>

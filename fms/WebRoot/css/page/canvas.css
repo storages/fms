@@ -1,0 +1,55 @@
+.canvasdiv{
+	display:none;
+	z-index:8888;
+	position: absolute;
+	top: 0px; 
+	left:0px; 
+	filter: Alpha(opacity=5);
+	-moz-opacity:.5; 
+    opacity:0.5;
+	background:#000; 
+}
+.ulploddiv{
+	position: absolute;
+	display:none;
+	top: 0px;
+	left: 0px; 
+	z-index: 9999;
+}
+.upload_vc{
+	width: 350px; 
+	height: 200px;
+	 border:solid 1px #000; 
+	 background: #fff;
+}
+.upload_vc p{
+	background:#D15B47;
+	size:24px;
+	color:#fff;
+	height: 45px;
+	line-height: 45px;
+	width: 100%;
+	text-align: center;
+	border-bottom: 1px solid #ccc; 
+	margin-bottom: 15px;
+}
+.upload_vc  ul{
+	height: 100%;
+	width: 330px;
+	margin: 5px;
+}
+.upload_vc ul li{
+	height:35px;
+	width:100%;
+	line-height:45px;
+	margin-top:5px;
+	margin-bottom:10px;
+	text-align:center;
+	
+}
+.upload_vc ul li .buts1{
+	margin-left: 80px;
+}
+.upload_vc ul li .buts2{
+	margin-right: 80px;
+}

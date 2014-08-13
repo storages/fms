@@ -22,10 +22,6 @@ public class EmployeeAction extends BaseAction {
 	 * 
 	 */
 	private  Employee   empl;
-	/**
-	 * 判断是可以登录
-	 */
-	private  boolean isloginUser;
 	
 	private AclUser user;
 	
@@ -34,6 +30,8 @@ public class EmployeeAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
     private	DeptLogic   deptLogic;
     private	EmployeeLogic  emplLogic;
+    
+    private String emid;
 	
 	public String employees(){
 		 List list =emplLogic.findAllEmpl(null, -1, -1);
@@ -54,13 +52,37 @@ public class EmployeeAction extends BaseAction {
     	 req.setAttribute("loadPath",path);
     	return "addemp";
     }	
+	/**
+	 * 修改员工
+	 * @return
+	 */
+    public String editEmployee(){
+    	 List<Department>  depts=deptLogic.findDept();
+    	 request.put("depts", depts);
+    	 HttpServletRequest req = ServletActionContext.getRequest();
+    	 if(emid!=null){
+    		Employee empl= emplLogic.getEmplById(emid);
+    		 request.put("empl", empl);
+    	 }
+    	 String scheme = req.getScheme();
+    	 String path = scheme+"://"+req.getServerName()+":"+req.getServerPort()+"/photo/";
+    	 req.setAttribute("loadPath",path);
+    	return "addemp";
+    }	
     
     public void  saveEmpl() throws IOException{
     	Writer  writer=	null;
          AjaxResult  result=new AjaxResult();
          try{
         	 writer= response.getWriter();
-        	 emplLogic.saveEmplAndUser(empl, isloginUser, user);
+        	 if(null!=empl.getId()&&!"".equals(empl.getId())){
+        		 //修改
+        		 result.setMsg("update");
+        	 }else{
+        		 //新增
+        		 result.setMsg("add");
+        	 }
+        	 emplLogic.saveEmplAndUser(empl, empl.isWfloginUser(), user);
         	 result.setSuccess(true);
          }catch(Exception e){
         	 result.setSuccess(false);
@@ -119,20 +141,24 @@ public class EmployeeAction extends BaseAction {
 		this.deptLogic = deptLogic;
 	}
 
-	public boolean isIsloginUser() {
-		return isloginUser;
-	}
-
-	public void setIsloginUser(boolean isloginUser) {
-		this.isloginUser = isloginUser;
-	}
-
 	public AclUser getUser() {
 		return user;
 	}
 
 	public void setUser(AclUser user) {
 		this.user = user;
+	}
+
+	public String getEmid() {
+		return emid;
+	}
+
+	public void setEmid(String emid) {
+		this.emid = emid;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 

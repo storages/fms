@@ -29,11 +29,17 @@ public class Employee extends BaseEntity {
 	 */
 	private String name;
 	
+	/**
+	 * 是否拥有登陆账户
+	 */
+	private boolean wfloginUser;
+	
 
 	/**
 	 * 别名
 	 */
 	private String nickName;
+	
 	/**
 	 * 年龄
 	 */
@@ -293,6 +299,14 @@ public class Employee extends BaseEntity {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public boolean isWfloginUser() {
+		return wfloginUser;
+	}
+
+	public void setWfloginUser(boolean wfloginUser) {
+		this.wfloginUser = wfloginUser;
 	}
 
 

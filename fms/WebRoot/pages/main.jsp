@@ -96,7 +96,7 @@
 	src="${pageContext.request.contextPath}/js/menujump/menuBindUrl.js"></script>
 </head>
 
-<body oncontextmenu="return false">
+<body oncontextmenu="return false" style="position: relative;">
 
 	<jsp:include page="/pages/content.jsp"></jsp:include>
 </body>

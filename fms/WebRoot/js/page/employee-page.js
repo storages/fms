@@ -12,6 +12,43 @@ $(function(){
 		yearRange: '1900:', 
 		dateFormat: 'yy-mm-dd'
 	});
+	//上传按钮
+  $("#uploadButton").click(function(){
+	  initcanvas();
+  });
+  $("#closecanvas").click(function(){
+	  closecanvas();
+  });
+	//初始化帆布】
+  function initcanvas(){
+	  //获取屏幕高端   宽度  上传文件DIV 宽度 和高度
+		 var $canvas =$("#canvas");
+		 var $div=$("#ulploddiv");
+	 var avheight= window.screen.availHeight; 
+	 var avwidth = window.screen.availWidth; 
+	 var divheight= parseInt($div.css("height"));
+	 var divwidth = parseInt($div.css("width"));
+	 var topsize= (avheight-divheight)/2;
+	 var leftsize= (avwidth-divwidth)/2;
+	 $canvas.css("height",avheight+"px");
+	 $canvas.css("width",avwidth+"px");
+	 $canvas.css("display","block");
+	 $("body").css("overflow","hidden");
+	 $div.css("display","block");
+	 $div.css("top",topsize+"px");
+	 $div.css("left",leftsize+"px");
+	 
+  }
+  function closecanvas(){
+	var $canvas =$("#canvas");
+	var $div=$("#ulploddiv");
+	$canvas.css("display","none");
+	$("body").css("overflow","");
+	$("#ulploddiv input[type='file']").val("");
+	 $div.css("display","none");
+  }
+  
+  
 	/**
 	 * 循环显示年龄
 	 */

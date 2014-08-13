@@ -13,6 +13,7 @@
 		
 		<property name="code" column="CODE"/>
 		<property name="name" column="NAME"/>
+		<property name="wfloginUser" column="WFLOGINUSER"/>
 		<property name="nickName" column="NICKNAME"/>
 		<property name="age" column="AGE"/>
 		<property name="gender" column="GENDER" />

@@ -62,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="hidden-480 center">${settl.note}　</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toedit('${settl.id}')">修改</a>｜
-										<a href="javascript:void(0);" onclick="delSingleSettl('${settl.id}')">删除</a>
+										<a href="javascript:void(0);" onclick="delData('${settl.id}','Settlement')">删除</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/pages/basicdata/addsettlement.jsp');">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreSettl()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','Settlement')">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>

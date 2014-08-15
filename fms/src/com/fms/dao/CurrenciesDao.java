@@ -7,42 +7,42 @@ import com.fms.core.entity.Currencies;
 
 public interface CurrenciesDao extends BaseDao{
 	/**
-	 * 获取所有的供应商或客户[分页]
+	 * 获取所有的交易货币[分页]
 	 * @return
 	 */
 	public List<Currencies> findAllCurrencies(String likeStr,Integer index,Integer length);
 	/**
-	 * 根据id查询供应商或客户
+	 * 根据id查询交易货币
 	 * @param id
 	 * @return
 	 */
 	public Currencies findCurrenciesById(String id);
 	/**
-	 * 保存单个供应商或客户
+	 * 保存单个交易货币
 	 * @param scmcoc
 	 */
 	public void saveCurrencies(Currencies currencies);
 	
 	/**
-	 * 批量保存供应商或客户
+	 * 批量保存交易货币
 	 * @param data
 	 */
 	public void betchSaveCurrencies(List<Currencies> data);
 	/**
-	 * 根据id删除供应商或客户
+	 * 根据id删除交易货币
 	 * @param id
 	 */
-	public void deleteCurrenciesById(String id);
+	public void deleteCurrenciesById(String [] ids);
 	
 	/**
-	 * 根据编码查询供应商或客户
+	 * 根据编码查询交易货币
 	 * @param code
 	 * @return
 	 */
-	public Currencies findCurrenciesByCode(String code);
+	public String findCurrenciesByCode(String code);
 	
 	/**
-	 * 批量删除供应商或客户
+	 * 批量删除交易货币
 	 * @param data
 	 */
 	public void delete(List<String> ids);

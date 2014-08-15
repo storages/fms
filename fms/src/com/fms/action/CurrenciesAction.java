@@ -1,5 +1,6 @@
 package com.fms.action;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -10,6 +11,8 @@ import java.util.List;
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Currencies;
 import com.fms.logic.CurrenciesLogic;
+import com.fms.utils.AjaxResult;
+import com.url.ajax.json.JSONObject;
 
 public class CurrenciesAction extends BaseAction {
 
@@ -44,7 +47,6 @@ public class CurrenciesAction extends BaseAction {
 	 * @return
 	 */
 	public String findAllCurrencies() {
-		// 是客户
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
 		dataTotal = this.currenciesLogic.findDataCount(className,parse(searchStr));
@@ -63,8 +65,12 @@ public class CurrenciesAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String saveCurrencies() throws Exception{
-		this.currenciesLogic.saveCurrencies(this.setProperty(new Currencies()));
+	public String saveCurrencies(){
+		try{
+			this.currenciesLogic.saveCurrencies(this.setProperty(new Currencies()));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return "save";
 	}
 	/**
@@ -73,21 +79,30 @@ public class CurrenciesAction extends BaseAction {
 	 * @return
 	 */
 	public void findCurrenciesByCode() {
+		
+		
 		PrintWriter out = null;
-		response.setContentType("application/text");
-		response.setCharacterEncoding("UTF-8");
+		AjaxResult  result=new AjaxResult();
 		try {
-			Currencies sc = this.currenciesLogic.findCurrenciesByCode(code);
 			out = response.getWriter();
-			if (null != sc) {
-				out.write("false");
-			} else {
-				out.write("true");
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			String findCode = this.currenciesLogic.findCurrenciesByCode(code);
+			if(null!=findCode){
+				result.setSuccess(false);
+				result.setMsg("编码已使用过了！");
+			}else{
+				result.setSuccess(true);
+			}			
+			JSONObject json=new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (IOException e) {
+			result.setMsg("对不起出错了：/n"+e.getMessage());
+		}finally{
+			if(out!=null){
+				out.close();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			out.close();
 		}
 	}
 
@@ -115,19 +130,33 @@ public class CurrenciesAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String del() throws Exception {
+	public void del() throws Exception {
 		if (null != ids && !"".equals(ids)) {
-			String[] arrIds = ids.split(",");
-			if(null!=arrIds && arrIds.length>0){
-				List<String> list = new ArrayList<String>();
-				for(String id:arrIds){
-					list.add(id);
+			String [] idArr = ids.split(",");
+			if(idArr!=null && idArr.length>0){
+				PrintWriter out = null;
+				AjaxResult  result=new AjaxResult();
+				try {
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					this.currenciesLogic.deleteCurrenciesById(idArr);
+					result.setSuccess(true);
+					result.setMsg("删除成功！");
+					JSONObject json=new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					result.setSuccess(false);
+					result.setMsg("数据被其它地方引用，不能删除！");
+					JSONObject json=new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
 				}
-				this.currenciesLogic.delete(list);
 			}
 		}
-		
-		return "save";//是货币请求
 	}
 
 	/**
@@ -140,9 +169,9 @@ public class CurrenciesAction extends BaseAction {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Currencies scm = this.currenciesLogic.findCurrenciesById(id);
-				if (null != scm) {
-					this.request.put("currencies", scm);
+				Currencies curr = this.currenciesLogic.findCurrenciesById(id);
+				if (null != curr) {
+					this.request.put("curr", curr);
 				}
 			}
 		}

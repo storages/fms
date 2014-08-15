@@ -141,14 +141,34 @@ public class StockAction extends BaseAction {
 	 * 删除仓库信息
 	 * @return
 	 */
-	public String deleteStock(){
+	public void deleteStock(){
+		
 		if (null != ids && !"".equals(ids)) {
 			String [] idArr = ids.split(",");
 			if(idArr!=null && idArr.length>0){
-				this.stockLogic.delStockById(idArr);
+				PrintWriter out = null;
+				AjaxResult  result=new AjaxResult();
+				try {
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					this.stockLogic.delStockById(idArr);
+					result.setSuccess(true);
+					result.setMsg("删除成功！");
+					JSONObject json=new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					result.setSuccess(false);
+					result.setMsg("数据被其它地方引用，不能删除！");
+					JSONObject json=new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
 			}
 		}
-		return "save";
 	}
 	
 	

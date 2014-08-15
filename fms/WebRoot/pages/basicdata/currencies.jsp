@@ -44,30 +44,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<th class="center">序号</th>
 								<th class="center">编号</th>
 								<th class="center">货币名称</th>
-								<th class="center">创建时间</th>
-								<th class="center">修改时间</th>
 								<th class="hidden-480 center">备注</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>
 
 						<tbody>
-							<c:forEach var="scmcoc" items="${currencies}" varStatus="index" step="1">
+							<c:forEach var="curr" items="${currencies}" varStatus="index" step="1">
 								<tr>
 									<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-										<input type="checkbox" value="${currencies.id}" name="sid" style="width:30px;"/>
+										<input type="checkbox" value="${curr.id}" name="sid" style="width:30px;"/>
 									</td>
 
 									<td class="center"><a href="#">${index.index+1}</a>
 									</td>
-									<td class="center">${currencies.code}</td>
-									<td class="center">${currencies.name}</td>
-									<td class="hidden-480 center">${currencies.createTime}　</td>
-									<td class="hidden-480 center">${currencies.updateTime}　</td>
-									<td class="hidden-480 center">${currencies.note}　</td>
+									<td class="center">${curr.code}</td>
+									<td class="center">${curr.name}</td>
+									<td class="hidden-480 center">${curr.note}　</td>
 									<td class="center">
-										<a href="javascript:void(0);" onclick="toedit('${currencies.id}')">修改</a>｜
-										<a href="javascript:void(0);" onclick="delSingleScmcoc('${currencies.id}','false')">删除</a>
+										<a href="javascript:void(0);" onclick="toedit('${curr.id}')">修改</a>｜
+										<a href="javascript:void(0);" onclick="delData('${curr.id}','Curr')">删除</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -77,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/pages/basicdata/addcurrencies.jsp');">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','Curr')">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
@@ -132,9 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function gotoPage(pageNum, pageSize) {
 		var likeStr = $("#search").val(); 
 		// 拼接URL
-		var url = "${pageContext.request.contextPath}/currencies_findAllCurrencies.action?currIndex=" +
-		 pageNum + "&maxIndex="+ pageSize + 
-		 "&searchStr="+parse(likeStr);
+		var url = "${pageContext.request.contextPath}/currencies_findAllCurrencies.action?currIndex="+pageNum + "&maxIndex="+ pageSize+"&searchStr="+parse(likeStr);
 		// 在本窗口中显示指定URL的页面
 		toMain(url);
 	}

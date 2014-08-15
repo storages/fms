@@ -3,9 +3,7 @@ package com.fms.logic.impl;
 import java.util.List;
 
 import com.fms.core.entity.Currencies;
-import com.fms.core.entity.Scmcoc;
 import com.fms.dao.CurrenciesDao;
-import com.fms.dao.ScmcocDao;
 import com.fms.logic.CurrenciesLogic;
 
 
@@ -23,9 +21,9 @@ public class CurrenciesLogicImpl implements CurrenciesLogic {
 		this.currenciesDao = currenciesDao;
 	}
 
-	public List<Currencies> findAllCurrencies(String likeStr, Integer index,
-			Integer length) {
-		return currenciesDao.findAllCurrencies(likeStr, index, length);
+	public List<Currencies> findAllCurrencies(String likeStr, Integer index,Integer length) {
+		List<Currencies> list = currenciesDao.findAllCurrencies(likeStr, index, length);
+		return list;
 	}
 
 	public Currencies findCurrenciesById(String id) {
@@ -40,11 +38,11 @@ public class CurrenciesLogicImpl implements CurrenciesLogic {
 		currenciesDao.betchSaveCurrencies(data);
 	}
 
-	public void deleteCurrenciesById(String id) {
-		currenciesDao.deleteCurrenciesById(id);
+	public void deleteCurrenciesById(String [] ids) {
+		currenciesDao.deleteCurrenciesById(ids);
 	}
 
-	public Currencies findCurrenciesByCode(String code) {
+	public String findCurrenciesByCode(String code) {
 		return currenciesDao.findCurrenciesByCode(code);
 	}
 

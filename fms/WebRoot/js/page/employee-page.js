@@ -187,40 +187,75 @@ $(function(){
 	var uploadimgframe= document.getElementById("uploadimgframe");
 	//判断IE 解决兼容问题
 	if(saveEmplframe.attachEvent){ // IE  
-		saveEmplframe.attachEvent('onload', emplsaveload);  
+		saveEmplframe.attachEvent('onload', function(){
+			var html= document.frames["saveEmpframe"].document.body.innerHTML;
+			if(html&&html!=""){
+				  var json= jQuery.parseJSON(html);
+				  if(json.success){
+			    	   if(json.msg=="add"){
+			    	   var rlt=confirm("保存成功:是否继续添加");
+			    	   if(rlt){	
+			    		   initEmpColums();
+			    	   }else{
+			    		   toMain(Global+"/empl_employees.action");
+			    	   }
+			    	   }else{
+			    		   alert("保存成功");
+			    		   toMain(Global+"/empl_employees.action");
+			    	   }
+			       }else{
+			    	   alert("保存失败"+json.msg);
+			       }
+			}else{
+				//不做任何处理
+			}
+		});  
     }else{
-	    saveEmplframe.onload=emplsaveload;
-    }
-	//保存员工回调函数
-	var emplsaveload=function(){
-		 var thisDocument=this.contentDocument||this.contentWindow.document; 
-	      var html=  $(thisDocument.body).find("pre").html();
-	       var json= jQuery.parseJSON(html);
-	       if(json.success){
-	    	   if(json.msg=="add"){
-	    	   var rlt=confirm("保存成功:是否继续添加");
-	    	   if(rlt){	
-	    		   initEmpColums();
-	    	   }else{
-	    		   toMain(Global+"/empl_employees.action");
-	    	   }
-	    	   }else{
-	    		   alert("保存成功");
-	    		   toMain(Global+"/empl_employees.action");
-	    	   }
-	       }else{
-	    	   alert("保存失败"+json.msg);
-	       }
+	    saveEmplframe.onload=function(){
+			 var thisDocument=this.contentDocument||this.contentWindow.document; 
+		      var html=  $(thisDocument.body).find("pre").html();
+		       var json= jQuery.parseJSON(html);
+		       if(json.success){
+		    	   if(json.msg=="add"){
+		    	   var rlt=confirm("保存成功:是否继续添加");
+		    	   if(rlt){	
+		    		   initEmpColums();
+		    	   }else{
+		    		   toMain(Global+"/empl_employees.action");
+		    	   }
+		    	   }else{
+		    		   alert("保存成功");
+		    		   toMain(Global+"/empl_employees.action");
+		    	   }
+		       }else{
+		    	   alert("保存失败"+json.msg);
+		       }
 
-	};
+		};
+    }
 	//图片上传回调函数  //判断IE 解决兼容问题
 	if(uploadimgframe.attachEvent){ // IE  
-		uploadimgframe.attachEvent('onload', uploadimgload);  
+		uploadimgframe.attachEvent('onload',function(){
+			alert("图片上传IEload");
+		var html= document.frames["uploadimgframe"].document.body.innerHTML;
+		if(html&&html!=""){
+			  var json= jQuery.parseJSON(html);
+			  if(json.success){
+	    	       $("#photoImg").attr("src",domloadPath+json.msg);
+	    	       $("#emplphoto").val(json.msg);
+	    	       closecanvas();
+	    	       alert("上传成功");
+	          }else{
+	    	       alert("上传失败"+json.msg);
+	          }
+		}else{
+		//不做任何处理
+		}
+	       
+		});  
     }else{
-    	uploadimgframe.onload=uploadimgload;
-    }
-	
-	var uploadimgload=function(){
+    	uploadimgframe.onload=function(){
+    		alert("图片上传load");
 		      var thisDocument=this.contentDocument||this.contentWindow.document; 
 	          var html=  $(thisDocument.body).find("pre").html();
 	          var json= jQuery.parseJSON(html);
@@ -234,6 +269,8 @@ $(function(){
 	          }
 
 	};
+    }
+	
 	$("#name").change(function(){
 		if($("#isloginUser").prop("checked")){
 			     var name=$("#name").val();

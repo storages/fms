@@ -53,8 +53,8 @@
 	
 </script>
 <body style="position: relative;">
-	<iframe name="empframe" id="saveEmpframe" style="display: none;"></iframe>
-	<iframe name="imgframe" id="uploadimgframe" style="display: none;"></iframe>
+	<iframe name="empframe" id="saveEmpframe"  style="display: none;"></iframe>
+	<iframe name="imgframe" id="uploadimgframe"   style="display: none;"></iframe>
 	<div class="page-header position-relative" style="margin-bottom: 0px;">
 		<c:if test="${dept.id==null}">
 			<h5>基础资料＞＞员工＞＞新增</h5>

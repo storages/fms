@@ -26,20 +26,18 @@
 <script type="text/javascript">
 	var domloadPath ='${loadPath}';
 	var selectAge='${empl.age}';
-	$("#age").val(selectAge);
 	var selectgender='${empl.gender}';
-	$("#gender").val(selectgender);
 	var selectnation='${empl.nation}';
-	$("#nation").val(selectnation);
 	var selectDiploma='${empl.diploma}';
-	$("#diploma").val(selectDiploma);
 	var selectDepartment='${empl.department.id}';
-	$("#department").val(selectDepartment);
+	
 </script>
 <link rel="stylesheet" href="<%=path%>/css/page/canvas.css"  type="text/css" /></link>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
 	type="text/css"></link>
+		<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
 <script type="text/javascript"
@@ -48,6 +46,7 @@
 	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/public/public.js"></script>
+
 
 </head>
 <script>
@@ -74,7 +73,7 @@
 		<div class="span12">
 			<form action="<%=path%>/empl_saveEmpl.action" target="empframe"
 				method="post">
-				<input type="hidden" name="id" value="${empl.id}" />
+				<input type="hidden" name="empl.id" value="${empl.id}" />
 				<!-- 为了判断是新增还是修改 -->
 				<table id="sample-table-1"
 					class="table table-striped table-bordered table-hover tablecss"
@@ -92,10 +91,12 @@
 							name="empl.name" id="name" style="height:25px;" value="${empl.name}" /><span
 							style="color:red;">*</span>
 						</td>
+						<c:if test="${empl.id==null||empl.id==''}">
 						<td class="hidden-480 addcss" rowspan="2"
 							style="vertical-align:middle;">
-							<input name="wfloginUser" value="true"<c:if test="${empl.wfloginUser}"> checked="checked" </c:if> id="isloginUser" type="checkbox" />登录用户</td>
-						<td class="hidden-480 addcss" colspan="1" rowspan="2">
+							<input name="wfloginUser" value="true" id="isloginUser" type="checkbox" />登录用户</td>
+						</c:if>
+						<td class="hidden-480 addcss" <c:if test="${empl.id==null||empl.id==''}">colspan="1"</c:if> <c:if test="${empl.id!=null&&empl.id!=''}">colspan="2"</c:if> rowspan="2">
 							<center>
 							<c:if test="${empl.photo!=null&&empl.photo!=''}">
 								<img width="100px" height="150px" id="photoImg" alt=""

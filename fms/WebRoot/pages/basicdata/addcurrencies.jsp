@@ -10,101 +10,79 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'addcurrencies.jsp' starting page</title>
+    <title>My JSP 'adddept.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	
-	<style type="text/css">
-		.addcss{
-			width:220px;
-		}
-		.captioncss{
-			width:80px;
-		}
-		.tablecss{
-			width:800px;
-			margin-left:5px;
-		}
-	</style>
-  
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
-  
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
   </head>
+  
   <body>
-  	<input type="hidden" value="${currencies.id}" id="flag"/>
+  	<input type="hidden" id="flag" value="${curr.id}"/><!-- 为了判断是新增还是修改 -->
     <div class="page-header position-relative" style="margin-bottom: 0px;">
-    	<c:if test="${currencies.id==null}">
+    	<c:if test="${curr.id==null}">
 			<h5>基础资料＞＞交易货币管理＞＞新增</h5>
 		</c:if>
-    	<c:if test="${currencies.id!=null}">
+    	<c:if test="${curr.id!=null}">
 			<h5>基础资料＞＞交易货币管理＞＞修改</h5>
 		</c:if>
 	</div>
 	<div class="modal-footer">
 		<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="保存" onclick="save()"/>
-		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">取消</button>
-	</div> 
+		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="cancel()" title="恢复初始状态">取消</button>
+	</div>
 	<div class="row-fluid" id="mybox">
 		<div class="span12">
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
 				<tr>
 					<td class="captioncss" style="text-align: right; width:100px;">编码</td>
-					<c:if test="${currencies.id==null}">
-						<td class="hidden-480 addcss"><input type="text" value="${currencies.code}" name="scmcoc.code" style="height:25px;"/><span style="color:red;">*</span></td>
+					<c:if test="${curr.id==null}">
+						<td class="hidden-480 addcss"><input type="text" value="${curr.code}" name="curr.code" style="height:25px;"/><span style="color:red;">*</span></td>
 					</c:if>
-					<c:if test="${currencies.id!=null}">
-						<td class="hidden-480 addcss"><input type="text" value="${currencies.code}" name="scmcoc.code" style="height:25px;" disabled="disabled"/><span style="color:red;">*</span></td>
+					<c:if test="${curr.id!=null}">
+						<td class="hidden-480 addcss"><input type="text" value="${curr.code}" name="curr.code" style="height:25px;" disabled="disabled"/><span style="color:red;">*</span></td>
 					</c:if>
-					<td class="captioncss" style="text-align: right; width:100px;">名称</td>
-					<td class="hidden-480 addcss"><input type="text" value="${currencies.name}" name="scmcoc.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right;">备注</td>
-					<td class="hidden-480 addcss"><input type="text" value="${currencies.note}" name="scmcoc.note" style="height:25px;"/></td>
+					<td class="captioncss" style="text-align: right; width:100px;">名称</td>
+					<td class="hidden-480 addcss"><input type="text" value="${curr.name}" name="curr.name" id="names" style="height:25px;"/><span style="color:red;">*</span></td>
+				</tr>
+				<tr>
+					<td class="captioncss" style="text-align: right; width:100px;">备注</td>
+					<td class="hidden-480 addcss"><textarea cols="40" rows="3" name="curr.note" id="note">${curr.note}</textarea></td>
 				</tr>
 			</table>
 		</div>
-	</div>
-  </body>
-  
-  <script language="javascript">
-	$(document).ready(function(){
-		$("#datepicker").datepicker({
-			changeYear: false,
-			changeMonth: true,
-			yearRange: '1900:', 
-			dateFormat: 'm-d'
-		});
-	});
+	</div> 
 	
-	//保存
+<script type="text/javascript">
 	function save(){
 		//编码
-		var code = $(":input[name='currencies.code']").val();  
+		var code = $(":input[name='curr.code']").val();  
 		//名称
-		var name= $(":input[name='currencies.name']").val(); 
-		 
+		var name= $(":input[name='curr.name']").val(); 
 		//备注
-		var note = $(":input[name='currencies.note']").val(); 
+		var note= $("#note").val(); 
+		var isEdit = $('#flag').val();
 		var isPass = true;
 		if(code==""){
 			alert("编码不能为空！");
-			return false;
+			isPass = false;
+			return;
 		}
 		if(name==""){
-			alert("供应商名称不能为空！");
-			return false;
+			alert("名称不能为空！");
+			isPass = false;
+			return;
 		}
-		
-		//编码是否可用
-		var isEdit = $("#flag").val();
+		//新增
 		if(isEdit==""){
 			var url = "${pageContext.request.contextPath}/currencies_findCurrenciesByCode.action?code="+code;
 			$.ajax({
@@ -113,30 +91,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     async: false,
 		     cache: false,
 		     success:function(data){
-		     	if("false"==data){
-		     		alert("编码已使用过！");
+		     var result=jQuery.parseJSON(data);
+		     if(!result.success){
+		     		alert(result.msg);
 		     		isPass = false;
 		     	}
 		     },error:function(){
-		        	$("#mess").html("程序异常，请重新启动程序！");
-		        	return false;
+		        	alert("程序异常，请重新启动程序！");
 		      }
 		  	});
-	  	}
-	  	if(isPass){
-		  	var str = "code="+parse(code)+
-		  			  "&name="+parse(name)+
-		  			  "&note="+parse(note);
-		  	var submitUrl = "${pageContext.request.contextPath}/currencies_saveCurrencies.action?"+str;
-		  	if(isEdit!=""){
-		  		submitUrl = submitUrl +"&ids="+isEdit;
-		  	}
-	  	toMain(submitUrl);
-	  	}
+		}
+		if(isPass){
+			var param = "code="+code+"&name="+parse(name)+"&note="+parse(note)+"&ids="+isEdit;
+			alert(param);
+			var submitUrl = "${pageContext.request.contextPath}/currencies_saveCurrencies.action?"+param;
+			toMain(submitUrl);
+		}
 	}
 	
-	function parse(str){
-		return encodeURI(encodeURI(str));  
+	//取消按钮
+	function cancel(){
+		var id = $('#flag').val();
+		if(id==""){
+			$(":input[name='dept.code']").val("");
+			$(":input[name='dept.name']").val("");
+			$("#note").val("");
+		}else{
+			var url = "${pageContext.request.contextPath}/currencies_findCurrenciesById.action?ids="+id;
+			toMain(url);
+		}
 	}
-	</script>
+</script>
+  </body>
 </html>

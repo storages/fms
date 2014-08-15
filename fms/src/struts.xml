@@ -71,7 +71,7 @@
 		  <action name="currencies_*" class="currenciesAction" method="{1}">
 			  <result name="success">/pages/basicdata/currencies.jsp</result> 
 			  <result name="find">/pages/basicdata/addcurrencies.jsp</result> 
-			  <result name="save" type="chain">currencies_findAllcurrencies</result>
+			  <result name="save" type="chain">currencies_findAllCurrencies</result>
 		  </action>
 		
 			<!--  employee的Action配置  --> 

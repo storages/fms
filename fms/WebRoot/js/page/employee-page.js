@@ -236,7 +236,6 @@ $(function(){
 	//图片上传回调函数  //判断IE 解决兼容问题
 	if(uploadimgframe.attachEvent){ // IE  
 		uploadimgframe.attachEvent('onload',function(){
-			alert("图片上传IEload");
 		var html= document.frames["uploadimgframe"].document.body.innerHTML;
 		if(html&&html!=""){
 			  var json= jQuery.parseJSON(html);

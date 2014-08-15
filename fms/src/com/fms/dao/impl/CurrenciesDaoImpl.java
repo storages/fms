@@ -10,15 +10,14 @@ import com.fms.dao.CurrenciesDao;
 
 public class CurrenciesDaoImpl extends BaseDaoImpl implements CurrenciesDao {
 
-	public List<Currencies> findAllCurrencies(String likeStr, Integer index,
-			Integer length) {
-		String hql = "select * from Currencies a  ";
+	public List<Currencies> findAllCurrencies(String likeStr, Integer index,Integer length) {
+		String hql = "from Currencies a where 1=1 ";
 		List param = new ArrayList();
 		if(null!=likeStr && !"".equals(likeStr)){
 			hql+=" and a.name like '%"+likeStr+"%'";
-			//param.add("'%"+ likeStr +"%'");
 		}
-		return this.findPageList(hql, param.toArray(),index,length);
+		List<Currencies> list = this.findPageList(hql, param.toArray(),index,length);
+		return list;
 	}
 
 	public Currencies findCurrenciesById(String id) {
@@ -38,23 +37,27 @@ public class CurrenciesDaoImpl extends BaseDaoImpl implements CurrenciesDao {
 		
 	}
 
-	public void deleteCurrenciesById(String id) {
+	public void deleteCurrenciesById(String [] ids) {
 		String hql = "delete from Currencies a where a.id = ? ";
 		List param = new ArrayList();
-		param.add(id);
-		this.batchUpdateOrDelete(hql,param.toArray());
+		param.add(ids[0]);
+		for(int i = 1 ; i < ids.length ; i++){
+			hql+=" or a.id = ? ";
+			param.add(ids[i]);
+		}
+		this.batchUpdateOrDelete(hql, param.toArray());
 		
 	}
 
-	public Currencies findCurrenciesByCode(String code) {
+	public String findCurrenciesByCode(String code) {
 		String hql = "select a from Currencies a where a.code = ? ";
 		List param = new ArrayList();
 		param.add(code);
-		return (Currencies) this.findUniqueResult(hql, param.toArray());
+		return (String) this.findUniqueResult(hql, param.toArray());
 	}
 
 	public Integer findDataCount(String className, String name) {
-		String hql = "select count(id) from "+className.trim() +" a  ";
+		String hql = "select count(id) from "+className.trim() +" a where 1=1 ";
 		List param = new ArrayList();
 		if(null!=name && !"".equals(name)){
 			hql+=" and a.name like '%"+name+"%'";

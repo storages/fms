@@ -32,7 +32,7 @@ public class Employee extends BaseEntity {
 	/**
 	 * 是否拥有登陆账户
 	 */
-	private boolean wfloginUser;
+	private Boolean wfloginUser;
 	
 
 	/**

@@ -117,6 +117,11 @@ function getUrl(flag){
 			url[0] = "${pageContext.request.contextPath}/stock_deleteStock.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/stock_findAllStock.action";
 			break;
+			//删除交易货币
+		case "Curr":
+			url[0] = "${pageContext.request.contextPath}/currencies_del.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/currencies_findAllCurrencies.action";
+			break;
 	}
 	return url;
 }

@@ -111,12 +111,34 @@ public class AclUserAction extends BaseAction {
 	/**
 	 * 删除用户
 	 */
-	public String deleteUser() throws Exception {
+	public void deleteUser() {
+		
 		if (null != ids && !"".equals(ids)) {
-			String[] arr = ids.split(",");
-			this.userLogic.deleteAclUser(arr);
+			String [] idArr = ids.split(",");
+			if(idArr!=null && idArr.length>0){
+				PrintWriter out = null;
+				AjaxResult  result=new AjaxResult();
+				try {
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					this.userLogic.deleteAclUser(idArr);
+					result.setSuccess(true);
+					result.setMsg("删除成功！");
+					JSONObject json=new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					result.setSuccess(false);
+					result.setMsg("数据被其它地方引用，不能删除！");
+					JSONObject json=new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
+			}
 		}
-		return "del";
 	}
 
 	/**

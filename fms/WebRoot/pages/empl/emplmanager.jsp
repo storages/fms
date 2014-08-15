@@ -19,10 +19,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+	
+	
+	
   <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/jqPaginator.js"></script>
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/page/bootstrap.min.css" />
   </head>
   
   <body>
@@ -84,9 +86,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
-				<!-- 分页 -->
-				<div class="pagination pull-right no-margin" style="width: 500px;">
-					<ul>
+			
+			<!-- 分页 -->
+					
+					<%-- 	<ul>
 						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
 						</li>
 						<li class="next"><a href="javascript: gotoPage( 1, ${pageNums} )">首页</a>
@@ -113,14 +116,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</c:if>
 						</c:forEach>
 					</select>
-				</div>
+					--%>
+				
 			</div>
+			
 		</div>
 		<!--PAGE CONTENT ENDS-->
 	</div>
+	<ul class="pagination" id="pagination1"></ul>
   </body>
   <script type="text/javascript" src="<%=path%>/js/page/emplmanager-page.js"> </script>
-	<script type="text/javascript">
+<script type="text/javascript">
+
+	 $.jqPaginator('#pagination1', {
+        totalPages: 100,
+        visiblePages: 10,
+        currentPage: 3,
+        onPageChange: function (num, type) {
+         //   $('#p1').text(type + '：' + num);
+        }
+    });
 	/**	function gototag(pageSize){
 			var n = $("#gonum option:selected").val();
 			gotoPage(n, pageSize);

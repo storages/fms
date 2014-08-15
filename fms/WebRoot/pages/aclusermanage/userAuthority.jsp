@@ -90,7 +90,7 @@
 										</c:if>
 										<td class="center">
 											<a href="javascript:void(0);" onclick="">修改权限</a>｜<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/pages/aclusermanage/edituser.jsp')">修改信息</a>｜
-											<a href="javascript:void(0);" onclick="delSingleObject('${user.id}')">删除</a>|
+											<a href="javascript:void(0);" onclick="delData('${user.id}','AclUser')">删除</a>|
 											<c:if test="${!user.isForbid}">
 												<a href="javascript:void(0);" onclick="toMain('${pageContext.request.contextPath}/users_stopOrOpenUser.action?userForbid=true&ids=${user.id}')">禁用</a>
 											</c:if>
@@ -106,7 +106,7 @@
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delList()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','AclUser')">
 					批量删除
 				</button>
 

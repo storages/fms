@@ -2,30 +2,12 @@
 function parse(str){
 	return encodeURI(encodeURI(str));  
 }
-function delList(){
-	var splitStr = "";
-	$('input[name="uid"]:checked').each(function(){
-		splitStr+=$(this).val()+',';
-	  }); 
-	if(splitStr==""){
-		alert("请选择要删除的内容!");
-		return;
-	}
-	
-	splitStr = splitStr.substring(0, splitStr.length-1);
-	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/users_deleteUser.action?ids="+splitStr;
-		toMain(url);
-	}
-}
 
-function delSingleObject(ids){
-	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/users_deleteUser.action?ids="+ids;
-		toMain(url);
-	}
-}
-
+/**
+ * 删除客户或供应商【单条删除】
+ * @param ids
+ * @param flag
+ */
 function delSingleScmcoc(ids,flag){
 	if(confirm("你确认要删除吗？")){
 		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+ids+"&isCustom="+flag;
@@ -33,6 +15,10 @@ function delSingleScmcoc(ids,flag){
 	}
 }
 
+/**
+ * 删除客户或供应商【批量删除】
+ * @param flag
+ */
 function delMoreScmcoc(flag){
 	var splitStr = "";
 	$('input[name="sid"]:checked').each(function(){
@@ -45,29 +31,6 @@ function delMoreScmcoc(flag){
 	splitStr = splitStr.substring(0, splitStr.length-1);
 	if(confirm("你确认要删除吗？")){
 		var url = "${pageContext.request.contextPath}/scmcoc_del.action?ids="+splitStr+"&isCustom="+flag;
-		toMain(url);
-	}
-}
-
-function delSingleDept(ids){
-	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/dept_deleteDept.action?ids="+ids;
-		toMain(url);
-	}
-}
-
-function delMoreDept(){
-	var splitStr = "";
-	$('input[name="sid"]:checked').each(function(){
-		splitStr+=$(this).val()+',';
-	  }); 
-	if(splitStr==""){
-		alert("请选择要删除的内容!");
-		return;
-	}
-	splitStr = splitStr.substring(0, splitStr.length-1);
-	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/dept_deleteDept.action?ids="+splitStr;
 		toMain(url);
 	}
 }
@@ -97,25 +60,73 @@ function delMoreStock(){
 }
 
 
-function delSingleSettl(ids){
-	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/settl_delSettlById.action?ids="+ids;
-		toMain(url);
-	}
-}
-
-function delMoreSettl(){
+/**
+ * 删除公共方法
+ * @param ids 传过来的id,每行后面的【删除】所传来的id;【批量删除】参数传''即可
+ * @param flag 这个参数是为了标识提交的地址，也就是下面getUrl(flag)方法要用到的
+ */
+function delData(ids,flag){
 	var splitStr = "";
 	$('input[name="sid"]:checked').each(function(){
 		splitStr+=$(this).val()+',';
 	}); 
-	if(splitStr==""){
+	if(splitStr=="" && ids==""){
 		alert("请选择要删除的内容!");
 		return;
+	}else if(ids!=""){
+		splitStr = ids+",";
 	}
 	splitStr = splitStr.substring(0, splitStr.length-1);
+	var resultUrl = getUrl(flag);
+	var url = resultUrl[0]+splitStr;
 	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/settl_delSettlById.action?ids="+splitStr;
-		toMain(url);
+		$.ajax({
+		     type: "POST",
+		     url:url,
+		     async: false,
+		     cache: false,
+		     success:function(data){
+		    	var result=jQuery.parseJSON(data);
+		    	if(!result.success){
+		    		alert(result.msg);
+		    		return;
+		    	}
+		    	alert(result.msg);
+		     },error:function(){
+		        	$("#mess").html("程序异常，请重新启动程序！");
+		        	return false;
+		      }
+		  	});
+		var refreshUrl = resultUrl[1];
+		toMain(refreshUrl);
 	}
+}
+
+
+/**
+ * 根据参数来确定url
+ * @param flag 用来判断是哪个模块的删除请求
+ * @returns
+ */
+function getUrl(flag){
+	var url = [2];//[0]表示删除请求的地址;    [1]表示刷新页面时所需的数据请求地址
+	switch(flag){
+		case "Settlement":
+			url[0] = "${pageContext.request.contextPath}/settl_delSettlById.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/settl_findAllSett.action";
+			break;
+		case "AclUser":
+			url[0] = "${pageContext.request.contextPath}/users_deleteUser.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/users_findAllUser.action";
+			break;
+		case "Department":
+			url[0] = "${pageContext.request.contextPath}/dept_deleteDept.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/dept_findAllDept.action";
+			break;
+		case "Stock":
+			url[0] = "${pageContext.request.contextPath}/stock_deleteStock.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/stock_findAllStock.action";
+			break;
+	}
+	return url;
 }

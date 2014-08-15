@@ -3,6 +3,9 @@ function parse(str){
 	return encodeURI(encodeURI(str));  
 }
 
+
+/*****************************这个独特，另外写的删除*******************/
+
 /**
  * 删除客户或供应商【单条删除】
  * @param ids
@@ -14,6 +17,9 @@ function delSingleScmcoc(ids,flag){
 		toMain(url);
 	}
 }
+
+
+
 
 /**
  * 删除客户或供应商【批量删除】
@@ -34,30 +40,10 @@ function delMoreScmcoc(flag){
 		toMain(url);
 	}
 }
+/********************************************************************************************************/
 
 
-function delSingleStock(ids){
-	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/stock_deleteStock.action?ids="+ids;
-		toMain(url);
-	}
-}
 
-function delMoreStock(){
-	var splitStr = "";
-	$('input[name="sid"]:checked').each(function(){
-		splitStr+=$(this).val()+',';
-	}); 
-	if(splitStr==""){
-		alert("请选择要删除的内容!");
-		return;
-	}
-	splitStr = splitStr.substring(0, splitStr.length-1);
-	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/stock_deleteStock.action?ids="+splitStr;
-		toMain(url);
-	}
-}
 
 
 /**
@@ -111,18 +97,22 @@ function delData(ids,flag){
 function getUrl(flag){
 	var url = [2];//[0]表示删除请求的地址;    [1]表示刷新页面时所需的数据请求地址
 	switch(flag){
+		//删除结算方式
 		case "Settlement":
 			url[0] = "${pageContext.request.contextPath}/settl_delSettlById.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/settl_findAllSett.action";
 			break;
+			//删除用户
 		case "AclUser":
 			url[0] = "${pageContext.request.contextPath}/users_deleteUser.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/users_findAllUser.action";
 			break;
+			//删除部门
 		case "Department":
 			url[0] = "${pageContext.request.contextPath}/dept_deleteDept.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/dept_findAllDept.action";
 			break;
+			//删除仓库
 		case "Stock":
 			url[0] = "${pageContext.request.contextPath}/stock_deleteStock.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/stock_findAllStock.action";

@@ -22,4 +22,5 @@ public interface EmployeeLogic {
 	 */
 	public List<Employee> findAllEmpl(String likeStr,Integer index,Integer length);
 	
+	public int countListEmpl(String str);
 }

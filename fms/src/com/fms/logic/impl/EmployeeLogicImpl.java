@@ -30,7 +30,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 
 
 	public List<Employee> findAllEmpl(String likeStr,Integer index,Integer length) {
-		return employeeDao.findAllEmpl(likeStr,index,length);
+		return employeeDao.findAllEmpl(likeStr,(index*length-length),length);
 	}
 
 
@@ -101,6 +101,17 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 
 	public void setUserDao(AclUserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	public int countListEmpl(String str) {
+		// TODO Auto-generated method stub
+		String hql = "select count(id) from Employee a where 1=1";
+		List param = new ArrayList();
+		if(null!=str && !"".equals(str)){
+			hql+=" and a.name like '%"+str+"%'";
+			//param.add("'%"+name+"%'");
+		}
+		return userDao.count(hql, param.toArray());
 	}
 
 

@@ -25,6 +25,10 @@ public class EmployeeAction extends BaseAction {
 	
 	private AclUser user;
 	
+	private int pageindex;
+	
+	private int pageReows=2;
+	
 	
 
 	private static final long serialVersionUID = 1L;
@@ -34,9 +38,35 @@ public class EmployeeAction extends BaseAction {
     private String emid;
 	
 	public String employees(){
-		 List list =emplLogic.findAllEmpl(null, -1, -1);
+		 List list =emplLogic.findAllEmpl(null, 1, pageReows);
+		 int count= emplLogic.countListEmpl(null);
+		 request.put("pagecount",count);
 		 request.put("empls", list);
 		return "manager";
+	}
+	
+	
+	public void employeesAjax(){
+		AjaxResult  result=new AjaxResult();
+		Writer writer=null;
+		try{
+			writer=response.getWriter();
+		result.setSuccess(false);
+		 List list =emplLogic.findAllEmpl(null, pageindex,pageReows);
+		 result.setSuccess(true);
+		 result.setObj(list);
+
+		}catch(Exception e){
+		 result.setMsg(e.getMessage());
+		}
+		 JSONObject json=new JSONObject(result);
+		 try {
+			writer.write(json.toString());
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -159,6 +189,26 @@ public class EmployeeAction extends BaseAction {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+
+	public int getPageindex() {
+		return pageindex;
+	}
+
+
+	public void setPageindex(int pageindex) {
+		this.pageindex = pageindex;
+	}
+
+
+	public int getPageReows() {
+		return pageReows;
+	}
+
+
+	public void setPageReows(int pageReows) {
+		this.pageReows = pageReows;
 	}
 
 

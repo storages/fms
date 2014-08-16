@@ -254,7 +254,6 @@ $(function(){
 		});  
     }else{
     	uploadimgframe.onload=function(){
-    		alert("图片上传load");
 		      var thisDocument=this.contentDocument||this.contentWindow.document; 
 	          var html=  $(thisDocument.body).find("pre").html();
 	          var json= jQuery.parseJSON(html);

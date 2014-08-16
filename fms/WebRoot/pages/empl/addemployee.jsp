@@ -94,7 +94,7 @@
 						<c:if test="${empl.id==null||empl.id==''}">
 						<td class="hidden-480 addcss" rowspan="2"
 							style="vertical-align:middle;">
-							<input name="wfloginUser" value="true" id="isloginUser" type="checkbox" />登录用户</td>
+							<input name="empl.wfloginUser" value="true" id="isloginUser" type="checkbox" />登录用户</td>
 						</c:if>
 						<td class="hidden-480 addcss" <c:if test="${empl.id==null||empl.id==''}">colspan="1"</c:if> <c:if test="${empl.id!=null&&empl.id!=''}">colspan="2"</c:if> rowspan="2">
 							<center>

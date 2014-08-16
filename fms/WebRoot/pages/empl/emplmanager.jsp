@@ -7,8 +7,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <base href="<%=basePath%>">
     
@@ -21,10 +21,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 	
 	
-	
+	<style type="text/css">
+body{margin:0;background:url(${pageContext.request.contextPath}/images/01.jpg) repeat center;font-size:12px;}
+h1,p{margin:0;}
+ul{padding:0;margin:0;list-style:none;}
+
+/* demo */
+.demo{width:800px;margin:30px;}
+#result{font-size:24px;font-family:'微软雅黑','宋体';color:#333;margin:0;font-weight:normal;}
+#pager ul.pages{padding-top:20px;height:40px;}
+#pager ul.pages li{float:left;border:1px solid #ddd;background:#fff; margin:0 5px 0 0;padding:5px 8px;}
+#pager ul.pages li:hover{border:1px solid #ec9db1;background:#fff2f5;}
+#pager ul.pages li.pgEmpty{border:1px solid #eee;color:#999;}
+#pager ul.pages li.pgCurrent{border:1px solid #ec97ab;color:#555;font-weight:700;background-color:#f8e8ec;}
+
+.txt{padding-top:5px;font-size:14px;font-family:Arial,Times New Roman;}
+.txt b{margin-left:5px;color:#f60;}
+</style>
   <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/jqPaginator.js"></script>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/page/bootstrap.min.css" />
+   <script type="text/javascript" src="<%=path%>/js/utils/jquery.tmpl.min.js"> </script>
+ <script type="text/javascript">
+ var maxPageCount=${pagecount};
+ var DATA_ROWS=2;
+ </script>
   </head>
   
   <body>
@@ -55,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 						</thead>
 
-						<tbody>
+						<tbody id="tbody">
 							<c:forEach var="item" items="${empls}" varStatus="index" step="1">
 								<tr>
 									<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
@@ -87,90 +106,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
 			
-			<!-- 分页 -->
-					
-					<%-- 	<ul>
-						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
-						</li>
-						<li class="next"><a href="javascript: gotoPage( 1, ${pageNums} )">首页</a>
-						</li>
-						<c:if test="${currIndex!=1}">
-							<li class="next"><a href="javascript: gotoPage( ${currIndex - 1}, ${pageNums} )">上一页</a>
-							</li>
-						</c:if>
-						<c:if test="${currIndex!=pageNums}">
-							<li class="next"><a href="javascript: gotoPage( ${currIndex + 1}, ${pageNums} )">下一页 </a>
-							</li>
-						</c:if>
-						
-						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
-						</li>
-					</ul>
-					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag('${pageNums}')">
-						<c:forEach begin="1" end="${pageNums}" var="pnum">
-							<c:if test="${pnum==currIndex}">
-								<option selected="selected" value="${pnum}">${pnum}页</option>
-							</c:if>
-							<c:if test="${pnum!=currIndex}">
-								<option  value="${pnum}">${pnum}页</option>
-							</c:if>
-						</c:forEach>
-					</select>
-					--%>
+				<!-- 分页 -->
+				<div class="pagination pull-right no-margin" style="width: 500px;">
 				
+				</div>
+	              <div class="demo">
+	                  <div id="pager" ></div>
+                  </div>
 			</div>
 			
 		</div>
 		<!--PAGE CONTENT ENDS-->
 	</div>
-	<ul class="pagination" id="pagination1"></ul>
+	  <script type="text/javascript" src="<%=path%>/js/page/emplmanager-page.js"> </script>
   </body>
-  <script type="text/javascript" src="<%=path%>/js/page/emplmanager-page.js"> </script>
-<script type="text/javascript">
+  
+<script id="SXrow" type="text/x-jquery-tmpl">
+<tr>
+<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+	<input type="checkbox" value="{{= id}}" name="sid" style="width:30px;"/>
+</td>
 
-	 $.jqPaginator('#pagination1', {
-        totalPages: 100,
-        visiblePages: 10,
-        currentPage: 3,
-        onPageChange: function (num, type) {
-         //   $('#p1').text(type + '：' + num);
-        }
-    });
-	/**	function gototag(pageSize){
-			var n = $("#gonum option:selected").val();
-			gotoPage(n, pageSize);
-		}
-		
-		/**
-	 * 转到指定页码
-	 * @param {Object} pageNum 要转到第几页        currIndex
-	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
-	 
-	function gotoPage(pageNum, pageSize) {
-		var likeStr = $("#search").val(); 
-		// 拼接URL
-		var url = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+"&isCustom=true";
-		// 在本窗口中显示指定URL的页面
-		toMain(url);
-	}
-	
-	function parse(str){
-		return encodeURI(encodeURI(str));  
-	}
-	
-	function toedit(id){
-	if(id==''){
-		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?isCustom=true";
-	}else{
-		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids="+id+"&isCustom=true";
-	}
-		toMain(url);
-	}
-   */
-	  
- $("#addEmpl").click(function(){
- toMain(Global+"/empl_addEmployee.action");
- });
+<td class="center"><a href="#">{{= index}}</a>
+</td>
+<td class="center">{{= code}}</td>
+<td class="center">{{= name}}</td>
+<td class="hidden-480 center">{{= department.name}}　</td>
+<td class="hidden-480 center">{{= gender}}　</td>
+<td class="hidden-480 center">{{= linkPhone}}　</td>
+<td class="center">
+	<a href="javascript:void(0);"  edit-emp="{{= id}}">修改</a>｜
+	<a href="javascript:void(0);" onclick="delSingleScmcoc('{{= id}}','true')">删除</a>
+</td>
+</tr>
 </script>
 </html>
 

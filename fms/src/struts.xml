@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<!-- <package name="default" extends="struts-default">
-		<default-action-ref name="notFound" />
-		<action name="notFound">
-			<result>/pages/error/404page.html</result>
-		</action>
-	</package> -->
-           
+	<!-- <package name="default" extends="struts-default"> <default-action-ref 
+		name="notFound" /> <action name="notFound"> <result>/pages/error/404page.html</result> 
+		</action> </package> -->
+
 	<package name="usersActionPackage" extends="struts-default">
-<!-- 拦截器配置 -->
-<interceptors>
-<interceptor name="loginInterceptor" class="com.fms.interceptor.AclLoginInterceptor">
-</interceptor>
-<interceptor-stack name="aclInterceptor">
-<interceptor-ref name="loginInterceptor"  />
-<interceptor-ref name="defaultStack" />
-</interceptor-stack>
-</interceptors>
-<!-- 这是全局拦截器 -->
-<default-interceptor-ref name="aclInterceptor"/>
-<global-results>
-<result name="tologin" type="redirectAction">loginAction_gologin</result>
-</global-results>
+		<!-- 拦截器配置 -->
+		<interceptors>
+			<interceptor name="loginInterceptor"
+				class="com.fms.interceptor.AclLoginInterceptor">
+			</interceptor>
+			<interceptor-stack name="aclInterceptor">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<!-- 这是全局拦截器 -->
+		<default-interceptor-ref name="aclInterceptor" />
+		<global-results>
+			<result name="tologin" type="redirectAction">loginAction_gologin</result>
+		</global-results>
 
 		<!-- 跳转到登录页面 -->
 		<action name="loginAction_*" class="aclUserAction" method="{1}">
@@ -31,11 +29,17 @@
 
 		<!-- AclUser的Action配置 -->
 		<action name="users_*" class="aclUserAction" method="{1}">
-			<result name="edit">/pages/login.jsp</result>  
+			<result name="edit">/pages/login.jsp</result>
 			<result name="authority">/pages/aclusermanage/userAuthority.jsp</result>
 			<result name="del" type="chain">users_findAllUser</result>
 		</action>
-		
+
+		<!-- ParameterSet的Action配置 -->
+		<action name="params_*" class="paramsAction" method="{1}">
+			<result name="success">/pages/basicdata/parameterset.jsp</result>
+			<result name="save" type="chain">params_getParameterValue</result>
+		</action>
+
 		<!-- Scmcoc的Action配置 -->
 		<action name="scmcoc_*" class="scmcocAction" method="{1}">
 			<result name="success">/pages/scmcoc/scmcoc.jsp</result>
@@ -44,48 +48,48 @@
 			<result name="findcis">/pages/scmcoc/addscmcis.jsp</result>
 			<result name="cis">/pages/scmcoc/scmcis.jsp</result>
 		</action>
-		
+
 		<!-- Department的Action配置 -->
 		<action name="dept_*" class="deptAction" method="{1}">
 			<result name="success">/pages/basicdata/department.jsp</result>
 			<result name="find">/pages/basicdata/adddept.jsp</result>
 			<result name="save" type="chain">dept_findAllDept</result>
 		</action>
-		
+
 		<!-- Stock的Action配置 -->
 		<action name="stock_*" class="stockAction" method="{1}">
 			<result name="success">/pages/basicdata/stock.jsp</result>
 			<result name="find">/pages/basicdata/addstock.jsp</result>
 			<result name="save" type="chain">stock_findAllStock</result>
 		</action>
-		
+
 		<!-- Settlement的Action配置 -->
 		<action name="settl_*" class="settlementAction" method="{1}">
 			<result name="success">/pages/basicdata/settlement.jsp</result>
 			<result name="find">/pages/basicdata/addsettlement.jsp</result>
 			<result name="save" type="chain">settl_findAllSett</result>
 		</action>
-		
-		<!--  currencies的Action配置  --> 
-		 
-		  <action name="currencies_*" class="currenciesAction" method="{1}">
-			  <result name="success">/pages/basicdata/currencies.jsp</result> 
-			  <result name="find">/pages/basicdata/addcurrencies.jsp</result> 
-			  <result name="save" type="chain">currencies_findAllCurrencies</result>
-		  </action>
-		
-			<!--  employee的Action配置  --> 
-		 
-		  <action name="empl_*"  class="employeeAction" method="{1}">
-			  <result name="manager">/pages/empl/emplmanager.jsp</result> 
-			  <result name="addemp">/pages/empl/addemployee.jsp</result> 
-		  </action>
-		
-		<action name="myupload_*" class="uploadUtils" method="{1}">
-		<param name="path">/upload</param>
+
+		<!-- currencies的Action配置 -->
+
+		<action name="currencies_*" class="currenciesAction" method="{1}">
+			<result name="success">/pages/basicdata/currencies.jsp</result>
+			<result name="find">/pages/basicdata/addcurrencies.jsp</result>
+			<result name="save" type="chain">currencies_findAllCurrencies</result>
 		</action>
-		
-		
+
+		<!-- employee的Action配置 -->
+
+		<action name="empl_*" class="employeeAction" method="{1}">
+			<result name="manager">/pages/empl/emplmanager.jsp</result>
+			<result name="addemp">/pages/empl/addemployee.jsp</result>
+		</action>
+
+		<action name="myupload_*" class="uploadUtils" method="{1}">
+			<param name="path">/upload</param>
+		</action>
+
+
 	</package>
 
 

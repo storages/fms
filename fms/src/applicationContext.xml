@@ -86,6 +86,12 @@
 		</property>
 	</bean>
 	
+	<!-- ParameterSet -->
+	<bean id="paramsDao" class="com.fms.dao.impl.ParamsDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
 	
 	<!-- Scmcoc -->
 	
@@ -128,6 +134,9 @@
 	 		 <ref bean="sessionFactory" /> 
 	     </property>
 	  </bean>
+	  
+	  
+	  
 	<!-- ======================Logic类=========================== -->
 	
 	<!-- AclUser -->
@@ -137,6 +146,12 @@
 		</property>
 	</bean>
 	
+	<!-- ParameterSet -->
+	<bean id="paramsLogic" class="com.fms.logic.impl.ParamsLogicImpl">
+		<property name="paramsDao">
+			<ref bean="paramsDao"/>
+		</property>
+	</bean>
 	
 	
 	<!-- Scmcoc -->
@@ -182,12 +197,22 @@
 		 <property name="employeeDao"><ref bean="employeeDao" /> </property>
 		   <property name="userDao"><ref bean="userDao" /> </property>
 	  </bean>
+	  
+	  
 	<!-- ======================Action类=========================== -->
 	
 	<!-- AclUser -->
 	<bean id="aclUserAction" class="com.fms.action.AclUserAction" scope="prototype">
 		<property name="userLogic">
 			<ref bean="userLogic"/>
+		</property>
+	</bean>
+	
+	<!-- ParameterSet -->
+	
+	<bean id="paramsAction" class="com.fms.action.ParamsAction" scope="prototype">
+		<property name="paramsLogic">
+			<ref bean="paramsLogic"/>
 		</property>
 	</bean>
 	

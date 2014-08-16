@@ -8,14 +8,14 @@
 
 <session-factory>
 	<property name="dialect">
-		org.hibernate.dialect.SQLServerDialect
+		org.hibernate.dialect.MySQLDialect
 	</property>
 	<property name="hbm2ddl.auto">update</property>
 	<property name="show_sql">true</property>
 	<property name="format_sql">true</property>
 
 	<!-- 实体类映射开始 -->
-	<mapping resource="com/fms/core/entity/Currencies.hbm.xml" /> 
+	<mapping resource="com/fms/core/entity/Currencies.hbm.xml" />
 	<mapping resource="com/fms/core/entity/AclUser.hbm.xml" />
 	<mapping resource="com/fms/core/entity/BehaviorRecord.hbm.xml" />
 	<mapping resource="com/fms/core/entity/Department.hbm.xml" />
@@ -24,6 +24,7 @@
 	<mapping resource="com/fms/core/entity/Scmcoc.hbm.xml" />
 	<!-- 实体类映射结束-->
 	<mapping resource="com/fms/core/entity/Settlement.hbm.xml" />
+	<mapping resource="com/fms/core/entity/ParameterSet.hbm.xml" />
 
 </session-factory>
 

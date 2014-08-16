@@ -23,9 +23,10 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
 <link
 	href="${pageContext.request.contextPath}/css/public/bootstrap.min.css"
-	rel="stylesheet">
+	rel="stylesheet"/>
 <link
 	href="${pageContext.request.contextPath}/css/public/bootstrap-responsive.min.css"
 	rel="stylesheet" />
@@ -50,7 +51,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/jquerytree/tree.css"
 	type="text/css"></link>
-
+  
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.8.2.min.js"></script>
 
@@ -59,6 +60,8 @@
 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquerytree/jquery.treeview.js"></script>
+	
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/jquery.pager.js"></script>
 
 <script type="text/javascript">
     var   Global='${pageContext.request.contextPath}';
@@ -97,7 +100,6 @@
 </head>
 
 <body oncontextmenu="return false" style="position: relative;">
-
 	<jsp:include page="/pages/content.jsp"></jsp:include>
 </body>
 </html>

@@ -90,7 +90,7 @@ ul{padding:0;margin:0;list-style:none;}
 									<td class="hidden-480 center">${item.linkPhone}　</td>
 									<td class="center">
 										<a href="javascript:void(0);"  edit-emp="${item.id}">修改</a>｜
-										<a href="javascript:void(0);" onclick="delSingleScmcoc('${item.id}','true')">删除</a>
+										<a href="javascript:void(0);" delete-emp="${item.id}">删除</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -101,7 +101,7 @@ ul{padding:0;margin:0;list-style:none;}
 			<div class="modal-footer">
 			  <a   href="javaScript:void;"></a>
 				<button  id="addEmpl" class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" >增加员工</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" id="deleteAll">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
@@ -136,7 +136,7 @@ ul{padding:0;margin:0;list-style:none;}
 <td class="hidden-480 center">{{= linkPhone}}　</td>
 <td class="center">
 	<a href="javascript:void(0);"  edit-emp="{{= id}}">修改</a>｜
-	<a href="javascript:void(0);" onclick="delSingleScmcoc('{{= id}}','true')">删除</a>
+	<a href="javascript:void(0);"  delete-emp="{{= id}}">删除</a>
 </td>
 </tr>
 </script>

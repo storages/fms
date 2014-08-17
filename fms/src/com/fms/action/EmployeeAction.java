@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -15,6 +16,9 @@ import com.fms.core.entity.Employee;
 import com.fms.logic.DeptLogic;
 import com.fms.logic.EmployeeLogic;
 import com.fms.utils.AjaxResult;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.url.ajax.json.JSONObject;
 
 public class EmployeeAction extends BaseAction {
@@ -28,6 +32,8 @@ public class EmployeeAction extends BaseAction {
 	private int pageindex;
 	
 	private int pageReows=2;
+	
+	private String  ids;
 	
 	
 
@@ -47,7 +53,7 @@ public class EmployeeAction extends BaseAction {
 	
 	
 	public void employeesAjax(){
-		AjaxResult  result=new AjaxResult();
+		AjaxResult<List<Employee>>  result=new AjaxResult();
 		Writer writer=null;
 		try{
 			writer=response.getWriter();
@@ -59,9 +65,10 @@ public class EmployeeAction extends BaseAction {
 		}catch(Exception e){
 		 result.setMsg(e.getMessage());
 		}
-		 JSONObject json=new JSONObject(result);
+		 Gson son=new Gson();
+		 String str= son.toJson(result);
 		 try {
-			writer.write(json.toString());
+			writer.write(str);
 			writer.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -126,7 +133,28 @@ public class EmployeeAction extends BaseAction {
     }
     
     
-    
+    public void deleteEmpl(){
+    	AjaxResult result=new AjaxResult ();
+    	result.setSuccess(false);
+    	try{
+    		String[] idarr=ids.split(",");
+           emplLogic.deleteEmpl(idarr);
+           result.setSuccess(true);
+    	}catch(Exception e){
+    	result.setSuccess(false);
+    	result.setMsg("删除失败稍后再试");
+    	}
+    	
+    	try {
+    		JSONObject json=new JSONObject(result);
+			Writer writer= response.getWriter();
+			writer.write(json.toString());
+			writer.flush();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
     
     
@@ -211,6 +239,20 @@ public class EmployeeAction extends BaseAction {
 		this.pageReows = pageReows;
 	}
 
+
+	public String getIds() {
+		return ids;
+	}
+
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+
+
+	
+	
 
 
 

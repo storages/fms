@@ -39,8 +39,15 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	}
 
 
-	public void deleteEmpl(String id) {
+	public void deleteEmpl(String [] ids) {
 		// TODO Auto-generated method stub
+		userDao.deleteAclUserByEmpId(ids);
+		String hql = "delete Employee a where 1=1 and ";
+		for(int i=0 ; i<ids.length; i++){
+			hql+=" a.id = ? or ";
+		}
+		hql = hql.substring(0,hql.trim().length()-2);
+		employeeDao.batchUpdateOrDelete(hql, ids);
 		
 	}
 
@@ -112,6 +119,11 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 			//param.add("'%"+name+"%'");
 		}
 		return userDao.count(hql, param.toArray());
+	}
+
+	public void deleteEmpl(String id) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

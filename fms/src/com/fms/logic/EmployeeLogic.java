@@ -11,6 +11,7 @@ public interface EmployeeLogic {
 	public List<Employee> loadEmployee();
 	public void updateEmpl(Employee modal);
 	public void deleteEmpl(String id);
+	public void deleteEmpl(String [] ids);
 	public Employee getEmplById(String id);
 	public void saveEmplAndUser(Employee empl,boolean isuser,AclUser user) throws Exception;
 	/**

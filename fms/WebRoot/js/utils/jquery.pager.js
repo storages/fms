@@ -76,8 +76,13 @@
         for (var page = startPoint; page <= endPoint; page++) {
 
             var currentButton = $('<li class="page-number">' + (page) + '</li>');
-
-            page == pagenumber ? currentButton.addClass('pgCurrent') : currentButton.click(function() { buttonClickCallback(this.firstChild.data,pagecount);});
+            if(page == pagenumber){
+            	currentButton.addClass('pgCurrent');
+            	currentButton.click(function() { buttonClickCallback(this.firstChild.data,pagecount);});
+            }else{
+            	currentButton.click(function() { buttonClickCallback(this.firstChild.data,pagecount);});
+            }
+             
             currentButton.appendTo($pager);
         }
 

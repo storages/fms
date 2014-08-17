@@ -5,10 +5,10 @@
  * @author Administrator
  *
  */
-public class AjaxResult {
+public class AjaxResult<T>  {
 	private boolean success;  //是否成功
 	private String msg;      //存储消息
-	private Object  obj;    //存储对象
+	private T  obj;    //存储对象
 	
 	public boolean isSuccess() {
 		return success;
@@ -22,12 +22,13 @@ public class AjaxResult {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public Object getObj() {
+	public T getObj() {
 		return obj;
 	}
-	public void setObj(Object obj) {
+	public void setObj(T obj) {
 		this.obj = obj;
 	}
+
 	
 
 }

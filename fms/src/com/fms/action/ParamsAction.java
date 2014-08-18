@@ -12,6 +12,9 @@ public class ParamsAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 
 	private ParamsLogic paramsLogic;
+	
+	private String id;
+	
 	// 数量保留小数位数
 	private Integer qtyBits;
 
@@ -31,7 +34,8 @@ public class ParamsAction extends BaseAction {
 	 */
 	public String getParameterValue() {
 		try{
-		request.put("params", paramsLogic.getParameterValue());
+			ParameterSet params = paramsLogic.getParameterValue();
+			request.put("params", params);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -44,6 +48,9 @@ public class ParamsAction extends BaseAction {
 	 */
 	public String saveParamsValue() {
 		ParameterSet ps = new ParameterSet(qtyBits,weightBits,priceBits,amountBits);
+		if(id!=null && !"".equals(id)){
+			ps.setId(id);
+		}
 		this.paramsLogic.saveParameterValue(ps);
 		return "save";
 	}
@@ -86,6 +93,14 @@ public class ParamsAction extends BaseAction {
 
 	public void setAmountBits(Integer amountBits) {
 		this.amountBits = amountBits;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

@@ -29,9 +29,6 @@ $(function(){
 		 }
 		
 		});
-		
-		
-		
 	};
 	
 	$("#pager").pager({

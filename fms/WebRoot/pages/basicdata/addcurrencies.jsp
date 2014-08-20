@@ -103,7 +103,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		if(isPass){
 			var param = "code="+code+"&name="+parse(name)+"&note="+parse(note)+"&ids="+isEdit;
-			alert(param);
 			var submitUrl = "${pageContext.request.contextPath}/currencies_saveCurrencies.action?"+param;
 			toMain(submitUrl);
 		}

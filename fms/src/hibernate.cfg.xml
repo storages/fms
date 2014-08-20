@@ -25,6 +25,7 @@
 	<!-- 实体类映射结束-->
 	<mapping resource="com/fms/core/entity/Settlement.hbm.xml" />
 	<mapping resource="com/fms/core/entity/ParameterSet.hbm.xml" />
+	<mapping resource="com/fms/core/entity/Unit.hbm.xml" />
 
 </session-factory>
 

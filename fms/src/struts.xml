@@ -78,6 +78,14 @@
 			<result name="save" type="chain">currencies_findAllCurrencies</result>
 		</action>
 
+
+		<!-- Unit的Action配置 -->
+		<action name="unit_*" class="unitAction" method="{1}">
+			<result name="success">/pages/basicdata/unit.jsp</result>
+			<result name="find">/pages/basicdata/addunit.jsp</result>
+			<result name="save" type="chain">currencies_findAllUnit</result>
+		</action>
+
 		<!-- employee的Action配置 -->
 
 		<action name="empl_*" class="employeeAction" method="{1}">

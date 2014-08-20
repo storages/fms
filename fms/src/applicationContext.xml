@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" 
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -17,9 +15,9 @@
 	<!-- 为了测试添加 的一个日期类 -->
 	<bean id="date" class="java.util.Date" />
 
-	
+
 	<!-- 加载外部的properties配置文件 -->
-	<context:property-placeholder location="classpath:jdbc.properties"/>
+	<context:property-placeholder location="classpath:jdbc.properties" />
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -32,9 +30,9 @@
 		<property name="driverClass" value="${driverClass}"></property>
 		<property name="user" value="${username}"></property>
 		<property name="password" value="${password}"></property>
-		
-		
-		
+
+
+
 		<!-- 其他配置 -->
 		<!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
 		<property name="initialPoolSize" value="3"></property>
@@ -75,189 +73,220 @@
 			<tx:method name="*" propagation="SUPPORTS" />
 		</tx:attributes>
 	</tx:advice>
-	
-	
+
+
 	<!-- =======================Dao类========================== -->
-	
+
 	<!-- AclUser -->
 	<bean id="userDao" class="com.fms.dao.impl.AclUserDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<!-- ParameterSet -->
 	<bean id="paramsDao" class="com.fms.dao.impl.ParamsDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<!-- Scmcoc -->
-	
+
 	<bean id="scmcocDao" class="com.fms.dao.impl.ScmcocDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
-	
+
+
 	<!-- Department -->
-	
+
 	<bean id="deptDao" class="com.fms.dao.impl.DeptDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<!-- Stock -->
 	<bean id="stockDao" class="com.fms.dao.impl.StockDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<!-- Settlement -->
 	<bean id="settlementDao" class="com.fms.dao.impl.SettlementDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
 	<bean id="currenciesDao" class="com.fms.dao.impl.CurrenciesDaoImpl">
-	 	 <property name="sessionFactory">
-	 		 <ref bean="sessionFactory" /> 
-	     </property>
-	  </bean>
-	
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
 	<bean id="employeeDao" class="com.fms.dao.impl.EmployeeDaoImpl">
-	<property name="sessionFactory">
-	 		 <ref bean="sessionFactory" /> 
-	     </property>
-	  </bean>
-	  
-	  
-	  
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="unitDao" class="com.fms.dao.impl.UnitDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
 	<!-- ======================Logic类=========================== -->
-	
+
 	<!-- AclUser -->
 	<bean id="userLogic" class="com.fms.logic.impl.AclUserLogicImpl">
 		<property name="userDao">
-			<ref bean="userDao"/>
+			<ref bean="userDao" />
 		</property>
 	</bean>
-	
+
 	<!-- ParameterSet -->
 	<bean id="paramsLogic" class="com.fms.logic.impl.ParamsLogicImpl">
 		<property name="paramsDao">
-			<ref bean="paramsDao"/>
+			<ref bean="paramsDao" />
 		</property>
 	</bean>
-	
-	
+
+
 	<!-- Scmcoc -->
 	<bean id="scmcocLogic" class="com.fms.logic.impl.ScmcocLogicImpl">
 		<property name="scmcocDao">
-			<ref bean="scmcocDao"/>
+			<ref bean="scmcocDao" />
 		</property>
 	</bean>
-	
-	
+
+
 	<!-- Department -->
-	
+
 	<bean id="deptLogic" class="com.fms.logic.impl.DeptLogicImpl">
 		<property name="deptDao">
-			<ref bean="deptDao"/>
+			<ref bean="deptDao" />
 		</property>
 	</bean>
-	
+
 	<!-- Stock -->
-	
+
 	<bean id="stockLogic" class="com.fms.logic.impl.StockLogicImpl">
 		<property name="stockDao">
-			<ref bean="stockDao"/>
+			<ref bean="stockDao" />
 		</property>
 	</bean>
-	
+
 
 	<!-- Settlement -->
-	
+
 	<bean id="settlementLogic" class="com.fms.logic.impl.SettlementLogicImpl">
 		<property name="settlementDao">
-			<ref bean="settlementDao"/>
+			<ref bean="settlementDao" />
 		</property>
 	</bean>
-	<!--  Currencies --> 
-	 <bean id="currenciesLogic" class="com.fms.logic.impl.CurrenciesLogicImpl">
-		 <property name="currenciesDao">
-		  <ref bean="currenciesDao" /> 
-		  </property>
-	  </bean>
+	<!-- Currencies -->
+	<bean id="currenciesLogic" class="com.fms.logic.impl.CurrenciesLogicImpl">
+		<property name="currenciesDao">
+			<ref bean="currenciesDao" />
+		</property>
+	</bean>
+
+	<bean id="employeeLogic" class="com.fms.logic.impl.EmployeeLogicImpl">
+		<property name="employeeDao">
+			<ref bean="employeeDao" />
+		</property>
+		<property name="userDao">
+			<ref bean="userDao" />
+		</property>
+	</bean>
 	
-	 <bean id="employeeLogic" class="com.fms.logic.impl.EmployeeLogicImpl">
-		 <property name="employeeDao"><ref bean="employeeDao" /> </property>
-		   <property name="userDao"><ref bean="userDao" /> </property>
-	  </bean>
-	  
-	  
+	<bean id="unitLogic" class="com.fms.logic.impl.UnitLogicImpl">
+		<property name="unitDao">
+			<ref bean="unitDao" />
+		</property>
+	</bean>
+
+
 	<!-- ======================Action类=========================== -->
-	
+
 	<!-- AclUser -->
-	<bean id="aclUserAction" class="com.fms.action.AclUserAction" scope="prototype">
+	<bean id="aclUserAction" class="com.fms.action.AclUserAction"
+		scope="prototype">
 		<property name="userLogic">
-			<ref bean="userLogic"/>
+			<ref bean="userLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- ParameterSet -->
-	
+
 	<bean id="paramsAction" class="com.fms.action.ParamsAction" scope="prototype">
 		<property name="paramsLogic">
-			<ref bean="paramsLogic"/>
+			<ref bean="paramsLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- Scmcoc -->
 	<bean id="scmcocAction" class="com.fms.action.ScmcocAction" scope="prototype">
 		<property name="scmcocLogic">
-			<ref bean="scmcocLogic"/>
+			<ref bean="scmcocLogic" />
 		</property>
 		<property name="settlementLogic">
-			<ref bean="settlementLogic"/>
+			<ref bean="settlementLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- Department -->
 	<bean id="deptAction" class="com.fms.action.DeptAction" scope="prototype">
 		<property name="deptLogic">
-			<ref bean="deptLogic"/>
+			<ref bean="deptLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- Stock -->
 	<bean id="stockAction" class="com.fms.action.StockAction" scope="prototype">
 		<property name="stockLogic">
-			<ref bean="stockLogic"/>
+			<ref bean="stockLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- Settlement -->
-	<bean id="settlementAction" class="com.fms.action.SettlementAction" scope="prototype">
+	<bean id="settlementAction" class="com.fms.action.SettlementAction"
+		scope="prototype">
 		<property name="settlementLogic">
-			<ref bean="settlementLogic"/>
+			<ref bean="settlementLogic" />
 		</property>
 	</bean>
-	 
-	<!--  Currencies --> 
-	<bean id="currenciesAction" class="com.fms.action.CurrenciesAction" scope="prototype">
+
+	<!-- Currencies -->
+	<bean id="currenciesAction" class="com.fms.action.CurrenciesAction"
+		scope="prototype">
 		<property name="currenciesLogic">
-			<ref bean="currenciesLogic"/>
+			<ref bean="currenciesLogic" />
 		</property>
 	</bean>
 	
-	<bean id="employeeAction" class="com.fms.action.EmployeeAction" scope="prototype">
-		<property name="deptLogic"><ref bean="deptLogic" /></property>
-		<property name="emplLogic"><ref bean="employeeLogic"/></property>
+	
+	<!-- Unit -->
+	<bean id="unitAction" class="com.fms.action.UnitAction" scope="prototype">
+		<property name="unitLogic">
+			<ref bean="unitLogic" />
+		</property>
 	</bean>
-	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils" >
+
+	<!-- Employee -->
+	<bean id="employeeAction" class="com.fms.action.EmployeeAction"
+		scope="prototype">
+		<property name="deptLogic">
+			<ref bean="deptLogic" />
+		</property>
+		<property name="emplLogic">
+			<ref bean="employeeLogic" />
+		</property>
+	</bean>
+	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils">
 	</bean>
 </beans>

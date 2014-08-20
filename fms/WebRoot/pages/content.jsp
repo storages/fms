@@ -48,7 +48,7 @@
 				<li><span class="file"><a href="javascript:void(0);" data-url="/dept_findAllDept.action" >部门管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/settl_findAllSett.action" >结算方式</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/currencies_findAllCurrencies.action" >交易货币管理</a></span></li>
-				<li><span class="file"><a href="">计量单位管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/unit_findAllUnit.action">计量单位管理</a></span></li>
 				<li  class="closed"><span class="folder directer">仓库设置</span>
 					<ul>
 						<li><span class="file"><a href="javascript:void(0);" data-url="/stock_findAllStock.action" >仓库管理</a></span></li>

@@ -20,11 +20,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	
   <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
   </head>
   
   <body>
-    <div class="page-header position-relative" style="margin-bottom: 0px;">
+    <div class="page-header position-relative" style="margin-bottom: 0px; height:30px;">
 		<h5>基础资料＞＞客户管理</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
@@ -90,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
 				<!-- 分页 -->
-				<div class="pagination pull-right no-margin" style="width: 500px;">
+				<div class="pagination pull-right no-margin" style="width: 700px;">
 					<ul>
 						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
 						</li>

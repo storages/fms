@@ -83,7 +83,7 @@
 		<action name="unit_*" class="unitAction" method="{1}">
 			<result name="success">/pages/basicdata/unit.jsp</result>
 			<result name="find">/pages/basicdata/addunit.jsp</result>
-			<result name="save" type="chain">currencies_findAllUnit</result>
+			<result name="save" type="chain">unit_findAllUnit</result>
 		</action>
 
 		<!-- employee的Action配置 -->

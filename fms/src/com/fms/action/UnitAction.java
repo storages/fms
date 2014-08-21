@@ -74,7 +74,7 @@ private String ids;
 				String id = arrIds[0];
 				Unit unit = this.unitLogic.findUnitById(id);
 				if (null != unit) {
-					this.request.put("stock", unit);
+					this.request.put("unit", unit);
 				}
 			}
 		}
@@ -87,7 +87,7 @@ private String ids;
 	 * @return
 	 * @throws Exception
 	 */
-	public String saveStock(){
+	public String saveUnit(){
 		this.unitLogic.saveUnit(this.setProperty(new Unit()));
 		return "save";
 	}
@@ -179,6 +179,96 @@ private String ids;
 
 	public void setUnitLogic(UnitLogic unitLogic) {
 		this.unitLogic = unitLogic;
+	}
+
+
+	public String getIds() {
+		return ids;
+	}
+
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getNote() {
+		return note;
+	}
+
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+
+	public String getSearchStr() {
+		return searchStr;
+	}
+
+
+	public Integer getDataTotal() {
+		return dataTotal;
+	}
+
+
+	public void setDataTotal(Integer dataTotal) {
+		this.dataTotal = dataTotal;
+	}
+
+
+	public String getCurrIndex() {
+		return currIndex;
+	}
+
+
+	public void setCurrIndex(String currIndex) {
+		this.currIndex = currIndex;
+	}
+
+
+	public String getMaxIndex() {
+		return maxIndex;
+	}
+
+
+	public void setMaxIndex(String maxIndex) {
+		this.maxIndex = maxIndex;
+	}
+
+
+	public Integer getPageNums() {
+		return pageNums;
+	}
+
+
+	public void setPageNums(Integer pageNums) {
+		this.pageNums = pageNums;
+	}
+
+
+	public void setSearchStr(String searchStr) {
+		this.searchStr = searchStr;
 	}
 	
 	

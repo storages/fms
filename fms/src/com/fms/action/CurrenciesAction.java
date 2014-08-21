@@ -228,23 +228,6 @@ public class CurrenciesAction extends BaseAction {
 		this.name = name;
 	}
 
-	
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Date getModifyDate() {
-		return modifyDate;
-	}
-
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
-	}
 
 	public String getNote() {
 		return note;

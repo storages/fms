@@ -122,6 +122,10 @@ function getUrl(flag){
 			url[0] = "${pageContext.request.contextPath}/currencies_del.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/currencies_findAllCurrencies.action";
 			break;
+		case "Unit":
+			url[0] = "${pageContext.request.contextPath}/unit_deleteUnit.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/unit_findAllUnit.action";
+			break;
 	}
 	return url;
 }

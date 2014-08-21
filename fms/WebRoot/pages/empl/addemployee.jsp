@@ -57,10 +57,10 @@
 	<iframe name="imgframe" id="uploadimgframe"   style="display: none;"></iframe>
 	<div class="page-header position-relative" style="margin-bottom: 0px;">
 		<c:if test="${dept.id==null}">
-			<h5>基础资料＞＞员工＞＞新增</h5>
+			<h5>职员管理＞＞职员信息＞＞新增</h5>
 		</c:if>
 		<c:if test="${dept.id!=null}">
-			<h5>基础资料＞＞员工＞＞修改</h5>
+			<h5>职员管理＞＞职员信息＞＞修改</h5>
 		</c:if>
 	</div>
 	<div class="modal-footer">

@@ -48,7 +48,7 @@ ul{padding:0;margin:0;list-style:none;}
   
   <body>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
-		<h5>基础资料＞＞员工管理</h5>
+		<h5>职员管理＞＞职员信息</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
 		<span class="">员工名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>

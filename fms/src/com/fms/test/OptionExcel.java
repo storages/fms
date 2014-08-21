@@ -20,6 +20,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.fms.core.entity.Stock;
+import com.fms.logic.StockLogic;
 import com.fms.utils.ReadExcelUtil;
 
 /**
@@ -30,6 +31,7 @@ import com.fms.utils.ReadExcelUtil;
  */
 public class OptionExcel {
 
+	StockLogic logic;
 	public static void main(String[] args) {
 		readExcel();// 读取excel
 		// writeExcel();// 写入excel
@@ -193,5 +195,23 @@ public class OptionExcel {
 
 		return style;
 	}
+	
+	private void validata(Object[][] data){
+		
+		List<Stock> stocks = logic.findAllStock(null, -1, -1);
+		for(int i =0;i<data.length;i++){
+			Object obj = data[i][0];//编码
+			
+		}
+	}
 
+	public StockLogic getLogic() {
+		return logic;
+	}
+
+	public void setLogic(StockLogic logic) {
+		this.logic = logic;
+	}
+	
+	
 }

@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -19,9 +18,8 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.format.CellTextFormatter;
-import org.apache.poi.ss.usermodel.CellStyle;
 
+import com.fms.core.entity.Stock;
 import com.fms.utils.ReadExcelUtil;
 
 /**
@@ -33,8 +31,8 @@ import com.fms.utils.ReadExcelUtil;
 public class OptionExcel {
 
 	public static void main(String[] args) {
-		 readExcel();//读取excel
-		//writeExcel();// 写入excel
+		readExcel();// 读取excel
+		// writeExcel();// 写入excel
 	}
 
 	/**
@@ -49,26 +47,32 @@ public class OptionExcel {
 
 			JFileChooser jfc = new JFileChooser();
 
-			//jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);// 只能选择目录
+			// jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);// 只能选择目录
 
-			jfc.showOpenDialog(null);
+			int value = jfc.showOpenDialog(null);
 
-			File selectFile = jfc.getSelectedFile();
+			if (value == JFileChooser.APPROVE_OPTION) {
 
-			String[][] result = excelUtil.getData(selectFile, 1);
+				File selectFile = jfc.getSelectedFile();
 
-			int rowLength = result.length;
+				String[][] result = excelUtil.getData(selectFile, 1);
 
-			for (int i = 0; i < rowLength; i++) {
+				int rowLength = result.length;
 
-				for (int j = 0; j < result[i].length; j++) {
+				List<Stock> stocks = new ArrayList<Stock>();
 
-					System.out.print(result[i][j] + "\t\t");
+				for (int i = 0; i < rowLength; i++) {
 
+					Stock stock = new Stock();
+
+					stock.setCode(result[i][0]);
+					stock.setName(result[i][1]);
+					stock.setNote(result[i][2]);
+					stocks.add(stock);
 				}
-
-				System.out.println();
-
+				for (Stock s : stocks) {
+					System.out.println(s.getCode() + " " + s.getName() + " "+ s.getNote());
+				}
 			}
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
@@ -80,7 +84,6 @@ public class OptionExcel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -121,14 +124,15 @@ public class OptionExcel {
 		}
 		for (int i = 0; i < dataList.size(); i++) {
 			// 创建电子表格的一行
-			HSSFRow row = sheet.createRow(i+1); // 下标为1的行开始
+			HSSFRow row = sheet.createRow(i + 1); // 下标为1的行开始
 			for (int k = 0; k < dataList.size(); k++) {
 				// 在一行内循环
 				HSSFCell cell = row.createCell((short) k);
 				// 设置表格的编码集，使支持中文
 				// // 先判断数据库中的数据类型
 				// 将结果集里的值放入电子表格中
-				cell.setCellValue(Double.parseDouble(dataList.get(k).toString()));
+				cell.setCellValue(Double
+						.parseDouble(dataList.get(k).toString()));
 			}
 			i++;
 		}
@@ -144,50 +148,50 @@ public class OptionExcel {
 		System.out.println("数据库导出成功");
 	}
 
-	
 	/**
 	 * 设置样式
+	 * 
 	 * @param wb
 	 * @return
 	 */
-	private static HSSFCellStyle setStyle(HSSFWorkbook wb ,HSSFSheet sheet){
-		
+	private static HSSFCellStyle setStyle(HSSFWorkbook wb, HSSFSheet sheet) {
+
 		HSSFCellStyle style = wb.createCellStyle();
-		
-		//一、设置背景色：
+
+		// 一、设置背景色：
 
 		style.setFillForegroundColor((short) 13);// 设置背景色
 		style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
-		//二、设置边框:
+		// 二、设置边框:
 
-		style.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
-		style.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
-		style.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
-		style.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+		style.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框
+		style.setBorderLeft(HSSFCellStyle.BORDER_THIN);// 左边框
+		style.setBorderTop(HSSFCellStyle.BORDER_THIN);// 上边框
+		style.setBorderRight(HSSFCellStyle.BORDER_THIN);// 右边框
 
-		//三、设置居中:
+		// 三、设置居中:
 
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
 
-		//四、设置字体:
+		// 四、设置字体:
 
 		HSSFFont font = wb.createFont();
 		font.setFontName("黑体");
-		font.setFontHeightInPoints((short) 16);//设置字体大小
+		font.setFontHeightInPoints((short) 16);// 设置字体大小
 
 		HSSFFont font2 = wb.createFont();
 		font2.setFontName("仿宋_GB2312");
-		font2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		font2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
 		font2.setFontHeightInPoints((short) 12);
 
-		style.setFont(font);//选择需要用到的字体格式
+		style.setFont(font);// 选择需要用到的字体格式
 
-		//五、设置列宽:
+		// 五、设置列宽:
 
-		sheet.setColumnWidth(0, 3766); //第一个参数代表列id(从0开始),第2个参数代表宽度值
+		sheet.setColumnWidth(0, 3766); // 第一个参数代表列id(从0开始),第2个参数代表宽度值
 
 		return style;
 	}
-	
+
 }

@@ -3,6 +3,7 @@
 import java.util.List;
 
 import com.fms.core.entity.AclUser;
+import com.fms.utils.AjaxResult;
 
 
 /**
@@ -44,4 +45,7 @@ public interface AclUserLogic {
 	 * @return
 	 */
 	public AclUser findUserById(String id);
+	
+	
+	public AjaxResult saveUserByNoName(AclUser user);
 }

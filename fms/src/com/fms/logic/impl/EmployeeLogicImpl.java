@@ -126,6 +126,14 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		
 	}
 
+	public void updateEmplUseByparam(String key,boolean param) {
+		// TODO Auto-generated method stub
+	    Employee employee= (Employee) employeeDao.get(Employee.class, key);
+	    employee.setWfloginUser(param);
+	    employeeDao.saveOrUpdate(employee);
+	}
+
+
 
 
 

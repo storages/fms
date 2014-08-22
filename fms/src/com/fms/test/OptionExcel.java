@@ -21,7 +21,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.fms.core.entity.Stock;
 import com.fms.logic.StockLogic;
-import com.fms.utils.ReadExcelUtil;
+import com.fms.utils.ExcelUtil;
 
 /**
  * 测试读取Excel
@@ -33,8 +33,8 @@ public class OptionExcel {
 
 	StockLogic logic;
 	public static void main(String[] args) {
-		readExcel();// 读取excel
-		// writeExcel();// 写入excel
+		//readExcel();// 读取excel
+		 new ExcelUtil().createPDF();//生成PDF文档
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class OptionExcel {
 	public static void readExcel() {
 
 		try {
-			ReadExcelUtil excelUtil = new ReadExcelUtil();
+			ExcelUtil excelUtil = new ExcelUtil();
 
 			JFileChooser jfc = new JFileChooser();
 
@@ -57,7 +57,7 @@ public class OptionExcel {
 
 				File selectFile = jfc.getSelectedFile();
 
-				String[][] result = excelUtil.getData(selectFile, 1);
+				String[][] result = excelUtil.readExcel(selectFile, 1);
 
 				int rowLength = result.length;
 

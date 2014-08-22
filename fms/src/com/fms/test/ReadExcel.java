@@ -4,7 +4,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
-import com.fms.utils.ReadExcelUtil;
+import com.fms.utils.ExcelUtil;
 
 
 
@@ -17,7 +17,7 @@ public class ReadExcel {
 
 	public static void main(String[] args) throws Exception {
 		
-		ReadExcelUtil excelUtil = new ReadExcelUtil();
+		ExcelUtil excelUtil = new ExcelUtil();
 		
 		JFileChooser jfc = new JFileChooser();
 		
@@ -25,7 +25,7 @@ public class ReadExcel {
 		
 		File selectFile = jfc.getSelectedFile(); 
 
-		String[][] result = excelUtil.getData(selectFile, 1);
+		String[][] result = excelUtil.readExcel(selectFile, 1);
 
 		int rowLength = result.length;
 

@@ -24,6 +24,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  <div>
+         图片 : <input type="file"/>
+  <img alt="aaa" src="" height="300px;" width="300px">
+  </div>
     <script type="text/javascript">
     	var url = "${pageContext.request.contextPath}/loginAction_gologin.action";
     	window.location.href= url;

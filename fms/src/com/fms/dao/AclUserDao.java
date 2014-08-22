@@ -36,6 +36,12 @@ public interface AclUserDao extends BaseDao{
 	public void deleteAclUser(String [] ids);
 	
 	public void deleteAclUserByEmpId(String [] empId);
+	/**
+	 * 更具用户名查询用户
+	 * @param name
+	 * @return
+	 */
+	public boolean findUserByName(String name);
 	
 	/**
 	 * 根据用户id来查询用户

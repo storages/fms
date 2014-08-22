@@ -5,6 +5,7 @@ import java.util.List;
 import com.fms.core.entity.AclUser;
 import com.fms.dao.AclUserDao;
 import com.fms.logic.AclUserLogic;
+import com.fms.utils.AjaxResult;
 import com.fms.utils.MD5Util;
 
 public class AclUserLogicImpl implements AclUserLogic {
@@ -47,6 +48,20 @@ public class AclUserLogicImpl implements AclUserLogic {
 
 	public AclUser findUserById(String id) {
 		return this.userDao.findUserById(id);
+	}
+
+	public AjaxResult saveUserByNoName(AclUser user) {
+		AjaxResult result=new AjaxResult();
+		result.setSuccess(false);
+        boolean isue= userDao.findUserByName(user.getUserName());	
+        if(!isue){
+        	userDao.saveAclUser(user);
+        	result.setSuccess(true);
+        }else{
+        	result.setSuccess(false);
+        	result.setMsg("用户名已经存在");
+        }
+		return result;
 	}
 
 }

@@ -45,13 +45,13 @@ import com.itextpdf.text.pdf.PdfWriter;
  * 读取Excel
  * 
  * @author guodacai 2014-8-13 下午5:41:43
- * 
  */
 public class ExcelUtil {
 
 	/**
+	 * @param 居然不支持office2007?蛋疼
 	 * 
-	 * 读取Excel的内容，第一维数组存储的是一行中格列的值，二维数组存储的是多少个行
+	 * @param 读取Excel的内容，第一维数组存储的是一行中列的值，二维数组存储的是多少个行
 	 * 
 	 * @param file
 	 *            读取数据的源Excel
@@ -276,6 +276,9 @@ public class ExcelUtil {
 
 	}
 
+	/**
+	 * 导入到PDF，还没有找到不显示中文的方法
+	 */
 	public static void createPDF() {
 		Document document = new Document(PageSize.A4, 10, 10, 10, 10);
 		try {

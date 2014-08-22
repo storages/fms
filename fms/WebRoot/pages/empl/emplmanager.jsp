@@ -43,7 +43,9 @@ ul{padding:0;margin:0;list-style:none;}
  <script type="text/javascript">
  var maxPageCount=${pagecount};
  var DATA_ROWS=2;
+ var names='${names}';
  </script>
+ <link rel="stylesheet" href="<%=path%>/css/page/canvas.css"  type="text/css" />
   </head>
   
   <body>
@@ -51,8 +53,8 @@ ul{padding:0;margin:0;list-style:none;}
 		<h5>职员管理＞＞职员信息</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
-		<span class="">员工名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
+		<span class="">员工名称</span><input type="text" id="search" value="${names}" style="height:25px;" class=""/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="submit" value="查询" id="searchbutton" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 	</div> 
 	<div class="row-fluid" >
 		<div class="span12">
@@ -64,7 +66,6 @@ ul{padding:0;margin:0;list-style:none;}
 						<thead>
 							<tr align="center">
 								<th class="center" style="width:30px;">选择</th>
-								<th class="center">序号</th>
 								<th class="center">编号</th>
 								<th class="center">员工名称</th>
 								<th class="hidden-480 center">部门名称</th>
@@ -80,16 +81,15 @@ ul{padding:0;margin:0;list-style:none;}
 									<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
 										<input type="checkbox" value="${item.id}" name="sid" style="width:30px;"/>
 									</td>
-
-									<td class="center"><a href="#">${index.index+1}</a>
-									</td>
 									<td class="center">${item.code}</td>
 									<td class="center">${item.name}</td>
 									<td class="hidden-480 center">${item.department.name}　</td>
 									<td class="hidden-480 center">${item.gender}　</td>
 									<td class="hidden-480 center">${item.linkPhone}　</td>
 									<td class="center">
-										<a href="javascript:void(0);"  edit-emp="${item.id}">修改</a>｜
+									  <c:if test="${item.wfloginUser}">  <a href="javascript:void(0);" cancel-loginUser="${item.id}">取消登陆权</a></c:if>
+									  <c:if test="${!item.wfloginUser}">  <a href="javascript:void(0);" create-loginUser="${item.id}">创建登陆</a></c:if>
+										｜<a href="javas cript:void(0);"  edit-emp="${item.id}">修改</a>｜
 										<a href="javascript:void(0);" delete-emp="${item.id}">删除</a>
 									</td>
 								</tr>
@@ -126,19 +126,36 @@ ul{padding:0;margin:0;list-style:none;}
 <td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
 	<input type="checkbox" value="{{= id}}" name="sid" style="width:30px;"/>
 </td>
-
-<td class="center"><a href="#">{{= index}}</a>
-</td>
 <td class="center">{{= code}}</td>
 <td class="center">{{= name}}</td>
 <td class="hidden-480 center">{{= department.name}}　</td>
 <td class="hidden-480 center">{{= gender}}　</td>
 <td class="hidden-480 center">{{= linkPhone}}　</td>
 <td class="center">
-	<a href="javascript:void(0);"  edit-emp="{{= id}}">修改</a>｜
+{{if wfloginUser}} <a href="javascript:void(0);" cancel-loginUser="{{ id}}">取消登陆权</a>{{else}} <a href="javascript:void(0);" create-loginUser="{{ id}}">创建登陆</a>  {{/if}}
+	｜<a href="javascript:void(0);"  edit-emp="{{= id}}">修改</a>｜
 	<a href="javascript:void(0);"  delete-emp="{{= id}}">删除</a>
 </td>
 </tr>
 </script>
 </html>
-
+<div id="canvas" class="canvasdiv"></div>
+	<div id="ulploddiv" class="ulploddiv">
+		<div class="upload_vc" style="">
+			<form name="uploadImg" action="<%=path%>/myupload_uploadAjax.action"
+				method="post" target="imgframe" enctype="multipart/form-data">
+				<p>请填写</p>
+				<ul>
+					<li style="height: 70px; line-height: 0px; margin-bottom: 20px;">
+					<span>登 陆 名 :</span> <input style="height: 20px; width: 150px;" id="loginName" name="user.name" type="text" /><br/>
+					<span>登陆密码 :</span> <input style="height: 20px; width: 150px;" id="password" name="user.password" type="password" /><br/>
+					<span>确认密码 :</span> <input style="height: 20px; width: 150px;" id="passwordto" name="passwordto" type="password" /><br/>
+					</li>
+					<li>
+					        <button class="btn btn-small btn-danger pull-left buts1" id="fileUpload" data-toggle="button" type="button">确定</button>
+							<button class="btn btn-small btn-danger pull-right buts2"  id="closecanvas" data-toggle="button" type="button">取消</button>
+					</li>
+				</ul>
+			</form>
+		</div>
+	</div>

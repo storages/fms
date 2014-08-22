@@ -13,6 +13,7 @@ import com.fms.base.action.BaseAction;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Department;
 import com.fms.core.entity.Employee;
+import com.fms.logic.AclUserLogic;
 import com.fms.logic.DeptLogic;
 import com.fms.logic.EmployeeLogic;
 import com.fms.utils.AjaxResult;
@@ -35,30 +36,39 @@ public class EmployeeAction extends BaseAction {
 	
 	private String  ids;
 	
+	private String names;
+	
 	
 
 	private static final long serialVersionUID = 1L;
     private	DeptLogic   deptLogic;
     private	EmployeeLogic  emplLogic;
+    private AclUserLogic acluserLogic;
     
     private String emid;
-	
+	/**
+	 * 员工列表
+	 * @return
+	 */
 	public String employees(){
-		 List list =emplLogic.findAllEmpl(null, 1, pageReows);
-		 int count= emplLogic.countListEmpl(null);
+		 List list =emplLogic.findAllEmpl(names, 1, pageReows);
+		 int count= emplLogic.countListEmpl(names);
 		 request.put("pagecount",count);
 		 request.put("empls", list);
+		 request.put("names", names);
 		return "manager";
 	}
 	
-	
+	/**
+	 * 员工列表分页
+	 */
 	public void employeesAjax(){
 		AjaxResult<List<Employee>>  result=new AjaxResult();
 		Writer writer=null;
 		try{
 			writer=response.getWriter();
 		result.setSuccess(false);
-		 List list =emplLogic.findAllEmpl(null, pageindex,pageReows);
+		 List list =emplLogic.findAllEmpl(names, pageindex,pageReows);
 		 result.setSuccess(true);
 		 result.setObj(list);
 
@@ -106,7 +116,10 @@ public class EmployeeAction extends BaseAction {
     	 req.setAttribute("loadPath",path);
     	return "addemp";
     }	
-    
+    /**
+     * 保存员工
+     * @throws IOException
+     */
     public void  saveEmpl() throws IOException{
     	Writer  writer=	null;
          AjaxResult  result=new AjaxResult();
@@ -132,7 +145,9 @@ public class EmployeeAction extends BaseAction {
          writer.close();
     }
     
-    
+    /**
+     * 删除员工
+     */
     public void deleteEmpl(){
     	AjaxResult result=new AjaxResult ();
     	result.setSuccess(false);
@@ -155,8 +170,54 @@ public class EmployeeAction extends BaseAction {
 			e.printStackTrace();
 		}
     }
+    public void updateisLous(){
+    	AjaxResult  result=new AjaxResult();
+    	result.setSuccess(false);
+    	try{
+        acluserLogic.saveAclUser(user);
+        emplLogic.updateEmplUseByparam(user.getEmployee().getId(), true);
+        result.setSuccess(true);
+    	}catch(Exception e){
+    		result.setSuccess(false);
+    		result.setMsg("操作失败");
+    	}
+    	try {
+			Writer writer= response.getWriter();
+			JSONObject  json=new JSONObject(result);
+			writer.write(json.toString());
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
-    
+    /**
+     * 
+     * @return
+     */
+    public void cancelLoUs(){
+    	AjaxResult  result=new AjaxResult();
+    	result.setSuccess(false);
+    	try{
+        String[] arr=new String[1];
+        arr[0]=ids;
+        acluserLogic.deleteAclUser(arr);
+        result.setSuccess(true);
+    	}catch(Exception e){
+    		result.setSuccess(false);
+    		result.setMsg("操作失败");
+    	}
+    	try {
+			Writer writer= response.getWriter();
+			JSONObject  json=new JSONObject(result);
+			writer.write(json.toString());
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
     
     
@@ -247,6 +308,16 @@ public class EmployeeAction extends BaseAction {
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+
+	public String getNames() {
+		return names;
+	}
+
+
+	public void setNames(String names) {
+		this.names = names;
 	}
 
 

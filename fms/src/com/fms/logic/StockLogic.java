@@ -3,8 +3,9 @@ package com.fms.logic;
 import java.util.List;
 
 import com.fms.core.entity.Stock;
+import com.fms.excel.importDataFromExcel;
 
-public interface StockLogic {
+public interface StockLogic  {
 
 	/**
 	 * 查询所有的仓库信息[分页]
@@ -53,4 +54,10 @@ public interface StockLogic {
 	 * 根据Id来删除仓库信息
 	 */
 	public void delStockById(String[] ids);
+	
+	/**
+	 * 导入Excel数据
+	 */
+	public void importData(List<?> dataList);
+	
 }

@@ -1,5 +1,6 @@
 package com.fms.action;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -37,6 +38,10 @@ public class StockAction extends BaseAction {
 	private String searchStr;//搜索条件
 	private static final Integer DEFAULT_PAGESIZE = 11; 
 
+	/*********获取前台选择的文件***********/
+	private String fileName;
+	private String fileContentType;
+	private File file;
 	
 	/**
 	 * 查询所有仓库列表【分页】
@@ -172,6 +177,11 @@ public class StockAction extends BaseAction {
 	}
 	
 	
+	public String importData(){
+		
+		return "";
+	}
+	
 	public StockLogic getStockLogic() {
 		return stockLogic;
 	}
@@ -250,6 +260,42 @@ public class StockAction extends BaseAction {
 
 	public void setSearchStr(String searchStr) {
 		this.searchStr = searchStr;
+	}
+
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
+
+
+	public File getFile() {
+		return file;
+	}
+
+
+
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 	 

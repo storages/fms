@@ -93,4 +93,16 @@ public class AclUserDaoImpl extends BaseDaoImpl implements AclUserDao {
 		}
 		this.batchUpdateOrDelete(hql, list.toArray());
 	}
+
+	public boolean findUserByName(String name) {
+		// TODO Auto-generated method stub
+		List list = new ArrayList();
+		String hql = "SELECT a FROM AclUser a where a.userName=?";
+		list.add(name);
+		AclUser aclUser = (AclUser) this.findUniqueResult(hql, list.toArray());
+		if(null!=aclUser)
+			return true;
+		else 
+			return false;
+	}
 }

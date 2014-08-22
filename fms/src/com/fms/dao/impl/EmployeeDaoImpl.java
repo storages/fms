@@ -13,7 +13,7 @@ public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao {
 	
 	
 	public List<Employee> findAllEmpl(String likeStr,Integer index,Integer length) {
-		String hql = "select a from Employee a ";
+ 		String hql = "select a from Employee a where 1=1";
 		List param = new ArrayList();
 		if(null!=likeStr && !"".equals(likeStr)){
 			hql+=" and a.name like '%"+likeStr+"%'";
@@ -21,5 +21,6 @@ public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao {
 		}
 		return this.findPageList(hql, param.toArray(),index,length);
 	}
+
                  
 }

@@ -2,6 +2,7 @@
 $(function(){
 	initEditfun();
 	initDeletefun();
+	initLogunButton();
 	var PageClick = function(pageclickednumber,sumcount){
 		$("#pager").pager({
 			pagenumber:pageclickednumber,
@@ -15,6 +16,7 @@ $(function(){
 		var data={};
 		data["pageindex"]=pageclickednumber;
 		data["pageReows"]=DATA_ROWS;
+		if(names&&names!=''){data["names"]=names;}
 		//alert(pageclickednumber);
 		$.post(url, data, function(result){
 		 var json=$.parseJSON(result);
@@ -37,8 +39,76 @@ $(function(){
 		pageSum:maxPageCount,
 		buttonClickCallback:PageClick
 	});
+	$("#searchbutton").click(function(){
+		var val= $("#search").val();
+		if(val&&val!=''){
+			var url=Global+"/empl_employees.action?names="+val;
+			toMain(url);
+		}else{
+			toMain(Global+"/empl_employees.action");
+		}
+
+	});
 	
-	
+	function initLogunButton(){
+		$("a[create-loginUser]").click(function(){
+			initcanvas();
+		});
+
+		$("a[cancel-loginUser]").click(function(){
+			var url=Global+"/empl_cancelLoUs.action";
+			var id=$(this).attr("cancel-loginUser");
+		    var data={};
+		    data["ids"]=id;
+		    $.post(url,data,function(result){
+		           var json=$.parseJSON(result);
+		            if(json.success){
+			             alert("操作成功");
+		            }else{
+			            alert(json.msg);
+		                }
+	             });
+		});
+	}
+	$("#closecanvas").click(closecanvas());
+	/**
+	 * 单击
+	 */
+	//初始化帆布】
+  function initcanvas(){
+	  //alert("123");
+	  //获取屏幕高端   宽度  上传文件DIV 宽度 和高度
+		 var $canvas =$("#canvas");
+		 var $div=$("#ulploddiv");
+	 var avheight= window.screen.availHeight; 
+	 var avwidth = window.screen.availWidth; 
+	 var divheight= parseInt($div.css("height"));
+	 var divwidth = parseInt($div.css("width"));
+	 var topsize= (avheight-divheight)/2;
+	 var leftsize= (avwidth-divwidth)/2;
+	 $canvas.css("height",avheight+"px");
+	 $canvas.css("width",avwidth+"px");
+	 $canvas.css("display","block");
+	 $("body").css("overflow","hidden");
+	 $div.css("display","block");
+	 $div.css("top",topsize+"px");
+	 $div.css("left",leftsize+"px");
+	 
+  }
+  /**
+   * 关闭帆布
+   */
+  function closecanvas(){
+	var $canvas =$("#canvas");
+	var $div=$("#ulploddiv");
+	$canvas.css("display","none");
+	$("body").css("overflow","");
+	$("#ulploddiv #loginName").val("");
+	$("#ulploddiv #password").val("");
+	$("#ulploddiv #passwordto").val("");
+	 $div.css("display","none");
+  }
+  
 	$("#addEmpl").click(function(){
 		 toMain(Global+"/empl_addEmployee.action");
 		 });

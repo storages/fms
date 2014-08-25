@@ -195,7 +195,7 @@ public class StockAction extends BaseAction {
 			
 			
 			//就这句，如何获取jsp页面传过来的文件
-			String[][] content = ExcelUtil.readExcel(new File("C:\\Users\\Administrator\\Desktop\\1.xls"), 1);
+			String[][] content = ExcelUtil.readExcel(new File("C:\\Documents and Settings\\Administrator\\桌面\\1.xls"), 1);
 			
 			
 			List<Stock> stocks = new ArrayList<Stock>();

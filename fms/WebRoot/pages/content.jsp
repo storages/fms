@@ -95,8 +95,8 @@
 
 
 
-<!-- 右边主功能区 -->
-<div class="page-content" style="margin-left: 192px; height:89%; padding:0px; font-size: 12px;" id="tomain">
+<!-- 右边主功能区 style="OVERFLOW-Y: auto; OVERFLOW-X:hidden;" -->
+<div class="page-content" style="margin-left: 192px; height:89%; padding:0px; font-size: 12px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;" id="tomain" >
 	<jsp:include page="/pages/templet/templet.jsp"></jsp:include>
 </div>
 <!--/.page-content-->

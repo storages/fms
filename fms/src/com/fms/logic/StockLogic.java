@@ -3,7 +3,6 @@ package com.fms.logic;
 import java.util.List;
 
 import com.fms.core.entity.Stock;
-import com.fms.excel.importDataFromExcel;
 
 public interface StockLogic  {
 
@@ -56,8 +55,13 @@ public interface StockLogic  {
 	public void delStockById(String[] ids);
 	
 	/**
-	 * 导入Excel数据
+	 * 验证导入Excel数据
 	 */
-	public void importData(List<?> dataList);
+	public List<?> doValidata(List<?> dataList);
+	
+	/**
+	 * 保存Excel数据到数据库
+	 */
+	public Boolean doSaveExcelData(List<?> dataList);
 	
 }

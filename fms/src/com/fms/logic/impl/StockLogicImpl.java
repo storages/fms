@@ -10,7 +10,6 @@ import java.util.Map;
 
 import com.fms.core.entity.Stock;
 import com.fms.dao.StockDao;
-import com.fms.excel.importDataFromExcel;
 import com.fms.logic.StockLogic;
 import com.fms.temp.TempStock;
 import com.fms.utils.ExcelUtil;
@@ -53,23 +52,13 @@ public class StockLogicImpl implements StockLogic {
 		this.stockDao.delStockById(ids);
 	}
 
-	public void importData(final List<?> dataList) {
-		new importDataFromExcel(){
+	public List<?> doValidata(final List<?> dataList) {
 			List<TempStock> tempList = new ArrayList<TempStock>();
 			List<Stock> stocks = stockDao.findAllStock(null, -1, -1);
 			Map<String,Stock> map = new HashMap<String,Stock>();
-			
+			Map<String,Stock> mapSelf = new HashMap<String,Stock>();
 			Map<String,Stock> stockCache = new HashMap<String,Stock>();
-			
-			
-			@Override
-			public void doSave() {
-				// TODO Auto-generated method stub
-				
-			}
 
-			@Override
-			public List<?> doValidata() {
 				//定义关键key
 				for(Stock stock:stocks){
 					String key = stock.getCode()+"/"+stock.getName();
@@ -81,34 +70,39 @@ public class StockLogicImpl implements StockLogic {
 					TempStock temp = new TempStock();
 					if(null==impStock.getCode() || "".equals(impStock.getCode().trim())){
 						String mess = "编码不能为空; ";
-						temp.setErrorInfo(temp.getErrorInfo()+mess);
+						temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 					}
 					if(null==impStock.getName() || "".equals(impStock.getName().trim())){
 						String mess = "仓库名称不能为空; ";
-						temp.setErrorInfo(temp.getErrorInfo()+mess);
+						temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 					}
 					String key2 = impStock.getCode()+"/"+impStock.getName();
 					//验证导入数据在系统中是否重复
 					if(stockCache.get(key2)!=null && null!=impStock.getCode() && !"".equals(impStock.getCode().trim()) && null!=impStock.getName() && !"".equals(impStock.getName().trim())){
 						setProperties(impStock, temp);
 						String mess = "对应编码【"+impStock.getCode()+"】、名称【 "+impStock.getName()+"】在系统中已存在; ";
-						temp.setErrorInfo(temp.getErrorInfo()+mess);
+						temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 					}
 					//验证导入数据自身是否有重复
-					Map<String,Stock> map = new HashMap<String,Stock>();
-					if(map.get(key2)!=null && null!=impStock.getCode() && !"".equals(impStock.getCode().trim()) && null!=impStock.getName() && !"".equals(impStock.getName().trim())){
+					
+					if(mapSelf.get(key2)!=null && null!=impStock.getCode() && !"".equals(impStock.getCode().trim()) && null!=impStock.getName() && !"".equals(impStock.getName().trim())){
 						String mess = "对应编码【"+impStock.getCode()+"】、名称【 "+impStock.getName()+"】在导入文件中重复; ";
-						temp.setErrorInfo(temp.getErrorInfo()+mess);
+						temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 					}
+					mapSelf.put(key2, temp);
 					tempList.add(setProperties(impStock, temp));
 				}
 				// TODO Auto-generated method stub
 				return tempList;
 			}
+
 			
-		};
-		
-	}
+			/*@Override
+			public void doSave() {
+				// TODO Auto-generated method stub
+				
+			}*/
+
 
 
 	/**
@@ -127,6 +121,16 @@ public class StockLogicImpl implements StockLogic {
 		return null;
 	}
 	
+	private Stock decProperties(TempStock src,Stock tag){
+		if(null!=src && null!=tag){
+			tag.setCode(src.getCode());
+			tag.setName(src.getName());
+			tag.setNote(src.getNote());
+			return tag;
+		}
+		return null;
+	}
+	
 	private void getData(File file){
 		try {
 			 String[][] datas = ExcelUtil.readExcel(file, 0);
@@ -134,5 +138,29 @@ public class StockLogicImpl implements StockLogic {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
+	}
+
+	/**
+	 * 保存Excel导入的数据
+	 */
+	public Boolean doSaveExcelData(List<?> dataList) {
+		List<Stock> stockL = new ArrayList<Stock>();
+		//重新验证是否有错误的数据
+		for(Object obj:dataList){
+			TempStock ts = (TempStock)obj;
+			if(null!=ts.getErrorInfo() && !"".equals(ts.getErrorInfo().trim())){
+				return false;
+			}else{
+				Stock s = new Stock();
+				stockL.add(decProperties(ts,s));
+				continue;
+			}
+		}
+		try{
+		this.stockDao.batchSaveOrUpdate(stockL);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return true;
 	}
 }

@@ -50,6 +50,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<br/>
     	
     	<a href="${pageContext.request.contextPath}/pages/loginUser.jsp">New LoginPage</a>
+    	
+    	<hr/>
+    	<br/>
+    	<h4>测试Excel导入</h4>
+    	<form method="post" onsubmit="toMai('${pageContext.request.contextPath}/stock_importData.action')" enctype="multipart/form-data">
+    		<input type="file" name="upfile"/><input type="submit" value="导入">
+    	</form>
   </body>
   <script type="text/javascript">
   	function findUserName(){

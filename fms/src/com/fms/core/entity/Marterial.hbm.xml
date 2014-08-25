@@ -1,0 +1,27 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="Material" table="MATERIAL">
+		<id name="id" column="ID">
+			<generator class="uuid" />
+		</id>
+		<property name="createDate" column="CREATEDATE" />
+		<property name="modifyDate" column="MODIFYDATE" />
+
+
+		<property name="hsName" column="HSNAME" />
+		<property name="color" column="COLOR" />
+		<many-to-one name="materialType" column="MATERIALTYPE" class="com.fms.core.entity.MaterialType"/>
+		<many-to-one name="unit" column="UNIT" class="com.fms.core.entity.Unit"/>
+		<property name="spec" column="SPEC" />
+		<property name="qty" column="QTY" />
+		<property name="pkgs" column="PKGS" />
+		<property name="imgExgFlag" column="IMGEXGFLAG" />
+		<property name="batchNO" column="BATCHNO" />
+		<property name="lowerQty" column="LOWERQTY" />
+		<property name="note" column="NOTE" />
+	</class>
+</hibernate-mapping>

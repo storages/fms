@@ -26,18 +26,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <div class="modal-footer" style="text-align: left;">
-		<input type="file" style="height:25px;" class="" name="upfile" id="importfile"/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="打开文件" style="height:25px; border: 2px; width:55px; margin-top:0px; margin-left: -85px;" onclick="sendfile()"/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误信息" style="height:25px; border: 2px; width:65px; margin-top:0px;" onclick="clearErrorData()"/>
+		<input type="file" style="height:25px; width:120px;" class="" name="upfile" id="importfile"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px;" onclick="sendfile()"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px;" onclick="clearErrorData()"/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" style="height:25px; border: 2px; width:55px; margin-top:0px;" onclick="saveData()"/>
 	</div> 
-  <div class="row-fluid" >
+  <div class="row-fluid">
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
 
 			<div class="row-fluid">
-				<div class="span12">
-					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
+				<div class="span12" >
+					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px; ">
 						<thead>
 							<tr align="center">
 								<th class="center">错误信息</th>

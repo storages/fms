@@ -61,6 +61,7 @@
 			<result name="success">/pages/basicdata/stock.jsp</result>
 			<result name="find">/pages/basicdata/addstock.jsp</result>
 			<result name="save" type="chain">stock_findAllStock</result>
+			<result name="validata">/pages/import/stockimport.jsp</result>
 		</action>
 
 		<!-- Settlement的Action配置 -->

@@ -74,8 +74,8 @@ public class StockLogicImpl implements StockLogic {
 						temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 					}
 					if(null!=impStock.getCode() || !"".equals(impStock.getCode().trim())){
-						if(stockcode.get(impStock).getCode()!=null){
-							String mess = "编码已用过; ";
+						if(stockcode.get(impStock.getCode())!=null){
+							String mess = "编码【"+impStock.getCode()+"】已用过; ";
 							temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 						}
 					}

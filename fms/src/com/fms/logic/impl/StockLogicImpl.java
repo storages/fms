@@ -58,11 +58,12 @@ public class StockLogicImpl implements StockLogic {
 			Map<String,Stock> map = new HashMap<String,Stock>();
 			Map<String,Stock> mapSelf = new HashMap<String,Stock>();
 			Map<String,Stock> stockCache = new HashMap<String,Stock>();
-
+			Map<String,Stock> stockcode = new HashMap<String,Stock>();
 				//定义关键key
 				for(Stock stock:stocks){
 					String key = stock.getCode()+"/"+stock.getName();
 					stockCache.put(key, stock);
+					stockcode.put("code",stock);
 				}
 				//验证数据
 				for(Object obj:dataList){
@@ -71,6 +72,12 @@ public class StockLogicImpl implements StockLogic {
 					if(null==impStock.getCode() || "".equals(impStock.getCode().trim())){
 						String mess = "编码不能为空; ";
 						temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
+					}
+					if(null!=impStock.getCode() || !"".equals(impStock.getCode().trim())){
+						if(stockcode.get(impStock).getCode()!=null){
+							String mess = "编码已用过; ";
+							temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
+						}
 					}
 					if(null==impStock.getName() || "".equals(impStock.getName().trim())){
 						String mess = "仓库名称不能为空; ";
@@ -92,7 +99,6 @@ public class StockLogicImpl implements StockLogic {
 					mapSelf.put(key2, temp);
 					tempList.add(setProperties(impStock, temp));
 				}
-				// TODO Auto-generated method stub
 				return tempList;
 			}
 
@@ -129,15 +135,6 @@ public class StockLogicImpl implements StockLogic {
 			return tag;
 		}
 		return null;
-	}
-	
-	private void getData(File file){
-		try {
-			 String[][] datas = ExcelUtil.readExcel(file, 0);
-			 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
 	}
 
 	/**

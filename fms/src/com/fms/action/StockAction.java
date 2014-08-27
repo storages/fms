@@ -4,8 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.sf.json.JsonConfig;
+
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Department;
@@ -14,6 +18,10 @@ import com.fms.logic.StockLogic;
 import com.fms.temp.TempStock;
 import com.fms.utils.AjaxResult;
 import com.fms.utils.ExcelUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.url.ajax.json.JSONArray;
+import com.url.ajax.json.JSONException;
 import com.url.ajax.json.JSONObject;
 
 public class StockAction extends BaseAction {
@@ -42,9 +50,11 @@ public class StockAction extends BaseAction {
 	private static final Integer DEFAULT_PAGESIZE = 11;
 
 	/********* 获取前台选择的文件 ***********/
-	private String fileName;
-	private String fileContentType;
-	private File upfile;
+	 private File     uploadFile;         //上传的文件    名称是Form 对应的name 
+	 private String   uploadFileContentType;   //文件的类型
+	 private String   uploadFileFileName;    //文件的名称
+	 //
+	 private String sendStr; 
 
 	private TempStock temp;
 
@@ -187,15 +197,12 @@ public class StockAction extends BaseAction {
 	 * 解析excel数据，并验证数据有效性
 	 * @return
 	 */
-	public String importData() {
+	public void importData() {
+		AjaxResult result=new AjaxResult();
+		result.setSuccess(false);
 		try {
-			if(session.get("tlist")!=null){
-				session.put("tlist", null);
-			}
-			
-			
 			//就这句，如何获取jsp页面传过来的文件
-			String[][] content = ExcelUtil.readExcel(new File("C:\\Documents and Settings\\Administrator\\桌面\\1.xls"), 1);
+			String[][] content = ExcelUtil.readExcel(uploadFile, 1);
 			
 			
 			List<Stock> stocks = new ArrayList<Stock>();
@@ -207,13 +214,26 @@ public class StockAction extends BaseAction {
 				stocks.add(s);
 			}
 			List tlist = stockLogic.doValidata(stocks);
-			session.put("tlist", tlist);
+			result.setSuccess(true);
+			result.setObj(tlist);
 		} catch (FileNotFoundException e) {
+			result.setSuccess(false);
+			result.setMsg("操作错误"+e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "validata";
+		
+		Gson gson=new Gson();
+		String str= gson.toJson(result);
+	    try {
+			Writer writer= response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -237,13 +257,23 @@ public class StockAction extends BaseAction {
 	
 	/**
 	 * 保存正确的excel数据
+	 * @throws JSONException 
 	 */
 	public String saveExcelData() {
-		List tlist = (List) session.get("tlist");
+	
+		
+		//net.sft.json.JSONArray.toList(jsons,new TempStock(),);
+	
+		/*Gson  gson=new Gson();
+		JsonArray json2=new JsonArray();
+		List <TempStock> list= gson.fromJson(sendStr, List.class);*/
+		//List list= toListofClassName(jsons,TempStock.class);
 		PrintWriter out = null;
 		AjaxResult result = new AjaxResult();
 		try {
-			if(null==tlist || tlist.size()<=0){
+			net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
+			List list= net.sf.json.JSONArray.toList(jsonArray, new TempStock(), new JsonConfig());
+			if(null==list || list.size()<=0){
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");
@@ -254,7 +284,7 @@ public class StockAction extends BaseAction {
 				out.flush();
 				out.close();
 			}
-			if (!this.stockLogic.doSaveExcelData(tlist)) {
+			if (!this.stockLogic.doSaveExcelData(list)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");
@@ -269,7 +299,7 @@ public class StockAction extends BaseAction {
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");
 				result.setSuccess(true);
-				result.setMsg("成功保存"+tlist.size()+"条数据！");
+				result.setMsg("成功保存"+list.size()+"条数据！");
 				session.put("tlist", null);
 				JSONObject json = new JSONObject(result);
 				out.println(json.toString());
@@ -282,6 +312,14 @@ public class StockAction extends BaseAction {
 		return "";
 	}
 
+	public List toListofClassName(JsonArray arr,Class t){
+		List list=new ArrayList();
+		Gson gson=new Gson();
+		for(int x=0;x<arr.size();x++){
+		list.add(gson.fromJson(arr.get(x), t.getClass()));
+		}
+		return list;
+	}
 	public StockLogic getStockLogic() {
 		return stockLogic;
 	}
@@ -362,28 +400,29 @@ public class StockAction extends BaseAction {
 		this.searchStr = searchStr;
 	}
 
-	public String getFileName() {
-		return fileName;
+	
+	public File getUploadFile() {
+		return uploadFile;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setUploadFile(File uploadFile) {
+		this.uploadFile = uploadFile;
 	}
 
-	public String getFileContentType() {
-		return fileContentType;
+	public String getUploadFileContentType() {
+		return uploadFileContentType;
 	}
 
-	public void setFileContentType(String fileContentType) {
-		this.fileContentType = fileContentType;
+	public void setUploadFileContentType(String uploadFileContentType) {
+		this.uploadFileContentType = uploadFileContentType;
 	}
 
-	public File getUpfile() {
-		return upfile;
+	public String getUploadFileFileName() {
+		return uploadFileFileName;
 	}
 
-	public void setUpfile(File upfile) {
-		this.upfile = upfile;
+	public void setUploadFileFileName(String uploadFileFileName) {
+		this.uploadFileFileName = uploadFileFileName;
 	}
 
 	public TempStock getTemp() {
@@ -393,5 +432,14 @@ public class StockAction extends BaseAction {
 	public void setTemp(TempStock temp) {
 		this.temp = temp;
 	}
+
+	public String getSendStr() {
+		return sendStr;
+	}
+
+	public void setSendStr(String sendStr) {
+		this.sendStr = sendStr;
+	}
+	
 
 }

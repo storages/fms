@@ -18,7 +18,7 @@ $(function(){
 		data["pageReows"]=DATA_ROWS;
 		if(names&&names!=''){data["names"]=names;}
 		//alert(pageclickednumber);
-		$.post(url, data, function(result){
+		$.post(url, data, function(result){a
 		 var json=$.parseJSON(result);
 		 if(json.success){
 			 $("#tbody tr").remove();

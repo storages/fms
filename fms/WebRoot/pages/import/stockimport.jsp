@@ -21,15 +21,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+<script type="text/javascript" src="<%=path%>/js/utils/jquery.tmpl.min.js"> </script>
   </head>
+  <script type="text/javascript">
+  var resultdata="";
+  </script>
   
+  <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
   <body>
     <div class="modal-footer" style="text-align: left;">
-		<input type="file" style="height:25px; width:120px;" class="" name="upfile" id="importfile"/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px;" onclick="sendfile()"/>
+		<form id="uploadform" action="stock_importData.action" target="excelupload" method="post" enctype="multipart/form-data">
+		<input type="file" style="height:25px; width:120px;" class="" name="uploadFile" id="importfile"/></form>
+		
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px;" />
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px;" onclick="clearErrorData()"/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" style="height:25px; border: 2px; width:55px; margin-top:0px;" onclick="saveData()"/>
+		<input class="btn btn-small btn-danger"  data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px;" />
 	</div> 
   <div class="row-fluid">
 		<div class="span12">
@@ -47,8 +53,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 						</thead>
 
-						<tbody>
-							<c:forEach var="stock" items="${tlist}">
+						<tbody id="tbodystock">
+						<%-- 	<c:forEach var="stock" items="${tlist}">
 							<c:if test="${stock.errorInfo!=null}">
 								<tr style="color: red;">
 									<td style="text-align: left;">${stock.errorInfo}　</td>
@@ -65,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="hidden-480 center">${stock.note}　</td>
 								</tr>
 							</c:if>
-							</c:forEach>
+							</c:forEach> --%>
 					</table>
 				</div>
 			</div>
@@ -73,7 +79,75 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<!--PAGE CONTENT ENDS-->
 	</div>
-	<script type="text/javascript">
+  </body>
+  <script id="SXrow" type="text/x-jquery-tmpl">
+            <tr  {{if erroris}} style="color: red;" {{/if}}>
+				<td style="text-align: left;">{{= errorInfo}}　</td>
+				<td class="center">{{= code}}　</td>
+				<td class="center">{{= name}}　</td>
+				<td class="hidden-480 center">{{= note}}　</td>
+				</tr>
+       </script>
+  <script type="text/javascript">
+	$(function(){
+	//上传
+	$("#uploadbutton").click(function(){
+	 $("#uploadform").submit();
+	    });
+	    
+	 $("#mysaveData").click(function(){
+		var paremt={};
+		paremt["sendStr"]=JSON.stringify(resultdata);
+	      var url = "${pageContext.request.contextPath}/stock_saveExcelData.action";
+	      $.post(url,paremt,function(data){
+		    	var result=jQuery.parseJSON(data);
+		    	if(!result.success){
+		    		alert(result.msg);
+		    		return;
+		    	}
+		    	alert(result.msg);
+		     });
+		});  
+	    
+	});
+	var excelupload= document.getElementById("excelupload");
+	//图片上传回调函数  //判断IE 解决兼容问题
+	if(excelupload.attachEvent){ // IE  
+		excelupload.attachEvent('onload',function(){
+		var html= document.frames["excelupload"].document.body.innerHTML;
+		if(html&&html!=""){
+			  var json= jQuery.parseJSON(html);
+			  if(json.success){
+			  alert(json.obj);
+	          }else{
+	          }
+		}else{
+		//不做任何处理
+		}
+	       
+		});  
+    }else{
+    	excelupload.onload=function(){
+		      var thisDocument=this.contentDocument||this.contentWindow.document; 
+	          var html=  $(thisDocument.body).find("pre").html();
+	          var json= jQuery.parseJSON(html);
+	          if(json.success){
+	          //stock   SXrow
+	         var mylist= json.obj;
+	         resultdata=mylist;
+	         for(var x=0; x<mylist.length; x++){
+	         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
+	             mylist[x].erroris=true;
+	              }
+	         }
+	          $("#SXrow").tmpl(json.obj).appendTo("#tbodystock");  
+	          }else{
+	    	       alert("上传失败"+json.msg);
+	          }
+	};
+    }
+    
+    
 		function sendfile(){
 			var filePath = $("#importfile").val();
 			if(filePath==""){
@@ -88,27 +162,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var url = "${pageContext.request.contextPath}/stock_clearErrorData.action";
 			toMain(url);
 		}
-		
-		function saveData(){
-			var url = "${pageContext.request.contextPath}/stock_saveExcelData.action";
-			$.ajax({
-		     type: "POST",
-		     url:url,
-		     async: false,
-		     cache: false,
-		     success:function(data){
-		    	var result=jQuery.parseJSON(data);
-		    	if(!result.success){
-		    		alert(result.msg);
-		    		return;
-		    	}
-		    	alert(result.msg);
-		     },error:function(){
-		        	$("#mess").html("程序异常，请重新启动程序！");
-		        	return false;
-		      }
-		  	});
-		}
 	</script>
-  </body>
 </html>

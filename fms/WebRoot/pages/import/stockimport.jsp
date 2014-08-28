@@ -29,13 +29,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
   <body>
-    <div class="modal-footer" style="text-align: left;">
-		<form id="uploadform" action="stock_importData.action" target="excelupload" method="post" enctype="multipart/form-data">
-		<input type="file" style="height:25px; width:120px;" class="" name="uploadFile" id="importfile"/></form>
+    <div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
+		<form id="uploadform" action="stock_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
+		<input type="file" style="height:25px; width:160px;" class="" name="uploadFile" id="importfile"/></form>
 		
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px;" />
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px;" onclick="clearErrorData()"/>
-		<input class="btn btn-small btn-danger"  data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px;" />
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="download" value="下载样本" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px;" onclick="clearErrorData() float: left;"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px; float: left;" />
 	</div> 
   <div class="row-fluid">
 		<div class="span12">
@@ -160,6 +161,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		function clearErrorData(){
 			var url = "${pageContext.request.contextPath}/stock_clearErrorData.action";
+			var paremt={};
+			paremt["sendStr"]=JSON.stringify(resultdata);
+			$.post(url,paremt,function(data){
+				var result=jQuery.parseJSON(data);
+		    	if(result.success){
+		    		//--------------
+		    		
+		    		//--------------
+		    	}
+			});
 			toMain(url);
 		}
 	</script>

@@ -11,6 +11,7 @@ import java.util.List;
 import net.sf.json.JsonConfig;
 
 
+
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Department;
 import com.fms.core.entity.Stock;
@@ -20,6 +21,7 @@ import com.fms.utils.AjaxResult;
 import com.fms.utils.ExcelUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+
 import com.url.ajax.json.JSONArray;
 import com.url.ajax.json.JSONException;
 import com.url.ajax.json.JSONObject;
@@ -240,19 +242,35 @@ public class StockAction extends BaseAction {
 	 * 清除错误的数据
 	 * @return
 	 */
-	public String clearErrorData(){
-		List tlist = (List) session.get("tlist");
-		if(null!=tlist || tlist.size()>0){
-			for(Object obj:tlist){
-				TempStock ts = (TempStock)obj;
+	public void clearErrorData(){
+		List errorList = new ArrayList();
+		AjaxResult result=new AjaxResult();
+		result.setSuccess(false);
+		PrintWriter out = null;
+		net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
+		List list= net.sf.json.JSONArray.toList(jsonArray, new TempStock(), new JsonConfig());
+		if(null!=list && list.size()>0){
+			for(int i = 0;i<list.size();i++){
+				TempStock ts = (TempStock)list.get(i);
 				if(null!=ts.getErrorInfo() && !"".equals(ts.getErrorInfo().trim())){
-					tlist.remove(ts);
+					errorList.add(ts);
 				}
 			}
+			list.removeAll(errorList);
 		}
-		session.put("tlist", null);
-		session.put("tlist", tlist);
-		return "validata";
+		Gson gson=new Gson();
+		result.setObj(list);
+		result.setSuccess(true);
+		String str= gson.toJson(result);
+		 try {
+				Writer writer= response.getWriter();
+				writer.write(str);
+				writer.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//return "validata";
 	}
 	
 	/**

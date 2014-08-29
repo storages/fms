@@ -89,7 +89,7 @@ ul{padding:0;margin:0;list-style:none;}
 									<td class="center">
 									  <c:if test="${item.wfloginUser}">  <a href="javascript:void(0);" cancel-loginUser="${item.id}">取消登陆权</a></c:if>
 									  <c:if test="${!item.wfloginUser}">  <a href="javascript:void(0);" create-loginUser="${item.id}">创建登陆</a></c:if>
-										｜<a href="javas cript:void(0);"  edit-emp="${item.id}">修改</a>｜
+										｜<a href="javascript:void(0);"  edit-emp="${item.id}">修改</a>｜
 										<a href="javascript:void(0);" delete-emp="${item.id}">删除</a>
 									</td>
 								</tr>
@@ -132,7 +132,7 @@ ul{padding:0;margin:0;list-style:none;}
 <td class="hidden-480 center">{{= gender}}　</td>
 <td class="hidden-480 center">{{= linkPhone}}　</td>
 <td class="center">
-{{if wfloginUser}} <a href="javascript:void(0);" cancel-loginUser="{{ id}}">取消登陆权</a>{{else}} <a href="javascript:void(0);" create-loginUser="{{ id}}">创建登陆</a>  {{/if}}
+{{if wfloginUser}} <a href="javascript:void(0);" cancel-loginUser="{{= id}}">取消登陆权</a>{{else}} <a href="javascript:void(0);" create-loginUser="{{= id}}">创建登陆</a>  {{/if}}
 	｜<a href="javascript:void(0);"  edit-emp="{{= id}}">修改</a>｜
 	<a href="javascript:void(0);"  delete-emp="{{= id}}">删除</a>
 </td>
@@ -147,12 +147,13 @@ ul{padding:0;margin:0;list-style:none;}
 				<p>请填写</p>
 				<ul>
 					<li style="height: 70px; line-height: 0px; margin-bottom: 20px;">
+					<input type="hidden"  id="emptyId"/>
 					<span>登 陆 名 :</span> <input style="height: 20px; width: 150px;" id="loginName" name="user.name" type="text" /><br/>
 					<span>登陆密码 :</span> <input style="height: 20px; width: 150px;" id="password" name="user.password" type="password" /><br/>
 					<span>确认密码 :</span> <input style="height: 20px; width: 150px;" id="passwordto" name="passwordto" type="password" /><br/>
 					</li>
 					<li>
-					        <button class="btn btn-small btn-danger pull-left buts1" id="fileUpload" data-toggle="button" type="button">确定</button>
+					        <button class="btn btn-small btn-danger pull-left buts1" id="saveuserbutton" data-toggle="button" type="button">确定</button>
 							<button class="btn btn-small btn-danger pull-right buts2"  id="closecanvas" data-toggle="button" type="button">取消</button>
 					</li>
 				</ul>

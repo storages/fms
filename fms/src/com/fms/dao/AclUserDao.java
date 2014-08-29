@@ -35,6 +35,10 @@ public interface AclUserDao extends BaseDao{
 	 */
 	public void deleteAclUser(String [] ids);
 	
+  /**
+   * 更具员工ID 删除用户	
+   * @param empId
+   */
 	public void deleteAclUserByEmpId(String [] empId);
 	/**
 	 * 更具用户名查询用户

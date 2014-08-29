@@ -18,14 +18,14 @@ $(function(){
 		data["pageReows"]=DATA_ROWS;
 		if(names&&names!=''){data["names"]=names;}
 		//alert(pageclickednumber);
-		$.post(url, data, function(result){a
+		$.post(url, data, function(result){
 		 var json=$.parseJSON(result);
 		 if(json.success){
 			 $("#tbody tr").remove();
 				 $("#SXrow").tmpl(json.obj).appendTo("#tbody");  
 				  initEditfun();
 				  initDeletefun();
-			
+				  initLogunButton();
 		 }else{
 			 alert("加载失败");
 		 }
@@ -49,9 +49,10 @@ $(function(){
 		}
 
 	});
-	
+	//清空按钮
 	function initLogunButton(){
 		$("a[create-loginUser]").click(function(){
+		 $("#emptyId").val($(this).attr("create-loginuser"));
 			initcanvas();
 		});
 
@@ -63,6 +64,7 @@ $(function(){
 		    $.post(url,data,function(result){
 		           var json=$.parseJSON(result);
 		            if(json.success){
+		            	   $(".pgCurrent").click();
 			             alert("操作成功");
 		            }else{
 			            alert(json.msg);
@@ -70,10 +72,44 @@ $(function(){
 	             });
 		});
 	}
-	$("#closecanvas").click(closecanvas());
+	$("#closecanvas").click(function(){
+		closecanvas();
+	});
 	/**
-	 * 单击
+	 * 保存用户
 	 */
+	$("#saveuserbutton").click(function(){
+		//获取数据
+		var emid= $("#emptyId").val();
+		var loginName= $("#loginName").val();
+		var password= $("#password").val();
+		var passwordto= $("#passwordto").val();
+		//发送请求保存数据
+		var url= Global+"/empl_updateisLous.action"; 
+		var param={};
+		if(password!=passwordto){
+			alert("两次密码不一致");
+			return false;
+		}
+		param["user.employee.id"]=emid;
+		param["user.loginName"]=loginName;
+		param["user.password"]=password;
+		param["passwordto"]=passwordto;
+		$.post(url,param,function(data){
+		   var json= $.parseJSON(data);
+		   if(json.success){
+			   $(".pgCurrent").click();
+			   alert("创建成功");
+			   closecanvas();
+			 
+		   }else{
+			   alert("操作失败了"+json.msg);
+		   }
+		});
+		
+		//关闭帆布
+	});
+	
 	//初始化帆布】
   function initcanvas(){
 	  //alert("123");

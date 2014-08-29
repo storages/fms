@@ -319,8 +319,8 @@ function initEmpColums(){
 	var linkPhone=$("#linkPhone").val("");
 	var networkLink=$("#networkLink").val("");
 	var positionName=$("#positionName").val("");
-	var note=$("#note").val();
-	
+	var note=$("#note").val("");
+	$("#loginuserTR").css("display","none");
 	var birthday=$("#birthday").val(""); 
 	var entryDate=$("#entryDate").val(""); 
 };	

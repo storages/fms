@@ -53,7 +53,7 @@ public class AclUserLogicImpl implements AclUserLogic {
 	public AjaxResult saveUserByNoName(AclUser user) {
 		AjaxResult result=new AjaxResult();
 		result.setSuccess(false);
-        boolean isue= userDao.findUserByName(user.getUserName());	
+        boolean isue= userDao.findUserByName(user.getLoginName());	
         if(!isue){
         	userDao.saveAclUser(user);
         	result.setSuccess(true);
@@ -62,6 +62,11 @@ public class AclUserLogicImpl implements AclUserLogic {
         	result.setMsg("用户名已经存在");
         }
 		return result;
+	}
+
+	public void deleteUserByEmpl(String[] ids) {
+		// TODO Auto-generated method stub
+		userDao.deleteAclUserByEmpId(ids);
 	}
 
 }

@@ -286,6 +286,9 @@
 		<property name="emplLogic">
 			<ref bean="employeeLogic" />
 		</property>
+		<property name="acluserLogic">
+			<ref bean="userLogic" />
+		</property>
 	</bean>
 	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils">
 	</bean>

@@ -44,8 +44,8 @@ public class EmployeeAction extends BaseAction {
     private	DeptLogic   deptLogic;
     private	EmployeeLogic  emplLogic;
     private AclUserLogic acluserLogic;
-    
-    private String emid;
+
+	private String emid;
 	/**
 	 * 员工列表
 	 * @return
@@ -170,13 +170,19 @@ public class EmployeeAction extends BaseAction {
 			e.printStackTrace();
 		}
     }
+    /**
+     * 创建登陆
+     */
     public void updateisLous(){
     	AjaxResult  result=new AjaxResult();
     	result.setSuccess(false);
     	try{
-        acluserLogic.saveAclUser(user);
-        emplLogic.updateEmplUseByparam(user.getEmployee().getId(), true);
-        result.setSuccess(true);
+    		result=   acluserLogic.saveUserByNoName(user);
+    		if(result.isSuccess()){
+    		    emplLogic.updateEmplUseByparam(user.getEmployee().getId(), true);
+    		     result.setSuccess(true);
+    		}
+   
     	}catch(Exception e){
     		result.setSuccess(false);
     		result.setMsg("操作失败");
@@ -193,7 +199,7 @@ public class EmployeeAction extends BaseAction {
     }
     
     /**
-     * 
+     * 取消登陆
      * @return
      */
     public void cancelLoUs(){
@@ -202,7 +208,8 @@ public class EmployeeAction extends BaseAction {
     	try{
         String[] arr=new String[1];
         arr[0]=ids;
-        acluserLogic.deleteAclUser(arr);
+        acluserLogic.deleteUserByEmpl(arr);
+        emplLogic.updateEmplUseByparam(ids, false);
         result.setSuccess(true);
     	}catch(Exception e){
     		result.setSuccess(false);
@@ -321,6 +328,14 @@ public class EmployeeAction extends BaseAction {
 	}
 
 
+    
+    public AclUserLogic getAcluserLogic() {
+		return acluserLogic;
+	}
+
+	public void setAcluserLogic(AclUserLogic acluserLogic) {
+		this.acluserLogic = acluserLogic;
+	}
 
 	
 	

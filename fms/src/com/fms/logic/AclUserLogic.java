@@ -40,6 +40,12 @@ public interface AclUserLogic {
 	public void deleteAclUser(String [] ids);
 	
 	/**
+	 * 根据员工ID 删除用户
+	 * @param ids
+	 */
+	public void deleteUserByEmpl(String [] ids);
+	
+	/**
 	 * 根据用户id来查询用户
 	 * @param id
 	 * @return

@@ -24,6 +24,7 @@
 					<c:if test="${u.userFlag=='P'}">
 						<li style="list-style: none; line-height:60px; color: white; font-size: 12px;float: left;">　　您是【普通用户】　<a href="" style="color:white;">注销</a></li>
 					</c:if>
+					<li style="list-style: none; line-height:60px; color: white; font-size: 12px;float: left;"><a href="${pageContext.request.contextPath}/test.jsp">去测试页面</a></li>
 				</ul>
 	</div>
 </div>

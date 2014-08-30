@@ -35,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="download" value="下载样本" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px;" onclick="clearErrorData() float: left;"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" onclick="clearErrorData()"/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px; float: left;" />
 	</div> 
   <div class="row-fluid">
@@ -94,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	//上传
 	$("#uploadbutton").click(function(){
 	 $("#uploadform").submit();
-	    });
+	});
 	    
 	 $("#mysaveData").click(function(){
 		var paremt={};
@@ -108,8 +108,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	}
 		    	alert(result.msg);
 		     });
-		});  
-	    
+		});
+		  
+	    $("#download").click(function(){
+	    	window.location.href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=stockTemp";
+	    });
 	});
 	var excelupload= document.getElementById("excelupload");
 	//图片上传回调函数  //判断IE 解决兼容问题

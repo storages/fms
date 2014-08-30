@@ -22,6 +22,19 @@
 			<result name="tologin" type="redirectAction">loginAction_gologin</result>
 		</global-results>
 
+		<!-- 测试下载文件的Action -->
+		<action name="fileDownload" class="fileDownload">
+			<result name="success" type="stream">
+				<param name="contentType">text/plain</param>
+				<param name="contentDisposition">attachment;fileName="${fileName}"</param>
+				<param name="inputName">downloadFile</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+
+
+
 		<!-- 跳转到登录页面 -->
 		<action name="loginAction_*" class="aclUserAction" method="{1}">
 			<result name="login">/pages/login.jsp</result>

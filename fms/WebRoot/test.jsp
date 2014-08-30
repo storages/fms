@@ -53,10 +53,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	
     	<hr/>
     	<br/>
-    	<h4>测试Excel导入</h4>
-    	<form method="post" onsubmit="toMai('${pageContext.request.contextPath}/stock_importData.action')" enctype="multipart/form-data">
-    		<input type="file" name="upfile"/><input type="submit" value="导入">
-    	</form>
+    	
+    	<h4>测试下载模板</h4>
+    	<a href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=stockTemp">下载模板</a>
   </body>
   <script type="text/javascript">
   	function findUserName(){

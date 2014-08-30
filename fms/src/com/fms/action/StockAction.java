@@ -22,7 +22,6 @@ import com.fms.utils.ExcelUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
-import com.url.ajax.json.JSONArray;
 import com.url.ajax.json.JSONException;
 import com.url.ajax.json.JSONObject;
 
@@ -242,11 +241,10 @@ public class StockAction extends BaseAction {
 	 * 清除错误的数据
 	 * @return
 	 */
-	public void clearErrorData(){
+	public String clearErrorData(){
 		List errorList = new ArrayList();
 		AjaxResult result=new AjaxResult();
 		result.setSuccess(false);
-		PrintWriter out = null;
 		net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
 		List list= net.sf.json.JSONArray.toList(jsonArray, new TempStock(), new JsonConfig());
 		if(null!=list && list.size()>0){
@@ -262,15 +260,16 @@ public class StockAction extends BaseAction {
 		result.setObj(list);
 		result.setSuccess(true);
 		String str= gson.toJson(result);
-		 try {
-				Writer writer= response.getWriter();
-				writer.write(str);
-				writer.flush();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		//return "validata";
+		Writer writer;
+		try {
+			writer = response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "clear";
 	}
 	
 	/**
@@ -278,14 +277,6 @@ public class StockAction extends BaseAction {
 	 * @throws JSONException 
 	 */
 	public String saveExcelData() {
-	
-		
-		//net.sft.json.JSONArray.toList(jsons,new TempStock(),);
-	
-		/*Gson  gson=new Gson();
-		JsonArray json2=new JsonArray();
-		List <TempStock> list= gson.fromJson(sendStr, List.class);*/
-		//List list= toListofClassName(jsons,TempStock.class);
 		PrintWriter out = null;
 		AjaxResult result = new AjaxResult();
 		try {

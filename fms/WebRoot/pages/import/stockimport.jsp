@@ -79,6 +79,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		</div>
 		<!--PAGE CONTENT ENDS-->
+		<!-- WAIT FLASH ACTIVE -->
+		<div id="waitdiv" class="waitcss" style="display: none;">
+			<img src="${pageContext.request.contextPath}/imges/loading.gif" class="waitgif" id="waitgif"></img>
+		</div>
 	</div>
   </body>
   <script id="SXrow" type="text/x-jquery-tmpl">
@@ -93,21 +97,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	$(function(){
 	//上传
 	$("#uploadbutton").click(function(){
+		var filePath = $("#importfile").val();
+			if(filePath==""){
+				alert("请选择文件!");
+				return;
+			}
+			posigif();
+			$("#waitdiv").show();
+			alert(1);
 	 $("#uploadform").submit();
 	});
 	    
 	 $("#mysaveData").click(function(){
+	 	posigif();
+		$("#waitdiv").show();
 		var paremt={};
 		paremt["sendStr"]=JSON.stringify(resultdata);
 	      var url = "${pageContext.request.contextPath}/stock_saveExcelData.action";
 	      $.post(url,paremt,function(data){
 		    	var result=jQuery.parseJSON(data);
 		    	if(!result.success){
+		    		$("#waitdiv").hide();
 		    		alert(result.msg);
 		    		return;
 		    	}
+		    	$("#waitdiv").hide();
 		    	alert(result.msg);
 		     });
+			
 		});
 		  
 	    $("#download").click(function(){
@@ -136,6 +153,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	          var html=  $(thisDocument.body).find("pre").html();
 	          var json= jQuery.parseJSON(html);
 	          if(json.success){
+	          $("#waitdiv").hide();
 	          //stock   SXrow
 	         var mylist= json.obj;
 	         resultdata=mylist;
@@ -175,6 +193,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	}
 			});
 			toMain(url);
+		}
+		
+		function posigif(){
+		 var w =  50;     //宽度offsetWidth
+		 var h = 50;   //高度
+		 var t = (screen.height-h)/2-80; //离顶部距离
+		 var l = (screen.width-w)/2; //离左边距离
+		 document.getElementById("waitgif").style.marginLeft = l+"px";
+		 document.getElementById("waitgif").style.marginTop = t+"px";
 		}
 	</script>
 </html>

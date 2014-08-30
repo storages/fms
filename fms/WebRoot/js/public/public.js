@@ -129,3 +129,8 @@ function getUrl(flag){
 	}
 	return url;
 }
+
+//等待加载，转圈gif样式脚本
+function loadgif(){
+	
+}

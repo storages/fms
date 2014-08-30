@@ -1,0 +1,65 @@
+package com.fms.utils;
+
+import java.io.File;
+import java.io.InputStream;
+
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+/**
+ * 下载文件
+ * @author Administrator
+ *
+ */
+public class FileDownLoad extends ActionSupport{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final String ROOTPATH = "WEB-INF"+File.separator+"template"+File.separator;
+	private String fileName;
+	private String fileFlag;
+	private String inputPath;
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	
+	public String getFileFlag() {
+		return fileFlag;
+	}
+
+	public void setFileFlag(String fileFlag) {
+		this.fileFlag = fileFlag;
+	}
+
+	public String getInputPath() {
+		return inputPath;
+	}
+
+	public void setInputPath(String inputPath) {
+		this.inputPath = inputPath;
+	}
+
+	// 返回一个输入流，作为一个客户端来说是一个输入流，但对于服务器端是一个 输出流
+	public InputStream getDownloadFile() throws Exception {
+		if("stockTemp".equals(fileFlag)){
+			this.fileName = "仓库管理【导入】模板.xls";
+			this.inputPath = ROOTPATH+"stockTemplate.xls";
+			
+		}
+		// 解解乱码
+		this.fileName = new String(this.fileName.getBytes("UTF-8"),"ISO-8859-1");
+		return ServletActionContext.getServletContext().getResourceAsStream(this.inputPath);
+	}
+
+	@Override
+	public String execute() throws Exception {
+		return SUCCESS;
+	}
+}

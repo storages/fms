@@ -87,6 +87,14 @@ $(function(){
 		//发送请求保存数据
 		var url= Global+"/empl_updateisLous.action"; 
 		var param={};
+		if(loginName.trim()<=3){
+			alert("输入正确的登陆名。长度不能少于3位数");
+			return false;
+		}
+		if(password.trim()<=5){
+			alert("输入正确的密码。长度不能少于6位数");
+			return false;
+		}
 		if(password!=passwordto){
 			alert("两次密码不一致");
 			return false;

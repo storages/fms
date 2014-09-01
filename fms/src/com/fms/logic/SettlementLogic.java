@@ -37,4 +37,11 @@ public interface SettlementLogic {
 	 * 根据Id来删除结算方式信息
 	 */
 	public void delSettltById(String [] ids);
+	
+	/**
+	 * 根据名称来查找结算方式信息
+	 * @param name
+	 * @return
+	 */
+	public Settlement findAllSettlementByName(String name);
 }

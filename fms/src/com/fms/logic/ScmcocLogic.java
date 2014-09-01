@@ -3,6 +3,7 @@
 import java.util.List;
 
 import com.fms.core.entity.Scmcoc;
+import com.fms.temp.TempScmcoc;
 
 /**
  * 供应商或客户逻辑中心接口
@@ -60,4 +61,11 @@ public interface ScmcocLogic {
 	 * @return
 	 */
 	public Integer findDataCount(String className,Boolean isCustom,String name);
+	
+	/**
+	 * 验证数据
+	 * @param data
+	 * @return
+	 */
+	public List<TempScmcoc> doValidata(List<Scmcoc> data);
 }

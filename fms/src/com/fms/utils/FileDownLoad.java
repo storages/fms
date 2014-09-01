@@ -51,7 +51,9 @@ public class FileDownLoad extends ActionSupport{
 		if("stockTemp".equals(fileFlag)){
 			this.fileName = "仓库管理【导入】模板.xls";
 			this.inputPath = ROOTPATH+"stockTemplate.xls";
-			
+		}else if("scmcocTemp".equals(fileFlag)){
+			this.fileName = "供应商管理【导入】模板.xls";
+			this.inputPath = ROOTPATH+"scmcocTemplate.xls";
 		}
 		// 解解乱码
 		this.fileName = new String(this.fileName.getBytes("UTF-8"),"ISO-8859-1");

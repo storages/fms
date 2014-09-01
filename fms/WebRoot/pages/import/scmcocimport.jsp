@@ -49,7 +49,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<tr align="center">
 								<th class="center">错误信息</th>
 								<th class="center">编号</th>
-								<th class="center">仓库名称</th>
+								<th class="center">供应商名称</th>
+								<th class="hidden-480 center">供应商联系电话</th>
+								<th class="hidden-phone center">供应商网络联系方式</th>
+								<th class="hidden-480 center">供应商联系人</th>
+								<th class="hidden-480 center">供应商地址</th>
+								<th class="hidden-480 center">结算方式</th>
+								<th class="hidden-480 center">约定结算日期</th>
 								<th class="hidden-480 center">备注</th>
 							</tr>
 						</thead>
@@ -86,13 +92,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
   </body>
   <script id="SXrow" type="text/x-jquery-tmpl">
-            <tr  {{if erroris}} style="color: red;" {{/if}}>
-				<td style="text-align: left;">{{= errorInfo}}　</td>
-				<td class="center">{{= code}}　</td>
-				<td class="center">{{= name}}　</td>
-				<td class="hidden-480 center">{{= note}}　</td>
-				</tr>
-       </script>
+
+
+<tr {{if erroris}} style="color: red;" {{/if}}>
+	<td class="center"  style="text-align: left;">{{= errorInfo}}　</td>
+	<td class="center">{{scmcoc.code}}　</td>
+	<td class="center">{{scmcoc.name}}　</td>
+	<td class="hidden-480 center">{{=scmcoc}}　</td>
+	<td class="hidden-480 center">{{=networkLink}}　</td>
+	<td class="hidden-480 center">{{=linkMan}}　</td>
+	<td class="hidden-480 center">{{=address}}　</td>
+	<td class="hidden-480 center">{{=settlement.name}}　</td>
+	<td class="hidden-480 center">每月${endDate}}日</td>
+	<td class="hidden-480 center">{{note}}　</td>
+</tr>
+</script>
   <script type="text/javascript">
 	$(function(){
 	//上传
@@ -104,6 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			posigif();
 			$("#waitdiv").show();
+			alert(1);
 	 $("#uploadform").submit();
 	});
 	    
@@ -111,9 +126,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	posigif();
 		$("#waitdiv").show();
 		var paremt={};
-		//alert(JSON.stringify(resultdata));
 		paremt["sendStr"]=JSON.stringify(resultdata);
-	      var url = Global+"/stock_saveExcelData.action";
+	      var url = "${pageContext.request.contextPath}/stock_saveExcelData.action";
 	      $.post(url,paremt,function(data){
 		    	var result=jQuery.parseJSON(data);
 		    	if(!result.success){
@@ -126,9 +140,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     });
 			
 		});
-		  
+		//下载样本 
 	    $("#download").click(function(){
-	    	window.location.href=Global+"/fileDownload.action?fileFlag=stockTemp";
+	    	window.location.href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=scmcocTemp";
 	    });
 	});
 	var excelupload= document.getElementById("excelupload");
@@ -141,7 +155,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  if(json.success){
 			  alert(json.obj);
 	          }else{
-	         alert("失败了"+json.msg);
 	          }
 		}else{
 		//不做任何处理
@@ -155,13 +168,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	          var json= jQuery.parseJSON(html);
 	          if(json.success){
 	          $("#waitdiv").hide();
-	          //stock   SXrow
+	          //SXrow
 	         var mylist= json.obj;
 	         resultdata=mylist;
 	         for(var x=0; x<mylist.length; x++){
-		         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
-		             mylist[x].erroris=true;
-		         }
+	         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
+	             mylist[x].erroris=true;
+	              }
 	         }
 	          $("#SXrow").tmpl(json.obj).appendTo("#tbodystock");  
 	          }else{
@@ -177,22 +190,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				alert("请选择文件!");
 				return;
 			}
-			var url =Global+"/stock_importData.action";
+			var url = "${pageContext.request.contextPath}/stock_importData.action";
 			toMain(url);
 		}
 		
 		function clearErrorData(){
-			//alert(resultdata);
-			var url =Global+"/stock_clearErrorData.action";
+			var url = "${pageContext.request.contextPath}/stock_clearErrorData.action";
 			var paremt={};
 			paremt["sendStr"]=JSON.stringify(resultdata);
 			$.post(url,paremt,function(data){
 				var result=jQuery.parseJSON(data);
 		    	if(result.success){
 		    		//--------------
-		    		alert(result.obj);
-		    		var list = result.obj;
-		    		$("#SXrow").tmpl(list).appendTo("#tbodystock"); 
+		    		
 		    		//--------------
 		    	}
 			});

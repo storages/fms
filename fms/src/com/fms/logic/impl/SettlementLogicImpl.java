@@ -38,4 +38,8 @@ public class SettlementLogicImpl implements SettlementLogic {
 		this.settlementDao.delSettltById(ids);
 	}
 
+	public Settlement findAllSettlementByName(String name) {
+		return this.settlementDao.findAllSettlementByName(name);
+	}
+
 }

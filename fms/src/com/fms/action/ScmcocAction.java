@@ -1,14 +1,23 @@
 ﻿package com.fms.action;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Settlement;
+import com.fms.core.entity.Stock;
 import com.fms.logic.ScmcocLogic;
 import com.fms.logic.SettlementLogic;
+import com.fms.temp.TempStock;
+import com.fms.utils.AjaxResult;
+import com.fms.utils.ExcelUtil;
+import com.google.gson.Gson;
 
 public class ScmcocAction extends BaseAction {
 
@@ -42,6 +51,14 @@ public class ScmcocAction extends BaseAction {
 	private String className="Scmcoc";//表名称
 	private String searchStr;//搜索条件
 	private static final Integer DEFAULT_PAGESIZE = 11; 
+	
+	private File     uploadFile;         //上传的文件    名称是Form 对应的name 
+	 private String   uploadFileContentType;   //文件的类型
+	 private String   uploadFileFileName;    //文件的名称
+	 //
+	 private String sendStr; 
+
+	private TempStock temp;
 
 	/**
 	 * 查询所有供应商或客户
@@ -112,6 +129,60 @@ public class ScmcocAction extends BaseAction {
 			out.close();
 		}
 	}
+	
+	
+	/**
+	 * 解析excel数据，并验证数据有效性
+	 * @return
+	 */
+	public void importData() {
+		AjaxResult result=new AjaxResult();
+		result.setSuccess(false);
+		try {
+			//就这句，如何获取jsp页面传过来的文件
+			String[][] content = ExcelUtil.readExcel(uploadFile, 1);
+			
+			
+			List<Scmcoc> scmcocs = new ArrayList<Scmcoc>();
+			for (int i = 0; i < content.length; i++) {
+				Scmcoc s = new Scmcoc();
+				s.setCode(content[i][0]);
+				s.setName(content[i][1]);
+				s.setLinkPhone(content[i][2]);
+				s.setNetworkLink(content[i][3]);
+				s.setAddress(content[i][4]);
+				s.setLinkMan(content[i][5]);
+				s.setEndDate(content[i][6]);
+				s.setIsCustom(false);
+				String name = (null==content[i][7] || "".equals(content[i][7].trim()))?"":content[i][7].trim();
+				Settlement sett = settlementLogic.findAllSettlementByName(name);
+				s.setSettlement(sett);
+				s.setNote(content[i][8]);
+				scmcocs.add(s);
+			}
+			List tlist = scmcocLogic.doValidata(scmcocs);
+			result.setSuccess(true);
+			result.setObj(tlist);
+		} catch (FileNotFoundException e) {
+			result.setSuccess(false);
+			result.setMsg("操作错误"+e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Gson gson=new Gson();
+		String str= gson.toJson(result);
+	    try {
+			Writer writer= response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * 填充对象
@@ -335,6 +406,46 @@ public class ScmcocAction extends BaseAction {
 
 	public void setSettlementId(String settlementId) {
 		this.settlementId = settlementId;
+	}
+
+	public File getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(File uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public String getUploadFileContentType() {
+		return uploadFileContentType;
+	}
+
+	public void setUploadFileContentType(String uploadFileContentType) {
+		this.uploadFileContentType = uploadFileContentType;
+	}
+
+	public String getUploadFileFileName() {
+		return uploadFileFileName;
+	}
+
+	public void setUploadFileFileName(String uploadFileFileName) {
+		this.uploadFileFileName = uploadFileFileName;
+	}
+
+	public String getSendStr() {
+		return sendStr;
+	}
+
+	public void setSendStr(String sendStr) {
+		this.sendStr = sendStr;
+	}
+
+	public TempStock getTemp() {
+		return temp;
+	}
+
+	public void setTemp(TempStock temp) {
+		this.temp = temp;
 	}
 	
 }

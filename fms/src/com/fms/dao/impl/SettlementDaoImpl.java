@@ -48,5 +48,9 @@ public class SettlementDaoImpl extends BaseDaoImpl implements SettlementDao {
 		}
 		this.batchUpdateOrDelete(hql, param.toArray());
 	}
-
+	
+	public Settlement findAllSettlementByName(String name){
+		String hql="SELECT a FROM Settlement a WHERE a.name = ?";
+		return (Settlement) this.find(hql, new Object[]{name});
+	}
 }

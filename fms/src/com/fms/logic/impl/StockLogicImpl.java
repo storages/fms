@@ -55,7 +55,6 @@ public class StockLogicImpl implements StockLogic {
 	public List<?> doValidata(final List<?> dataList) {
 			List<TempStock> tempList = new ArrayList<TempStock>();
 			List<Stock> stocks = stockDao.findAllStock(null, -1, -1);
-			Map<String,Stock> map = new HashMap<String,Stock>();
 			Map<String,Stock> mapSelf = new HashMap<String,Stock>();
 			Map<String,Stock> stockCache = new HashMap<String,Stock>();
 			Map<String,Stock> stockcode = new HashMap<String,Stock>();
@@ -63,7 +62,7 @@ public class StockLogicImpl implements StockLogic {
 				for(Stock stock:stocks){
 					String key = stock.getCode()+"/"+stock.getName();
 					stockCache.put(key, stock);
-					stockcode.put("code",stock);
+					stockcode.put(stock.getCode(),stock);
 				}
 				//验证数据
 				for(Object obj:dataList){

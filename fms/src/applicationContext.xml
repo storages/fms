@@ -164,6 +164,9 @@
 		<property name="scmcocDao">
 			<ref bean="scmcocDao" />
 		</property>
+		<property name="settlementDao">
+			<ref bean="settlementDao" />
+		</property>
 	</bean>
 
 

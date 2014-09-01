@@ -16,7 +16,7 @@ import com.fms.temp.TempScmcoc;
 public class ScmcocLogicImpl implements ScmcocLogic {
 
 	private ScmcocDao scmcocDao;
-	private SettlementDao settDao;
+	private SettlementDao settlementDao;
 	 
 	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
 		return scmcocDao.findAllScmcoc(isCustom,likeStr,index,length);
@@ -31,11 +31,11 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	}
 
 	public SettlementDao getSettDao() {
-		return settDao;
+		return settlementDao;
 	}
 
 	public void setSettDao(SettlementDao settDao) {
-		this.settDao = settDao;
+		this.settlementDao = settDao;
 	}
 
 	public void betchSaveScmcoc(List<Scmcoc> data) {
@@ -69,7 +69,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	public List doValidata(List dataList) {
 		List<TempScmcoc> valiList= new ArrayList<TempScmcoc>();
 		List<Scmcoc> scmList = this.scmcocDao.findAllScmcoc(false, null, -1, -1);
-		List<Settlement> settList = this.settDao.findAllSettlement(null);
+		List<Settlement> settList = this.settlementDao.findAllSettlement(null);
 		Map<String,Scmcoc> scmcocCache = new HashMap<String,Scmcoc>(); 
 		Map<String,Scmcoc> importDataCache = new HashMap<String,Scmcoc>(); 
 		Map<String,Scmcoc> codeCache = new HashMap<String,Scmcoc>(); 

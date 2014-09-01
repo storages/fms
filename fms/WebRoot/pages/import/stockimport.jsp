@@ -112,8 +112,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	posigif();
 		$("#waitdiv").show();
 		var paremt={};
+		alert(JSON.stringify(resultdata));
 		paremt["sendStr"]=JSON.stringify(resultdata);
-	      var url = "${pageContext.request.contextPath}/stock_saveExcelData.action";
+	      var url = Global+"/stock_saveExcelData.action";
 	      $.post(url,paremt,function(data){
 		    	var result=jQuery.parseJSON(data);
 		    	if(!result.success){
@@ -128,7 +129,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 		  
 	    $("#download").click(function(){
-	    	window.location.href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=stockTemp";
+	    	window.location.href=Global+"/fileDownload.action?fileFlag=stockTemp";
 	    });
 	});
 	var excelupload= document.getElementById("excelupload");
@@ -141,6 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  if(json.success){
 			  alert(json.obj);
 	          }else{
+	         alert("失败了"+json.msg);
 	          }
 		}else{
 		//不做任何处理
@@ -176,19 +178,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				alert("请选择文件!");
 				return;
 			}
-			var url = "${pageContext.request.contextPath}/stock_importData.action";
+			var url =Global+"/stock_importData.action";
 			toMain(url);
 		}
 		
 		function clearErrorData(){
-			var url = "${pageContext.request.contextPath}/stock_clearErrorData.action";
+			alert(resultdata);
+			var url =Global+"/stock_clearErrorData.action";
 			var paremt={};
 			paremt["sendStr"]=JSON.stringify(resultdata);
 			$.post(url,paremt,function(data){
 				var result=jQuery.parseJSON(data);
 		    	if(result.success){
 		    		//--------------
-		    		
+		    		alert("成功");
 		    		//--------------
 		    	}
 			});

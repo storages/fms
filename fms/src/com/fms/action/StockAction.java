@@ -241,7 +241,7 @@ public class StockAction extends BaseAction {
 	 * 清除错误的数据
 	 * @return
 	 */
-	public String clearErrorData(){
+	public void clearErrorData(){
 		List errorList = new ArrayList();
 		AjaxResult result=new AjaxResult();
 		result.setSuccess(false);
@@ -269,7 +269,7 @@ public class StockAction extends BaseAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "clear";
+		
 	}
 	
 	/**

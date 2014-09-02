@@ -18,6 +18,14 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	private ScmcocDao scmcocDao;
 	private SettlementDao settlementDao;
 	 
+	public SettlementDao getSettlementDao() {
+		return settlementDao;
+	}
+
+	public void setSettlementDao(SettlementDao settlementDao) {
+		this.settlementDao = settlementDao;
+	}
+
 	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
 		return scmcocDao.findAllScmcoc(isCustom,likeStr,index,length);
 	}

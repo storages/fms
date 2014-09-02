@@ -150,6 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});  
     }else{
     	excelupload.onload=function(){
+    	$("#tbodystock tr").remove();
 		      var thisDocument=this.contentDocument||this.contentWindow.document; 
 	          var html=  $(thisDocument.body).find("pre").html();
 	          var json= jQuery.parseJSON(html);
@@ -189,14 +190,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$.post(url,paremt,function(data){
 				var result=jQuery.parseJSON(data);
 		    	if(result.success){
+		    	$("#tbodystock tr").remove();
 		    		//--------------
-		    		alert(result.obj);
+		    		alert("删除成功");
 		    		var list = result.obj;
 		    		$("#SXrow").tmpl(list).appendTo("#tbodystock"); 
 		    		//--------------
 		    	}
 			});
-			toMain(url);
 		}
 		
 		function posigif(){

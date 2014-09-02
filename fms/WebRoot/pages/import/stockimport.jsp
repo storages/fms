@@ -190,6 +190,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$.post(url,paremt,function(data){
 				var result=jQuery.parseJSON(data);
 		    	if(result.success){
+		    	 resultdata=result.obj;
 		    	$("#tbodystock tr").remove();
 		    		//--------------
 		    		alert("删除成功");

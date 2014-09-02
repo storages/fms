@@ -190,12 +190,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				alert("请选择文件!");
 				return;
 			}
-			var url = "${pageContext.request.contextPath}/stock_importData.action";
+			var url = "${pageContext.request.contextPath}/scmcoc_importData.action";
 			toMain(url);
 		}
 		
 		function clearErrorData(){
-			var url = "${pageContext.request.contextPath}/stock_clearErrorData.action";
+			var url = "${pageContext.request.contextPath}/scmcoc_clearErrorData.action";
 			var paremt={};
 			paremt["sendStr"]=JSON.stringify(resultdata);
 			$.post(url,paremt,function(data){

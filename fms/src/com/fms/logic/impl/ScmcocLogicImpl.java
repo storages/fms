@@ -18,13 +18,6 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	private ScmcocDao scmcocDao;
 	private SettlementDao settlementDao;
 	 
-	public SettlementDao getSettlementDao() {
-		return settlementDao;
-	}
-
-	public void setSettlementDao(SettlementDao settlementDao) {
-		this.settlementDao = settlementDao;
-	}
 
 	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
 		return scmcocDao.findAllScmcoc(isCustom,likeStr,index,length);
@@ -38,12 +31,13 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		scmcocDao.saveScmcoc(scmcoc);
 	}
 
-	public SettlementDao getSettDao() {
+
+	public SettlementDao getSettlementDao() {
 		return settlementDao;
 	}
 
-	public void setSettDao(SettlementDao settDao) {
-		this.settlementDao = settDao;
+	public void setSettlementDao(SettlementDao settlementDao) {
+		this.settlementDao = settlementDao;
 	}
 
 	public void betchSaveScmcoc(List<Scmcoc> data) {

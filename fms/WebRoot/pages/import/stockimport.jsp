@@ -123,6 +123,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	}
 		    	$("#waitdiv").hide();
 		    	alert(result.msg);
+		    	var returnUrl = Global +"/stock_findAllStock.action";
+		    	toMain(returnUrl);
 		     });
 			
 		});
@@ -193,7 +195,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	 resultdata=result.obj;
 		    	$("#tbodystock tr").remove();
 		    		//--------------
-		    		alert("删除成功");
 		    		var list = result.obj;
 		    		$("#SXrow").tmpl(list).appendTo("#tbodystock"); 
 		    		//--------------

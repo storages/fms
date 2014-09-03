@@ -120,7 +120,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 				temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 			}
 			if(impScm.getSettlement()!=null){
-				String seetkey = impScm.getCode()+"/"+impScm.getName();
+				String seetkey = impScm.getSettlement().getCode()+"/"+impScm.getSettlement().getName();
 				if(settlementCache.get(seetkey)==null){
 					String mess = "结算方式在系统中不存在; ";
 					temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);

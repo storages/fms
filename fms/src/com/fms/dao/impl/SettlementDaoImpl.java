@@ -51,6 +51,6 @@ public class SettlementDaoImpl extends BaseDaoImpl implements SettlementDao {
 	
 	public Settlement findAllSettlementByName(String name){
 		String hql="SELECT a FROM Settlement a WHERE a.name = ?";
-		return (Settlement) this.find(hql, new Object[]{name});
+		return (Settlement) this.findUniqueResult(hql, new Object[]{name});
 	}
 }

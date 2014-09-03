@@ -30,13 +30,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
   <body>
     <div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
-		<form id="uploadform" action="stock_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
+		<form id="uploadform" action="scmcoc_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
 		<input type="file" style="height:25px; width:160px;" class="" name="uploadFile" id="importfile"/></form>
 		
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="download" value="下载样本" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" onclick="clearErrorData()"/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px; float: left;" />
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="download" value="下载样本" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
 	</div> 
   <div class="row-fluid">
 		<div class="span12">
@@ -50,17 +50,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<th class="center">错误信息</th>
 								<th class="center">编号</th>
 								<th class="center">供应商名称</th>
+								<th class="hidden-480 center">供应商联系人</th>
+								<th class="hidden-480 center">结算方式</th>
 								<th class="hidden-480 center">供应商联系电话</th>
 								<th class="hidden-phone center">供应商网络联系方式</th>
-								<th class="hidden-480 center">供应商联系人</th>
 								<th class="hidden-480 center">供应商地址</th>
-								<th class="hidden-480 center">结算方式</th>
 								<th class="hidden-480 center">约定结算日期</th>
 								<th class="hidden-480 center">备注</th>
 							</tr>
 						</thead>
 
-						<tbody id="tbodystock">
+						<tbody id="tbodyscmcoc">
 						<%-- 	<c:forEach var="stock" items="${tlist}">
 							<c:if test="${stock.errorInfo!=null}">
 								<tr style="color: red;">
@@ -92,20 +92,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
   </body>
   <script id="SXrow" type="text/x-jquery-tmpl">
-
-
-<tr {{if erroris}} style="color: red;" {{/if}}>
-	<td class="center"  style="text-align: left;">{{= errorInfo}}　</td>
-	<td class="center">{{scmcoc.code}}　</td>
-	<td class="center">{{scmcoc.name}}　</td>
-	<td class="hidden-480 center">{{=scmcoc}}　</td>
-	<td class="hidden-480 center">{{=networkLink}}　</td>
-	<td class="hidden-480 center">{{=linkMan}}　</td>
-	<td class="hidden-480 center">{{=address}}　</td>
-	<td class="hidden-480 center">{{=settlement.name}}　</td>
-	<td class="hidden-480 center">每月${endDate}}日</td>
-	<td class="hidden-480 center">{{note}}　</td>
-</tr>
+	<tr {{if erroris}} style="color: red;" {{/if}}>
+		<td class="center"  style="text-align: left;">{{= errorInfo}}　</td>
+		<td class="center">{{=code}}　</td>
+		<td class="center">{{=name}}　</td>
+		<td class="hidden-480 center">{{=scmcoc}}　</td>
+		<td class="hidden-480 center">{{=networkLink}}　</td>
+		<td class="hidden-480 center">{{=linkMan}}　</td>
+		<td class="hidden-480 center">{{=address}}　</td>
+		<td class="hidden-480 center">{{=settlement.name}}　</td>
+		<td class="hidden-480 center">每月${=endDate}}日</td>
+		<td class="hidden-480 center">{{=note}}　</td>
+	</tr>
 </script>
   <script type="text/javascript">
 	$(function(){
@@ -118,7 +116,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			posigif();
 			$("#waitdiv").show();
-			alert(1);
 	 $("#uploadform").submit();
 	});
 	    
@@ -127,7 +124,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#waitdiv").show();
 		var paremt={};
 		paremt["sendStr"]=JSON.stringify(resultdata);
-	      var url = "${pageContext.request.contextPath}/stock_saveExcelData.action";
+	      var url = "${pageContext.request.contextPath}/scmcoc_saveExcelData.action";
 	      $.post(url,paremt,function(data){
 		    	var result=jQuery.parseJSON(data);
 		    	if(!result.success){
@@ -176,7 +173,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	             mylist[x].erroris=true;
 	              }
 	         }
-	          $("#SXrow").tmpl(json.obj).appendTo("#tbodystock");  
+	          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
 	          }else{
 	    	       alert("上传失败"+json.msg);
 	          }

@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<div class="row-fluid">
 				<div class="span12">
-				<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
+				<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-left: -30px;"">
 					<thead>
 							<tr align="center">
 								<th class="center" style="width:30px;">选择</th>
@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','Settlement')">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="showImport()">Excel导入</button>
 			</div>
 	</div>
   </body>
@@ -88,5 +88,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var url = "${pageContext.request.contextPath}/settl_findAllSett.action?searhStr="+parse(searhStr);
 		toMain(url);
 	}
+	function showImport(){
+	  	var url = "${pageContext.request.contextPath}/pages/import/settlementimport.jsp";
+	  	toMain(url);
+  	}
   </script>
 </html>

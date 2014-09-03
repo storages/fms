@@ -44,4 +44,14 @@ public interface SettlementLogic {
 	 * @return
 	 */
 	public Settlement findAllSettlementByName(String name);
+	
+	/**
+	 * 验证导入Excel数据
+	 */
+	public List<?> doValidata(List<?> dataList);
+	
+	/**
+	 * 保存Excel数据到数据库
+	 */
+	public Boolean doSaveExcelData(List<?> dataList);
 }

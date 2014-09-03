@@ -160,6 +160,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});  
     }else{
     	excelupload.onload=function(){
+    		$("#tbodyscmcoc tr").remove();
 		      var thisDocument=this.contentDocument||this.contentWindow.document; 
 	          var html=  $(thisDocument.body).find("pre").html();
 	          var json= jQuery.parseJSON(html);

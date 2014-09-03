@@ -22,7 +22,7 @@
 			<result name="tologin" type="redirectAction">loginAction_gologin</result>
 		</global-results>
 
-		<!-- 测试下载文件的Action -->
+		<!-- 下载文件的Action -->
 		<action name="fileDownload" class="fileDownload">
 			<result name="success" type="stream">
 				<param name="contentType">text/plain</param>

@@ -6,12 +6,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Settlement;
-import com.fms.core.entity.Stock;
 import com.fms.logic.ScmcocLogic;
 import com.fms.logic.SettlementLogic;
 import com.fms.temp.TempStock;
@@ -141,22 +142,26 @@ public class ScmcocAction extends BaseAction {
 		try {
 			//就这句，如何获取jsp页面传过来的文件
 			String[][] content = ExcelUtil.readExcel(uploadFile, 1);
-			
-			
+			List<Settlement> setList = this.settlementLogic.findAllSettlement(null);
+			Map<String,Settlement> settCache = new HashMap<String,Settlement>();
+			for(Settlement temp:setList){
+				String key = temp.getName();
+				settCache.put(key, temp);
+			}
 			List<Scmcoc> scmcocs = new ArrayList<Scmcoc>();
 			for (int i = 0; i < content.length; i++) {
 				Scmcoc s = new Scmcoc();
 				s.setCode(content[i][0]);
 				s.setName(content[i][1]);
-				s.setLinkPhone(content[i][2]);
-				s.setNetworkLink(content[i][3]);
-				s.setAddress(content[i][4]);
-				s.setLinkMan(content[i][5]);
-				s.setEndDate(content[i][6]);
+				s.setLinkMan(content[i][2]);
+				String name = (null==content[i][3] || "".equals(content[i][3].trim()))?"":content[i][3].trim();
+				//Settlement sett = settlementLogic.findAllSettlementByName(name);
+				s.setSettlement(settCache.get(name));
+				s.setLinkPhone(content[i][4]);
+				s.setNetworkLink(content[i][5]);
+				s.setAddress(content[i][6]);
+				s.setEndDate(content[i][7]);
 				s.setIsCustom(false);
-				String name = (null==content[i][7] || "".equals(content[i][7].trim()))?"":content[i][7].trim();
-				Settlement sett = settlementLogic.findAllSettlementByName(name);
-				s.setSettlement(sett);
 				s.setNote(content[i][8]);
 				scmcocs.add(s);
 			}

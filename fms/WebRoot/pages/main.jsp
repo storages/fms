@@ -101,5 +101,9 @@
 
 <body oncontextmenu="return false" style="position: relative;">
 	<jsp:include page="/pages/content.jsp"></jsp:include>
+	<!-- WAIT FLASH ACTIVE -->
+		<div id="waitdiv" class="waitcss" style="display: none;">
+			<img src="${pageContext.request.contextPath}/imges/loading.gif" class="waitgif" id="waitgif"></img>
+		</div>
 </body>
 </html>

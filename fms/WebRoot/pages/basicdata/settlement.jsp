@@ -31,19 +31,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<span class="">结算方式名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 	</div> 
-	<div class="span12">
+	<div class="span12" style="margin-left: 0px;">
 			<!--PAGE CONTENT BEGINS-->
 
 			<div class="row-fluid">
-				<div class="span12">
-				<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-left: -30px;"">
+				<div class="span12" style="margin-left: 0px;">
+				<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 					<thead>
 							<tr align="center">
 								<th class="center" style="width:30px;">选择</th>
 								<th class="center">序号</th>
 								<th class="center">编号</th>
 								<th class="center">结算方式名称</th>
-								<th class="hidden-480 center">备注</th>
+								<th class="center">备注</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>
@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</td>
 									<td class="center">${settl.code}</td>
 									<td class="center">${settl.name}</td>
-									<td class="hidden-480 center">${settl.note}　</td>
+									<td class="center">${settl.note}　</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toedit('${settl.id}')">修改</a>｜
 										<a href="javascript:void(0);" onclick="delData('${settl.id}','Settlement')">删除</a>

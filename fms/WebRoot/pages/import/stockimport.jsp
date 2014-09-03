@@ -79,10 +79,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		</div>
 		<!--PAGE CONTENT ENDS-->
-		<!-- WAIT FLASH ACTIVE -->
-		<div id="waitdiv" class="waitcss" style="display: none;">
-			<img src="${pageContext.request.contextPath}/imges/loading.gif" class="waitgif" id="waitgif"></img>
-		</div>
 	</div>
   </body>
   <script id="SXrow" type="text/x-jquery-tmpl">

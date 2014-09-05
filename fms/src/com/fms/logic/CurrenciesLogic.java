@@ -3,6 +3,7 @@ package com.fms.logic;
 import java.util.List;
 
 import com.fms.core.entity.Currencies;
+import com.fms.temp.TempCurrencies;
 
 /**
  * 供应商或客户逻辑中心接口
@@ -60,4 +61,11 @@ public interface CurrenciesLogic {
 	 * @return
 	 */
 	public Integer findDataCount(String className,String name);
+	
+	/**
+	 * 导入excel 检测
+	 * @param list
+	 * @return
+	 */
+	public List<TempCurrencies> doValidata(List<Currencies> list);
 }

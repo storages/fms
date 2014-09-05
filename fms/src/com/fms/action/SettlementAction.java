@@ -212,7 +212,7 @@ public class SettlementAction extends BaseAction {
 		AjaxResult result=new AjaxResult();
 		result.setSuccess(false);
 		net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
-		List list= net.sf.json.JSONArray.toList(jsonArray, new TempStock(), new JsonConfig());
+		List list= net.sf.json.JSONArray.toList(jsonArray, new TempSettlement(), new JsonConfig());
 		if(null!=list && list.size()>0){
 			for(int i = 0;i<list.size();i++){
 				TempStock ts = (TempStock)list.get(i);
@@ -287,14 +287,7 @@ public class SettlementAction extends BaseAction {
 		return "";
 	}
 
-	public List toListofClassName(JsonArray arr,Class t){
-		List list=new ArrayList();
-		Gson gson=new Gson();
-		for(int x=0;x<arr.size();x++){
-		list.add(gson.fromJson(arr.get(x), t.getClass()));
-		}
-		return list;
-	}
+
 
 	public SettlementLogic getSettlementLogic() {
 		return settlementLogic;

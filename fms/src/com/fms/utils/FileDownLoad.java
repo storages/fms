@@ -54,6 +54,9 @@ public class FileDownLoad extends ActionSupport{
 		}else if("scmcocTemp".equals(fileFlag)){
 			this.fileName = "供应商管理【导入】模板.xls";
 			this.inputPath = ROOTPATH+"scmcocTemplate.xls";
+		}else if("currTemp".equals(fileFlag)){
+			this.fileName = "交易货币【导入】模板.xls";
+			this.inputPath = ROOTPATH+"currTemplate.xls";
 		}
 		// 解解乱码
 		this.fileName = new String(this.fileName.getBytes("UTF-8"),"ISO-8859-1");

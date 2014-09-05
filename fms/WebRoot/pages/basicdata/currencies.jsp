@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','Curr')">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="showImport()">Excel导入</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
@@ -141,4 +141,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var url = "${pageContext.request.contextPath}/currencies_findCurrenciesById.action?ids="+id;
 		toMain(url);
 	}
+	function showImport(){
+	  	var url = "${pageContext.request.contextPath}/pages/import/currimport.jsp";
+	  	toMain(url);
+  	}
 </script>

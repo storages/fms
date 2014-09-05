@@ -61,11 +61,16 @@ public interface CurrenciesLogic {
 	 * @return
 	 */
 	public Integer findDataCount(String className,String name);
+
 	
 	/**
-	 * 导入excel 检测
-	 * @param list
-	 * @return
+	 * 验证导入Excel数据
 	 */
-	public List<TempCurrencies> doValidata(List<Currencies> list);
+	public List<?> doValidata(List<?> dataList);
+	
+	/**
+	 * 保存Excel数据到数据库
+	 */
+	public Boolean doSaveExcelData(List<?> dataList); 
+
 }

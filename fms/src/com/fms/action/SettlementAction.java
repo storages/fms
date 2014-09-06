@@ -215,7 +215,7 @@ public class SettlementAction extends BaseAction {
 		List list= net.sf.json.JSONArray.toList(jsonArray, new TempSettlement(), new JsonConfig());
 		if(null!=list && list.size()>0){
 			for(int i = 0;i<list.size();i++){
-				TempStock ts = (TempStock)list.get(i);
+				TempSettlement ts = (TempSettlement)list.get(i);
 				if(null!=ts.getErrorInfo() && !"".equals(ts.getErrorInfo().trim())){
 					errorList.add(ts);
 				}

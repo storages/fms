@@ -48,7 +48,7 @@ public class StockAction extends BaseAction {
 	private Integer pageNums;// 共有多少页
 	private String className = "Stock";// 表名称
 	private String searchStr;// 搜索条件
-	private static final Integer DEFAULT_PAGESIZE = 11;
+	private static final Integer DEFAULT_PAGESIZE = 10;
 
 	/********* 获取前台选择的文件 ***********/
 	 private File     uploadFile;         //上传的文件    名称是Form 对应的name 

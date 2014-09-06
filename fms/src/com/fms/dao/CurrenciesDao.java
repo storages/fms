@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.Currencies;
+import com.fms.core.entity.Settlement;
 
 public interface CurrenciesDao extends BaseDao{
 	/**
@@ -16,6 +17,10 @@ public interface CurrenciesDao extends BaseDao{
 	 * @param id
 	 * @return
 	 */
+	
+	
+	public List<Currencies> findAllCurrencies();
+	
 	public Currencies findCurrenciesById(String id);
 	/**
 	 * 保存单个交易货币

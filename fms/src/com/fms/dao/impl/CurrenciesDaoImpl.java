@@ -6,6 +6,7 @@ import java.util.List;
 import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.Currencies;
 import com.fms.core.entity.Scmcoc;
+import com.fms.core.entity.Settlement;
 import com.fms.dao.CurrenciesDao;
 
 public class CurrenciesDaoImpl extends BaseDaoImpl implements CurrenciesDao {
@@ -74,6 +75,12 @@ public class CurrenciesDaoImpl extends BaseDaoImpl implements CurrenciesDao {
 		hql = hql.substring(0,hql.trim().length()-2);
 		Object [] objs = ids.toArray();
 		this.batchUpdateOrDelete(hql, objs);
+	}
+
+	public List<Currencies> findAllCurrencies() {
+		// TODO Auto-generated method stub
+		String hql = "SELECT a FROM Currencies a ";
+		return this.find(hql, null);
 	}
 
 }

@@ -57,7 +57,10 @@ public class FileDownLoad extends ActionSupport{
 		}else if("currTemp".equals(fileFlag)){
 			this.fileName = "交易货币【导入】模板.xls";
 			this.inputPath = ROOTPATH+"currTemplate.xls";
-		}
+		}else if("settlTemp".equals(fileFlag)){
+			this.fileName = "结算方式【导入】模板.xls";
+			this.inputPath = ROOTPATH+"settlTemplate.xls";
+	}
 		// 解解乱码
 		this.fileName = new String(this.fileName.getBytes("UTF-8"),"ISO-8859-1");
 		return ServletActionContext.getServletContext().getResourceAsStream(this.inputPath);

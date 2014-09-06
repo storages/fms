@@ -183,6 +183,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 		}
 		
+		$("#download").click(function(){
+	    	window.location.href=Global+"/fileDownload.action?fileFlag=settlTemp";
+	    });
+		
 		function posigif(){
 		 var w =  50;     //宽度offsetWidth
 		 var h = 50;   //高度

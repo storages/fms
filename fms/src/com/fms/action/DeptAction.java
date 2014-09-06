@@ -36,7 +36,7 @@ public class DeptAction extends BaseAction {
 	private Integer pageNums;//共有多少页
 	private String className="Department";//表名称
 	private String searchStr;//搜索条件
-	private static final Integer DEFAULT_PAGESIZE = 11; 
+	private static final Integer DEFAULT_PAGESIZE = 10; 
 	
 	
 	

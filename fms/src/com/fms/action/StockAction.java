@@ -211,7 +211,7 @@ public class StockAction extends BaseAction {
 			title[2] = content[0][2];
 			if(!"编码".equals(title[0]) || !"仓库名称".equals(title[1]) || !"备注".equals(title[2])){
 				result.setSuccess(false);
-				result.setMsg("导入的excel文件格式不正确!");
+				result.setMsg("导入的excel文件内容不正确!");
 			}else{
 				List<Stock> stocks = new ArrayList<Stock>();
 				for (int i = 1; i < content.length; i++) {

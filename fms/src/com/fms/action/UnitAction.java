@@ -208,7 +208,7 @@ private String ids;
 			title[2] = content[0][2];
 			if(!"编码".equals(title[0]) || !"计量单位名称".equals(title[1]) || !"备注".equals(title[2])){
 				result.setSuccess(false);
-				result.setMsg("导入的excel文件格式不正确!");
+				result.setMsg("导入的excel文件内容不正确!");
 			}else{
 			
 				List<Unit> units = new ArrayList<Unit>();

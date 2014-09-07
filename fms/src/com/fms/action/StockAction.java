@@ -203,20 +203,28 @@ public class StockAction extends BaseAction {
 		result.setSuccess(false);
 		try {
 			//就这句，如何获取jsp页面传过来的文件
-			String[][] content = ExcelUtil.readExcel(uploadFile, 1);
+			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
 			
-			
-			List<Stock> stocks = new ArrayList<Stock>();
-			for (int i = 0; i < content.length; i++) {
-				Stock s = new Stock();
-				s.setCode(content[i][0]);
-				s.setName(content[i][1]);
-				s.setNote(content[i][2]);
-				stocks.add(s);
+			String [] title = new String[3];
+			title[0] = content[0][0];
+			title[1] = content[0][1];
+			title[2] = content[0][2];
+			if(!"编码".equals(title[0]) || !"仓库名称".equals(title[1]) || !"备注".equals(title[2])){
+				result.setSuccess(false);
+				result.setMsg("导入的excel文件格式不正确!");
+			}else{
+				List<Stock> stocks = new ArrayList<Stock>();
+				for (int i = 1; i < content.length; i++) {
+					Stock s = new Stock();
+					s.setCode(content[i][0]);
+					s.setName(content[i][1]);
+					s.setNote(content[i][2]);
+					stocks.add(s);
+				}
+				List tlist = stockLogic.doValidata(stocks);
+				result.setSuccess(true);
+				result.setObj(tlist);
 			}
-			List tlist = stockLogic.doValidata(stocks);
-			result.setSuccess(true);
-			result.setObj(tlist);
 		} catch (FileNotFoundException e) {
 			result.setSuccess(false);
 			result.setMsg("操作错误"+e.getMessage());
@@ -235,6 +243,7 @@ public class StockAction extends BaseAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    
 	}
 
 	/**

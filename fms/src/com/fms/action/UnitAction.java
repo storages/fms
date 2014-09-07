@@ -201,20 +201,28 @@ private String ids;
 		result.setSuccess(false);
 		try {
 			//就这句，如何获取jsp页面传过来的文件
-			String[][] content = ExcelUtil.readExcel(uploadFile, 1);
+			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
+			String [] title = new String[3];
+			title[0] = content[0][0];
+			title[1] = content[0][1];
+			title[2] = content[0][2];
+			if(!"编码".equals(title[0]) || !"计量单位名称".equals(title[1]) || !"备注".equals(title[2])){
+				result.setSuccess(false);
+				result.setMsg("导入的excel文件格式不正确!");
+			}else{
 			
-			
-			List<Unit> units = new ArrayList<Unit>();
-			for (int i = 0; i < content.length; i++) {
-				Unit s = new Unit();
-				s.setCode(content[i][0]);
-				s.setName(content[i][1]);
-				s.setNote(content[i][2]);
-				units.add(s);
+				List<Unit> units = new ArrayList<Unit>();
+				for (int i = 1; i < content.length; i++) {
+					Unit s = new Unit();
+					s.setCode(content[i][0]);
+					s.setName(content[i][1]);
+					s.setNote(content[i][2]);
+					units.add(s);
+				}
+				List tlist = unitLogic.doValidata(units);
+				result.setSuccess(true);
+				result.setObj(tlist);
 			}
-			List tlist = unitLogic.doValidata(units);
-			result.setSuccess(true);
-			result.setObj(tlist);
 		} catch (FileNotFoundException e) {
 			result.setSuccess(false);
 			result.setMsg("操作错误"+e.getMessage());

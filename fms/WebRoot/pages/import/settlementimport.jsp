@@ -115,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    });
 	});
 	var excelupload= document.getElementById("excelupload");
-	//图片上传回调函数  //判断IE 解决兼容问题
+    //判断IE 解决兼容问题
 	if(excelupload.attachEvent){ // IE  
 		excelupload.attachEvent('onload',function(){
 		var html= document.frames["excelupload"].document.body.innerHTML;
@@ -149,7 +149,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	         }
 	          $("#SXrow").tmpl(json.obj).appendTo("#tbodysettl");  
 	          }else{
-	    	       alert("上传失败"+json.msg);
+	    	       $("#waitdiv").hide();
+	    	       alert("解析文件错误！原因："+json.msg);
 	          }
 	};
     }

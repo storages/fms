@@ -82,6 +82,7 @@
 			<result name="success">/pages/basicdata/settlement.jsp</result>
 			<result name="find">/pages/basicdata/addsettlement.jsp</result>
 			<result name="save" type="chain">settl_findAllSett</result>
+			<param name="path">/upload</param>
 		</action>
 
 		<!-- currencies的Action配置 -->
@@ -90,6 +91,7 @@
 			<result name="success">/pages/basicdata/currencies.jsp</result>
 			<result name="find">/pages/basicdata/addcurrencies.jsp</result>
 			<result name="save" type="chain">currencies_findAllCurrencies</result>
+			<param name="path">/upload</param>
 		</action>
 
 
@@ -98,6 +100,7 @@
 			<result name="success">/pages/basicdata/unit.jsp</result>
 			<result name="find">/pages/basicdata/addunit.jsp</result>
 			<result name="save" type="chain">unit_findAllUnit</result>
+			<param name="path">/upload</param>
 		</action>
 
 		<!-- employee的Action配置 -->

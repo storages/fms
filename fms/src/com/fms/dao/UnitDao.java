@@ -2,10 +2,11 @@ package com.fms.dao;
 
 import java.util.List;
 
+import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.Unit;
 
 
-public interface UnitDao {
+public interface UnitDao extends BaseDao {
 	/**
 	 * 查询所有的计量单位信息[分页]
 	 * @param likeStr

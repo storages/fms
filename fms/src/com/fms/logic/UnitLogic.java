@@ -51,4 +51,14 @@ public interface UnitLogic {
 	 * 根据Id来删除计量单位信息
 	 */
 	public void delUnitById(String[] ids);
+	
+	/**
+	 * 验证导入Excel数据
+	 */
+	public List<?> doValidata(List<?> dataList);
+	
+	/**
+	 * 保存Excel数据到数据库
+	 */
+	public Boolean doSaveExcelData(List<?> dataList);
 }

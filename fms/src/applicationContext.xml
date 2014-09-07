@@ -14,8 +14,7 @@
 
 	<!-- 为了测试添加 的一个日期类 -->
 	<bean id="date" class="java.util.Date" />
-	<!-- 测试下载 -->
-	<bean name="fileDownload" class="com.fms.utils.FileDownLoad" scope="prototype"/>
+	
 	
 	
 
@@ -296,6 +295,8 @@
 			<ref bean="userLogic" />
 		</property>
 	</bean>
-	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils">
-	</bean>
+	<!-- 上传 -->
+	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils"></bean>
+	<!-- 下载 -->
+	<bean name="fileDownload" class="com.fms.utils.FileDownLoad" scope="prototype"/>
 </beans>

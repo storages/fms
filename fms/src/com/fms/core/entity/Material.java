@@ -22,12 +22,9 @@ public class Material extends BaseEntity{
 	private MaterialType materialType;
 	//计量单位
 	private Unit unit;
-	//包装规格
-	private String spec;
 	//数量
 	private Double qty;
-	//件数(数量/包装规格)
-	private Double pkgs;
+	
 	//成品或原料标记("I"原料，"E"成品)
 	private String imgExgFlag;
 	//批次号
@@ -36,6 +33,7 @@ public class Material extends BaseEntity{
 	private Double lowerQty;
 	//备注
 	private String note;
+	
 	public String getHsName() {
 		return hsName;
 	}
@@ -60,23 +58,11 @@ public class Material extends BaseEntity{
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
-	public String getSpec() {
-		return spec;
-	}
-	public void setSpec(String spec) {
-		this.spec = spec;
-	}
 	public Double getQty() {
 		return qty;
 	}
 	public void setQty(Double qty) {
 		this.qty = qty;
-	}
-	public Double getPkgs() {
-		return pkgs;
-	}
-	public void setPkgs(Double pkgs) {
-		this.pkgs = pkgs;
 	}
 	public String getImgExgFlag() {
 		return imgExgFlag;

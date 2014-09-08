@@ -29,6 +29,7 @@
 	<!-- 实体类映射结束-->
 	<mapping resource="com/fms/core/entity/Marterial.hbm.xml" />
 	<mapping resource="com/fms/core/entity/MaterialType.hbm.xml" />
+	<mapping resource="com/fms/core/entity/OutStorage.hbm.xml" />
 </session-factory>
 
 </hibernate-configuration>

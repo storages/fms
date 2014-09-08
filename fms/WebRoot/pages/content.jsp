@@ -66,8 +66,8 @@
 		</li>
 		<li  class="closed"><span class="folder directer">物料</span>
 			<ul>
-				<li><span class="file"><a href="#">物料信息</a></span></li>
 				<li><span class="file"><a href="#">物料分类</a></span></li>
+				<li><span class="file"><a href="#">物料信息</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">订单管理</span>

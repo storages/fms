@@ -130,7 +130,14 @@ public class ScmcocAction extends BaseAction {
 			out.close();
 		}
 	}
-	
+	/**
+	 * 到导入Excles 的页面
+	 * @return
+	 */
+	public String toExcels(){
+		
+		return "inputExcels";
+	}
 	
 	/**
 	 * 解析excel数据，并验证数据有效性

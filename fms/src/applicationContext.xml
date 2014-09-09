@@ -50,8 +50,8 @@
 		<!-- maxStatementsPerConnection定义了连接池内单个连接所拥有的最大缓存statements数。Default: 
 			0 -->
 		<property name="maxStatementsPerConnection" value="5"></property>
-		<!--最大空闲时间,1800秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
-		<property name="maxIdleTime" value="1800"></property>
+		<!--最大空闲时间,3600秒(1小时)内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+		<property name="maxIdleTime" value="3600"></property>
 	</bean>
 
 	<bean id="transactionManager"

@@ -94,15 +94,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script id="SXrow" type="text/x-jquery-tmpl">
 	<tr {{if erroris}} style="color: red;" {{/if}}>
 		<td class="center"  style="text-align: left;">{{= errorInfo}}　</td>
-		<td class="center">{{=code}}　</td>
-		<td class="center">{{=name}}　</td>
-		<td class="hidden-480 center">{{=scmcoc}}　</td>
-		<td class="hidden-480 center">{{=networkLink}}　</td>
-		<td class="hidden-480 center">{{=linkMan}}　</td>
-		<td class="hidden-480 center">{{=address}}　</td>
-		<td class="hidden-480 center">{{=settlement.name}}　</td>
-		<td class="hidden-480 center">每月${=endDate}}日</td>
-		<td class="hidden-480 center">{{=note}}　</td>
+		<td class="center">{{= code}}　</td>
+		<td class="center">{{= name}}　</td>
+		<td class="hidden-480 center">{{= scmcoc}}　</td>
+		<td class="hidden-480 center">{{= networkLink}}　</td>
+		<td class="hidden-480 center">{{= linkMan}}　</td>
+		<td class="hidden-480 center">{{= address}}　</td>
+		<td class="hidden-480 center">{{= settlement.name}}　</td>
+		<td class="hidden-480 center">每月{{= endDate}}日</td>
+		<td class="hidden-480 center">{{= note}}　</td>
 	</tr>
 </script>
   <script type="text/javascript">

@@ -152,7 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		toMain(url);
 	}
 	function showImport(){
-  	var url = "${pageContext.request.contextPath}/pages/import/scmcocimport.jsp";
+  	var url = Global+"/scmcoc_toExcels.action";
   	toMain(url);
   	}
 </script>

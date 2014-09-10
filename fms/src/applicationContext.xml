@@ -140,7 +140,12 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-
+	
+	<bean id="dao" class="com.fms.dao.impl.MaterialTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
 	<!-- ======================Logic类=========================== -->
 
 	<!-- AclUser -->
@@ -215,7 +220,11 @@
 		</property>
 	</bean>
 
-
+	<bean id="logic" class="com.fms.logic.impl.MaterialTypeLogicImpl">
+		<property name="dao">
+			<ref bean="dao" />
+		</property>
+	</bean>
 	<!-- ======================Action类=========================== -->
 
 	<!-- AclUser -->
@@ -283,8 +292,7 @@
 	</bean>
 
 	<!-- Employee -->
-	<bean id="employeeAction" class="com.fms.action.EmployeeAction"
-		scope="prototype">
+	<bean id="employeeAction" class="com.fms.action.EmployeeAction" scope="prototype">
 		<property name="deptLogic">
 			<ref bean="deptLogic" />
 		</property>
@@ -295,6 +303,15 @@
 			<ref bean="userLogic" />
 		</property>
 	</bean>
+	
+	<!-- 物料 -->
+	<bean id="materialTypeAction" class="com.fms.action.MaterialTypeAction" scope="prototype">
+		<property name="logic">
+			<ref bean="logic"/>
+		</property>
+	</bean>
+	
+	
 	<!-- 上传 -->
 	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils"></bean>
 	<!-- 下载 -->

@@ -59,6 +59,7 @@
 			<result name="save" type="chain">scmcoc_findAllScmcoc</result>
 			<result name="findcoc">/pages/scmcoc/addscmcoc.jsp</result>
 			<result name="findcis">/pages/scmcoc/addscmcis.jsp</result>
+			<result name="inputExcels">/pages/import/scmcocimport.jsp</result>
 			<result name="cis">/pages/scmcoc/scmcis.jsp</result>
 		</action>
 
@@ -114,6 +115,13 @@
 			<param name="path">/upload</param>
 		</action>
 
+
+	<!-- 物料类型 -->
+		<action name="mater_*" class="materialTypeAction" method="{1}">
+			<result name="success">/pages/material/materialtype.jsp</result>
+		</action>
+
+	
 
 	</package>
 

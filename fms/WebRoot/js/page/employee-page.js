@@ -297,34 +297,136 @@ $("#isloginUser").click(function(){
  * 重置INput
  */
 function initEmpColums(){
-	//获取所有input
-	var gender =$("#gender").val(-1); //性别
-	var age=$("#age").val(-1);//年龄
-	var nation =$("#nation").val(-1);//名族
-	var diploma=$("#diploma").val(-1);//学历
-	var department=$("#department").val(-1);
+	//获取所有input 
+	//性别
+	if($("#gender").attr("data-val")){
+		var gender =$("#gender").val($("#gender").attr("data-val"));
+	}else{
+		var gender =$("#gender").val(-1);
+	}
+	//年龄
+	if($("#age").attr("data-val")){
+		var age=$("#age").val($("#age").attr("data-val"));
+	}else{
+		var age=$("#age").val(-1);
+	}
+	//名族
+	if($("#nation").attr("data-val")){
+		var nation =$("#nation").val($("#nation").attr("data-val"));
+	}else{
+		var nation =$("#nation").val(-1);
+	}
+	//学历
+	if($("#diploma").attr("data-val")){
+		$("#diploma").val($("#diploma").attr("data-val"));
+	}else{
+		var diploma=$("#diploma").val(-1);
+	}
+	if($("#department").attr("data-val")){
+		var department=$("#department").val($("#department").attr("data-val"));
+	}else{
+		var department=$("#department").val(-1);
+	}
 	
-	var code=$("#code").val(""); //登录名
-	var name=$("#name").val("");//名称
-	var isloginUser=$("#isloginUser").prop("checked",false);//是否用户
-	var photoImg=$("#photoImg").attr("src",Global+"/images/defaulttopimg.jpg");//头像
-	var nickName=$("#nickName").val("");
-	var loginName=$("#loginName").val("");
-	var password=$("#password").val("");
-	var passwordto=$("#passwordto").val("");
-	var identityCard=$("#identityCard").val("");
-	var origo=$("#origo").val("");
-	var address=$("#address").val("");
-	var currentResidence=$("#currentResidence").val("");
-	var linkPhone=$("#linkPhone").val("");
-	var networkLink=$("#networkLink").val("");
-	var positionName=$("#positionName").val("");
-	var note=$("#note").val("");
+	if($("#code").attr("data-val")){
+		var code=$("#code").val($("#code").attr("data-val")); 
+	}else{
+		var code=$("#code").val("");
+	}
+	if($("#name").attr("data-val")){
+		var code=$("#name").val($("#name").attr("data-val")); 
+	}else{
+		var code=$("#name").val("");
+	}
+	//是否用户
+	if($("#isloginUser").attr("data-val")){
+		var isloginUser=$("#isloginUser").prop("checked",$("#isloginUser").attr("data-val"));
+	}else{
+		var isloginUser=$("#isloginUser").prop("checked",false);
+	}
+	if($("#emplphoto").attr("data-val")){
+		var photoImg=$("#photoImg").attr("src",$("#emplphoto").attr("data-val"));//头像
+	}else{
+		var photoImg=$("#photoImg").attr("src",Global+"/images/defaulttopimg.jpg");//头像
+	}
+	
+	if($("#nickName").attr("data-val")){
+		var nickName=$("#nickName").val($("#nickName").attr("data-val"));
+	}else{
+		var nickName=$("#nickName").val("");
+	}
+    if($("#loginName").attr("data-val")){
+    	var loginName=$("#loginName").val($("#loginName").attr("data-val"));
+    }else{
+    	var loginName=$("#loginName").val("");
+    }
+   if($("#password").attr("data-val")){
+		var password=$("#password").val($("#password").attr("data-val"));
+   }else{
+		var password=$("#password").val("");
+   }
+   
+  if($("#passwordto").attr("data-val")){
+	  var passwordto=$("#passwordto").val($("#passwordto").attr("data-val"));
+   }else{
+	   var passwordto=$("#passwordto").val("");
+    }
+  
+	if($("#identityCard").attr("data-val")){
+		var identityCard=$("#identityCard").val($("#identityCard").attr("data-val"));
+	}else{
+		var identityCard=$("#identityCard").val("");
+	}
+    if($("#origo").attr("data-val")){
+    	var origo=$("#origo").val($("#origo").attr("data-val"));
+    }else{
+    	var origo=$("#origo").val("");
+    }	
+    if($("#address").attr("data-val")){
+    	var address=$("#address").val($("#address").attr("data-val"));
+    }else{
+    	var address=$("#address").val("");
+    }
+	if($("#currentResidence").attr("data-val")){
+		var currentResidence=$("#currentResidence").val($("#currentResidence").attr("data-val"));
+	}else{
+		var currentResidence=$("#currentResidence").val("");
+	}
+	if($("#linkPhone").attr("data-val")){
+		var linkPhone=$("#linkPhone").val($("#linkPhone").attr("data-val"));
+	}else{
+		var linkPhone=$("#linkPhone").val("");
+	}
+	if($("#networkLink").attr("data-val")){
+		var networkLink=$("#networkLink").val($("#networkLink").attr("data-val"));
+	}else{
+		var networkLink=$("#networkLink").val("");
+	}
+    if($("#positionName").attr("data-val")){
+    	var positionName=$("#positionName").val($("#positionName").attr("data-val"));
+    }else{
+    	var positionName=$("#positionName").val("");
+    }
+	if($("#note").attr("data-val")){
+		var note=$("#note").val($("#note").attr("data-val"));
+	}else{
+		var note=$("#note").val("");
+	}
+	
 	$("#loginuserTR").css("display","none");
-	var birthday=$("#birthday").val(""); 
-	var entryDate=$("#entryDate").val(""); 
-};	
+	if($("#birthday").attr("data-val")){
+		var birthday=$("#birthday").val($("#birthday").attr("data-val")); 
+	}else{
+		var birthday=$("#birthday").val(""); 
+	}
+	if($("#entryDate").attr("data-val")){
+		var entryDate=$("#entryDate").val($("#entryDate").attr("data-val")); 
 	
+	}else{
+		var entryDate=$("#entryDate").val(""); 
+	}
+	
+}
 
 $("a[edit-emp]").click(function(){
 	var id= $(this).attr("edit-emp");

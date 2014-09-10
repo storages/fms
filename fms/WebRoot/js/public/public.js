@@ -122,9 +122,15 @@ function getUrl(flag){
 			url[0] = "${pageContext.request.contextPath}/currencies_del.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/currencies_findAllCurrencies.action";
 			break;
+			//删除计量单位
 		case "Unit":
 			url[0] = "${pageContext.request.contextPath}/unit_deleteUnit.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/unit_findAllUnit.action";
+			break;
+			//删除物料类型
+		case "MaterialType":
+			url[0] = "${pageContext.request.contextPath}/mater_deleteMaterialType.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/mater_findAllMaterialType.action";
 			break;
 	}
 	return url;

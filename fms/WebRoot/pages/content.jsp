@@ -39,11 +39,11 @@
 				<li><span class="file"><a href="javascript:void(0);" onclick="findAllUserByFlag('${u.userFlag}')">用户权限</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="">用户分组</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="">操作日志</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" data-url="/params_getParameterValue.action">系统参数设置</a></span></li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">基础资料</span>
 			<ul>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/params_getParameterValue.action">系统参数设置</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/scmcoc_findAllScmcoc.action?isCustom=false">供应商管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/scmcoc_findAllScmcoc.action?isCustom=true">客户管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/dept_findAllDept.action" >部门管理</a></span></li>
@@ -61,12 +61,12 @@
 		</li>
 		<li  class="closed"><span class="folder directer">职员管理</span>
 			<ul>
-				<li><span class="file"><a href="javascript:void(0);"   data-url="/empl_employees.action">职员信息</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/empl_employees.action">职员信息</a></span></li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">物料</span>
 			<ul>
-				<li><span class="file"><a href="#">物料分类</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/mater_findAllMaterialType.action">物料分类</a></span></li>
 				<li><span class="file"><a href="#">物料信息</a></span></li>
 			</ul>
 		</li>

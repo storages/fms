@@ -7,10 +7,12 @@ import java.util.Map;
 
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Settlement;
+import com.fms.core.entity.Stock;
 import com.fms.dao.ScmcocDao;
 import com.fms.dao.SettlementDao;
 import com.fms.logic.ScmcocLogic;
 import com.fms.temp.TempScmcoc;
+import com.fms.temp.TempStock;
 
 
 public class ScmcocLogicImpl implements ScmcocLogic {
@@ -67,8 +69,25 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	public Integer findDataCount(String className,Boolean isCustom,String name){
 		return this.scmcocDao.findDataCount(className,isCustom,name);
 	}
+	private TempScmcoc setProperties(Scmcoc src,TempScmcoc tag){
+		if(null!=src && null!=tag){
+			tag.setCode(src.getCode());
+			tag.setName(src.getName());
+			tag.setLinkPhone(src.getLinkPhone());
+			tag.setNetworkLink(src.getNetworkLink());
+			tag.setAddress(src.getAddress());
+			tag.setLinkMan(src.getLinkMan());
+			tag.setEndDate(src.getEndDate());
+			tag.setIsCustom(false);
+			tag.setSettlement(src.getSettlement());
+			tag.setNote(src.getNote());
+			return tag;
+		}
+		return null;
+	}
 
-	public List doValidata(List dataList) {
+	public List<TempScmcoc> doValidata(List<Scmcoc> data,
+			Map<String, Settlement> map) {
 		List<TempScmcoc> valiList= new ArrayList<TempScmcoc>();
 		List<Scmcoc> scmList = this.scmcocDao.findAllScmcoc(false, null, -1, -1);
 		List<Settlement> settList = this.settlementDao.findAllSettlement(null);
@@ -86,7 +105,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 			settlementCache.put(keys, seet);
 		}
 		//开始验证数据
-		for(Object obj:dataList){
+		for(Object obj:data){
 			Scmcoc impScm = (Scmcoc) obj;
 			TempScmcoc temp = new TempScmcoc();
 			if(null==impScm.getCode() || "".equals(impScm.getCode().trim())){
@@ -115,11 +134,11 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 				String mess = "对应编码【"+impScm.getCode()+"】、名称【 "+impScm.getName()+"】在导入文件中重复; ";
 				temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 			}
-			if(impScm.getSettlement()==null){
+			if(impScm.getSettlement().getName()==null||impScm.getSettlement().getName().equals("")){
 				String mess = "结算方式不能为空; ";
 				temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 			}
-			if(impScm.getSettlement()!=null){
+			if(map.get(impScm.getSettlement().getName())==null){
 				String seetkey = impScm.getSettlement().getCode()+"/"+impScm.getSettlement().getName();
 				if(settlementCache.get(seetkey)==null){
 					String mess = "结算方式在系统中不存在; ";
@@ -131,22 +150,43 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		}
 		return valiList;
 	}
+
 	
-	
-	private TempScmcoc setProperties(Scmcoc src,TempScmcoc tag){
-		if(null!=src && null!=tag){
-			tag.setCode(src.getCode());
-			tag.setName(src.getName());
-			tag.setLinkPhone(src.getLinkPhone());
-			tag.setNetworkLink(src.getNetworkLink());
-			tag.setAddress(src.getAddress());
-			tag.setLinkMan(src.getLinkMan());
-			tag.setEndDate(src.getEndDate());
-			tag.setIsCustom(false);
-			tag.setSettlement(src.getSettlement());
-			tag.setNote(src.getNote());
-			return tag;
+	private Scmcoc decProperties(TempScmcoc src){
+		Scmcoc s = new Scmcoc();
+		if(null!=src){
+			s.setCode(src.getCode());
+			s.setName(src.getName());
+			s.setNote(src.getNote());
+			s.setAddress(src.getAddress());
+			s.setEndDate(src.getEndDate());
+			s.setLinkMan(src.getLinkMan());
+			s.setLinkPhone(src.getLinkPhone());
+			s.setNetworkLink(src.getNetworkLink());
+			s.setSettlement(src.getSettlement());
+			return s;
 		}
 		return null;
 	}
+	
+	public boolean doSaveExcelData(List list) {
+		List<Scmcoc> stockL = new ArrayList<Scmcoc>();
+		//重新验证是否有错误的数据
+		for(Object obj:list){
+			TempScmcoc ts = (TempScmcoc)obj;
+			if(null!=ts.getErrorInfo() && !"".equals(ts.getErrorInfo().trim())){
+				return false;
+			}else{
+				stockL.add(decProperties(ts));
+				continue;
+			}
+		}
+		try{
+		scmcocDao.batchSaveOrUpdate(stockL);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return true;
+	}
+
 }

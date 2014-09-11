@@ -1,8 +1,10 @@
 ﻿package com.fms.logic;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fms.core.entity.Scmcoc;
+import com.fms.core.entity.Settlement;
 import com.fms.temp.TempScmcoc;
 
 /**
@@ -67,5 +69,8 @@ public interface ScmcocLogic {
 	 * @param data
 	 * @return
 	 */
-	public List<TempScmcoc> doValidata(List<Scmcoc> data);
+	public List<TempScmcoc> doValidata(List<Scmcoc> data,Map<String ,Settlement> map);
+	
+	
+	public boolean doSaveExcelData(List list);
 }

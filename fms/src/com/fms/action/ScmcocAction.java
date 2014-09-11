@@ -10,15 +10,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JsonConfig;
+
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Settlement;
 import com.fms.logic.ScmcocLogic;
 import com.fms.logic.SettlementLogic;
+import com.fms.temp.TempScmcoc;
 import com.fms.temp.TempStock;
 import com.fms.utils.AjaxResult;
 import com.fms.utils.ExcelUtil;
 import com.google.gson.Gson;
+import com.url.ajax.json.JSONObject;
 
 public class ScmcocAction extends BaseAction {
 
@@ -161,9 +165,11 @@ public class ScmcocAction extends BaseAction {
 				s.setCode(content[i][0]);
 				s.setName(content[i][1]);
 				s.setLinkMan(content[i][2]);
+				Settlement  scmodal=new Settlement();
 				String name = (null==content[i][3] || "".equals(content[i][3].trim()))?"":content[i][3].trim();
+				scmodal.setName(name);
 				//Settlement sett = settlementLogic.findAllSettlementByName(name);
-				s.setSettlement(settCache.get(name));
+				s.setSettlement(scmodal);
 				s.setLinkPhone(content[i][4]);
 				s.setNetworkLink(content[i][5]);
 				s.setAddress(content[i][6]);
@@ -172,7 +178,7 @@ public class ScmcocAction extends BaseAction {
 				s.setNote(content[i][8]);
 				scmcocs.add(s);
 			}
-			List tlist = scmcocLogic.doValidata(scmcocs);
+			List tlist = scmcocLogic.doValidata(scmcocs,settCache);
 			result.setSuccess(true);
 			result.setObj(tlist);
 		} catch (FileNotFoundException e) {
@@ -195,6 +201,84 @@ public class ScmcocAction extends BaseAction {
 		}
 	}
 
+	/**
+	 * 删除错误信息
+	 */
+	public void clearErrorData(){
+		List errorList = new ArrayList();
+		AjaxResult result=new AjaxResult();
+		result.setSuccess(false);
+		net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
+		List list= net.sf.json.JSONArray.toList(jsonArray, new TempStock(), new JsonConfig());
+		if(null!=list && list.size()>0){
+			for(int i = 0;i<list.size();i++){
+				TempScmcoc ts = (TempScmcoc)list.get(i);
+				if(null!=ts.getErrorInfo() && !"".equals(ts.getErrorInfo().trim())){
+					errorList.add(ts);
+				}
+			}
+			list.removeAll(errorList);
+		}
+		Gson gson=new Gson();
+		result.setObj(list);
+		result.setSuccess(true);
+		String str= gson.toJson(result);
+		Writer writer;
+		try {
+			writer = response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void saveExcelData(){
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		try {
+			net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
+			List list= net.sf.json.JSONArray.toList(jsonArray, new TempStock(), new JsonConfig());
+			if(null==list || list.size()<=0){
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("没有数据可保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+			if (!this.scmcocLogic.doSaveExcelData(list)) {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("保存的数据中有错误，请点击【删除错误】按钮后再保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			} else {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(true);
+				result.setMsg("成功保存"+list.size()+"条数据！");
+				session.put("tlist", null);
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	/**
 	 * 填充对象

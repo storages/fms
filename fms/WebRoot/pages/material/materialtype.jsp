@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="modal-footer" style="text-align: left;">
 		<span class="">类别名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 	</div>
 	<div class="row-fluid" >
 		<div class="span12">
@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/material/addmaterialtype.jsp');">新增</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/pages/material/addmaterialtype.jsp');">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','MaterialType')">
 					批量删除
 				</button>
@@ -79,7 +79,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script type="text/javascript">
   	//修改
   	function toedit(id){
-		var url = "${pageContext.request.contextPath}/mater_findMaterialTypeById.action?ids="+id;
+		var url = "${pageContext.request.contextPath}/mater_findTypeById.action?ids="+id;
+		toMain(url);
+	}
+	function search(){
+		var searhStr = $('#search').val();
+		var url = "${pageContext.request.contextPath}/mater_findAllMaterialType.action?searhStr="+parse(searhStr);
 		toMain(url);
 	}
   </script>

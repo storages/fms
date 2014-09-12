@@ -101,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td class="hidden-480 center">{{= linkPhone}}　</td>
 		<td class="hidden-480 center">{{= networkLink}}　</td>
 		<td class="hidden-480 center">{{= address}}　</td>
-		<td class="hidden-480 center">每月{{= endDate}}日</td>
+		<td class="hidden-480 center">{{if endDate!=""}}每月{{= endDate}}日{{/if}}　</td>
 		<td class="hidden-480 center">{{= note}}　</td>
 	</tr>
 </script>
@@ -176,7 +176,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	         }
 	          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
 	          }else{
-	    	       alert("上传失败"+json.msg);
+	    	       $("#waitdiv").hide();
+	    	       alert("解析文件错误！原因："+json.msg);
 	          }
 	};
     }

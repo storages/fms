@@ -152,35 +152,54 @@ public class ScmcocAction extends BaseAction {
 		result.setSuccess(false);
 		try {
 			//就这句，如何获取jsp页面传过来的文件
-			String[][] content = ExcelUtil.readExcel(uploadFile, 1);
-			List<Settlement> setList = this.settlementLogic.findAllSettlement(null);
-			Map<String,Settlement> settCache = new HashMap<String,Settlement>();
-			for(Settlement temp:setList){
-				String key = temp.getName();
-				settCache.put(key, temp);
+			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
+			if(null!=content && null!=content[0]&& content[0].length!=10){
+				result.setSuccess(false);
+				result.setMsg("导入的excel文件内容不正确!");
+			}else{
+				String [] title = new String[9];
+				title[0] = content[0][0];
+				title[1] = content[0][1];
+				title[2] = content[0][2];
+				title[3] = content[0][3];
+				title[4] = content[0][4];
+				title[5] = content[0][5];
+				title[6] = content[0][6];
+				title[7] = content[0][7];
+				title[8] = content[0][8];
+				if(!validataFile(title)){
+					result.setSuccess(false);
+					result.setMsg("导入的excel文件内容不正确!");
+				}
+				List<Settlement> setList = this.settlementLogic.findAllSettlement(null);
+				Map<String,Settlement> settCache = new HashMap<String,Settlement>();
+				for(Settlement temp:setList){
+					String key = temp.getName();
+					settCache.put(key, temp);
+				}
+				List<Scmcoc> scmcocs = new ArrayList<Scmcoc>();
+				for (int i = 1; i < content.length; i++) {
+					Scmcoc s = new Scmcoc();
+					s.setCode(content[i][0]);
+					s.setName(content[i][1]);
+					s.setLinkMan(content[i][2]);
+					Settlement  scmodal=new Settlement();
+					String name = (null==content[i][3] || "".equals(content[i][3].trim()))?"":content[i][3].trim();
+					scmodal.setName(name);
+					//Settlement sett = settlementLogic.findAllSettlementByName(name);
+					s.setSettlement(scmodal);
+					s.setLinkPhone(content[i][4]);
+					s.setNetworkLink(content[i][5]);
+					s.setAddress(content[i][6]);
+					s.setEndDate(content[i][7]);
+					s.setIsCustom(false);
+					s.setNote(content[i][8]);
+					scmcocs.add(s);
+				}
+				List tlist = scmcocLogic.doValidata(scmcocs,settCache);
+				result.setSuccess(true);
+				result.setObj(tlist);
 			}
-			List<Scmcoc> scmcocs = new ArrayList<Scmcoc>();
-			for (int i = 0; i < content.length; i++) {
-				Scmcoc s = new Scmcoc();
-				s.setCode(content[i][0]);
-				s.setName(content[i][1]);
-				s.setLinkMan(content[i][2]);
-				Settlement  scmodal=new Settlement();
-				String name = (null==content[i][3] || "".equals(content[i][3].trim()))?"":content[i][3].trim();
-				scmodal.setName(name);
-				//Settlement sett = settlementLogic.findAllSettlementByName(name);
-				s.setSettlement(scmodal);
-				s.setLinkPhone(content[i][4]);
-				s.setNetworkLink(content[i][5]);
-				s.setAddress(content[i][6]);
-				s.setEndDate(content[i][7]);
-				s.setIsCustom(false);
-				s.setNote(content[i][8]);
-				scmcocs.add(s);
-			}
-			List tlist = scmcocLogic.doValidata(scmcocs,settCache);
-			result.setSuccess(true);
-			result.setObj(tlist);
 		} catch (FileNotFoundException e) {
 			result.setSuccess(false);
 			result.setMsg("操作错误"+e.getMessage());
@@ -209,7 +228,7 @@ public class ScmcocAction extends BaseAction {
 		AjaxResult result=new AjaxResult();
 		result.setSuccess(false);
 		net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
-		List list= net.sf.json.JSONArray.toList(jsonArray, new TempStock(), new JsonConfig());
+		List list= net.sf.json.JSONArray.toList(jsonArray, new TempScmcoc(), new JsonConfig());
 		if(null!=list && list.size()>0){
 			for(int i = 0;i<list.size();i++){
 				TempScmcoc ts = (TempScmcoc)list.get(i);
@@ -365,6 +384,24 @@ public class ScmcocAction extends BaseAction {
 			pageNums+=1;
 		}
 		return pageNums;
+	}
+	
+	private Boolean validataFile(Object[] obj){
+		Boolean flag = false;
+		if(null!=obj && obj.length>0){
+			if("编码".equals(obj[0])
+					&& "客户/供应商名称".equals(obj[1])
+					&& "联系人".equals(obj[2])
+					&& "结算方式".equals(obj[3])
+					&& "联系电话".equals(obj[4])
+					&& "网络联系方式".equals(obj[5])
+					&& "客户/供应商地址".equals(obj[6])
+					&& "约定结算日期".equals(obj[7])
+					&& "备注".equals(obj[8])){
+				flag = true;
+			}
+		}
+		return flag;
 	}
 	
 	/*********Getter and Setter method*********/

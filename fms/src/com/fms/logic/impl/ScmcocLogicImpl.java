@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Settlement;
@@ -94,6 +95,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		Map<String,Scmcoc> scmcocCache = new HashMap<String,Scmcoc>(); 
 		Map<String,Scmcoc> importDataCache = new HashMap<String,Scmcoc>(); 
 		Map<String,Scmcoc> codeCache = new HashMap<String,Scmcoc>(); 
+		Map<String,TempScmcoc> tempCodeCache = new HashMap<String,TempScmcoc>(); 
 		Map<String,Settlement> settlementCache = new HashMap<String,Settlement>(); 
 		for(Scmcoc s:valiList){
 			String key = s.getCode()+"/"+s.getName()+"/"+s.isCustom;
@@ -104,6 +106,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 			String keys = seet.getCode()+"/"+seet.getName();
 			settlementCache.put(keys, seet);
 		}
+		try{
 		//开始验证数据
 		for(Object obj:data){
 			Scmcoc impScm = (Scmcoc) obj;
@@ -122,6 +125,21 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 				String mess = "供应商名称不能为空; ";
 				temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 			}
+			if(null==impScm.getLinkMan() || "".equals(impScm.getLinkMan().trim())){
+				String mess = "联系人不能为空; ";
+				temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
+			}
+			if(null!=impScm.getEndDate() || !"".equals(impScm.getEndDate().trim())){
+				if(!isNumeric(impScm.getEndDate())){
+					String mess = "约定结算日期不是正整数或不是数字; ";
+					temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
+				}else{
+					if(Integer.parseInt(impScm.getEndDate())>28 || Integer.parseInt(impScm.getEndDate())<=0){
+						String mess = "约定结算日期不在(1~28)之间; ";
+						temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
+					}
+				}
+			}
 			String key2 = impScm.getCode()+"/"+impScm.getName();
 			//验证导入数据在系统中是否重复
 			if(scmcocCache.get(key2)!=null && null!=impScm.getCode() && !"".equals(impScm.getCode().trim()) && null!=impScm.getName() && !"".equals(impScm.getName().trim())){
@@ -138,15 +156,23 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 				String mess = "结算方式不能为空; ";
 				temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 			}
-			if(map.get(impScm.getSettlement().getName())==null){
+			if(!"".equals(impScm.getSettlement().getName())&& map.get(impScm.getSettlement().getName())==null){
 				String seetkey = impScm.getSettlement().getCode()+"/"+impScm.getSettlement().getName();
 				if(settlementCache.get(seetkey)==null){
 					String mess = "结算方式在系统中不存在; ";
 					temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 				}
 			}
+			if(null!=impScm.getCode() && !"".equals(impScm.getCode()) && tempCodeCache.get(impScm.getCode())!=null){
+				String mess = "供应商或客户编号【"+ impScm.getCode() +"】在导入的文件中有重复; ";
+				temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
+			}
+			tempCodeCache.put(impScm.getCode(), temp);
 			importDataCache.put(key2, temp);
 			valiList.add(setProperties(impScm, temp));
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return valiList;
 	}
@@ -189,4 +215,8 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		return true;
 	}
 
+	private boolean isNumeric(String str){ 
+	    Pattern pattern = Pattern.compile("[0-9]*"); 
+	    return pattern.matcher(str).matches();    
+	 } 
 }

@@ -64,7 +64,7 @@ public class FileDownLoad extends ActionSupport{
 			this.fileName = "计量单位【导入】模板.xls";
 			this.inputPath = ROOTPATH+"unitTemplate.xls";
 		}
-		// 解解乱码
+		// 解乱码
 		this.fileName = new String(this.fileName.getBytes("UTF-8"),"ISO-8859-1");
 		return ServletActionContext.getServletContext().getResourceAsStream(this.inputPath);
 	}

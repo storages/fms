@@ -20,7 +20,7 @@ public class InStorage extends BaseEntity {
 	private Scmcoc scmcoc;
 	// 入库数量
 	private Double inQty;
-	// 入库类型(0:进货入库    1:退货入库     2:其它入库)
+	// 入库类型(0:采购入库    1:退货入库     2:其它入库)
 	private String impFlag;
 	// 入库日期
 	private Date impDate;

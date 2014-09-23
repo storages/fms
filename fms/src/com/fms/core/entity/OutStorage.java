@@ -20,7 +20,7 @@ public class OutStorage extends BaseEntity {
 	private Scmcoc scmcoc;
 	// 出库数量
 	private Double outQty;
-	// 出库类型(0:出货出库    1:退货出库     2:其它出库)
+	// 出库类型(0:出货出库    1:退货出库    2:外发出库   3:其它出库)
 	private String expFlag;
 	// 出库日期
 	private Date expDate;

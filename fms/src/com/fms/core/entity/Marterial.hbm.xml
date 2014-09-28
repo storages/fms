@@ -16,7 +16,7 @@
 		<property name="color" column="COLOR" />
 		<many-to-one name="materialType" column="MATERIALTYPE" class="com.fms.core.entity.MaterialType"/>
 		<many-to-one name="unit" column="UNIT" class="com.fms.core.entity.Unit"/>
-		<property name="qty" column="QTY" />
+		<!-- <property name="qty" column="QTY" /> -->
 		<property name="imgExgFlag" column="IMGEXGFLAG" />
 		<property name="batchNO" column="BATCHNO" />
 		<property name="lowerQty" column="LOWERQTY" />

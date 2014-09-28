@@ -345,7 +345,7 @@ function initEmpColums(){
 		var isloginUser=$("#isloginUser").prop("checked",false);
 	}
 	if($("#emplphoto").attr("data-val")){
-		var photoImg=$("#photoImg").attr("src",$("#emplphoto").attr("data-val"));//头像
+		var photoImg=$("#photoImg").attr("src",domloadPath+$("#emplphoto").attr("data-val"));//头像
 	}else{
 		var photoImg=$("#photoImg").attr("src",Global+"/images/defaulttopimg.jpg");//头像
 	}

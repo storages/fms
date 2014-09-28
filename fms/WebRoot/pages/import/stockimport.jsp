@@ -136,11 +136,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var html= document.frames["excelupload"].document.body.innerHTML;
 		if(html&&html!=""){
 			  var json= jQuery.parseJSON(html);
-			  if(json.success){
-			  alert(json.obj);
-	          }else{
-	         alert("失败了"+json.msg);
-	          }
+		       if(json.success){
+			          $("#waitdiv").hide();
+			          //stock   SXrow
+			         var mylist= json.obj;
+			         resultdata=mylist;
+			         for(var x=0; x<mylist.length; x++){
+				         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
+				             mylist[x].erroris=true;
+				         }
+			         }
+			          $("#SXrow").tmpl(json.obj).appendTo("#tbodystock");  
+			          }else{
+			    	       $("#waitdiv").hide();
+			    	       alert("解析文件错误！原因："+json.msg);
+			          }
 		}else{
 		//不做任何处理
 		}

@@ -148,11 +148,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		excelupload.attachEvent('onload',function(){
 		var html= document.frames["excelupload"].document.body.innerHTML;
 		if(html&&html!=""){
-			  var json= jQuery.parseJSON(html);
-			  if(json.success){
-			  alert(json.obj);
-	          }else{
-	          }
+	         if(json.success){
+		          $("#waitdiv").hide();
+		          //SXrow
+		         var mylist= json.obj;
+		         resultdata=mylist;
+		         for(var x=0; x<mylist.length; x++){
+		         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
+		             mylist[x].erroris=true;
+		              }
+		         }
+		          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
+		          }else{
+		    	       $("#waitdiv").hide();
+		    	       alert("解析文件错误！原因："+json.msg);
+		          }
 		}else{
 		//不做任何处理
 		}

@@ -274,7 +274,7 @@
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">所属部门</td>
 						<td class="hidden-480 addcss"><select id="department"
-							name="empl.department.id" data-val="${${empl.department.id}}">
+							name="empl.department.id" data-val="${empl.department.id}">
 							<option value="-1">请选择</option>
 							<c:forEach items="${depts}"
 									var="item">

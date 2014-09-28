@@ -166,7 +166,7 @@
 					</tr>
 					<tr>
 						<td class="captioncss" style="text-align: right; width:100px;">名族</td>
-						<td class="hidden-480 addcss"><select id="nation"  data-val="empl.nation" name="empl.nation">
+						<td class="hidden-480 addcss"><select id="nation"  data-val="${empl.nation}" name="empl.nation">
 						<option value="-1">请选择</option>
 								<option value="汉族">汉族</option>
 								<option value="蒙古族">蒙古族</option>
@@ -231,7 +231,7 @@
 							name="empl.origo" style="height:25px;" data-val="${empl.origo}" value="${empl.origo}" /><span style="color:red;">*</span>
 						</td>
 						<td class="captioncss" style="text-align: right; width:100px;">学历</td>
-						<td class="hidden-480 addcss"><select id="diploma" data-val="empl.diploma" name="empl.diploma">
+						<td class="hidden-480 addcss"><select id="diploma" data-val="${empl.diploma}" name="empl.diploma">
 						       <option value="-1">请选择</option>
 								<option value="xx">小学</option>
 								<option value="cg">初中</option>

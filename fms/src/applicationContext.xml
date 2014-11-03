@@ -146,6 +146,13 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	
+	<bean id="materialDao" class="com.fms.dao.impl.MaterialDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
 	<!-- ======================Logic类=========================== -->
 
 	<!-- AclUser -->
@@ -223,6 +230,12 @@
 	<bean id="logic" class="com.fms.logic.impl.MaterialTypeLogicImpl">
 		<property name="dao">
 			<ref bean="dao" />
+		</property>
+	</bean>
+	
+	<bean id="materLogic" class="com.fms.logic.impl.MaterialLogicImpl">
+		<property name="materialDao">
+			<ref bean="materialDao" />
 		</property>
 	</bean>
 	<!-- ======================Action类=========================== -->
@@ -304,10 +317,16 @@
 		</property>
 	</bean>
 	
-	<!-- 物料 -->
+	<!-- 物料类别 -->
 	<bean id="materialTypeAction" class="com.fms.action.MaterialTypeAction" scope="prototype">
 		<property name="logic">
 			<ref bean="logic"/>
+		</property>
+	</bean>
+	
+	<bean id="materialAction" class="com.fms.action.MaterialAction" scope="prototype">
+		<property name="materLogic">
+			<ref bean="materLogic"/>
 		</property>
 	</bean>
 	

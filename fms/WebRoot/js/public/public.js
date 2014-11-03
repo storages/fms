@@ -132,6 +132,10 @@ function getUrl(flag){
 			url[0] = "${pageContext.request.contextPath}/mater_deleteMaterialType.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/mater_findAllMaterialType.action";
 			break;
+		case "Material":
+			url[0] = "${pageContext.request.contextPath}/mater_deleteMaterial.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/mater_findAllMaterial.action";
+			break;
 	}
 	return url;
 }

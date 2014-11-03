@@ -22,9 +22,10 @@ public class Material extends BaseEntity{
 	private MaterialType materialType;
 	//计量单位
 	private Unit unit;
-	/*//数量
-	private Double qty;*/
-	
+	//数量
+	private Double qty;
+	//规格
+	private String model;
 	//成品或原料标记("I"原料，"E"成品)
 	private String imgExgFlag;
 	//批次号
@@ -82,6 +83,18 @@ public class Material extends BaseEntity{
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public Double getQty() {
+		return qty;
+	}
+	public void setQty(Double qty) {
+		this.qty = qty;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
 	}
 	
 }

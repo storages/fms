@@ -67,7 +67,12 @@
 		<li  class="closed"><span class="folder directer">物料</span>
 			<ul>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/mater_findAllMaterialType.action">物料分类</a></span></li>
-				<li><span class="file"><a href="#">物料信息</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料信息</a></span></li>
+			</ul>
+		</li>
+		<li class="closed"><span class="folder directer">外发加工</span>
+			<ul>
+				<li><span class="file"><a href="#">外发记录</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">订单管理</span>
@@ -77,7 +82,21 @@
 		</li>
 		<li class="closed"><span class="folder directer">销售管理</span>
 			<ul>
-				<li><span class="file"><a href="">销售业绩</a></span></li>
+				<li><span class="file"><a href="">销售报表</a></span></li>
+				<li><span class="file"><a href="">销售数据图表分析</a></span></li>
+			</ul>
+		</li>
+		<li class="closed"><span class="folder directer">财务管理</span>
+			<ul>
+				<li><span class="file"><a href="">收款</a></span></li>
+				<li><span class="file"><a href="">付款</a></span></li>
+			</ul>
+		</li>
+		<li class="closed"><span class="folder directer">账单管理</span>
+			<ul>
+				<li><span class="file"><a href="">对账清单</a></span></li>
+				<li><span class="file"><a href="">月度收款</a></span></li>
+				<li><span class="file"><a href="">月度付款</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">报表查询</span>

@@ -9,15 +9,16 @@ import com.fms.dao.ScmcocDao;
 
 public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
+	public List<Scmcoc> findAllScmcoc(Boolean isCustom, String likeStr,
+			Integer index, Integer length) {
 		String hql = "select a from Scmcoc a left join fetch a.settlement where a.isCustom = ? ";
 		List param = new ArrayList();
 		param.add(isCustom);
-		if(null!=likeStr && !"".equals(likeStr)){
-			hql+=" and a.name like '%"+likeStr+"%'";
-			//param.add("'%"+ likeStr +"%'");
+		if (null != likeStr && !"".equals(likeStr)) {
+			hql += " and a.name like '%" + likeStr + "%'";
+			// param.add("'%"+ likeStr +"%'");
 		}
-		return this.findPageList(hql, param.toArray(),index,length);
+		return this.findPageList(hql, param.toArray(), index, length);
 	}
 
 	public Scmcoc findScmcocById(String id) {
@@ -39,7 +40,7 @@ public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 		String hql = "delete from Scmcoc a where a.id = ? ";
 		List param = new ArrayList();
 		param.add(id);
-		this.batchUpdateOrDelete(hql,param.toArray());
+		this.batchUpdateOrDelete(hql, param.toArray());
 	}
 
 	public Scmcoc findScmcocByCode(String code) {
@@ -51,23 +52,29 @@ public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 
 	public void delete(List<String> ids) {
 		String hql = "delete Scmcoc a where 1=1 and ";
-		for(int i=0 ; i<ids.size(); i++){
-			hql+=" a.id = ? or ";
+		for (int i = 0; i < ids.size(); i++) {
+			hql += " a.id = ? or ";
 		}
-		hql = hql.substring(0,hql.trim().length()-2);
-		Object [] objs = ids.toArray();
+		hql = hql.substring(0, hql.trim().length() - 2);
+		Object[] objs = ids.toArray();
 		this.batchUpdateOrDelete(hql, objs);
 	}
 
-	public Integer findDataCount(String className,Boolean isCustom,String name) {
-		String hql = "select count(id) from "+className.trim() +" a where a.isCustom = ? ";
-		List param = new ArrayList();
-		param.add(isCustom);
-		if(null!=name && !"".equals(name)){
-			hql+=" and a.name like '%"+name+"%'";
-			//param.add("'%"+name+"%'");
+	public Integer findDataCount(String className, Boolean isCustom, String name) {
+		try {
+			String hql = "select count(a.id) from " + className.trim()
+					+ " a where a.isCustom = ? ";
+			List param = new ArrayList();
+			param.add(isCustom);
+			if (null != name && !"".equals(name)) {
+				hql += " and a.name like '%" + name + "%'";
+				// param.add("'%"+name+"%'");
+			}
+			return this.count(hql, param.toArray());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return this.count(hql, param.toArray());
+		return null;
 	}
 
 }

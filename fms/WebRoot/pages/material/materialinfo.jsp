@@ -147,7 +147,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	
 	function toedit(id){
-		var url = "${pageContext.request.contextPath}/unit_findUnitById.action?ids="+id;
+	alert(id);
+		var url = "${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids="+id;
 		toMain(url);
 	}
 	function showImport(){

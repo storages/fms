@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="span12">
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
 				<tr>
-					<td class="captioncss" style="text-align: right; ">物料名称</td>
+					<td class="captioncss" style="text-align: right; ">物料名称></td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.hsName}" name="material.hsName" style="height:25px;" onblur="check()"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; ">颜色</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.color}" name="material.color" style="height:25px;"/><span style="color:red;">*</span></td>
@@ -90,10 +90,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script type="text/javascript">
 			//名称
 		function save(){
+			var id= $('#matrId').val();
 			var name= $(":input[name='material.hsName']").val(); 
 			var color= $(":input[name='material.color']").val(); 
 			var imgExgFlag= $("#form-field-select-1").val() ;
-			alert(imgExgFlag);
 			var model= $(":input[name='material.model']").val(); 
 			var unit= $(":input[name='material.unit']").val(); 
 			var qty= $(":input[name='material.qty']").val(); 
@@ -110,6 +110,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			//新增
 			if(isEdit==""){
+			alert("保存");
 				var url = "${pageContext.request.contextPath}/materInfo_checkMaterial.action?hsName="+name+"&batchNO="+batchNO+"&model="+model;
 				$.ajax({
 			     type: "POST",
@@ -128,8 +129,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  	});
 			}
 			if(isPass){
-				var param = "hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)
-				alert(param);
+				var param = "hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit
+				alert(parse(note));
 				var submitUrl = "${pageContext.request.contextPath}/materInfo_save.action?"+param;
 				toMain(submitUrl);
 			}

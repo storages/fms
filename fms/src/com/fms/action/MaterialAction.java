@@ -64,7 +64,7 @@ public class MaterialAction extends BaseAction {
 		dataTotal = this.materLogic.findDataCount(className,parse(searchStr));
 		//imgExgFlag = (this.context.getSession().get("imgExgFlag")!=null)?this.context.getSession().get("imgExgFlag").toString():imgExgFlag;
 		List<Material> material = this.materLogic.findAllMaterialInfo(parse(searchStr),imgExgFlag,(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
-		this.session.put("materials", material);
+		this.request.put("materials", material);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
 		this.request.put("pageNums", pageCount(max, dataTotal));
@@ -93,16 +93,20 @@ public class MaterialAction extends BaseAction {
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
 				Material materinfo = this.materLogic.findMaterialById(id);
-				if (null != unit) {
+				if (null != materinfo) {
+					findAllUnit();
 					this.request.put("materinfo", materinfo);
 				}
 			}
 		}
-		return "find";
+		return "editinfo";
 	}
 	
 	public String save(){
 		Material m = new Material();
+		if(null!=ids && !"".equals(ids)){
+			m.setId(ids);
+		}
 		m.setHsName(this.parse(hsName));
 		m.setColor(this.parse(color));
 		m.setImgExgFlag(imgExgFlag);

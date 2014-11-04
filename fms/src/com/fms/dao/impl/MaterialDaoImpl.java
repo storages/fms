@@ -19,8 +19,7 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 			String hql = "select a from Material a left join fetch a.unit where a.imgExgFlag = ? ";
 			List param = new ArrayList();
 			if (null != likeStr && !"".equals(likeStr)) {
-				hql += " and a.name like ? ";
-				param.add("%" + likeStr + "%");
+				hql += " and a.hsName like '%" + likeStr + "%'";
 			}
 			param.add(imgExgFlag);
 			return this.findPageList(hql, param.toArray(), index, length);
@@ -31,12 +30,18 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 	}
 
 	public Integer findDataCount(String className, String name) {
+		Integer num = 0;
+		try{
 		String hql = "select count(id) from " + className.trim()
 				+ " a where 1=1 ";
 		if (null != name && !"".equals(name)) {
-			hql += " and a.name like '%" + name + "%'";
+			hql += " and a.hsName like '%" + name + "%'";
 		}
-		return this.count(hql, new Object[] {});
+		num = this.count(hql, new Object[] {});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return num;
 	}
 
 	public List<Unit> findAllUnit() {

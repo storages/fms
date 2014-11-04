@@ -31,8 +31,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 		 <c:if test="${imgexgflag=='I'}">
-		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('I')" checked="checked"/>&nbsp;原料　
-		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('E')"/>&nbsp;成品
+		 	<input type="radio" name="materialType" value="I" style="margin-top: -5px;" onchange="changematerialtype('I')" checked="checked"/>&nbsp;原料　
+		 	<input type="radio" name="materialType" value="E" style="margin-top: -5px;" onchange="changematerialtype('E')"/>&nbsp;成品
 		 </c:if>
 		 <c:if test="${imgexgflag=='E'}">
 		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('I')" />&nbsp;原料　
@@ -168,5 +168,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
   		toMain(url);
   	}
+  	function search(){
+  		var str = $('#search').val();
+  		var flag = $('input:radio:checked').val();
+  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
+  		toMain(url);
+  	}
+  	
 </script>
 </html>

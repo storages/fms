@@ -30,6 +30,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="modal-footer" style="text-align: left;">
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
+		 <c:if test="${imgexgflag=='I'}">
+		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('I')" checked="checked"/>&nbsp;原料　
+		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('E')"/>&nbsp;成品
+		 </c:if>
+		 <c:if test="${imgexgflag=='E'}">
+		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('I')" />&nbsp;原料　
+		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('E')" checked="checked"/>&nbsp;成品
+		 </c:if>
 	</div>
 	<div class="row-fluid" >
 		<div class="span12">
@@ -75,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="center">${info.note}　</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toedit('${info.id}')">修改</a>｜
-										<a href="javascript:void(0);" onclick="delSingleMaterial('${info.id}','I')">删除</a>
+										<a href="javascript:void(0);" onclick="delSingleMaterial('${info.id}','${info.imgExgFlag}')">删除</a>
 									</td>
 							</tr>
 						</c:forEach>
@@ -154,6 +162,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function showImport(){
 	  	var url = "${pageContext.request.contextPath}/pages/import/unitimport.jsp";
 	  	toMain(url);
+  	}
+  	function changematerialtype(flag){
+  	var str = $('#search').val();
+  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
+  		toMain(url);
   	}
 </script>
 </html>

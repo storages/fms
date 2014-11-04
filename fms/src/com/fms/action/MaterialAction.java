@@ -70,6 +70,7 @@ public class MaterialAction extends BaseAction {
 		this.request.put("maxIndex", max);
 		this.request.put("pageNums", pageCount(max, dataTotal));
 		this.request.put("searchStr", parse(searchStr));
+		this.request.put("imgexgflag", imgExgFlag);
 		return this.SUCCESS;
 
 	}

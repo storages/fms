@@ -40,6 +40,41 @@ function delMoreScmcoc(flag){
 		toMain(url);
 	}
 }
+
+/**
+ * 删除物料信息【单条删除】
+ * @param ids
+ * @param flag
+ */
+function delSingleMaterial(ids,flag){
+	if(confirm("你确认要删除吗？")){
+		var url = "${pageContext.request.contextPath}/materInfo_deleteMaterial.action?ids="+ids+"&imgExgFlag="+flag;
+		toMain(url);
+	}
+}
+
+
+
+
+/**
+ * 删除物料信息【批量删除】
+ * @param flag
+ */
+function delMoreMater(flag){
+	var splitStr = "";
+	$('input[name="sid"]:checked').each(function(){
+		splitStr+=$(this).val()+',';
+	}); 
+	if(splitStr==""){
+		alert("请选择要删除的内容!");
+		return;
+	}
+	splitStr = splitStr.substring(0, splitStr.length-1);
+	if(confirm("你确认要删除吗？")){
+		var url = "${pageContext.request.contextPath}/materInfo_deleteMaterial.action?ids="+splitStr+"&imgExgFlag="+flag;
+		toMain(url);
+	}
+}
 /********************************************************************************************************/
 
 
@@ -63,6 +98,7 @@ function delData(ids,flag){
 		splitStr = ids+",";
 	}
 	splitStr = splitStr.substring(0, splitStr.length-1);
+	console.info(splitStr);
 	var resultUrl = getUrl(flag);
 	var url = resultUrl[0]+splitStr;
 	if(confirm("你确认要删除吗？")){
@@ -131,10 +167,6 @@ function getUrl(flag){
 		case "MaterialType":
 			url[0] = "${pageContext.request.contextPath}/mater_deleteMaterialType.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/mater_findAllMaterialType.action";
-			break;
-		case "Material":
-			url[0] = "${pageContext.request.contextPath}/mater_deleteMaterial.action?ids=";
-			url[1] = "${pageContext.request.contextPath}/mater_findAllMaterial.action";
 			break;
 	}
 	return url;

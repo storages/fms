@@ -110,7 +110,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			//新增
 			if(isEdit==""){
-			alert("保存");
 				var url = "${pageContext.request.contextPath}/materInfo_checkMaterial.action?hsName="+name+"&batchNO="+batchNO+"&model="+model;
 				$.ajax({
 			     type: "POST",
@@ -130,7 +129,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			if(isPass){
 				var param = "hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit
-				alert(parse(note));
 				var submitUrl = "${pageContext.request.contextPath}/materInfo_save.action?"+param;
 				toMain(submitUrl);
 			}

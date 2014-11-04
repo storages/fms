@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<c:forEach var="info" varStatus="index" step="1" items="${materials}">
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${m.id}" name="sid" style="width:30px;"/>
+									<input type="checkbox" value="${info.id}" name="sid" style="width:30px;"/>
 								</td>
 									<td class="center">${index.index+1}</td>
 									<td class="center">${info.hsName}　</td>
@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="center">${info.note}　</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toedit('${info.id}')">修改</a>｜
-										<a href="javascript:void(0);" onclick="delData('${info.id}','Material')">删除</a>
+										<a href="javascript:void(0);" onclick="delSingleMaterial('${info.id}','I')">删除</a>
 									</td>
 							</tr>
 						</c:forEach>
@@ -85,7 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/materInfo_add.action');">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','Material')">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreMater('I')">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="showImport()">Excel导入</button>

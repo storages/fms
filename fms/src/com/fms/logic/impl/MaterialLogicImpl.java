@@ -42,4 +42,9 @@ private MaterialDao materialDao;
 		materialDao.saveOrUpdate(material);
 	}
 
+	public void deleteMaterial(String[] ids) {
+		materialDao.deleteMaterial(ids);
+		
+	}
+
 }

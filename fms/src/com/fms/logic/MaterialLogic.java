@@ -13,4 +13,5 @@ public interface MaterialLogic {
 	public Material findMaterialById(String id);
 	public Material checkMaterial(String hsName,String model,String batchNO);
 	public void saveOrUpdate(Material material);
+	void deleteMaterial(String[] ids);
 }

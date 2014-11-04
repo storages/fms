@@ -2,6 +2,7 @@ package com.fms.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -132,6 +133,16 @@ public class MaterialAction extends BaseAction {
 		return "add";
 	}
 	
+	
+	public String deleteMaterial() throws Exception {
+		if (null != ids && !"".equals(ids)) {
+			String[] arrIds = ids.split(",");
+			if(null!=arrIds && arrIds.length>0){
+				this.materLogic.deleteMaterial(arrIds);
+			}
+		}
+		return "save";
+	}
 	/**
 	 * 验证物料信息是否重复【名称+规格+批次号】
 	 */

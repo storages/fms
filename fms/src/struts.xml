@@ -116,20 +116,25 @@
 		</action>
 
 
-	<!-- 物料类型 -->
+		<!-- 物料类型 -->
 		<action name="mater_*" class="materialTypeAction" method="{1}">
 			<result name="success">/pages/material/materialtype.jsp</result>
 			<result name="save" type="chain">mater_findAllMaterialType</result>
 			<result name="find">/pages/material/addmaterialtype.jsp</result>
 		</action>
 
-	<!-- 物料信息 -->
-	<action name="materInfo_*" class="materialAction" method="{1}">
-		<result name="success">/pages/material/materialinfo.jsp</result>
-		<result name="add">/pages/material/materialinfoedit.jsp</result>
-		<result name="editinfo">/pages/material/materialinfoedit.jsp</result>
-		<result name="save" type="chain">materInfo_findAllMaterial</result>
-	</action>
+		<!-- 物料信息 -->
+		<action name="materInfo_*" class="materialAction" method="{1}">
+			<result name="success">/pages/material/materialinfo.jsp</result>
+			<result name="add">/pages/material/materialinfoedit.jsp</result>
+			<result name="editinfo">/pages/material/materialinfoedit.jsp</result>
+			<result name="save" type="chain">materInfo_findAllMaterial</result>
+		</action>
+
+		<!-- 进出库 -->
+		<action name="storage_*" class="storageAction" method="{1}">
+			<result name="success">/pages/storage/impexpstorage.jsp</result>
+		</action>
 	</package>
 
 

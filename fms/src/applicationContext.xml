@@ -14,9 +14,9 @@
 
 	<!-- 为了测试添加 的一个日期类 -->
 	<bean id="date" class="java.util.Date" />
-	
-	
-	
+
+
+
 
 	<!-- 加载外部的properties配置文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties" />
@@ -140,19 +140,25 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<bean id="dao" class="com.fms.dao.impl.MaterialTypeDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<bean id="materialDao" class="com.fms.dao.impl.MaterialDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
+	<!-- 进出库 -->
+	<bean id="storageDao" class="com.fms.dao.impl.StorageDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
 	<!-- ======================Logic类=========================== -->
 
 	<!-- AclUser -->
@@ -220,7 +226,7 @@
 			<ref bean="userDao" />
 		</property>
 	</bean>
-	
+
 	<bean id="unitLogic" class="com.fms.logic.impl.UnitLogicImpl">
 		<property name="unitDao">
 			<ref bean="unitDao" />
@@ -232,10 +238,17 @@
 			<ref bean="dao" />
 		</property>
 	</bean>
-	
+
 	<bean id="materLogic" class="com.fms.logic.impl.MaterialLogicImpl">
 		<property name="materialDao">
 			<ref bean="materialDao" />
+		</property>
+	</bean>
+
+	<!-- 进出库 -->
+	<bean id="storageLogic" class="com.fms.logic.impl.StorageLogicImpl">
+		<property name="storageDao">
+			<ref bean="storageDao" />
 		</property>
 	</bean>
 	<!-- ======================Action类=========================== -->
@@ -295,8 +308,8 @@
 			<ref bean="currenciesLogic" />
 		</property>
 	</bean>
-	
-	
+
+
 	<!-- Unit -->
 	<bean id="unitAction" class="com.fms.action.UnitAction" scope="prototype">
 		<property name="unitLogic">
@@ -305,7 +318,8 @@
 	</bean>
 
 	<!-- Employee -->
-	<bean id="employeeAction" class="com.fms.action.EmployeeAction" scope="prototype">
+	<bean id="employeeAction" class="com.fms.action.EmployeeAction"
+		scope="prototype">
 		<property name="deptLogic">
 			<ref bean="deptLogic" />
 		</property>
@@ -316,23 +330,31 @@
 			<ref bean="userLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- 物料类别 -->
-	<bean id="materialTypeAction" class="com.fms.action.MaterialTypeAction" scope="prototype">
+	<bean id="materialTypeAction" class="com.fms.action.MaterialTypeAction"
+		scope="prototype">
 		<property name="logic">
-			<ref bean="logic"/>
+			<ref bean="logic" />
 		</property>
 	</bean>
-	
-	<bean id="materialAction" class="com.fms.action.MaterialAction" scope="prototype">
+	<!-- 物料信息 -->
+	<bean id="materialAction" class="com.fms.action.MaterialAction"
+		scope="prototype">
 		<property name="materLogic">
-			<ref bean="materLogic"/>
+			<ref bean="materLogic" />
 		</property>
 	</bean>
-	
-	
+	<!-- 进出库 -->
+	<bean id="storageAction" class="com.fms.action.StorageAction"
+		scope="prototype">
+		<property name="storageLogic">
+			<ref bean="storageLogic"/>
+		</property>
+	</bean>
 	<!-- 上传 -->
 	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils"></bean>
 	<!-- 下载 -->
-	<bean name="fileDownload" class="com.fms.utils.FileDownLoad" scope="prototype"/>
+	<bean name="fileDownload" class="com.fms.utils.FileDownLoad"
+		scope="prototype" />
 </beans>

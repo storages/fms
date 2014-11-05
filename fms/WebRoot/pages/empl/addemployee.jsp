@@ -33,8 +33,7 @@
 	
 </script>
 <link rel="stylesheet" href="<%=path%>/css/page/canvas.css"  type="text/css" /></link>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
 	type="text/css"></link>
 		<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>

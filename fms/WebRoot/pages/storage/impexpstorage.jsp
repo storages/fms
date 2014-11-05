@@ -20,11 +20,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
+	type="text/css"></link>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
   </head>
   
   <body>
@@ -32,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<h5>物料＞＞入库</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
-		<span class="">入库日期</span><input type="text" id="beginDate" value="" style="height:25px; width:100px;" id="datepicker" readonly="readonly" class=""/><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" class=""/>
+		<span class="">入库日期</span><input type="text" id="beginDate" value="" style="height:25px; width:100px;" readonly="readonly"/><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
 		<span class="">供应商名称</span><input type="text" id="scmcocName" value="" style="height:25px; width:100px;" class=""/>
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px; width:100px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
@@ -92,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/materInfo_add.action');">新增</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/storage_editStorage.action');">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreMater('I')">
 					批量删除
 				</button>
@@ -131,4 +135,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
   </body>
+  <script type="text/javascript">
+  	$(function(){
+  		$("#beginDate").datepicker({
+  			changeYear: true,
+			changeMonth: true,
+			yearRange: '1900:', 
+			dateFormat: 'yy-mm-dd'
+  		});
+  		$("#endDate").datepicker({
+  			changeYear: true,
+			changeMonth: true,
+			yearRange: '1900:', 
+			dateFormat: 'yy-mm-dd'
+  		});
+  	});
+  </script>
 </html>

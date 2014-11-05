@@ -24,7 +24,9 @@ public class StorageAction extends BaseAction {
 		return this.SUCCESS;
 	}
 	
-	
+	public String editStorage(){
+		return "edit";
+	}
 	
 	
 	

@@ -50,13 +50,11 @@
 				<li><span class="file"><a href="javascript:void(0);" data-url="/settl_findAllSett.action" >结算方式</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/currencies_findAllCurrencies.action" >交易货币管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/unit_findAllUnit.action">计量单位管理</a></span></li>
-				<li  class="closed"><span class="folder directer">仓库设置</span>
-					<ul>
+				<!-- <li  class="closed"><span class="folder directer">仓库设置</span>
+					<ul> -->
 						<li><span class="file"><a href="javascript:void(0);" data-url="/stock_findAllStock.action" >仓库管理</a></span></li>
-						<li><span class="file"><a href="javascript:void(0);" >出库</a></span></li>
-						<li><span class="file"><a href="javascript:void(0);" >入库</a></span></li>
-					</ul>
-				</li>
+					<!-- </ul>
+				</li> -->
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">职员管理</span>
@@ -68,6 +66,8 @@
 			<ul>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/mater_findAllMaterialType.action">物料分类</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料信息</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" >出库</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" >入库</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">外发加工</span>

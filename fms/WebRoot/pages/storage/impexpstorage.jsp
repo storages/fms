@@ -20,6 +20,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
   </head>
   
@@ -28,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<h5>物料＞＞入库</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
-		<span class="">入库日期</span><input type="text" id="beginDate" value="" style="height:25px; width:100px;" class=""/><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" class=""/>
+		<span class="">入库日期</span><input type="text" id="beginDate" value="" style="height:25px; width:100px;" id="datepicker" readonly="readonly" class=""/><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" class=""/>
 		<span class="">供应商名称</span><input type="text" id="scmcocName" value="" style="height:25px; width:100px;" class=""/>
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px; width:100px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>

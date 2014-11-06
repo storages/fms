@@ -29,8 +29,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+	
+	<style type="text/css">
+		.required{color:red;}
+	</style>
   </head>
-  
   <body>
     <input type="hidden" id="flag" value="${materinfo.id}"/><!-- 为了判断是新增还是修改 -->
     <div class="page-header position-relative" style="margin-bottom: 0px;">
@@ -43,59 +46,56 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="row-fluid" id="mybox">
 		<div class="span12">
-			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
-				<tr>
-					<td class="captioncss" style="text-align: right; ">物料名称</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.hsName}" name="material.hsName" style="height:25px;" onblur="check()"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; ">颜色</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.color}" name="material.color" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-				<tr>
-					<td class="captioncss" style="text-align: right; ">计量单位</td>
-					<td class="hidden-480 addcss" style="">
-					<select name="material.unit" id="form-field-select-1" style="height: 25px; ">
-						<c:forEach var="unit" items="${units}">
-							<option value="${unit.name}">${unit.name}</option>
-						</c:forEach>
+			<form action="" method="post">
+				<p style="padding-left: 16px;">
+					进出库类型:<input type="text" style="height: 25px;" readonly="readonly"/>&nbsp;&nbsp;&nbsp;
+					物料类型:<span class="required">*</span>
+					<select style="height: 25px;width:207px;">
+						<option value="I">物料</option>
+						<option value="E">成品</option>
 					</select>
-					<%-- <input type="text" value="${materinfo.unit.name}" name="material.unit" style="height:25px;"/> --%>
-					
-					<span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; " onblur="check()">供应商名称</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.model}" name="material.model" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-				<tr>
-					<td class="captioncss" style="text-align: right; ">入库数量</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.qty}" name="material.qty" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; " onblur="check()">每件包装数量</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.batchNO}" name="material.batchNO" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-				<tr>
-					<td class="captioncss" style="text-align: right; ">件数</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.lowerQty}" name="material.lowerQty" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; " onblur="check()">批次号</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.batchNO}" name="material.batchNO" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-				<tr>
-					<td class="captioncss" style="text-align: right; ">入库日期</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.lowerQty}" id="indate" name="material.lowerQty" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; ">备注</td>
-					<td class="hidden-480 addcss" style=""><input type="text" name="note" style="height:25px;"/></td>
-				</tr>
-				<tr>
-				</tr>
-			</table>
+				</p>
+				<p style="padding-left: 22px;">
+					物料名称:<span class="required">*</span><input type="text" style="height: 25px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					颜色:<input type="text" style="height: 25px;" readonly="readonly"/>&nbsp;&nbsp;&nbsp;&nbsp;
+				</p>
+				<p style="padding-left: 16px;">
+					计量单位:<span class="required">*</span>
+					<select style="height: 25px;width:207px;">
+						
+					</select>&nbsp;&nbsp;
+					供应商名称:<span class="required">*</span><input type="text" style="height: 25px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+				</p>
+				<p style="padding-left: 22px;">
+					入库数量:<span class="required">*</span><input type="text" style="height: 25px;" id="inqty" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+					每件包装数量:<span class="required">*</span><input type="text" style="height: 25px;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</p>
+				<p style="padding-left: 52px;">
+					件数:<input type="text" style="height: 25px;" readonly="readonly"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					批次号:<span class="required">*</span><input type="text" style="height: 25px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</p>
+				<p style="padding-left: 28px;">
+					入库日期:<input type="text" readonly="readonly" id="inDate" style="height: 25px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					备注:<input type="text" style="height: 25px;"/>
+				</p>
+				<p style="padding-left: 210px;">
+					<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="submit" value="保存"/>&nbsp;&nbsp;
+					&nbsp;&nbsp;<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="reset" value="取消" style="margin-left: 10px;"/>
+				</p>
+			</form>
 		</div>
 	</div>
   </body>
   <script type="text/javascript">
   	$(function(){
-  		$("#indate").datepicker({
+  		$("#inDate").datepicker({
   			changeYear: true,
 			changeMonth: true,
 			yearRange: '1900:', 
 			dateFormat: 'yy-mm-dd'
   		});
+  		
   	});
+  	
   </script>
 </html>

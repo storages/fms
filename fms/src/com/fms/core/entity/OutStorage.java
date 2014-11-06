@@ -20,63 +20,87 @@ public class OutStorage extends BaseEntity {
 	private Scmcoc scmcoc;
 	// 出库数量
 	private Double outQty;
-	// 出库类型(0:出货出库    1:退货出库    2:外发出库   3:其它出库)
+	// 出库类型(0:出货出库 1:退货出库 2:外发出库 3:其它出库)
 	private String expFlag;
 	// 出库日期
 	private Date expDate;
-	
-	//备注
+
+	// 备注
 	private String note;
-	
+
+	// 进出库标志
+	private String impExpFalg;
+
 	public Material getMaterial() {
 		return material;
 	}
+
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
+
 	public Integer getSpecQty() {
 		return specQty;
 	}
+
 	public void setSpecQty(Integer specQty) {
 		this.specQty = specQty;
 	}
+
 	public Double getPkgs() {
 		return pkgs;
 	}
+
 	public void setPkgs(Double pkgs) {
 		this.pkgs = pkgs;
 	}
+
 	public Scmcoc getScmcoc() {
 		return scmcoc;
 	}
+
 	public void setScmcoc(Scmcoc scmcoc) {
 		this.scmcoc = scmcoc;
 	}
+
 	public Double getOutQty() {
 		return outQty;
 	}
+
 	public void setOutQty(Double outQty) {
 		this.outQty = outQty;
 	}
+
 	public String getExpFlag() {
 		return expFlag;
 	}
+
 	public void setExpFlag(String expFlag) {
 		this.expFlag = expFlag;
 	}
+
 	public Date getExpDate() {
 		return expDate;
 	}
+
 	public void setExpDate(Date expDate) {
 		this.expDate = expDate;
 	}
+
 	public String getNote() {
 		return note;
 	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
-	
+
+	public String getImpExpFalg() {
+		return impExpFalg;
+	}
+
+	public void setImpExpFalg(String impExpFalg) {
+		this.impExpFalg = impExpFalg;
+	}
 
 }

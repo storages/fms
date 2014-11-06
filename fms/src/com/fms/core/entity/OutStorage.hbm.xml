@@ -19,6 +19,7 @@
 		<property name="outQty" column="OUTQTY" />
 		<property name="expFlag" column="EXPFLAG" />
 		<property name="expDate" column="EXPDATE" />
+		<property name="impExpFalg" column="IMPEXPFALG" />
 		<property name="note" column="NOTE" />
 		                   
 	</class>

@@ -27,6 +27,8 @@ public class InStorage extends BaseEntity {
 	
 	//备注
 	private String note;
+	//进出库标志
+	private String impExpFalg;
 	
 	public Material getMaterial() {
 		return material;
@@ -76,6 +78,12 @@ public class InStorage extends BaseEntity {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public String getImpExpFalg() {
+		return impExpFalg;
+	}
+	public void setImpExpFalg(String impExpFalg) {
+		this.impExpFalg = impExpFalg;
 	}
 	
 	

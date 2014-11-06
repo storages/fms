@@ -37,10 +37,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <input type="hidden" id="flag" value="${materinfo.id}"/><!-- 为了判断是新增还是修改 -->
     <div class="page-header position-relative" style="margin-bottom: 0px;">
-    	<c:if test="${materinfo.id==null}">
+    	<c:if test="${storage.id==null}">
 			<h5>物料＞＞<a href="">入库</a>＞＞新增</h5>
 		</c:if>
-    	<c:if test="${materinfo.id!=null}">
+    	<c:if test="${storage.id!=null}">
 			<h5>物料＞＞<a href="">出库</a>＞＞修改</h5>
 		</c:if>
 	</div>
@@ -48,23 +48,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="span12">
 			<form action="" method="post">
 				<p style="padding-left: 16px;">
-					进出库类型:<input type="text" style="height: 25px;" readonly="readonly"/>&nbsp;&nbsp;&nbsp;
+					<c:if test="${inStorage.impExpFalg=='0'}">
+						进出库类型:<input type="text" style="height: 25px;" readonly="readonly" value="入库"/>&nbsp;&nbsp;&nbsp;
+					</c:if>
+					<c:if test="${inStorage.impExpFalg=='1'}">
+						进出库类型:<input type="text" style="height: 25px;" readonly="readonly" value="出库"/>&nbsp;&nbsp;&nbsp;
+					</c:if>
 					物料类型:<span class="required">*</span>
 					<select style="height: 25px;width:207px;">
-						<option value="I">物料</option>
-						<option value="E">成品</option>
+						<option value="">---请选择物料类型---</option>
+						<c:forEach var="type" items="${types}">
+							<option value="${type.id}">${type.typeName}</option>
+						</c:forEach>
 					</select>
 				</p>
 				<p style="padding-left: 22px;">
 					物料名称:<span class="required">*</span><input type="text" style="height: 25px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					颜色:<input type="text" style="height: 25px;" readonly="readonly"/>&nbsp;&nbsp;&nbsp;&nbsp;
 				</p>
-				<p style="padding-left: 16px;">
-					计量单位:<span class="required">*</span>
-					<select style="height: 25px;width:207px;">
-						
+				<p style="padding-left: 20px;">
+					计量单位:<span class="required">*</span><select style="height: 25px;width:207px;">
+						<option value="">---请选择计量单位---</option>
+						<c:forEach var="unit" items="${units}">
+							<option value="${unit.id}">${unit.name}</option>
+						</c:forEach>
 					</select>&nbsp;&nbsp;
-					供应商名称:<span class="required">*</span><input type="text" style="height: 25px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					供应商名称:<span class="required">*</span>
+					<select style="height: 25px;width:200px;">
+						<option value="">---请选择供应商---</option>
+						<c:forEach var="scmCoc" items="${scmCocs}">
+							<option value="${scmCoc.id}">${scmCoc.name}</option>
+						</c:forEach>
+					</select>
+					<!-- <input type="text" style="height: 25px;"/>&nbsp;&nbsp;&nbsp;&nbsp; -->
 				</p>
 				<p style="padding-left: 22px;">
 					入库数量:<span class="required">*</span><input type="text" style="height: 25px;" id="inqty" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>

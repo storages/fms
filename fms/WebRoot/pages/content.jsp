@@ -65,9 +65,9 @@
 		<li  class="closed"><span class="folder directer">物料</span>
 			<ul>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/mater_findAllMaterialType.action">物料分类</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料信息</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/storage_findAllInStorage.action">入库</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" >出库</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料统计</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">外发加工</span>

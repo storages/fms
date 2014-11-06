@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
      <div class="page-header position-relative" style="margin-bottom: 0px;">
-		<h5>物料＞＞物料信息</h5>
+		<h5>物料＞＞物料统计</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>

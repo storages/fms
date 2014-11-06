@@ -346,10 +346,18 @@
 		</property>
 	</bean>
 	<!-- 进出库 -->
-	<bean id="storageAction" class="com.fms.action.StorageAction"
-		scope="prototype">
+	<bean id="storageAction" class="com.fms.action.StorageAction" scope="prototype">
 		<property name="storageLogic">
 			<ref bean="storageLogic"/>
+		</property>
+		<property name="logic">
+			<ref bean="logic"/>
+		</property>
+		<property name="unitLogic">
+			<ref bean="unitLogic" />
+		</property>
+		<property name="scmcocLogic">
+			<ref bean="scmcocLogic" />
 		</property>
 	</bean>
 	<!-- 上传 -->

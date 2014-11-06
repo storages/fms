@@ -19,6 +19,7 @@
 		<property name="inQty" column="INQTY" />
 		<property name="impFlag" column="IMPFLAG" />
 		<property name="impDate" column="IMPDATE" />
+		<property name="impExpFalg" column="IMPEXPFALG" />
 		<property name="note" column="NOTE" />
 		                   
 	</class>

@@ -16,6 +16,9 @@ public class UnitDaoImpl extends BaseDaoImpl implements UnitDao {
 		if(null!=likeStr && !"".equals(likeStr)){
 			hql+=" and a.name like '%"+likeStr+"%'";
 		}
+		if(index==null || length==null){
+			return this.find(hql, new Object[]{});
+		}
 		return this.findPageList(hql, new Object[]{},index,length);
 	}
 

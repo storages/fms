@@ -24,6 +24,10 @@ public class StorageAction extends BaseAction {
 		return this.SUCCESS;
 	}
 	
+	/**
+	 * 编辑
+	 * @return
+	 */
 	public String editStorage(){
 		return "edit";
 	}

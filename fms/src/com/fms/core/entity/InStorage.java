@@ -24,7 +24,8 @@ public class InStorage extends BaseEntity {
 	private String impFlag;
 	// 入库日期
 	private Date impDate;
-	
+	//物料类型
+	private MaterialType materialType;
 	//备注
 	private String note;
 	//进出库标志
@@ -84,6 +85,12 @@ public class InStorage extends BaseEntity {
 	}
 	public void setImpExpFalg(String impExpFalg) {
 		this.impExpFalg = impExpFalg;
+	}
+	public MaterialType getMaterialType() {
+		return materialType;
+	}
+	public void setMaterialType(MaterialType materialType) {
+		this.materialType = materialType;
 	}
 	
 	

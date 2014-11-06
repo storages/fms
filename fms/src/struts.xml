@@ -135,6 +135,7 @@
 		<action name="storage_*" class="storageAction" method="{1}">
 			<result name="success">/pages/storage/impexpstorage.jsp</result>
 			<result name="edit">/pages/storage/storageedit.jsp</result>
+			<result name="save" type="chain">storage_findAllInStorage</result>
 		</action>
 	</package>
 

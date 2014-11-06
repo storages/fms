@@ -13,6 +13,7 @@
 
 
 		<many-to-one name="material" column="MATERIAL" class="com.fms.core.entity.Material"/>
+		<many-to-one name="materialType" column="MATERIALTYPE" class="MaterialType"/>
 		<property name="specQty" column="SPECQTY" />
 		<property name="pkgs" column="PKGS" />
 		<many-to-one name="scmcoc" column="SCMCOC" class="Scmcoc"/>

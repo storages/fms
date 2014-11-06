@@ -24,7 +24,8 @@ public class OutStorage extends BaseEntity {
 	private String expFlag;
 	// 出库日期
 	private Date expDate;
-
+	// 物料类型
+	private MaterialType materialType;
 	// 备注
 	private String note;
 
@@ -101,6 +102,14 @@ public class OutStorage extends BaseEntity {
 
 	public void setImpExpFalg(String impExpFalg) {
 		this.impExpFalg = impExpFalg;
+	}
+
+	public MaterialType getMaterialType() {
+		return materialType;
+	}
+
+	public void setMaterialType(MaterialType materialType) {
+		this.materialType = materialType;
 	}
 
 }

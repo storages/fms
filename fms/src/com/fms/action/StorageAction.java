@@ -66,7 +66,12 @@ public class StorageAction extends BaseAction {
 	}
 	
 	
-	
+	public String save(){
+		if(inStorage!=null){
+			
+		}
+		return "save";
+	}
 	
 	
 	

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="AppBillHead" table="APPBILLHEAD">
+		<id name="id" column="ID">
+			<generator class="uuid" />
+		</id>
+		<property name="createDate" column="CREATEDATE" />
+		<property name="modifyDate" column="MODIFYDATE" />
+
+
+		<property name="serialNo" column="SERIALNO" />
+		<property name="appStatus" column="APPSTATUS" />
+		<property name="appNo" column="APPNO" />
+		<property name="itemQty" column="ITEMQTY" />
+		<property name="totalQty" column="TOTALQTY" />
+		<property name="totalAmount" column="TOTALAMOUNT" />
+		<property name="appDate" column="APPDATE" />
+		<property name="approvaledQty" column="APPROVALEDQTY" />
+		<property name="unApprovalQty" column="UNAPPROVALQTY" />
+		<property name="note" column="NOTE" />
+	</class>
+</hibernate-mapping>

@@ -7,7 +7,9 @@
 <hibernate-configuration>
 
 <session-factory>
-	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+	<property name="dialect">
+		org.hibernate.dialect.MySQLDialect
+	</property>
 	<property name="hbm2ddl.auto">update</property>
 	<property name="show_sql">true</property>
 	<property name="format_sql">true</property>
@@ -39,6 +41,10 @@
 	<mapping resource="com/fms/core/entity/Marterial.hbm.xml" />
 	<mapping resource="com/fms/core/entity/MaterialType.hbm.xml" />
 	<mapping resource="com/fms/core/entity/OutStorage.hbm.xml" />
+	<mapping resource="com/fms/core/entity/AppBillHead.hbm.xml" />
+	<mapping resource="com/fms/core/entity/AppBillItem.hbm.xml" />
+	<mapping resource="com/fms/core/entity/PurchaseBill.hbm.xml" />
+	<mapping resource="com/fms/core/entity/Quotation.hbm.xml" />
 </session-factory>
 
 </hibernate-configuration>

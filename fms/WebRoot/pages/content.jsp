@@ -62,12 +62,23 @@
 				<li><span class="file"><a href="javascript:void(0);" data-url="/empl_employees.action">职员信息</a></span></li>
 			</ul>
 		</li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="#" >报价单</a></span></li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="#" >请购单</a></span></li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="#" >采购单</a></span></li>
 		<li  class="closed"><span class="folder directer">物料</span>
 			<ul>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/mater_findAllMaterialType.action">物料分类</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料清单</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/storage_findAllInStorage.action">入库</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" >出库</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料统计</a></span></li>
+			</ul>
+		</li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="#" >订单管理</a></span></li>
+		
+		<li class="closed"><span class="folder directer">报表查询</span>
+			<ul>
+				<li><span class="file"><a href="#">采购统计</a></span></li>
+				<li><span class="file"><a href="#">订单统计</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">外发加工</span>
@@ -75,17 +86,7 @@
 				<li><span class="file"><a href="#">外发记录</a></span></li>
 			</ul>
 		</li>
-		<li class="closed"><span class="folder directer">订单管理</span>
-			<ul>
-				<li><span class="file"><a href="#">订单信息</a></span></li>
-			</ul>
-		</li>
-		<li class="closed"><span class="folder directer">销售管理</span>
-			<ul>
-				<li><span class="file"><a href="">销售报表</a></span></li>
-				<li><span class="file"><a href="">销售数据图表分析</a></span></li>
-			</ul>
-		</li>
+		
 		<li class="closed"><span class="folder directer">财务管理</span>
 			<ul>
 				<li><span class="file"><a href="">收款</a></span></li>
@@ -99,15 +100,6 @@
 				<li><span class="file"><a href="">月度付款</a></span></li>
 			</ul>
 		</li>
-		<li class="closed"><span class="folder directer">报表查询</span>
-			<ul>
-				<li><span class="file"><a href="#">原料耗用统计</a></span></li>
-				<li><span class="file"><a href="#">订单统计</a></span></li>
-				<li><span class="file"><a href="#">销售统计</a></span></li>
-			</ul>
-		</li>
-		
-		
 	</ul>
 	
 	</div>

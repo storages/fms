@@ -1,0 +1,22 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="Quotation" table="QUOTATION">
+		<id name="id" column="ID">
+			<generator class="uuid" />
+		</id>
+		<property name="createDate" column="CREATEDATE" />
+		<property name="modifyDate" column="MODIFYDATE" />
+
+
+		<property name="serialNo" column="SERIALNO" />
+		<many-to-one name="scmcoc" class="Scmcoc" column="SCMCOC" />
+		<many-to-one name="material" class="Material" column="MATERIAL" />
+		<property name="price" column="PRICE" />
+		<property name="effect" column="EFFECT" />
+		<property name="note" column="NOTE" />
+	</class>
+</hibernate-mapping>

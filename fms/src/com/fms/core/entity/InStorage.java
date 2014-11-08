@@ -10,6 +10,8 @@ public class InStorage extends BaseEntity {
 	 * 入库
 	 */
 	private static final long serialVersionUID = 1L;
+	//流水号
+	private Integer serialNo;
 	// 物料
 	private Material material;
 	// 每包装数量

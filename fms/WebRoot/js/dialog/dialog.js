@@ -34,7 +34,7 @@ function addTitle(){
 	}else if(num>0){
 		firstele = $('#dialog').children(":first");
 		firstele.before(str);
-		$('#dialog').html(str+"<div style='width:99%;height:90%;overflow:auto;padding:2px;'>"+ htmltext +"</div>");
+		$('#dialog').html(str+"<div style='width:99%;height:89%;overflow:auto;padding:2px;'>"+ htmltext +"</div>");
 	}
 }
 

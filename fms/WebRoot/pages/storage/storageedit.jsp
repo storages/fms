@@ -106,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<span id="hcode">物料编码<span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="" readonly="readonly"><img alt="" style="cursor: pointer; margin-top: -5px;" id="showDialogForm" src="${pageContext.request.contextPath}/images/search.gif"></span>
 					<span id="pcode" style="display: none;">商品编码<span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="" readonly="readonly"><img alt="" style="cursor: pointer; margin-top: -5px;" id="showDialogForm1" src="${pageContext.request.contextPath}/images/search.gif"></span>
 				</p>
-				<div class="dialog" id="dialog">
+				<div class="dialog" id="dialog" title="货物选择">
 				<p style="border:solid 1px red;">${u.userName}</p>
 				<p style="border:solid 1px red;">${u.userName}</p>
 				<p style="border:solid 1px red;">${u.userName}</p>

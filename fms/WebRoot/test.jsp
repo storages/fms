@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	
     	<h4>测试dialog对话框</h4>
     	<button id="showDialogForm">弹出dialog</button>
-    	<div class="dialog" id="dialog"><input /></div>
+    	<div class="dialog" id="dialog" title="测试dialog对话框"><input /></div>
   </body>
   <script type="text/javascript">
   	function findUserName(){

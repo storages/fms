@@ -40,7 +40,11 @@ function addTitle(){
 
 //显示关闭叉叉按钮
 function addTitleClose(text){
-	$('#titleele').append('<span style="float:right; width:auto;height:100%;line-height:35px;margin-right:5px;cursor: pointer;font-weight:bold;color:red; font-size:14px;" id="close-button" onclick="closeListenler();">×</span>');
+	var titleText = $('#dialog').attr("title");
+	if(titleText==undefined){
+		titleText = "";
+	}
+	$('#titleele').append('<span style="float:left;margin-left:5px; width:auto;height:100%;line-height:35px;font-size:14px; font-weight:bold;">'+ titleText +'</span><span style="float:right; width:auto;height:100%;line-height:35px;margin-right:5px;cursor: pointer;font-weight:bold;color:red; font-size:14px;" id="close-button" onclick="closeListenler();">×</span>');
 }
 
 //添加关闭叉叉按钮的事件

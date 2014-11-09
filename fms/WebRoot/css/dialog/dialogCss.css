@@ -6,7 +6,7 @@
 	display:none;
 	position: absolute;
 	left:25%;
-	top:30%;
+	top:25%;
 	z-index: 10000;
 	filter: Alpha(opacity=1);
 	-moz-opacity:1;

@@ -20,9 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
-  </head>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/dialog/dialogCss.css" type="text/css"></link>
   
   <body>
     <div class="page-header position-relative" style="margin-bottom: 0px; height:30px;">
@@ -35,7 +33,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="row-fluid" >
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
-
 			<div class="row-fluid">
 				<div class="span12">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
@@ -83,7 +80,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</table>
 				</div>
 			</div>
-
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toedit('');">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">

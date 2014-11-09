@@ -3,6 +3,9 @@ $(function(){
 	$('#showDialogForm').click(function(){
 		showDialog();
 	});
+	$('#showDialogForm1').click(function(){
+		showDialog();
+	});
 });
 
 //显示dialog
@@ -23,12 +26,15 @@ function addParentElement(){
 function addTitle(){
 	var firstele;
 	var num = $('#dialog').children().length;
+	var htmltext = $('#dialog').html();
+	var str = '<div id="titleele" style="height:35px;width:100%;background-color:#99CCFF;"></div>'
 	if(num==''){
 		firstele = $('#dialog'); 
-		firstele.append('<div id="titleele" style="height:35px;width:100%;background-color:#99CCFF;margin-bottom:3px;"></div>');
+		firstele.append(str);
 	}else if(num>0){
 		firstele = $('#dialog').children(":first");
-		firstele.before('<div id="titleele" style="height:35px;width:100%;background-color:#99CCFF;margin-bottom:3px;"></div>');
+		firstele.before(str);
+		$('#dialog').html(str+"<div style='width:99%;height:90%;overflow:auto;padding:2px;'>"+ htmltext +"</div>");
 	}
 }
 

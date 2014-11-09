@@ -41,6 +41,10 @@ public class InStorage extends BaseEntity {
 	 */
 	private String hsModel;
 	/**
+	 * 颜色
+	 */
+	private String colors;
+	/**
 	 * 入库数量(impQty)
 	 */
 	private Double inQty;
@@ -62,7 +66,7 @@ public class InStorage extends BaseEntity {
 	private String  useFlag;
 	
 	/**
-	 * 每包装数量
+	 * 每件包装数量
 	 */
 	private Double specQty;
 	/**
@@ -192,6 +196,12 @@ public class InStorage extends BaseEntity {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public String getColors() {
+		return colors;
+	}
+	public void setColors(String colors) {
+		this.colors = colors;
 	}
 	
 

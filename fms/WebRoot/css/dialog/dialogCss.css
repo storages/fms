@@ -1,0 +1,14 @@
+.dialog{
+	width: 40%;
+	height:50%;
+	border: 1px solid gray;
+	background-color: #FFFFFF;
+	display:none;
+	position: absolute;
+	left:25%;
+	top:30%;
+	z-index: 10000;
+	filter: Alpha(opacity=1);
+	-moz-opacity:1;
+	opacity:1;
+}

@@ -22,6 +22,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 
   <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+  
+  <link rel="stylesheet" href="css/dialog/dialogCss.css" type="text/css"></link>
+  <script type="text/javascript" src="js/dialog/dialog.js"></script>
   </head>
   
   <body>
@@ -56,6 +59,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	
     	<h4>测试下载模板</h4>
     	<a href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=stockTemp">下载模板</a>
+    	
+    	<hr/>
+    	<br/>
+    	
+    	<h4>测试dialog对话框</h4>
+    	<button id="showDialogForm">弹出dialog</button>
+    	<div class="dialog" id="dialog"><input /></div>
   </body>
   <script type="text/javascript">
   	function findUserName(){

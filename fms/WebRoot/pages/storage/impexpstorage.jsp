@@ -51,45 +51,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<thead>
 							<tr>
 								<th class="center" style="width:30px;">选择</th>
-								<th class="center">编号</th>
-								<th class="center">进出库类型</th>
-								<th class="center">物料名称</th>
-								<th class="center">颜色</th>
-								<th class="center">计量单位</th>
-								<th class="center">供应商名称</th>
+								<th class="center">流水号</th>
+								<th class="center">启用状态</th>
+								<th class="center">采购单号</th>
+								<th class="center">物料编码</th>
+								<th class="center">订单号</th>
+								<th class="center">商品编码</th>
+								<th class="center">货物名称</th>
+								<th class="center">货物规格型号</th>
 								<th class="center">入库数量</th>
-								<th class="center">每件包装数量</th>
-								<th class="center">件数</th>
 								<th class="center">批次号</th>
+								<th class="center">入库人</th>
 								<th class="center">入库日期</th>
+								<th class="center">每包装数量</th>
+								<th class="center">件数</th>
+								<th class="center">货物标志</th>
+								<th class="center">入库类型</th>
+								<th class="center">物料类型</th>
 								<th class="center">备注</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>
 						<tbody>
 						<c:forEach var="info" varStatus="index" step="1" items="${materials}">
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${info.id}" name="sid" style="width:30px;"/>
-								</td>
-									<td class="center">${index.index+1}</td>
-									<td class="center">${info.hsName}　</td>
-									<td class="center">${info.color}　</td>
-									<td class="center">${info.unit.name}　</td>
-									<td class="center">${info.qty}　</td>
-									<td class="center">${info.batchNO}　</td>
-									<td class="center">${info.lowerQty}　</td>
-									<td class="center">${info.lowerQty}　</td>
-									<td class="center">${info.lowerQty}　</td>
-									<td class="center">${info.lowerQty}　</td>
-									<td class="center">${info.lowerQty}　</td>
-									<td class="center">${info.lowerQty}　</td>
-									<td class="center">${info.note}　</td>
-									<td class="center">
-										<a href="javascript:void(0);" onclick="toedit('${info.id}')">修改</a>｜
-										<a href="javascript:void(0);" onclick="delSingleMaterial('${info.id}','${info.imgExgFlag}')">删除</a>
-									</td>
-							</tr>
+							
 						</c:forEach>
 						</tbody>
 					</table>

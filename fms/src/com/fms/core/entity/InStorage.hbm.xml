@@ -12,16 +12,23 @@
 		<property name="modifyDate" column="MODIFYDATE" />
 
 
-		<many-to-one name="material" column="MATERIAL" class="com.fms.core.entity.Material"/>
-		<many-to-one name="materialType" column="MATERIALTYPE" class="MaterialType"/>
-		<property name="specQty" column="SPECQTY" />
-		<property name="pkgs" column="PKGS" />
-		<many-to-one name="scmcoc" column="SCMCOC" class="Scmcoc"/>
-		<property name="inQty" column="INQTY" />
-		<property name="impFlag" column="IMPFLAG" />
+		<property name="serialNo" column="serialNo" />
+		<property name="purchaseNo" column="purchaseNo" />
+		<property name="hsCode" column="hsCode" />
+		<property name="orderNo" column="orderNo" />
+		<property name="ptCode" column="ptCode" />
+		<property name="hsName" column="hsName" />
+		<property name="hsModel" column="hsModel" />
+		<property name="inQty" column="inQty" />
+		<property name="betchNo" column="betchNo" />
+		<property name="handling" column="handling" />
 		<property name="impDate" column="IMPDATE" />
-		<property name="impExpFalg" column="IMPEXPFALG" />
+		<property name="useFlag" column="useFlag" />
+		<property name="specQty" column="specQty" />
+		<property name="pkgs" column="PKGS" />
+		<property name="imgExgFlag" column="imgExgFlag" />
+		<property name="impFlag" column="IMPFLAG" />
+		<property name="materialTypeName" column="materialTypeName" />
 		<property name="note" column="NOTE" />
-		                   
 	</class>
 </hibernate-mapping>

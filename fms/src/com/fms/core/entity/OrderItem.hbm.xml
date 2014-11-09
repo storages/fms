@@ -4,7 +4,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.fms.core.entity">
-	<class name="OutStorage" table="OUTSTORAGE">
+	<class name="OrderItem" table="ORDERITEM">
 		<id name="id" column="ID">
 			<generator class="uuid" />
 		</id>
@@ -13,19 +13,13 @@
 
 
 		<property name="serialNo" column="SERIALNO" />
-		<property name="orderNo" column="ORDERNO" />
 		<property name="hsCode" column="HSCODE" />
 		<property name="hsName" column="HSNAME" />
 		<property name="hsModel" column="HSMODEL" />
-		<property name="expQty" column="EXPQTY" />
-		<property name="betchNo" column="BETCHNO" />
-		<property name="handling" column="HANDLING" />
-		<property name="expDate" column="EXPDATE" />
-		<property name="expFlag" column="EXPFLAG" />
-		<property name="specQty" column="SPECQTY" />
-		<property name="pkgs" column="PKGS" />
-		<property name="materialTypeName" column="MATERIALTYPENAME" />
+		<property name="qty" column="QTY" />
+		<many-to-one name="unit" class="Unit" column="UNIT"/>
+		<property name="price" column="PRICE" />
+		<property name="amount" column="AMOUNT" />
 		<property name="note" column="NOTE" />
-		                   
 	</class>
 </hibernate-mapping>

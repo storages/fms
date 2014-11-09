@@ -47,21 +47,7 @@ public class StorageAction extends BaseAction {
 	 * @return
 	 */
 	public String editStorage(){
-		try{
-		List<MaterialType> types = this.logic.findAllType(null);//加载物料类型下拉框
-		List<Unit> units = this.unitLogic.findAllUnit(null, null, null);//加载计量单位下拉框
-		List<Scmcoc> scmCocs = this.scmcocLogic.findAllScmcoc(impExpFlag.equals(ImpExpFlag.INSTORAGE)?false:true, null, -1, -1);
-		this.request.put("types", types);
-		this.request.put("units", units);
-		this.request.put("scmCocs", scmCocs);
-		if(inStorage==null){
-			inStorage = new InStorage();
-			inStorage.setImpExpFalg(impExpFlag);
-		}
-		this.request.put("inStorage", inStorage);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		
 		return "edit";
 	}
 	

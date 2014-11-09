@@ -45,6 +45,9 @@
 	<mapping resource="com/fms/core/entity/AppBillItem.hbm.xml" />
 	<mapping resource="com/fms/core/entity/PurchaseBill.hbm.xml" />
 	<mapping resource="com/fms/core/entity/Quotation.hbm.xml" />
+	<mapping resource="com/fms/core/entity/OrderHead.hbm.xml" />
+	<mapping resource="com/fms/core/entity/OrderItem.hbm.xml" />
+	<mapping resource="com/fms/core/entity/InStorage.hbm.xml" />
 </session-factory>
 
 </hibernate-configuration>

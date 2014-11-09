@@ -10,106 +10,148 @@ public class OutStorage extends BaseEntity {
 	 * 出库
 	 */
 	private static final long serialVersionUID = 1L;
-	// 物料
-	private Material material;
-	// 每包装数量
-	private Integer specQty;
-	// 件数(出库数量/每包装数量,向上取整)
-	private Double pkgs;
-	// 客户名称
-	private Scmcoc scmcoc;
-	// 出库数量
-	private Double outQty;
-	// 出库类型(0:出货出库 1:退货出库 2:外发出库 3:其它出库)
-	private String expFlag;
-	// 出库日期
+	
+	/**
+	 * 流水号(serialNo)
+	 */
+	private Integer serialNo;
+	/**
+	 * 订单号(orderNo)   从订单表头中抓取订单号(下拉框)
+	 */
+	private String orderNo;
+	/**
+	 * 货物编码(hsCode)  根据订单号从入库表中获取
+	 */
+	private String hsCode;
+	/**
+	 * 货物名称(hsName) 根据订单号从入库表中获取
+	 */
+	private String hsName;
+	/**
+	 * 货物规格型号(hsModel)  根据订单号从入库表中获取
+	 */
+	private String hsModel;
+	/**
+	 * 货物数量(expQty)  根据订单号从入库表中获取，然后检查出库数量不能大于入库数量
+	 */
+	private Double expQty;
+	/**
+	 * 批次号(betchNo)  根据订单号从入库表中获取
+	 */
+	private String betchNo;
+	/**
+	 * 出库人(handling)  统自动生成(当前登录用户)
+	 */
+	private String handling;
+	/**
+	 * 出库日期(expDate)  系统自动生成(当前系统时间)
+	 */
 	private Date expDate;
-	// 物料类型
-	private MaterialType materialType;
-	// 备注
+	/**
+	 *  出库类型(0:出货出库 1:退货出库 2:外发出库 3:其它出库)
+	 */
+	private String expFlag;
+	
+	/**
+	 *  每件包装数量(根据订单号从入库表中获取)
+	 */
+	private Double specQty;
+	/**
+	 *  件数(根据订单号从入库表中获取)
+	 */
+	private Double pkgs;
+	/**
+	 *  物料类型(根据订单号从入库表中获取)
+	 */
+	private String materialTypeName;
+	/**
+	 *  备注
+	 */
 	private String note;
-
-	// 进出库标志
-	private String impExpFalg;
-
-	public Material getMaterial() {
-		return material;
+	public Integer getSerialNo() {
+		return serialNo;
 	}
-
-	public void setMaterial(Material material) {
-		this.material = material;
+	public void setSerialNo(Integer serialNo) {
+		this.serialNo = serialNo;
 	}
-
-	public Integer getSpecQty() {
-		return specQty;
+	public String getOrderNo() {
+		return orderNo;
 	}
-
-	public void setSpecQty(Integer specQty) {
-		this.specQty = specQty;
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
-
-	public Double getPkgs() {
-		return pkgs;
+	public String getHsCode() {
+		return hsCode;
 	}
-
-	public void setPkgs(Double pkgs) {
-		this.pkgs = pkgs;
+	public void setHsCode(String hsCode) {
+		this.hsCode = hsCode;
 	}
-
-	public Scmcoc getScmcoc() {
-		return scmcoc;
+	public String getHsName() {
+		return hsName;
 	}
-
-	public void setScmcoc(Scmcoc scmcoc) {
-		this.scmcoc = scmcoc;
+	public void setHsName(String hsName) {
+		this.hsName = hsName;
 	}
-
-	public Double getOutQty() {
-		return outQty;
+	public String getHsModel() {
+		return hsModel;
 	}
-
-	public void setOutQty(Double outQty) {
-		this.outQty = outQty;
+	public void setHsModel(String hsModel) {
+		this.hsModel = hsModel;
 	}
-
-	public String getExpFlag() {
-		return expFlag;
+	public Double getExpQty() {
+		return expQty;
 	}
-
-	public void setExpFlag(String expFlag) {
-		this.expFlag = expFlag;
+	public void setExpQty(Double expQty) {
+		this.expQty = expQty;
 	}
-
+	public String getBetchNo() {
+		return betchNo;
+	}
+	public void setBetchNo(String betchNo) {
+		this.betchNo = betchNo;
+	}
+	public String getHandling() {
+		return handling;
+	}
+	public void setHandling(String handling) {
+		this.handling = handling;
+	}
 	public Date getExpDate() {
 		return expDate;
 	}
-
 	public void setExpDate(Date expDate) {
 		this.expDate = expDate;
 	}
-
+	public String getExpFlag() {
+		return expFlag;
+	}
+	public void setExpFlag(String expFlag) {
+		this.expFlag = expFlag;
+	}
+	public Double getSpecQty() {
+		return specQty;
+	}
+	public void setSpecQty(Double specQty) {
+		this.specQty = specQty;
+	}
+	public Double getPkgs() {
+		return pkgs;
+	}
+	public void setPkgs(Double pkgs) {
+		this.pkgs = pkgs;
+	}
+	public String getMaterialTypeName() {
+		return materialTypeName;
+	}
+	public void setMaterialTypeName(String materialTypeName) {
+		this.materialTypeName = materialTypeName;
+	}
 	public String getNote() {
 		return note;
 	}
-
 	public void setNote(String note) {
 		this.note = note;
 	}
 
-	public String getImpExpFalg() {
-		return impExpFalg;
-	}
-
-	public void setImpExpFalg(String impExpFalg) {
-		this.impExpFalg = impExpFalg;
-	}
-
-	public MaterialType getMaterialType() {
-		return materialType;
-	}
-
-	public void setMaterialType(MaterialType materialType) {
-		this.materialType = materialType;
-	}
-
+	
 }

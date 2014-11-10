@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		p{margin-bottom: 2px;}
 	</style>
   </head>
-  <body>
+  <body style="position: relative;">
     <input type="hidden" id="flag" value="${materinfo.id}"/><!-- 为了判断是新增还是修改 -->
     <div class="page-header position-relative" style="margin-bottom: 0px;">
     	<c:if test="${storage.id==null}">
@@ -117,45 +117,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<p style="border:solid 1px red;">${u.userName}</p>
 				<p style="border:solid 1px red;">${u.userName}</p>
 				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				</div>
+				<%--<p style="margin-left: 40%;">
+					<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="保存"/>&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="取消" style="margin-left: 10px;"  onclick="closeListenler()"/>
+				</p>
+				--%></div>
 				<p style="padding-left: 0px;">
 					物料名称<span class="required">*</span><input type="text" readonly="readonly" style="height: 25px;width: 160px;" name="inStorage.material.hsName" id="materialName" value="${inStorage.material.hsName}"/>&nbsp;&nbsp;&nbsp;&nbsp;
 					规格型号<span class="required">*</span><input type="text" readonly="readonly" style="height: 25px;width: 160px;" name="inStorage.material.hsName" id="materialName" value=""/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

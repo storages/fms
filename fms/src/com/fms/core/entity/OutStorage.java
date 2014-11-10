@@ -4,11 +4,11 @@ import java.util.Date;
 
 import com.fms.base.entity.BaseEntity;
 
+/**
+ * 出库
+ */
 public class OutStorage extends BaseEntity {
 
-	/**
-	 * 出库
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	/**

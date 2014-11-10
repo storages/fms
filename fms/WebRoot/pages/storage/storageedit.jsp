@@ -107,21 +107,132 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<span id="pcode" style="display: none;">商品编码<span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="" readonly="readonly"><img alt="" style="cursor: pointer; margin-top: -5px;" id="showDialogForm1" src="${pageContext.request.contextPath}/images/search.gif"></span>
 				</p>
 				<div class="dialog" id="dialog" title="货物选择">
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<p style="border:solid 1px red;">${u.userName}</p>
-				<%--<p style="margin-left: 40%;">
-					<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="保存"/>&nbsp;&nbsp;&nbsp;
-					&nbsp;&nbsp;<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="取消" style="margin-left: 10px;"  onclick="closeListenler()"/>
-				</p>
-				--%></div>
+					<p style="height: 28px;"><input style="height: 25px;width: 160px;" type="text" name=""/><input class="btn btn-small btn-danger" style="height: 25px; margin-top: -10px;border-top-width: 1px;" data-toggle="button" type="submit" value="查询"/></p>
+					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
+						<thead>
+							<tr align="center">
+								<th class="center" style="width:30px;">选择</th>
+								<th class="center">序号</th>
+								<th class="center">编号</th>
+								<th class="center">客户名称</th>
+								<th class="hidden-480 center">客户联系电话</th>
+								<th class="hidden-phone center">客户网络联系方式</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<p style="padding-left: 0px;">
 					物料名称<span class="required">*</span><input type="text" readonly="readonly" style="height: 25px;width: 160px;" name="inStorage.material.hsName" id="materialName" value="${inStorage.material.hsName}"/>&nbsp;&nbsp;&nbsp;&nbsp;
 					规格型号<span class="required">*</span><input type="text" readonly="readonly" style="height: 25px;width: 160px;" name="inStorage.material.hsName" id="materialName" value=""/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

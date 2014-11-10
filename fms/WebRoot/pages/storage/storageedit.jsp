@@ -122,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<tbody>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -132,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -142,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -152,7 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -162,7 +162,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -172,7 +172,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -182,7 +182,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -192,7 +192,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -202,7 +202,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -212,7 +212,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>
@@ -222,7 +222,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
+								</td>
+								<td class="center"><a href="#">${index.index+1}</a></td>
+								<td class="center">DG23790　</td>
+								<td class="center">东莞方滨兴塑胶　</td>
+								<td class="hidden-480 center">0769-66239081　</td>
+								<td class="hidden-480 center">QQ:398012390　</td>
+							</tr>
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 								</td>
 								<td class="center"><a href="#">${index.index+1}</a></td>
 								<td class="center">DG23790　</td>

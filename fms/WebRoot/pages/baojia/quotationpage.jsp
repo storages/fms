@@ -29,13 +29,13 @@
 								<th class="center">流水号</th>
 								<th class="center">供应商编码</th>
 								<th class="center">供应商名称</th>
-								<th class="hidden-480 center">供应商联系电话</th>
-								<th class="hidden-480 center">物料编码</th>
-								<th class="hidden-480 center">物料名称</th>
-								<th class="hidden-480 center">规格型号</th>
-								<th class="hidden-phone center">单价</th>
-								<th class="hidden-480 center">生效日期</th>
-								<th class="hidden-480 center">备注</th>
+								<th class="center">供应商联系电话</th>
+								<th class="center">物料编码</th>
+								<th class="center">物料名称</th>
+								<th class="center">规格型号</th>
+								<th class="center">单价</th>
+								<th class="center">生效日期</th>
+								<th class="center">备注</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>

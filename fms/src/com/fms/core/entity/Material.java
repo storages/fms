@@ -13,7 +13,8 @@ public class Material extends BaseEntity{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	//物料编码
+	private String hsCode;
 	//物料名称
 	private String hsName;
 	//颜色
@@ -35,6 +36,13 @@ public class Material extends BaseEntity{
 	//备注
 	private String note;
 	
+	
+	public String getHsCode() {
+		return hsCode;
+	}
+	public void setHsCode(String hsCode) {
+		this.hsCode = hsCode;
+	}
 	public String getHsName() {
 		return hsName;
 	}

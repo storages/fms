@@ -159,6 +159,18 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	<!-- 报价单 -->
+	<bean id="quotationDao" class="com.fms.dao.impl.QuotationDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
 	<!-- ======================Logic类=========================== -->
 
 	<!-- AclUser -->
@@ -251,6 +263,19 @@
 			<ref bean="storageDao" />
 		</property>
 	</bean>
+	
+	<!-- 报价单 -->
+	<bean id="quotationLogic" class="com.fms.logic.impl.QuotationLogicImpl">
+		<property name="quotationDao">
+			<ref bean="quotationDao"/>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
 	<!-- ======================Action类=========================== -->
 
 	<!-- AclUser -->
@@ -358,6 +383,13 @@
 		</property>
 		<property name="scmcocLogic">
 			<ref bean="scmcocLogic" />
+		</property>
+	</bean>
+	
+	<!-- 报价单 -->
+	<bean id="quotationAction" class="com.fms.action.QuotationAction" scope="prototype">
+		<property name="quotationLogic">
+			<ref bean="quotationLogic"/>
 		</property>
 	</bean>
 	<!-- 上传 -->

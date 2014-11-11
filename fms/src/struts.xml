@@ -137,6 +137,18 @@
 			<result name="edit">/pages/storage/storageedit.jsp</result>
 			<result name="save" type="chain">storage_findAllInStorage</result>
 		</action>
+		
+		<!-- 报价单 -->
+		<action name="quotation_*" class="quotationAction" method="{1}">
+			<result name="success">/pages/baojia/quotationpage.jsp</result>
+		</action>
+		
+		
+		
+		
+		
+		
+		
 	</package>
 
 

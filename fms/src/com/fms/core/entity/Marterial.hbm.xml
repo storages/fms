@@ -12,6 +12,7 @@
 		<property name="modifyDate" column="MODIFYDATE" />
 
 
+		<property name="hsCode" column="HSCODE" />
 		<property name="hsName" column="HSNAME" />
 		<property name="color" column="COLOR" />
 		<!-- <many-to-one name="materialType" column="MATERIALTYPE" class="com.fms.core.entity.MaterialType"/> -->

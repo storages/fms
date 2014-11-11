@@ -25,7 +25,7 @@ public class Quotation extends BaseEntity{
 	//单价
 	private Double price;
 	//生效日期
-	private Date effect;
+	private Date effectDate;
 	//备注
 	private String note;
 	public Integer getSerialNo() {
@@ -52,11 +52,11 @@ public class Quotation extends BaseEntity{
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	public Date getEffect() {
-		return effect;
+	public Date getEffectDate() {
+		return effectDate;
 	}
-	public void setEffect(Date effect) {
-		this.effect = effect;
+	public void setEffectDate(Date effectDate) {
+		this.effectDate = effectDate;
 	}
 	public String getNote() {
 		return note;

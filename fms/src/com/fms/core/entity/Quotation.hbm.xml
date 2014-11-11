@@ -16,7 +16,7 @@
 		<many-to-one name="scmcoc" class="Scmcoc" column="SCMCOC" />
 		<many-to-one name="material" class="Material" column="MATERIAL" />
 		<property name="price" column="PRICE" />
-		<property name="effect" column="EFFECT" />
+		<property name="effectDate" column="EFFECTDATE" />
 		<property name="note" column="NOTE" />
 	</class>
 </hibernate-mapping>

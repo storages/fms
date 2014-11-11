@@ -62,7 +62,7 @@
 				<li><span class="file"><a href="javascript:void(0);" data-url="/empl_employees.action">职员信息</a></span></li>
 			</ul>
 		</li>
-		<li><span class="file"><a href="javascript:void(0);" data-url="#" >报价单</a></span></li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="/quotation_findQuotations.action" >报价单</a></span></li>
 		<li><span class="file"><a href="javascript:void(0);" data-url="#" >请购单</a></span></li>
 		<li><span class="file"><a href="javascript:void(0);" data-url="#" >采购单</a></span></li>
 		<li  class="closed"><span class="folder directer">物料</span>

@@ -6,15 +6,22 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<div class="page-header position-relative"
-	style="margin-bottom: 0px; height:30px;">
-	<h5>报价单</h5>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
+	type="text/css"></link>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
+<div class="page-header position-relative" style="margin-bottom: 0px; height:10px;">
+	<span style="font-size: 14px; font-weight: bold;">报价单</span>
 </div>
 <div class="modal-footer" style="text-align: left;">
-	<span class="">供应商名称</span><input type="text" id="search"
-		value="${searchStr}" style="height:25px;" class="" /> <input
-		class="btn btn-small btn-danger" data-toggle="button" type="button"
-		value="查询" onclick="gotoPage(1,1)"
+	<span class="">供应商名称</span><input type="text" id="scmCocName" value="${scmCocName}" style="height:25px;width:100px;" class="" /> 
+	<span class="">物料编码</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
+	<span class="">生效日期以后</span><input type="text" id="effectDate" value="${effectDate}" style="height:25px;width:100px;" class="" /> 
+	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 </div>
 <div class="row-fluid" >
@@ -55,6 +62,7 @@
 									<td class="hidden-480 center">${quotation.material.hsCode}　</td>
 									<td class="hidden-480 center">${quotation.material.hsName}　</td>
 									<td class="hidden-480 center">${quotation.material.model}　</td>
+									<td class="hidden-480 center">${quotation.price}　</td>
 									<td class="hidden-480 center">${quotation.price}　</td>
 									<td class="hidden-480 center">${scmcoc.note}　</td>
 									<td class="center">
@@ -106,3 +114,13 @@
 		</div>
 		<!--PAGE CONTENT ENDS-->
 	</div>
+<script type="text/javascript">
+	$(function(){
+		$("#effectDate").datepicker({
+  			changeYear: true,
+			changeMonth: true,
+			yearRange: '1900:', 
+			dateFormat: 'yy-mm-dd'
+  		});
+	});
+</script>

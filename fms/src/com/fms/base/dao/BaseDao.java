@@ -194,6 +194,13 @@ public interface BaseDao {
 	 * @param entities
 	 *            Collection类型
 	 */
+
 	public void deleteAll(Collection entities);
 	
+	/**
+	 * 获取流水号
+	 * @param className
+	 * @return
+	 */
+	public Integer getSerialNo(String clazz);
 }

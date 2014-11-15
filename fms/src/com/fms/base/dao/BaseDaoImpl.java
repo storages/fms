@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
+import java.lang.reflect.Field;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.CacheMode;
 import org.hibernate.HibernateException;
@@ -19,7 +19,10 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import sun.security.jca.GetInstance.Instance;
+
 import com.fms.base.entity.BaseEntity;
+import com.sun.xml.internal.bind.v2.model.core.PropertyInfo;
 
 
 /**
@@ -513,4 +516,30 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 	 return getMySession().createQuery("FROM "+clazz.getSimpleName()).setFirstResult(pageIndex).setMaxResults(pageRows).list();
    }
 */
+	
+	public Integer getSerialNo(String clazz){
+		String filedName = "serialNo";
+		Integer serialNo = null;
+		Field[] fields;
+		try {
+			Class c = Class.forName("com.fms.core.entity."+clazz);
+			fields = c.getDeclaredFields();
+			for(Field filed:fields){
+				System.out.println(filed.getName()+"\n");
+				if(filedName.equals(filed.getName())){
+					String hql = "select max(a.serialNo) from "+clazz+" a ";
+					serialNo = (Integer) this.uniqueResult(hql, new Object[]{});
+					return serialNo;
+				}
+			}
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fms.base.action.BaseAction;
@@ -12,6 +13,7 @@ import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.QuotationLogic;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 
 /**
@@ -54,10 +56,31 @@ public class QuotationAction extends BaseAction {
 	 */
 	public String findQuotations() {
 		try {
+			begineffectDate = "".equals(begineffectDate)?null:begineffectDate;
+			endeffectDate = "".equals(endeffectDate)?null:endeffectDate;
+			/*SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+	        String str = formatDate.format(begineffectDate);
+	        String str2 = formatDate.format(endeffectDate);*/
+			Date date = null;
+	        if(null!=begineffectDate){
+	        	date = new SimpleDateFormat("yyyy-MM-dd").parse(begineffectDate); 
+	        }
+	        Date date2 = null;
+	        if(null!=endeffectDate){
+	        	date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endeffectDate); 
+	        }
+	        /*Date time1 = null;
+	        Date time2 = null;
+	        try {
+	            time1 = formatDate.parse(str);
+	            time2 = formatDate.parse(str2);
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }*/
 			Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-			dataTotal = this.quotationLogic.findDataCount(parse(scmCocName),parse(hsCode),begineffectDate==null?null:SimpleDateFormat.getInstance().parse(begineffectDate),endeffectDate==null?null:SimpleDateFormat.getInstance().parse(endeffectDate));
-			List<Quotation> quotations = this.quotationLogic.findQuotations(parse(scmCocName),parse(hsCode),begineffectDate==null?null:SimpleDateFormat.getInstance().parse(begineffectDate),endeffectDate==null?null:SimpleDateFormat.getInstance().parse(endeffectDate), -1, -1);
+			dataTotal = this.quotationLogic.findDataCount(parse(scmCocName),parse(hsCode),(begineffectDate==null||"".equals(begineffectDate))?null:date,(endeffectDate==null||"".equals(endeffectDate))?null:date2);
+			List<Quotation> quotations = this.quotationLogic.findQuotations(parse(scmCocName),parse(hsCode),begineffectDate==null?null:date,endeffectDate==null?null:date2, -1, -1);
 			List<Material> mlist = materLogic.findAllMaterialInfo(hsCode, null, -1, -1);
 			List<Scmcoc> scmcocs = quotationLogic.findAll();
 			this.request.put("scmcocs", scmcocs);
@@ -68,8 +91,8 @@ public class QuotationAction extends BaseAction {
 			this.request.put("pageNums", pageCount(max, dataTotal));
 			this.request.put("scmCocName", parse(scmCocName));
 			this.request.put("hsCode", parse(hsCode));
-			this.request.put("begineffectDate", begineffectDate==null?null:SimpleDateFormat.getInstance().parse(begineffectDate));
-			this.request.put("endeffectDate", endeffectDate==null?null:SimpleDateFormat.getInstance().parse(endeffectDate));
+			this.request.put("begineffectDate", begineffectDate==null?null:begineffectDate);
+			this.request.put("endeffectDate", endeffectDate==null?null:endeffectDate);
 			//findMaterial();
 		} catch (Exception e) {
 			e.printStackTrace();

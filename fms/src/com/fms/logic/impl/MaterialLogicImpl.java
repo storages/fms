@@ -47,4 +47,11 @@ private MaterialDao materialDao;
 		
 	}
 
+	public List<Material> findMaterialById(String[] ids) {
+		return materialDao.findMaterialById(ids);
+	}
+	public String findHsCode(String hsCode){
+		return materialDao.findHsCode(hsCode);
+	}
+
 }

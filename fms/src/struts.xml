@@ -7,7 +7,7 @@
 
 	<package name="usersActionPackage" extends="struts-default">
 		<!-- 拦截器配置 -->
-		<interceptors>
+		<!-- <interceptors>
 			<interceptor name="loginInterceptor"
 				class="com.fms.interceptor.AclLoginInterceptor">
 			</interceptor>
@@ -15,12 +15,12 @@
 				<interceptor-ref name="loginInterceptor" />
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
-		</interceptors>
+		</interceptors> -->
 		<!-- 这是全局拦截器 -->
-		<default-interceptor-ref name="aclInterceptor" />
+		<!-- <default-interceptor-ref name="aclInterceptor" />
 		<global-results>
 			<result name="tologin" type="redirectAction">loginAction_gologin</result>
-		</global-results>
+		</global-results> -->
 
 		<!-- 下载文件的Action -->
 		<action name="fileDownload" class="fileDownload">

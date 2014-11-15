@@ -16,12 +16,15 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 	public List<Material> findAllMaterialInfo(String likeStr,
 			String imgExgFlag, Integer index, Integer length) {
 		try {
-			String hql = "select a from Material a left join fetch a.unit where a.imgExgFlag = ? ";
+			String hql = "select a from Material a left join fetch a.unit where 1=1 ";
 			List param = new ArrayList();
+			if(null != imgExgFlag && !"".equals(imgExgFlag)){
+				hql+=" and a.imgExgFlag = ? ";
+				param.add(imgExgFlag);
+			}
 			if (null != likeStr && !"".equals(likeStr)) {
 				hql += " and a.hsName like '%" + likeStr + "%'";
 			}
-			param.add(imgExgFlag);
 			return this.findPageList(hql, param.toArray(), index, length);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,5 +71,29 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 			param.add(ids[i]);
 		}
 		this.batchUpdateOrDelete(hql, param.toArray());
+	}
+
+	public List<Material> findMaterialById(String[] ids) {
+		if(ids!=null && !"".equals(ids)){
+			List param = new ArrayList();
+			String hql = "from Material a where a.id = ? ";
+			param.add(ids[0]);
+			for(int i = 1 ;i<ids.length;i++){
+				hql+=" or a.id = ? ";
+				param.add(ids[i]);
+			}
+			return this.find(hql, param.toArray());
+		}
+		return null;
+	}
+	
+	public String findHsCode(String hsCode){
+		try{
+			String hql = "select a from Material a where a.hsCode = "+hsCode;
+			return (String) this.uniqueResult(hql,new Object[]{});
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -11,6 +11,8 @@ public interface MaterialDao extends BaseDao{
 	public Integer findDataCount(String className, String name);
 	public List<Unit> findAllUnit();
 	public Material findMaterialById(String id);
+	public List<Material> findMaterialById(String[] ids);
 	public Material checkMaterial(String hsName,String model,String batchNO);
 	void deleteMaterial(String [] ids);
+	String findHsCode(String hsCode);
 }

@@ -11,7 +11,9 @@ public interface MaterialLogic {
 	public Integer findDataCount(String className, String name);
 	public List<Unit> findAllUnit();
 	public Material findMaterialById(String id);
+	public List<Material> findMaterialById(String[] ids);
 	public Material checkMaterial(String hsName,String model,String batchNO);
 	public void saveOrUpdate(Material material);
 	void deleteMaterial(String[] ids);
+	public String findHsCode(String hsCode);
 }

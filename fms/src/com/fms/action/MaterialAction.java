@@ -45,6 +45,8 @@ public class MaterialAction extends BaseAction {
 	// 备注
 	private String note;
 	
+	private String hsCode;
+	
 	/*********分页用的属性***********/
 	private Integer dataTotal;//总记录数
 	private String currIndex;//当前页码
@@ -114,6 +116,7 @@ public class MaterialAction extends BaseAction {
 		if(null!=ids && !"".equals(ids)){
 			m.setId(ids);
 		}
+		m.setHsCode(this.parse(hsCode));
 		m.setHsName(this.parse(hsName));
 		m.setColor(this.parse(color));
 		m.setImgExgFlag(imgExgFlag);
@@ -177,6 +180,37 @@ public class MaterialAction extends BaseAction {
 			}
 		}
 	}
+	
+	
+	/**
+	 * 验证物料编码是否重复
+	 */
+	public void findHsCode() {
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		try {
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			String findCode = this.materLogic.findHsCode(hsCode);
+			if (null != findCode) {
+				result.setSuccess(false);
+				result.setMsg("编码已使用过了！");
+			} else {
+				result.setSuccess(true);
+			}
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (IOException e) {
+			result.setMsg("对不起出错了：/n" + e.getMessage());
+		} finally {
+			if (out != null) {
+				out.close();
+			}
+		}
+	}
+	
 	
 	public String getHsName() {
 		return hsName;
@@ -308,6 +342,16 @@ public class MaterialAction extends BaseAction {
 
 	public void setModel(String model) {
 		this.model = model;
+	}
+
+
+	public String getHsCode() {
+		return hsCode;
+	}
+
+
+	public void setHsCode(String hsCode) {
+		this.hsCode = hsCode;
 	}
 	
 }

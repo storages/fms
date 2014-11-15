@@ -49,7 +49,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<thead>
 							<tr>
 								<th class="center" style="width:30px;">选择</th>
-								<th class="center">编号</th>
+								<th class="center">行号</th>
+								<th class="center">物料编码</th>
 								<th class="center">物料名称</th>
 								<th class="center">颜色</th>
 								<th class="center">物料类别</th>
@@ -68,6 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<input type="checkbox" value="${info.id}" name="sid" style="width:30px;"/>
 								</td>
 									<td class="center">${index.index+1}</td>
+									<td class="center">${info.hsCode}　</td>
 									<td class="center">${info.hsName}　</td>
 									<td class="center">${info.color}　</td>
 									<c:if test="${info.imgExgFlag=='I'}">

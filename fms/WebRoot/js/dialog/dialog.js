@@ -27,8 +27,8 @@ function addTitle(){
 	var firstele;
 	var num = $('#dialog').children().length;
 	var htmltext = $('#dialog').html();
-	var str = '<div id="titleele" style="height:35px;width:100%;background-color:#99CCFF;"></div>'
-	var toolbar = '<div style="height:auto; width:100%;" id="tool"><p style="margin-left: 40%;"><input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="确定"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="取消" style="margin-left: 10px;"  onclick="closeListenler()"/></p></div>';
+	var str = '<div id="titleele" style="height:35px;width:100%;background-color:#99CCFF;" onmouseup="getMousePos()"></div>'
+	var toolbar = '<div style="height:auto; width:100%;" id="tool"><p style="margin-left: 40%;"><input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="确定" id="okbutton"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="取消" style="margin-left: 10px;"  onclick="closeListenler()"/></p></div>';
 	if(num==''){
 		firstele = $('#dialog'); 
 		firstele.append(str);
@@ -61,3 +61,24 @@ function closeListenler(){
 	
 }
 
+/*function getMousePos(){
+    var o=document.getElementById("dialog");
+    o.onselectstart = function(){
+    	return(false);
+    };
+    o.onmousedown = function(e) {
+        e = e||window.event;
+        var x=e.layerX||e.offsetX;
+        var y=e.layerY||e.offsetY;
+        x=x-document.getElementById("dialog").scrollLeft+193;
+        y=y-document.getElementById("dialog").scrollTop+104;
+        document.onmousemove = function(e){
+            e=e||window.event;
+            o.style.left=(e.clientX-x)+"px";
+            o.style.top=(e.clientY-y)+"px";
+        };
+        document.onmouseup=function(){
+            document.onmousemove=null;
+        };
+    };
+}*/

@@ -2,7 +2,7 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
 	</style>
-	<div class="navbar">
+	<div class="navbar"  style="position: relative;">
 		<div class="navbar-inner" id="setcss">
 			<div class="container-fluid">
 				<img alt="公司标志" src="${pageContext.request.contextPath}/imges/ls_logo.png" style="width: 60px;">

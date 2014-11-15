@@ -41,21 +41,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="span12">
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
 				<tr>
-					<td class="captioncss" style="text-align: right; ">物料名称></td>
+					<td class="captioncss" style="text-align: right; ">物料编码</td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.hsCode}" name="material.hsCode" style="height:25px;" onblur="check()" id="codes"/><span style="color:red;">*</span></td>
+					<td class="captioncss" style="text-align: right; ">物料名称</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.hsName}" name="material.hsName" style="height:25px;" onblur="check()"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; ">颜色</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.color}" name="material.color" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
+					<td class="captioncss" style="text-align: right; ">颜色</td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.color}" name="material.color" style="height:25px;"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; ">物料类别</td>
 					<td class="hidden-480 addcss" style="">
 					<select id="form-field-select-1">
 						<option value="I">原料</option>
 						<option value="E">成品</option>
 					</select>
-						<%-- <input type="text" value="${materinfo.imgExgFlag}" name="material.imgExgFlag" style="height:25px;"/> --%>
 						<span style="color:red;">*</span>
 					</td>
+				</tr>
+				<tr>
 					<td class="captioncss" style="text-align: right; ">计量单位</td>
 					<td class="hidden-480 addcss" style="">
 					<select name="material.unit" id="form-field-select-1">
@@ -66,20 +69,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<%-- <input type="text" value="${materinfo.unit.name}" name="material.unit" style="height:25px;"/> --%>
 					
 					<span style="color:red;">*</span></td>
-				</tr>
-				<tr>
 					<td class="captioncss" style="text-align: right; " onblur="check()">规格</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.model}" name="material.model" style="height:25px;"/><span style="color:red;">*</span></td>
+				</tr>
+				<tr>
 					<td class="captioncss" style="text-align: right; ">数量</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.qty}" name="material.qty" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-				<tr>
 					<td class="captioncss" style="text-align: right; " onblur="check()">批次号</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.batchNO}" name="material.batchNO" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; ">最低库存</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.lowerQty}" name="material.lowerQty" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
+					<td class="captioncss" style="text-align: right; ">最低库存</td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.lowerQty}" name="material.lowerQty" style="height:25px;"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; ">备注</td>
 					<td class="hidden-480 addcss" style=""><textarea cols="120" rows="3" name="material.note" id="note">${materinfo.note}</textarea></td>
 				</tr>
@@ -88,9 +89,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
   </body>
   <script type="text/javascript">
+  var isPass = true;
 			//名称
 		function save(){
 			var id= $('#matrId').val();
+			var code= $(":input[name='material.hsCode']").val(); 
 			var name= $(":input[name='material.hsName']").val(); 
 			var color= $(":input[name='material.color']").val(); 
 			var imgExgFlag= $("#form-field-select-1").val() ;
@@ -102,7 +105,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			//备注
 			var note= $("#note").val(); 
 			var isEdit = $('#flag').val();
-			var isPass = true;
 			if(name==""){
 				alert("名称不能为空！");
 				isPass = false;
@@ -110,7 +112,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			//新增
 			if(isEdit==""){
-				var url = "${pageContext.request.contextPath}/materInfo_checkMaterial.action?hsName="+name+"&batchNO="+batchNO+"&model="+model;
+			alert(code);
+				var url = "${pageContext.request.contextPath}/materInfo_checkMaterial.action?hsCode="+ code +"&hsName="+name+"&batchNO="+batchNO+"&model="+model;
 				$.ajax({
 			     type: "POST",
 			     url:url,
@@ -128,7 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  	});
 			}
 			if(isPass){
-				var param = "hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit
+				var param = "hsCode="+code+"&hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit
 				var submitUrl = "${pageContext.request.contextPath}/materInfo_save.action?"+param;
 				toMain(submitUrl);
 			}
@@ -147,9 +150,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		
 		function check(){
-			if(name!="" && model!="" && batchNO!=""){
-			
-			}
+			var code = $("#codes").val();
+				var url = "${pageContext.request.contextPath}/materInfo_findHsCode.action?hsCode="+code;
+				$.ajax({
+			     type: "POST",
+			     url:url,
+			     async: false,
+			     cache: false,
+			     success:function(data){
+					alert(code);
+				     var result=jQuery.parseJSON(data);
+				     if(!result.success){
+				     	alert(result.msg);
+				     	isPass = false;
+				     	return;
+				     }
+			     },error:function(){
+			        alert("程序异常，请重新启动程序！");
+			      }
+			  	});
 		}
 	</script>
 </html>

@@ -98,7 +98,7 @@
 
 </head>
 
-<body oncontextmenu="return false" style="position: relative;">
+<body oncontextmenu="return false">
 	<jsp:include page="/pages/content.jsp"></jsp:include>
 	<!-- WAIT FLASH ACTIVE -->
 		<div id="waitdiv" class="waitcss" style="display: none;">

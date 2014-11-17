@@ -25,6 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <link rel="stylesheet" href="css/dialog/dialogCss.css" type="text/css"></link>
   <script type="text/javascript" src="js/dialog/dialog.js"></script>
+  <script type="text/javascript" src="js/controlUI/editTable.js"></script>
   </head>
   
   <body>
@@ -66,6 +67,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<h4>测试dialog对话框</h4>
     	<button id="showDialogForm">弹出dialog</button>
     	<div class="dialog" id="dialog" title="测试dialog对话框"><input /></div>
+    	
+    	
+    	<hr/>
+    	<br/>
+    	
+    	<h4>测试Table编辑</h4>
+    	<table border="1px solid black">
+    		<thead>
+    			<tr>
+    				<td>　</td>
+    				<td>语文</td>
+    				<td>数学</td>
+    				<td>评语</td>
+    				<td>操作</td>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<tr>
+    				<td>张三</td>
+    				<td>98</td>
+    				<td>80</td>
+    				<td>继续努力</td>
+    				<td><a href="javascript:void(0)" onclick="showTableEdit(this,'1,2,3')">修改</a>
+    				<a href="javascript:void(0)" onclick="closeTableEdit(this,'1,2,3')">保存</a>
+    				</td>
+    			</tr>
+    			<tr>
+    				<td>李四</td>
+    				<td>78</td>
+    				<td>89</td>
+    				<td>加油</td>
+    				<td><a href="javascript:void(0)" onclick="showTableEdit(this,'1,2,3')">修改</a></td>
+    			</tr>
+    			<tr>
+    				<td>王五</td>
+    				<td>86</td>
+    				<td>91</td>
+    				<td>再接再励</td>
+    				<td><a href="javascript:void(0)" onclick="showTableEdit(this,'1,2,3')">修改</a></td>
+    			</tr>
+    		</tbody>
+    	</table>
   </body>
   <script type="text/javascript">
   	function findUserName(){

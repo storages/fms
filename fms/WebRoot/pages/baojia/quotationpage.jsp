@@ -54,7 +54,7 @@
 						<tbody>
 							<c:forEach var="quotation" items="${quotations}" varStatus="index" step="1">
 								<tr>
-									<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<td class="center" style="width:30px;" >
 										<input type="checkbox" value="${quotation.id}" name="sid" style="width:30px;"/>
 									</td>
 										<td class="center">${quotation.serialNo}</td>
@@ -69,8 +69,8 @@
 										<td class="hidden-480 center">${quotation.effectDate}　</td>
 										<td class="hidden-480 center">${quotation.note}　</td>
 										<td class="center">
-											<a href="javascript:void(0);" onclick="toedit('${quotation.id}')">修改</a>｜
-											<a href="javascript:void(0);" onclick="delSingleScmcoc('${quotation.id}','true')">删除</a>
+											<a href="javascript:void(0);" onclick="showTableEdit(this,'10,12')">修改</a>｜
+											<a href="javascript:void(0);" onclick="closeTableEdit(this,'10,12')">删除</a>
 										</td>
 								</tr>
 							</c:forEach>

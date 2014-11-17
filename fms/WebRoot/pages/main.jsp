@@ -96,6 +96,8 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/menujump/menuBindUrl.js"></script>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/controlUI/editTable.js"></script>
+
 </head>
 
 <body oncontextmenu="return false">

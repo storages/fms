@@ -69,7 +69,7 @@
 										<td class="hidden-480 center">${quotation.effectDate}　</td>
 										<td class="hidden-480 center">${quotation.note}　</td>
 										<td class="center">
-											<a href="javascript:void(0);" onclick="showTableEdit(this,'10,12')">修改</a>｜
+											<a href="javascript:void(0);" onclick="edit(this,'10,12','${quotation.id}')">修改</a>｜
 											<a href="javascript:void(0);" onclick="closeTableEdit(this,'10,12')">删除</a>
 										</td>
 								</tr>
@@ -115,7 +115,7 @@
 			</div>
 		</div>
 		<!--PAGE CONTENT ENDS-->
-		
+		<input type="hidden" id="hid"/>
 		<!-- dialog -->
 		<div class="dialog" id="dialog" title="选择物料">
 		<%-- <input style="height: 25px;width: 160px;" type="text" name="${hsCode}" id="hsCode"/><input class="btn btn-small btn-danger" style="height: 25px; margin-top: -10px;border-top-width: 1px;" data-toggle="button" type="submit" value="查询"/> --%>
@@ -223,6 +223,10 @@
 	function parse(str){
 		return encodeURI(encodeURI(str));  
 	}
-	
+function edit(obj,arr,ids){
+	var va = $('#hid').val();
+	$('#hid').val(va+","+ids);
+	showTableEdit(obj,arr);
+}
 	
 </script>

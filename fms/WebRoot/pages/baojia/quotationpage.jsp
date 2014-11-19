@@ -1,5 +1,6 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,java.text.SimpleDateFormat" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -36,18 +37,18 @@
 						<thead>
 							<tr align="center">
 								<th class="center" style="width:30px;">选择</th>
-								<th class="center">流水号</th>
-								<th class="center">供应商编码</th>
+								<th class="center" style="width:30px;">流水号</th>
+								<th class="center" style="width:71px;">供应商编码</th>
 								<th class="center">供应商名称</th>
-								<th class="center">供应商联系电话</th>
+								<th class="center" style="width:91px;">供应商联系电话</th>
 								<th class="center">物料编码</th>
 								<th class="center">物料名称</th>
 								<th class="center">规格型号</th>
-								<th class="center">计量单位</th>
-								<th class="center">单价</th>
-								<th class="center">生效日期</th>
-								<th class="center">备注</th>
-								<th class="center">操作</th>
+								<th class="center" style="width:60px;">计量单位</th>
+								<th class="center" style="width:50px;">单价</th>
+								<th class="center" style="width:60px;">生效日期</th>
+								<th class="center" style="width:100px;">备注</th>
+								<th class="center" style="width:70px;">操作</th>
 							</tr>
 						</thead>
 
@@ -60,17 +61,18 @@
 										<td class="center">${quotation.serialNo}</td>
 										<td class="center">${quotation.scmcoc.code}</td>
 										<td class="center">${quotation.scmcoc.name}</td>
-										<td class="hidden-480 center">${quotation.scmcoc.linkPhone}　</td>
-										<td class="hidden-480 center">${quotation.material.hsCode}　</td>
-										<td class="hidden-480 center">${quotation.material.hsName}　</td>
-										<td class="hidden-480 center">${quotation.material.model}　</td>
-										<td class="hidden-480 center">${quotation.material.unit.name}　</td>
-										<td class="hidden-480 center">${quotation.price}　</td>
-										<td class="hidden-480 center">${quotation.effectDate}　</td>
-										<td class="hidden-480 center">${quotation.note}　</td>
+										<td class="hidden-480 center">${quotation.scmcoc.linkPhone}&nbsp;</td>
+										<td class="hidden-480 center">${quotation.material.hsCode}&nbsp;</td>
+										<td class="hidden-480 center">${quotation.material.hsName}&nbsp;</td>
+										<td class="hidden-480 center">${quotation.material.model}&nbsp;</td>
+										<td class="hidden-480 center">${quotation.material.unit.name}&nbsp;</td>
+										<td class="hidden-480 center">${quotation.price}&nbsp;</td>
+										<td class="center"><fmt:formatDate value="${quotation.effectDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
+<%-- 										<td class="hidden-480 center">${quotation.effectDate}　</td> --%>
+										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
 										<td class="center">
-											<a href="javascript:void(0);" onclick="edit(this,'10,12','${quotation.id}')">修改</a>｜
-											<a href="javascript:void(0);" onclick="closeTableEdit(this,'10,12')">删除</a>
+											<a href="javascript:void(0);" onclick="edit(this,'10,11,12','${quotation.id}')">修改</a>｜
+											<a href="javascript:void(0);" onclick="">删除</a>
 										</td>
 								</tr>
 							</c:forEach>
@@ -79,6 +81,7 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add">新增</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="closeAllEdit('sample-table-1','10,11,12')">保存</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
 					批量删除
 				</button>

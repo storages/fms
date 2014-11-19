@@ -73,7 +73,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<br/>
     	
     	<h4>测试Table编辑</h4>
-    	<table border="1px solid black">
+    	<p><button onclick="closeAllEdit('mytable','1,2,3')">关闭所有编辑框</button></p>
+    	<table border="1px solid black" id="mytable">
     		<thead>
     			<tr>
     				<td>　</td>

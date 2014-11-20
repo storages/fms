@@ -48,4 +48,8 @@ public class QuotationLogicImpl implements QuotationLogic{
 		return quotationDao.findById(id);
 	}
 	
+	public List<Quotation> findQuotationByIds(String [] ids){
+		return this.quotationDao.findQuotationByIds(ids);
+	}
+	
 }

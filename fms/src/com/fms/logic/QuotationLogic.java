@@ -37,4 +37,6 @@ public interface QuotationLogic {
 	
 	public List<Scmcoc> findAll();
 	public Scmcoc findById(String id);
+	
+	public List<Quotation> findQuotationByIds(String [] ids);
 }

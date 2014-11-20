@@ -57,11 +57,9 @@ public class QuotationAction extends BaseAction {
 	 */
 	public String findQuotations() {
 		try {
+			System.out.println("我来过了");
 			begineffectDate = "".equals(begineffectDate)?null:begineffectDate;
 			endeffectDate = "".equals(endeffectDate)?null:endeffectDate;
-			/*SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-	        String str = formatDate.format(begineffectDate);
-	        String str2 = formatDate.format(endeffectDate);*/
 			Date date = null;
 	        if(null!=begineffectDate){
 	        	date = new SimpleDateFormat("yyyy-MM-dd").parse(begineffectDate); 
@@ -70,14 +68,6 @@ public class QuotationAction extends BaseAction {
 	        if(null!=endeffectDate){
 	        	date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endeffectDate); 
 	        }
-	        /*Date time1 = null;
-	        Date time2 = null;
-	        try {
-	            time1 = formatDate.parse(str);
-	            time2 = formatDate.parse(str2);
-	        } catch (ParseException e) {
-	            e.printStackTrace();
-	        }*/
 			Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
 			dataTotal = this.quotationLogic.findDataCount(parse(scmCocName),parse(hsCode),(begineffectDate==null||"".equals(begineffectDate))?null:date,(endeffectDate==null||"".equals(endeffectDate))?null:date2);
@@ -130,6 +120,15 @@ public class QuotationAction extends BaseAction {
 		if(null!=list && list.size()>0){
 			this.quotationLogic.saveQuotations(list);
 		}
+	}
+	
+	public String editQuotation(){
+		String [] idArr = ids.split(",");
+		if(null!=idArr&&idArr.length>0){
+			List<Quotation> list = this.quotationLogic.findQuotationByIds(idArr);
+			this.saveQuotation(list);
+		}
+		return this.SUCCESS;
 	}
 	
 	private Integer pageCount(Integer maxIndex,Integer dataTotal){

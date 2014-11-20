@@ -61,4 +61,15 @@ public class QuotationDaoImpl extends BaseDaoImpl implements QuotationDao{
 	public Scmcoc findById(String id){
 		return (Scmcoc) this.findUniqueResult("from Scmcoc a where a.id = ?", new Object[]{id});
 	}
+	
+	public List<Quotation> findQuotationByIds(String [] ids){
+		if(ids!=null && ids.length>0){
+			String hql = "select a from Quotation a where 1=1 and a.id = ? ";
+			for(int i = 1 ;i<ids.length;i++){
+				hql += " or a.id = ? ";
+			}
+			return this.find(hql, ids);
+		}
+		return null;
+	}
 }

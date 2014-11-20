@@ -9,6 +9,11 @@ function showTableEdit(obj, array) {
 			j++;
 			for ( var k = 0; k < index.length; k++) {
 				if (index[k] == j) {
+					var inputcounts = tdarr[i].getElementsByTagName("input").length;
+					console.info("text框有"+inputcounts+"个");
+					if(inputcounts>0){
+						return;
+					}
 					var value = tdarr[i].innerHTML;
 					var currWidth = tdarr[i].offsetWidth;
 					var currHeight = tdarr[i].offsetHeight;
@@ -36,6 +41,7 @@ function showTableEdit(obj, array) {
 			}
 		}
 	}
+	obj.disabled=false;
 }
 
 function closeTableEdit(obj, array) {

@@ -81,7 +81,7 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="closeAllEdit('sample-table-1','10,11,12')">保存</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
 					批量删除
 				</button>
@@ -130,7 +130,7 @@
 					</c:forEach>
 				</select>
 			</p>
-					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-top:2px;">
+					<table id="sample-table-2" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-top:2px;">
 						<thead>
 							<tr align="center">
 								<th class="center" style="width:30px;">选择</th>
@@ -231,5 +231,15 @@ function edit(obj,arr,ids){
 	$('#hid').val(va+","+ids);
 	showTableEdit(obj,arr);
 }
-	
+
+function saveData(arr){
+	$("#sample-table-1 tr").each(function() {
+			var arr = [];
+			$(this).find("input").each(function() {
+				console.info($(this).val());
+				arr.push($(this).val());
+			});
+		});
+	//closeAllEdit('sample-table-1','10,11,12');
+}	
 </script>

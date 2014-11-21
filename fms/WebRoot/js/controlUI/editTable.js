@@ -44,7 +44,8 @@ function showTableEdit(obj, array) {
 					if (tag > 0 && currWidth != tag) {
 						currWidth = tag;
 					}
-					tdarr[i].style.padding = "4px";
+					tdarr[i].style.padding = "0px";
+					tdarr[i].style.paddingTop = "4px";
 					tdarr[i].innerHTML = "<input type='text' value='"
 							+ value
 							+ "' id='"
@@ -52,8 +53,8 @@ function showTableEdit(obj, array) {
 							+ "_"
 							+ j
 							+ "' style='height:25px;width:"
-							+ currWidth
-							+ ";margin:0px;padding:0px;background-color: #FFFFCC;font-size:12px;color:black;'/>";
+							+ (currWidth+35)
+							+ "px;margin:0px;padding:0px;background-color: #FFFFCC;font-size:12px;color:black;'/>";
 					var ele = $("#" + i + "_" + j);
 					// ele.css("width",currWidth);
 					/*

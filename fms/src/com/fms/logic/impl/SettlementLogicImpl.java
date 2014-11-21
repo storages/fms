@@ -54,11 +54,13 @@ public class SettlementLogicImpl implements SettlementLogic {
 		Map<String,Settlement> mapSelf = new HashMap<String,Settlement>();
 		Map<String,Settlement> settCache = new HashMap<String,Settlement>();
 		Map<String,Settlement> settcode = new HashMap<String,Settlement>();
+		Map<String,Settlement> settName = new HashMap<String,Settlement>();
 		//定义关键key
 		for(Settlement settl:settls){
 			String key = settl.getCode()+"/"+settl.getName();
 			settCache.put(key, settl);
 			settcode.put(settl.getCode(),settl);
+			settName.put(settl.getName(),settl);
 		}
 		//验证数据
 		for(Object obj:dataList){
@@ -75,8 +77,14 @@ public class SettlementLogicImpl implements SettlementLogic {
 				}
 			}
 			if(null==impSett.getName() || "".equals(impSett.getName().trim())){
-				String mess = "仓库名称不能为空; ";
+				String mess = "结算方式名称不能为空; ";
 				temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
+			}
+			if(null==impSett.getName() || "".equals(impSett.getName().trim())){
+				if(settName.get(impSett.getName())!=null){
+					String mess = "结算方式名称【"+impSett.getName()+"】已存在; ";
+					temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
+				}
 			}
 			String key2 = impSett.getCode()+"/"+impSett.getName();
 			//验证导入数据在系统中是否重复

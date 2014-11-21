@@ -1,12 +1,12 @@
 package com.fms.action;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import net.sf.json.JSONArray;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Material;
@@ -14,7 +14,8 @@ import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.QuotationLogic;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
+
 
 
 /**
@@ -57,7 +58,6 @@ public class QuotationAction extends BaseAction {
 	 */
 	public String findQuotations() {
 		try {
-			System.out.println("我来过了");
 			begineffectDate = "".equals(begineffectDate)?null:begineffectDate;
 			endeffectDate = "".equals(endeffectDate)?null:endeffectDate;
 			Date date = null;
@@ -70,8 +70,8 @@ public class QuotationAction extends BaseAction {
 	        }
 			Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-			dataTotal = this.quotationLogic.findDataCount(parse(scmCocName),parse(hsCode),(begineffectDate==null||"".equals(begineffectDate))?null:date,(endeffectDate==null||"".equals(endeffectDate))?null:date2);
-			List<Quotation> quotations = this.quotationLogic.findQuotations(parse(scmCocName),parse(hsCode),begineffectDate==null?null:date,endeffectDate==null?null:date2, -1, -1);
+			dataTotal = this.quotationLogic.findDataCount(parseValue(scmCocName),parseValue(hsCode),(begineffectDate==null||"".equals(begineffectDate))?null:date,(endeffectDate==null||"".equals(endeffectDate))?null:date2);
+			List<Quotation> quotations = this.quotationLogic.findQuotations(parseValue(scmCocName),parseValue(hsCode),begineffectDate==null?null:date,endeffectDate==null?null:date2, -1, -1);
 			List<Material> mlist = materLogic.findAllMaterialInfo(hsCode, null, -1, -1);
 			List<Scmcoc> scmcocs = quotationLogic.findAll();
 			this.request.put("scmcocs", scmcocs);
@@ -80,8 +80,8 @@ public class QuotationAction extends BaseAction {
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
 			this.request.put("pageNums", pageCount(max, dataTotal));
-			this.request.put("scmCocName", parse(scmCocName));
-			this.request.put("hsCode", parse(hsCode));
+			this.request.put("scmCocName", parseValue(scmCocName));
+			this.request.put("hsCode", parseValue(hsCode));
 			this.request.put("begineffectDate", begineffectDate==null?null:begineffectDate);
 			this.request.put("endeffectDate", endeffectDate==null?null:endeffectDate);
 			//findMaterial();
@@ -123,10 +123,27 @@ public class QuotationAction extends BaseAction {
 	}
 	
 	public String editQuotation(){
-		String [] idArr = ids.split(",");
-		if(null!=idArr&&idArr.length>0){
-			List<Quotation> list = this.quotationLogic.findQuotationByIds(idArr);
-			this.saveQuotation(list);
+		List<List<String>> list = this.parseJsonArr(jsonstr);
+		List<Quotation> editData = new ArrayList<Quotation>();
+		if(null!=list && list.size()>0){
+			for(List<String> ldata:list){
+				List<String> contents = ldata;
+				if(null!=contents && contents.size()>0){
+					try {
+						System.out.println(contents.get(2).replace((char) 12288, ' '));
+						Quotation quotation = this.quotationLogic.findQuotationById(className, contents.get(0));
+						quotation.setPrice(contents.get(1)==null||"".equals(contents.get(1))||"".equals(contents.get(1).trim())||"null".equals(contents.get(1).trim())?null:Double.parseDouble(contents.get(1).trim()));//单价
+						System.out.println(contents.get(2).trim());
+						quotation.setEffectDate(contents.get(2)==null||"".equals(contents.get(2))||"".equals(contents.get(2).trim())||"null".equals(contents.get(2).trim())?null:new SimpleDateFormat("yyyy-MM-dd").parse(contents.get(2).trim()));//生效日期
+						quotation.setNote((contents.get(3)==null||"".equals(contents.get(3))||"".equals(contents.get(3).trim())||"null".equals(contents.get(3).trim())?null:parseValue(contents.get(3).trim())));//备注
+						editData.add(quotation);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			this.saveQuotation(editData);
+			this.findQuotations();
 		}
 		return this.SUCCESS;
 	}
@@ -242,6 +259,7 @@ public class QuotationAction extends BaseAction {
 	public void setScmid(String scmid) {
 		this.scmid = scmid;
 	}
+
 
 
 

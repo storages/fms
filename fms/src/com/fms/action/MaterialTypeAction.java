@@ -66,8 +66,8 @@ public class MaterialTypeAction extends BaseAction {
 		if (null != ids && !"".equals(ids)) {
 			mater.setId(ids);
 		}
-		mater.setTypeName(parse(name));
-		mater.setNote(parse(note));
+		mater.setTypeName(parseValue(name));
+		mater.setNote(parseValue(note));
 		return mater;
 	}
 	

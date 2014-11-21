@@ -2,9 +2,13 @@
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -43,7 +47,7 @@ public class BaseAction extends ActionSupport {
 	 * @param value
 	 * @return
 	 */
-	protected String parse(String value) {
+	protected String parseValue(String value) {
 		if(null!=value && !"".equals(value)){
 			try {
 				return URLDecoder.decode(value, "utf-8");
@@ -53,4 +57,41 @@ public class BaseAction extends ActionSupport {
 		}
 		return null;
 	}
+	
+protected List<List<String>> parseJsonArr(String str) {
+	JSONArray jsonArr = JSONArray.fromObject(str);
+	String [] arr = jsonArr.toString().split("],");
+	List<List<String>> list = new ArrayList<List<String>>();
+	for(int i=0;i<arr.length;i++){
+		String newstr = arr[i].replace('[', ' ').replace(']', ' ').replace('"', ' ').replace('　', ' ').trim();
+		List<String> values = new ArrayList<String>();
+		String [] arrs = newstr.split(",");
+		for(int j=0;j<arrs.length;j++){
+			try {
+				values.add(URLDecoder.decode(arrs[j].toString().trim(),"utf-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		list.add(values);
+	}
+	return list;
+}	
+	
+	
+	
+	/**
+	 * 前台传来的json格式字符串
+	 */
+	protected String jsonstr;
+
+	public String getJsonstr() {
+		return jsonstr;
+	}
+
+	public void setJsonstr(String jsonstr) {
+		this.jsonstr = jsonstr;
+	}
+	
+	
 }

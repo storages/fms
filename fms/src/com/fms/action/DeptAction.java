@@ -43,13 +43,13 @@ public class DeptAction extends BaseAction {
 	public String findAllDept() throws Exception{
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-		dataTotal = this.deptLogic.findDataCount(className,parse(searchStr));
-		List<Department> depts = this.deptLogic.findAllDept(parse(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+		dataTotal = this.deptLogic.findDataCount(className,parseValue(searchStr));
+		List<Department> depts = this.deptLogic.findAllDept(parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		request.put("depts", depts);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
 		this.request.put("pageNums", pageCount(max, dataTotal));
-		this.request.put("searchStr", parse(searchStr));
+		this.request.put("searchStr", parseValue(searchStr));
 		return this.SUCCESS;
 	}
 
@@ -100,9 +100,9 @@ public class DeptAction extends BaseAction {
 		if(null!=ids && !"".equals(ids)){
 			dept.setId(ids);
 		}
-		dept.setCode(parse(code));
-		dept.setName(parse(name));
-		dept.setNote(parse(note));
+		dept.setCode(parseValue(code));
+		dept.setName(parseValue(name));
+		dept.setNote(parseValue(note));
 		return dept;
 	}
 

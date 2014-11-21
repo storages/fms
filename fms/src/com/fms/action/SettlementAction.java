@@ -53,7 +53,7 @@ public class SettlementAction extends BaseAction {
 	
 	
 	public String findAllSett(){
-		List<Settlement> settlements = this.settlementLogic.findAllSettlement(this.parse(searhStr));
+		List<Settlement> settlements = this.settlementLogic.findAllSettlement(this.parseValue(searhStr));
 		this.request.put("settlements", settlements);
 		return this.SUCCESS;
 	}
@@ -153,9 +153,9 @@ public class SettlementAction extends BaseAction {
 		if(null!=ids && !"".equals(ids)){
 			settl.setId(ids);
 		}
-		settl.setCode(parse(code));
-		settl.setName(parse(name));
-		settl.setNote(parse(note));
+		settl.setCode(parseValue(code));
+		settl.setName(parseValue(name));
+		settl.setNote(parseValue(note));
 		return settl;
 	}
 	

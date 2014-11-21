@@ -74,13 +74,13 @@ public class ScmcocAction extends BaseAction {
 		// 是客户
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-		dataTotal = this.scmcocLogic.findDataCount(className,Boolean.parseBoolean(isCustom),parse(searchStr));
-		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),parse(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+		dataTotal = this.scmcocLogic.findDataCount(className,Boolean.parseBoolean(isCustom),parseValue(searchStr));
+		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(Boolean.parseBoolean(isCustom),parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		this.request.put("scmcocs", scmcocs);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
 		this.request.put("pageNums", pageCount(max, dataTotal));
-		this.request.put("searchStr", parse(searchStr));
+		this.request.put("searchStr", parseValue(searchStr));
 		if("true".equals(isCustom)){
 			return "cis";//是客户页面请求
 		}
@@ -309,14 +309,14 @@ public class ScmcocAction extends BaseAction {
 		if(null!=ids && !"".equals(ids)){
 			scmcoc.setId(ids);
 		}
-		scmcoc.setCode(parse(code));
-		scmcoc.setName(parse(name));
-		scmcoc.setLinkPhone(parse(linkPhone));
-		scmcoc.setLinkMan(parse(linkMan));
-		scmcoc.setNetworkLink(parse(networkLink));
-		scmcoc.setAddress(parse(address));
+		scmcoc.setCode(parseValue(code));
+		scmcoc.setName(parseValue(name));
+		scmcoc.setLinkPhone(parseValue(linkPhone));
+		scmcoc.setLinkMan(parseValue(linkMan));
+		scmcoc.setNetworkLink(parseValue(networkLink));
+		scmcoc.setAddress(parseValue(address));
 		scmcoc.setEndDate(endDate);
-		scmcoc.setNote(parse(note));
+		scmcoc.setNote(parseValue(note));
 		if(null!=settlementId && !"".equals(settlementId)){
 			//查询结算方式
 			Settlement stt = settlementLogic.findSettById(settlementId);

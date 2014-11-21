@@ -65,14 +65,14 @@ public class MaterialAction extends BaseAction {
 		try {
 			Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-			dataTotal = this.materLogic.findDataCount(className,parse(searchStr));
+			dataTotal = this.materLogic.findDataCount(className,parseValue(searchStr));
 			//imgExgFlag = (this.context.getSession().get("imgExgFlag")!=null)?this.context.getSession().get("imgExgFlag").toString():imgExgFlag;
-			List<Material> material = this.materLogic.findAllMaterialInfo(parse(searchStr),imgExgFlag,(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+			List<Material> material = this.materLogic.findAllMaterialInfo(parseValue(searchStr),imgExgFlag,(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 			this.request.put("materials", material);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
 			this.request.put("pageNums", pageCount(max, dataTotal));
-			this.request.put("searchStr", parse(searchStr));
+			this.request.put("searchStr", parseValue(searchStr));
 			this.request.put("imgexgflag", imgExgFlag);
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
@@ -116,18 +116,18 @@ public class MaterialAction extends BaseAction {
 		if(null!=ids && !"".equals(ids)){
 			m.setId(ids);
 		}
-		m.setHsCode(this.parse(hsCode));
-		m.setHsName(this.parse(hsName));
-		m.setColor(this.parse(color));
+		m.setHsCode(this.parseValue(hsCode));
+		m.setHsName(this.parseValue(hsName));
+		m.setColor(this.parseValue(color));
 		m.setImgExgFlag(imgExgFlag);
 		m.setQty((qty==null||"".equals(qty))?0.0:Double.parseDouble(qty));
-		m.setModel(this.parse(model));
+		m.setModel(this.parseValue(model));
 		m.setBatchNO(batchNO);
 		m.setLowerQty((lowerQty==null||"".equals(lowerQty))?0.0:Double.parseDouble(lowerQty));
-		m.setNote(this.parse(note));
+		m.setNote(this.parseValue(note));
 		List<Unit> list = this.materLogic.findAllUnit();
 		for(Unit u:list ){
-			if(u.getName().equals(this.parse(unit))){
+			if(u.getName().equals(this.parseValue(unit))){
 				m.setUnit(u);
 				break;
 			}

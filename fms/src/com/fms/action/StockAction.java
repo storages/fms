@@ -69,14 +69,14 @@ public class StockAction extends BaseAction {
 				: Integer.parseInt(currIndex);// 当前第几页
 		Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer
 				.parseInt(currIndex);// 每页最多显示条数
-		dataTotal = this.stockLogic.findDataCount(className, parse(searchStr));
-		List<Stock> stocks = this.stockLogic.findAllStock(parse(searchStr),
+		dataTotal = this.stockLogic.findDataCount(className, parseValue(searchStr));
+		List<Stock> stocks = this.stockLogic.findAllStock(parseValue(searchStr),
 				(curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 		request.put("stocks", stocks);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
 		this.request.put("pageNums", pageCount(max, dataTotal));
-		this.request.put("searchStr", parse(searchStr));
+		this.request.put("searchStr", parseValue(searchStr));
 		return this.SUCCESS;
 	}
 
@@ -124,9 +124,9 @@ public class StockAction extends BaseAction {
 		if (null != ids && !"".equals(ids)) {
 			stock.setId(ids);
 		}
-		stock.setCode(parse(code));
-		stock.setName(parse(name));
-		stock.setNote(parse(note));
+		stock.setCode(parseValue(code));
+		stock.setName(parseValue(name));
+		stock.setNote(parseValue(note));
 		return stock;
 	}
 

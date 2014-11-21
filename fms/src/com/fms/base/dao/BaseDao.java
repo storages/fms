@@ -203,4 +203,11 @@ public interface BaseDao {
 	 * @return
 	 */
 	public Integer getSerialNo(String clazz);
+	
+	/**
+	 * 根据id查找实体
+	 * @param id
+	 * @return
+	 */
+	public Object findEntityById(String entityName,String id);
 }

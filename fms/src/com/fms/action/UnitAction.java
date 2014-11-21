@@ -66,13 +66,13 @@ private String ids;
 	public String findAllUnit(){
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-		dataTotal = this.unitLogic.findDataCount(className,parse(searchStr));
-		List<Unit> units = this.unitLogic.findAllUnit(parse(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+		dataTotal = this.unitLogic.findDataCount(className,parseValue(searchStr));
+		List<Unit> units = this.unitLogic.findAllUnit(parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		request.put("units", units);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
 		this.request.put("pageNums", pageCount(max, dataTotal));
-		this.request.put("searchStr", parse(searchStr));
+		this.request.put("searchStr", parseValue(searchStr));
 		return this.SUCCESS;
 	}
 	
@@ -121,9 +121,9 @@ private String ids;
 		if(null!=ids && !"".equals(ids)){
 			unit.setId(ids);
 		}
-		unit.setCode(parse(code));
-		unit.setName(parse(name));
-		unit.setNote(parse(note));
+		unit.setCode(parseValue(code));
+		unit.setName(parseValue(name));
+		unit.setNote(parseValue(note));
 		return unit;
 	}
 	

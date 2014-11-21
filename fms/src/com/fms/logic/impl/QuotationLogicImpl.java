@@ -51,5 +51,9 @@ public class QuotationLogicImpl implements QuotationLogic{
 	public List<Quotation> findQuotationByIds(String [] ids){
 		return this.quotationDao.findQuotationByIds(ids);
 	}
+
+	public Quotation findQuotationById(String entityName,String id) {
+		return (Quotation) this.quotationDao.findEntityById(entityName, id);
+	}
 	
 }

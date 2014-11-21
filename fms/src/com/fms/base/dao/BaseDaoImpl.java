@@ -542,4 +542,8 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		return -1;
 	}
 
+	public Object findEntityById(String entityName,String id){
+		return this.findUniqueResult("select a from "+entityName.trim()+" a where a.id = ? ", new Object[]{id});
+	}
+	
 }

@@ -71,13 +71,13 @@ public class CurrenciesAction extends BaseAction {
 	public String findAllCurrencies() {
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-		dataTotal = this.currenciesLogic.findDataCount(className,parse(searchStr));
-		List<Currencies> currencies = this.currenciesLogic.findAllCurrencies(parse(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+		dataTotal = this.currenciesLogic.findDataCount(className,parseValue(searchStr));
+		List<Currencies> currencies = this.currenciesLogic.findAllCurrencies(parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		this.request.put("currencies", currencies);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
 		this.request.put("pageNums", pageCount(max, dataTotal));
-		this.request.put("searchStr", parse(searchStr));
+		this.request.put("searchStr", parseValue(searchStr));
 		return this.SUCCESS;//是货币请求
 	}
 
@@ -138,11 +138,11 @@ public class CurrenciesAction extends BaseAction {
 		if(null!=ids && !"".equals(ids)){
 			currencies.setId(ids);
 		}
-		currencies.setCode(parse(code));
-		currencies.setName(parse(name));
+		currencies.setCode(parseValue(code));
+		currencies.setName(parseValue(name));
 /*		currencies.setCreateDate(createDate); 兄弟，在这里不用手动去设置这两个时间，
 		currencies.setModifyDate(modifyDate); 因为，在BaseDao中已经帮你做了，你可以看一下SavaOrUpdate方法
-*/		currencies.setNote(parse(note));
+*/		currencies.setNote(parseValue(note));
 		return currencies;
 	}
 

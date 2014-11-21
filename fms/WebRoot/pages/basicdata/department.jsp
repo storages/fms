@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','Department')">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
+				
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>

@@ -235,6 +235,23 @@ function edit(obj,arr,ids){
 function saveData(){
 	var jsonstr = getModifyData();
 	var url = "${pageContext.request.contextPath}/quotation_editQuotation.action?jsonstr="+jsonstr;
-	toMain(url);
+	$.ajax({
+		     type: "POST",
+		     url:url,
+		     async: false,
+		     cache: false,
+		     success:function(data){
+		     var result=jQuery.parseJSON(data);
+		     if(!result.success){
+		     		alert(result.msg);
+		     	}else{
+		     		url = "${pageContext.request.contextPath}/quotation_findQuotations.action";
+		     		toMain(url);
+		     	}
+		     },error:function(){
+		        	alert("程序异常，请重新启动程序！");
+		      }
+		  	});
+	//toMain(url);
 }	
 </script>

@@ -233,25 +233,7 @@ function edit(obj,arr,ids){
 }
 
 function saveData(){
-var dataArr = [];
-	$("#sample-table-1 tr").each(function() {
-			var arr = [];
-			var inputcount = $(this).find("input").length;
-			if(undefined!=inputcount && ""!=inputcount && inputcount>1){
-				$(this).find("input").each(function() {
-					var objectValue = $(this).val();
-					if(undefined!=objectValue && ""!=objectValue){
-						var objectValue = objectValue.replace(/　/g,"").replace(/\s/g,"").replace("　","");//去除中文全角空格
-						arr.push(encodeURI(encodeURI(objectValue)));//把中文字符转换成特定编码，如：%45%56...类型,以防乱码！
-						//alert(encodeURI(encodeURI(objectValue)));
-					}else{
-						arr.push(null);
-					}
-				});
-				dataArr.push(arr);
-			}
-		});
-	var jsonstr = JSON.stringify(dataArr); //返回字符串
+	var jsonstr = getModifyData();
 	var url = "${pageContext.request.contextPath}/quotation_editQuotation.action?jsonstr="+jsonstr;
 	toMain(url);
 }	

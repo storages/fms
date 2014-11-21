@@ -1,4 +1,28 @@
 var tag = 0;
+
+function getModifyData(){
+	var dataArr = [];
+	$("#sample-table-1 tr").each(function() {
+			var arr = [];
+			var inputcount = $(this).find("input").length;
+			if(undefined!=inputcount && ""!=inputcount && inputcount>1){
+				$(this).find("input").each(function() {
+					var objectValue = $(this).val();
+					if(undefined!=objectValue && ""!=objectValue){
+						var objectValue = objectValue.replace(/　/g,"").replace(/\s/g,"").replace("　","");//去除中文全角空格
+						arr.push(encodeURI(encodeURI(objectValue)));//把中文字符转换成特定编码，如：%45%56...类型,以防乱码！
+						//alert(encodeURI(encodeURI(objectValue)));
+					}else{
+						arr.push(null);
+					}
+				});
+				dataArr.push(arr);
+			}
+		});
+	var jsonstr = JSON.stringify(dataArr); //返回字符串
+	return jsonstr;
+}
+
 function showTableEdit(obj, array) {
 	var tr = obj.parentNode.parentNode;
 	var index = array.split(",");
@@ -29,7 +53,7 @@ function showTableEdit(obj, array) {
 							+ j
 							+ "' style='height:25px;width:"
 							+ currWidth
-							+ ";margin:0px;padding:0px;background-color: #FFFFCC;font-size:11px;'/>";
+							+ ";margin:0px;padding:0px;background-color: #FFFFCC;font-size:12px;color:black;'/>";
 					var ele = $("#" + i + "_" + j);
 					// ele.css("width",currWidth);
 					/*
@@ -81,4 +105,5 @@ function closeAllEdit(obj, array) {
 			closeAllEdit(obj, array);
 		}
 	}
+	
 }

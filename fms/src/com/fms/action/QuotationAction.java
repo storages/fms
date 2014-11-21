@@ -161,7 +161,7 @@ public class QuotationAction extends BaseAction {
 							quotation.setNote((contents.get(3)==null||"".equals(contents.get(3))||"".equals(contents.get(3).trim())||"null".equals(contents.get(3).trim())?null:parseValue(contents.get(3).trim())));//备注
 							editData.add(quotation);
 							this.saveQuotation(editData);
-							this.findQuotations();
+							//this.findQuotations();
 							result.setSuccess(true);
 						}else{
 							result.setSuccess(false);

@@ -1,5 +1,6 @@
 ﻿package com.fms.action;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,8 @@ public class AclUserAction extends BaseAction {
 	private AclUserLogic userLogic;
 	private String userName;
 	private String password;
+	private String loginName;
+	private String userFlag;
 	protected String ids;
 	protected String forget;//记住密码
 	/**
@@ -141,6 +144,32 @@ public class AclUserAction extends BaseAction {
 		}
 	}
 
+	public void registerUser(){
+		System.out.println("注册");
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		try {
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			AclUser user = new AclUser();
+			user.setLoginName(loginName);
+			user.setUserName(userName);
+			user.setUserFlag(userFlag);
+			user.setPassword(MD5Util.encryptData(password.trim()));
+			this.userLogic.saveAclUser(user);
+			result.setSuccess(true);
+			result.setMsg("注册成功");
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (IOException e) {
+			result.setMsg("注册失败");
+			result.setSuccess(false);
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 禁用或启用用户账号
 	 * @return
@@ -174,6 +203,10 @@ public class AclUserAction extends BaseAction {
 		return userLogic;
 	}
 
+	public static void main(String[] args) {
+		System.out.println(MD5Util.encryptData("admin"));
+	}
+	
 	public void setUserLogic(AclUserLogic userLogic) {
 		this.userLogic = userLogic;
 	}
@@ -216,6 +249,22 @@ public class AclUserAction extends BaseAction {
 
 	public void setForget(String forget) {
 		this.forget = forget;
+	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	public String getUserFlag() {
+		return userFlag;
+	}
+
+	public void setUserFlag(String userFlag) {
+		this.userFlag = userFlag;
 	}
 
 }

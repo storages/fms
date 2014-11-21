@@ -29,18 +29,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <a href="${pageContext.request.contextPath}/users_findUsers.action">测试Action跳转</a>
+    <a href="${pageContext.request.contextPath}/users_findAllUser.action">测试Action跳转</a>
     <hr/>
     <br/>
     <h4>测试注册功能</h4>
-    <form action="${pageContext.request.contextPath}/users_saveUser.action" method="post">
-		登&nbsp;录&nbsp;名: <input type="text" name="user.loginName"/> <br/>
-		用&nbsp;户&nbsp;名: <input type="text" name="user.userName"/>  <br/>
-		密　　码: <input type="password" name="user.password"/>  <br/>
-		重复密码: <input type="password" name="repass"/><br/>
-		是否是管理员　<input type="radio" name="user.userFlag" value="S"/>是　　<input type="radio" name="user.userFlag" value="O"/>否
-		<br/><input type="submit" value="注册"/>
-    </form>
+		登&nbsp;录&nbsp;名: <input type="text" name="user.loginName" onblur="checkloginName()"/> <br/>
+		用&nbsp;户&nbsp;名: <input type="text" name="user.userName" onblur="checkuserName()"/>  <br/>
+		密　　码: <input type="password" name="user.password" onblur="checkuserpass()"/>  <br/>
+		重复密码: <input type="password" name="repass" onblur="checkrepass()"/><br/>
+		是否是管理员　<input type="radio" name="user.userFlag" value="S"/>是　　<input type="radio" name="user.userFlag" value="O" checked="checked"/>否
+		<br/><input type="button" value="注册" onclick="register()"/>
     
     <hr/>
     <br/>
@@ -144,6 +142,91 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	$("#mess").html("登录异常，请重新启动程序！");
 	      }
 	  	});
+  	}
+  	
+  	function register(){
+	  	var loginName = $("input[name='user.loginName']").val();
+	  	var userName = $("input[name='user.userName']").val();
+	  	var password = $("input[name='user.password']").val();
+	  	var userFlag = $("input[name='user.userFlag']").filter(":checked").val();
+	  	if(checkData()){
+	  		var url = "${pageContext.request.contextPath}/users_registerUser.action?loginName="+loginName+"&userName="+userName+"&password="+password+"&userFlag="+userFlag;
+	  		$.ajax({
+		     type: "POST",
+		     url:url,
+		     async: false,
+		     cache: false,
+		     success:function(data){
+		     var result=jQuery.parseJSON(data);
+		     if(!result.success){
+		     		alert(result.msg);
+		     	}else{
+		     		alert(result.msg);
+		     		url = "${pageContext.request.contextPath}/index.jsp";
+		     		window.location.href=url;
+		     	}
+		     },error:function(){
+		        	alert("程序异常，请重新启动程序！");
+		      } 
+		  	});
+	  	}
+  	}
+  	
+  	function checkloginName(){
+  		var loginName = $("input[name='user.loginName']").val();
+	  	if(loginName==""){
+	  		alert("登录名不能为空");
+	  		return false;
+	  	}
+	  	return true;
+  	}
+  	function checkuserName(){
+  		var userName = $("input[name='user.userName']").val();
+	  	if(userName==""){
+	  		alert("用户名不能为空");
+	  		return false;
+	  	}
+	  	return true;
+  	}
+  	function checkuserpass(){
+	  	var userpass = $("input[name='user.password']").val();
+	  	if(userpass==""){
+	  		alert("密码不能为空");
+	  		return false;
+	  	}
+	  	return true;
+  	}
+  	function checkrepass(){
+	  	var repass = $("input[name='repass']").val();
+	  	var userpass = $("input[name='user.password']").val();
+	  	if(repass==""){
+	  		alert("再次输入密码");
+	  		return false;
+	  	}else if(userpass!=repass){
+	  		alert("两次输入的密码不一致");
+	  		return false;
+	  	}
+	  	return true;
+  	}
+  	function checkData(){
+  		var ispass = true;
+	  	if(!checkloginName()){
+	  		ispass = false;
+	  		return ispass;
+	  	}
+	  	if(!checkuserName()){
+	  		ispass = false;
+	  		return ispass;
+	  	};
+	  	if(!checkuserpass()){
+	  		ispass = false;
+	  		return ispass;
+	  	};
+	  	if(!checkrepass()){
+	  		ispass = false;
+	  		return ispass;
+	  	};
+	  	return ispass;
   	}
   </script>
 </html>

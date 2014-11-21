@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="${pageContext.request.contextPath}/js/jquery-1.8.2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/utils/cookieUtils.js"></script>
 	<script src="${pageContext.request.contextPath}/js/login/login.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/js/menujump/menuBindUrl.js"></script>
     <%-- <link href="<%=path%>/css/page/login.css" rel="stylesheet" type="text/css" /> --%>
 	<style type="text/css">
 		body,div,img,table,tr,td{margin:0 auto; padding:0px;}
@@ -31,6 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		.mess{font-size: 12px; color:red;font-weight: bold; margin-left: 5px;}
 		.info{position: absolute;}
 	</style>
+  
   </head>
   <body onload="shownotes()">
   	<div class="besidebox">

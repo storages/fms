@@ -7,16 +7,17 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
-	type="text/css"></link>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dialog/dialogCss.css" type="text/css"></link>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/dialog/dialog.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+
+
+
 <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;">
 	<span style="font-size: 14px; font-weight: bold;">报价单</span>
 </div>

@@ -153,7 +153,12 @@
 									<td>${mater.hsName}</td>
 									<td>${mater.unit.name}</td>
 									<td>${mater.model}</td>
-									<td>${mater.imgExgFlag}</td>
+									<c:if test="${mater.imgExgFlag=='I'}">
+										<td>原料</td>
+									</c:if>
+									<c:if test="${mater.imgExgFlag=='E'}">
+										<td>成品</td>
+									</c:if>
 									<td>${mater.note}</td>
 								</tr>
 							</c:forEach>

@@ -72,7 +72,7 @@
 										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
 										<td class="center">
 											<a href="javascript:void(0);" onclick="edit(this,'10,11,12')">修改</a>｜
-											<a href="javascript:void(0);" onclick="">删除</a>
+											<a href="javascript:void(0);" onclick="delData('${quotation.id}','Quotation')">删除</a>
 										</td>
 								</tr>
 							</c:forEach>
@@ -82,7 +82,7 @@
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','Quotation')">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>

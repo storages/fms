@@ -1,5 +1,6 @@
 package com.fms.action;
 
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.QuotationLogic;
+import com.fms.utils.AjaxResult;
+import com.url.ajax.json.JSONObject;
 
 
 
@@ -122,7 +125,9 @@ public class QuotationAction extends BaseAction {
 		}
 	}
 	
-	public String editQuotation(){
+	public void editQuotation(){
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
 		List<List<String>> list = this.parseJsonArr(jsonstr);
 		List<Quotation> editData = new ArrayList<Quotation>();
 		if(null!=list && list.size()>0){
@@ -130,22 +135,48 @@ public class QuotationAction extends BaseAction {
 				List<String> contents = ldata;
 				if(null!=contents && contents.size()>0){
 					try {
-						System.out.println(contents.get(2).replace((char) 12288, ' '));
+						String msg = "";
 						Quotation quotation = this.quotationLogic.findQuotationById(className, contents.get(0));
-						quotation.setPrice(contents.get(1)==null||"".equals(contents.get(1))||"".equals(contents.get(1).trim())||"null".equals(contents.get(1).trim())?null:Double.parseDouble(contents.get(1).trim()));//单价
-						System.out.println(contents.get(2).trim());
-						quotation.setEffectDate(contents.get(2)==null||"".equals(contents.get(2))||"".equals(contents.get(2).trim())||"null".equals(contents.get(2).trim())?null:new SimpleDateFormat("yyyy-MM-dd").parse(contents.get(2).trim()));//生效日期
-						quotation.setNote((contents.get(3)==null||"".equals(contents.get(3))||"".equals(contents.get(3).trim())||"null".equals(contents.get(3).trim())?null:parseValue(contents.get(3).trim())));//备注
-						editData.add(quotation);
+						if(contents.get(1)==null||"".equals(contents.get(1))||"".equals(contents.get(1).trim())||"null".equals(contents.get(1).trim())){
+							msg= "单价不能为空";
+						}else if(!isNumeric(contents.get(1).trim())){
+							msg= "单价必须是数字";
+						}
+						if(contents.get(2)==null||"".equals(contents.get(2))||"".equals(contents.get(2).trim())||"null".equals(contents.get(2).trim())){
+							msg= "生效日期不能为空";
+						}else{
+							try{
+								new SimpleDateFormat("yyyy-MM-dd").parse(contents.get(2).trim());
+							}catch(ParseException e){
+								msg= "非法的生效日期";
+							}
+						}
+						out = response.getWriter();
+						response.setContentType("application/text");
+						response.setCharacterEncoding("UTF-8");
+						if("".equals(msg)){
+							quotation.setPrice(contents.get(1)==null||"".equals(contents.get(1))||"".equals(contents.get(1).trim())||"null".equals(contents.get(1).trim())?null:Double.parseDouble(contents.get(1).trim()));//单价
+							System.out.println(contents.get(2).trim());
+							quotation.setEffectDate(contents.get(2)==null||"".equals(contents.get(2))||"".equals(contents.get(2).trim())||"null".equals(contents.get(2).trim())?null:new SimpleDateFormat("yyyy-MM-dd").parse(contents.get(2).trim()));//生效日期
+							quotation.setNote((contents.get(3)==null||"".equals(contents.get(3))||"".equals(contents.get(3).trim())||"null".equals(contents.get(3).trim())?null:parseValue(contents.get(3).trim())));//备注
+							editData.add(quotation);
+							this.saveQuotation(editData);
+							this.findQuotations();
+							result.setSuccess(true);
+						}else{
+							result.setSuccess(false);
+							result.setMsg(msg);
+						}
+						JSONObject json = new JSONObject(result);
+						out.println(json.toString());
+						out.flush();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
-			this.saveQuotation(editData);
-			this.findQuotations();
 		}
-		return this.SUCCESS;
+		//return this.SUCCESS;
 	}
 	
 	private Integer pageCount(Integer maxIndex,Integer dataTotal){
@@ -155,6 +186,7 @@ public class QuotationAction extends BaseAction {
 		}
 		return pageNums;
 	}
+	
 	
 	public QuotationLogic getQuotationLogic() {
 		return quotationLogic;

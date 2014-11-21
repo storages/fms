@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -77,8 +78,17 @@ protected List<List<String>> parseJsonArr(String str) {
 	}
 	return list;
 }	
-	
-	
+
+/**
+ * 判断是否是数字
+ * @param str
+ * @return
+ */
+public static boolean isNumeric(String str){ 
+	String reg = "\\d+(\\.\\d+)?"; 
+    return str.matches(reg);  
+ } 
+
 	
 	/**
 	 * 前台传来的json格式字符串

@@ -46,7 +46,7 @@
 								<th class="center">规格型号</th>
 								<th class="center" style="width:60px;">计量单位</th>
 								<th class="center" style="width:50px;">单价</th>
-								<th class="center" style="width:60px;">生效日期</th>
+								<th class="center" style="width:60px;padding:0px;">生效日期<br/>(年-月-日)</th>
 								<th class="center" style="width:100px;">备注</th>
 								<th class="center" style="width:70px;">操作</th>
 							</tr>
@@ -71,7 +71,7 @@
 <%-- 										<td class="hidden-480 center">${quotation.effectDate}　</td> --%>
 										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
 										<td class="center">
-											<a href="javascript:void(0);" onclick="edit(this,'10,11,12','${quotation.id}')">修改</a>｜
+											<a href="javascript:void(0);" onclick="edit(this,'10,11,12')">修改</a>｜
 											<a href="javascript:void(0);" onclick="">删除</a>
 										</td>
 								</tr>
@@ -226,9 +226,7 @@
 	function parse(str){
 		return encodeURI(encodeURI(str));  
 	}
-function edit(obj,arr,ids){
-	var va = $('#hid').val();
-	$('#hid').val(va+","+ids);
+function edit(obj,arr){
 	showTableEdit(obj,arr);
 }
 

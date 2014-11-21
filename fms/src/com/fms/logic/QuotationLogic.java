@@ -41,4 +41,6 @@ public interface QuotationLogic {
 	public List<Quotation> findQuotationByIds(String [] ids);
 	
 	public Quotation findQuotationById(String entityName,String id);
+	
+	public void delQuotationById(String[] ids);
 }

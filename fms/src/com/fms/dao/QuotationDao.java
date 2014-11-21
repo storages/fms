@@ -31,4 +31,6 @@ public interface QuotationDao extends BaseDao{
 	public Scmcoc findById(String id);
 	
 	public List<Quotation> findQuotationByIds(String [] ids);
+	
+	public void delQuotationById(String[] ids);
 }

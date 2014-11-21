@@ -19,7 +19,7 @@ public class QuotationDaoImpl extends BaseDaoImpl implements QuotationDao{
 			params.add("%"+scmCocName+"%");
 		}
 		if(hsCode!=null && !"".equals(hsCode)){
-			hql+=" and m.code like ? ";
+			hql+=" and m.hsCode like ? ";
 			params.add("%"+hsCode+"%");
 		}
 		if(begineffectDate!=null && !"".equals(begineffectDate)){
@@ -41,7 +41,7 @@ public class QuotationDaoImpl extends BaseDaoImpl implements QuotationDao{
 			params.add("%"+scmCocName+"%");
 		}
 		if(hsCode!=null && !"".equals(hsCode)){
-			hql+=" and m.code like ? ";
+			hql+=" and m.hsCode like ? ";
 			params.add("%"+hsCode+"%");
 		}
 		if(begineffectDate!=null && !"".equals(begineffectDate)){
@@ -71,5 +71,16 @@ public class QuotationDaoImpl extends BaseDaoImpl implements QuotationDao{
 			return this.find(hql, ids);
 		}
 		return null;
+	}
+	
+	public void delQuotationById(String[] ids) {
+		String hql = "DELETE FROM Quotation a WHERE a.id = ? ";
+		List param = new ArrayList();
+		param.add(ids[0]);
+		for(int i = 1 ; i < ids.length ; i++){
+			hql+=" or a.id = ? ";
+			param.add(ids[i]);
+		}
+		this.batchUpdateOrDelete(hql, param.toArray());
 	}
 }

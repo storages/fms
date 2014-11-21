@@ -55,5 +55,7 @@ public class QuotationLogicImpl implements QuotationLogic{
 	public Quotation findQuotationById(String entityName,String id) {
 		return (Quotation) this.quotationDao.findEntityById(entityName, id);
 	}
-	
+	public void delQuotationById(String[] ids){
+		this.quotationDao.delQuotationById(ids);
+	}
 }

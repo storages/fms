@@ -68,5 +68,7 @@ public class AclUserLogicImpl implements AclUserLogic {
 		// TODO Auto-generated method stub
 		userDao.deleteAclUserByEmpId(ids);
 	}
-
+	public boolean findUserByName(String name){
+		return userDao.findUserByName(name);
+	}
 }

@@ -38,6 +38,37 @@ public class AclUserAction extends BaseAction {
 
 	/**
 	 * 测试Action
+	 * @return
+	 */
+	public void test(){
+		PrintWriter out = null;
+		AjaxResult result=new AjaxResult();
+		Boolean isExits = null;
+		try {
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			isExits = this.userLogic.findUserByName("admin");
+			if(isExits!=null){
+				result.setMsg("Action跳转成功!");
+				result.setSuccess(true);
+				JSONObject json=new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+		} catch (Exception e) {
+			result.setMsg("Action跳转异常!");
+			result.setSuccess(false);
+			JSONObject json=new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+			out.close();
+		}
+	}
+	
+	/**
+	 * 启动跳转
 	 * 
 	 * @return
 	 */

@@ -54,4 +54,6 @@ public interface AclUserLogic {
 	
 	
 	public AjaxResult saveUserByNoName(AclUser user);
+	
+	public boolean findUserByName(String name);
 }

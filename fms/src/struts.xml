@@ -32,8 +32,8 @@
 			</result>
 		</action>
 
-
-
+		
+	
 
 		<!-- 跳转到登录页面 -->
 		<action name="loginAction_*" class="aclUserAction" method="{1}">

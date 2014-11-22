@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <a href="${pageContext.request.contextPath}/users_findAllUser.action">测试Action跳转</a>
+    <a href="javascript:void(0);" onclick="testAction()">测试Action跳转</a>
     <hr/>
     <br/>
     <h4>测试注册功能</h4>
@@ -110,6 +110,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</table>
   </body>
   <script type="text/javascript">
+  	function testAction(){
+    		var url = "${pageContext.request.contextPath}/users_test.action";
+    		$.ajax({
+		     type: "POST",
+		     url:url,
+		     async: false,
+		     cache: false,
+		     success:function(data){
+		        var result=jQuery.parseJSON(data);
+		     	alert(result.msg);
+		     },error:function(){
+		        	alert("登录异常，请重新启动程序！");
+		      }
+		  	});
+    	}
+  
   	function findUserName(){
 	  	var username = $("#username").val();
 	  	var password = $("#password").val();

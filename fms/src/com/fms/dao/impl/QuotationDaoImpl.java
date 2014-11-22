@@ -30,6 +30,7 @@ public class QuotationDaoImpl extends BaseDaoImpl implements QuotationDao{
 			hql+=" and q.effectDate<= ? ";
 			params.add(endeffectDate);
 		}
+		hql+=" order by q.serialNo asc";
 		return this.findPageList(hql, params.toArray(), index, length);
 	}
 

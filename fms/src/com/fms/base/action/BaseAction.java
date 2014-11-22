@@ -1,5 +1,6 @@
 ﻿package com.fms.base.action;
 
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.fms.utils.AjaxResult;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -42,6 +44,11 @@ public class BaseAction extends ActionSupport {
 	 */
 	protected HttpServletResponse response = ServletActionContext.getResponse();
 	
+	/**
+	 * 处理ajax
+	 */
+	protected PrintWriter out = null;
+	protected AjaxResult result = new AjaxResult();
 	/**
 	 * 翻译字符编码
 	 * 

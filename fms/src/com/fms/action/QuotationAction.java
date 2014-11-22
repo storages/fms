@@ -1,5 +1,6 @@
 package com.fms.action;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,7 +75,7 @@ public class QuotationAction extends BaseAction {
 			Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
 			dataTotal = this.quotationLogic.findDataCount(parseValue(scmCocName),parseValue(hsCode),(begineffectDate==null||"".equals(begineffectDate))?null:date,(endeffectDate==null||"".equals(endeffectDate))?null:date2);
-			List<Quotation> quotations = this.quotationLogic.findQuotations(parseValue(scmCocName),parseValue(hsCode),begineffectDate==null?null:date,endeffectDate==null?null:date2, -1, -1);
+			List<Quotation> quotations = this.quotationLogic.findQuotations(parseValue(scmCocName),parseValue(hsCode),begineffectDate==null?null:date,endeffectDate==null?null:date2, (curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 			List<Material> mlist = materLogic.findAllMaterialInfo(hsCode, null, -1, -1);
 			List<Scmcoc> scmcocs = quotationLogic.findAll();
 			this.request.put("scmcocs", scmcocs);
@@ -119,12 +120,19 @@ public class QuotationAction extends BaseAction {
 		return this.SUCCESS;
 	} 
 	
+	/**
+	 * 保存报价单
+	 * @param list
+	 */
 	private void saveQuotation(List<Quotation> list){
 		if(null!=list && list.size()>0){
 			this.quotationLogic.saveQuotations(list);
 		}
 	}
 	
+	/**
+	 * 修改报价单
+	 */
 	public void editQuotation(){
 		PrintWriter out = null;
 		AjaxResult result = new AjaxResult();
@@ -151,12 +159,14 @@ public class QuotationAction extends BaseAction {
 								msg= "非法的生效日期";
 							}
 						}
+						if(contents.size()<4){
+							contents.add(null);
+						}
 						out = response.getWriter();
 						response.setContentType("application/text");
 						response.setCharacterEncoding("UTF-8");
 						if("".equals(msg)){
 							quotation.setPrice(contents.get(1)==null||"".equals(contents.get(1))||"".equals(contents.get(1).trim())||"null".equals(contents.get(1).trim())?null:Double.parseDouble(contents.get(1).trim()));//单价
-							System.out.println(contents.get(2).trim());
 							quotation.setEffectDate(contents.get(2)==null||"".equals(contents.get(2))||"".equals(contents.get(2).trim())||"null".equals(contents.get(2).trim())?null:new SimpleDateFormat("yyyy-MM-dd").parse(contents.get(2).trim()));//生效日期
 							quotation.setNote((contents.get(3)==null||"".equals(contents.get(3))||"".equals(contents.get(3).trim())||"null".equals(contents.get(3).trim())?null:parseValue(contents.get(3).trim())));//备注
 							editData.add(quotation);
@@ -179,6 +189,45 @@ public class QuotationAction extends BaseAction {
 		//return this.SUCCESS;
 	}
 	
+	/**
+	 * 更新报价单
+	 */
+	public void updatePrice(){
+		try {
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			if(!"".equals(ids)&&null!=ids){
+				String[] idarr = ids.split(",");
+				int count = this.quotationLogic.updatePrice(idarr);
+				if(count==-1){
+					this.result.setMsg("报价单中的单价、生效日期不能为空，请检查!");
+					this.result.setSuccess(false);
+				}else if(count==0){
+					this.result.setMsg("目前没有可更新的内容!");
+					this.result.setSuccess(true);
+				}else if(count>0){
+					this.result.setMsg("成功更新"+count+"条数据!");
+					this.result.setSuccess(true);
+				}
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+			}
+		} catch (IOException e) {
+			this.result.setMsg("更新失败!");
+			this.result.setSuccess(false);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
 	private Integer pageCount(Integer maxIndex,Integer dataTotal){
 		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // 总页数
 		if(pageNums==0){
@@ -188,7 +237,7 @@ public class QuotationAction extends BaseAction {
 	}
 	
 	/**
-	 * 删除仓库信息
+	 * 删除报价单信息
 	 * 
 	 * @return
 	 */

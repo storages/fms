@@ -15,7 +15,7 @@
 		<property name="appStatus" column="APPSTATUS" />
 		<many-to-one name="scmcoc" class="Scmcoc" column="SCMCOC" />
 		<many-to-one name="material" class="Material" column="MATERIAL" />
-		<many-to-one name="quotation" class="Quotation" column="QUOTATION" />
+		<property name="price" column="PRICE" />
 		<property name="totalQty" column="TOTALQTY" />
 		<property name="amount" column="AMOUNT" />
 		<property name="appDate" column="APPDATE" />

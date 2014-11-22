@@ -29,9 +29,9 @@ public class AppBillItem extends BaseEntity{
 	 */
 	private Material material;
 	/**
-	 * 报价单(实体Quotation)
+	 * 单价(来源报价单)
 	 */
-	private Quotation quotation;
+	private Double price;
 	/**
 	 * 申请数量(totalQty)
 	 */
@@ -70,11 +70,12 @@ public class AppBillItem extends BaseEntity{
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
-	public Quotation getQuotation() {
-		return quotation;
+	
+	public Double getPrice() {
+		return price;
 	}
-	public void setQuotation(Quotation quotation) {
-		this.quotation = quotation;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 	public Double getTotalQty() {
 		return totalQty;

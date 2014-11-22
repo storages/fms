@@ -165,6 +165,24 @@
 		</property>
 	</bean>
 	
+	<!-- 申请单表头表体 -->
+	<bean id="appBillDao" class="com.fms.dao.impl.AppBillDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!-- 采购单 -->
+	<bean id="purchaseBillDao" class="com.fms.dao.impl.PurchaseBillDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
 	
 	<!-- 系统启动时，自动加载用户的监听 -->
 	<bean id="createUserListener" class="com.fms.listener.CreateUserListener">
@@ -172,6 +190,7 @@
 			<ref bean="userDao" />
 		</property>
 	</bean>
+	
 	
 	
 	
@@ -273,7 +292,28 @@
 		<property name="quotationDao">
 			<ref bean="quotationDao"/>
 		</property>
+		<property name="appBillDao">
+			<ref bean="appBillDao"/>
+		</property>
+		<property name="purchaseBillDao">
+			<ref bean="purchaseBillDao"/>
+		</property>
 	</bean>
+	
+	<!-- 申请单表头表体 -->
+	<bean id="appBillLogic" class="com.fms.logic.impl.AppBillLogicImpl">
+		<property name="appBillDao">
+			<ref bean="appBillDao"/>
+		</property>
+	</bean>
+	
+	<!-- 采购单 -->
+	<bean id="purchaseBillLogic" class="com.fms.logic.impl.PurchaseBillLogicImpl">
+		<property name="purchaseBillDao">
+			<ref bean="purchaseBillDao"/>
+		</property>
+	</bean>
+	
 	
 	
 	
@@ -399,6 +439,27 @@
 			<ref bean="materLogic" />
 		</property>
 	</bean>
+	
+	<!-- 申请单表头表体 -->
+	<bean id="appBillHead" class="com.fms.action.AppBillAction" scope="prototype">
+		<property name="appBillLogic">
+			<ref bean="appBillLogic"/>
+		</property>
+	</bean>
+	
+	<!-- 采购单 -->
+	<bean id="purchaseBillAction" class="com.fms.action.PurchaseBillAction" scope="prototype">
+		<property name="purchaseBillLogic">
+			<ref bean="purchaseBillLogic"/>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
 	<!-- 上传 -->
 	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils"></bean>
 	<!-- 下载 -->

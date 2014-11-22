@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
+import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 /**
@@ -33,4 +34,6 @@ public interface QuotationDao extends BaseDao{
 	public List<Quotation> findQuotationByIds(String [] ids);
 	
 	public void delQuotationById(String[] ids);
+	
+	
 }

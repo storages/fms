@@ -8,12 +8,13 @@ function getModifyData(){
 			if(undefined!=inputcount && ""!=inputcount && inputcount>1){
 				$(this).find("input").each(function() {
 					var objectValue = $(this).val();
+					alert(objectValue);
 					if(undefined!=objectValue && ""!=objectValue){
 						var objectValue = objectValue.replace(/　/g,"").replace(/\s/g,"").replace("　","");//去除中文全角空格
 						arr.push(encodeURI(encodeURI(objectValue)));//把中文字符转换成特定编码，如：%45%56...类型,以防乱码！
 						//alert(encodeURI(encodeURI(objectValue)));
 					}else{
-						arr.push(null);
+						arr.push(" ");
 					}
 				});
 				dataArr.push(arr);

@@ -18,10 +18,10 @@
 
 
 
-<div class="page-header position-relative" style="margin-bottom: 0px; height:10px;">
-	<span style="font-size: 14px; font-weight: bold;">报价单</span>
+<div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:15px;line-height: 25px;">
+	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">报价单</span>
 </div>
-<div class="modal-footer" style="text-align: left;">
+<div class="modal-footer" style="text-align: left;padding:5px;">
 	<span class="">供应商名称</span><input type="text" id="scmCocName" value="${scmCocName}" style="height:25px;width:100px;" class="" /> 
 	<span class="">物料编码</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
 	<span class="">生效日期</span><input type="text" id="begineffectDate" value="${effectDate}" style="height:25px;width:100px;" class="" /><span>至</span>
@@ -33,7 +33,7 @@
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="span12"  style="height: 430px;">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 						<thead>
 							<tr align="center">
@@ -80,30 +80,32 @@
 					</table>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" style="padding-top:2px;">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','Quotation')">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btn_update">更新单价</button>
 				<!-- 分页 -->
-				<div class="pagination pull-right no-margin" style="width: 700px;">
+				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
 						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
 						</li>
-						<c:if test="${currIndex!=1 && currIndex!=null}">
-						<li class="next"><a href="javascript: gotoPage( 1, ${pageNums} )">首页</a></li>
+						<li class="next"><a href="javascript: gotoPage( 1, ${pageNums} )">首页</a>
+						</li>
+						<c:if test="${currIndex!=1}">
 							<li class="next"><a href="javascript: gotoPage( ${currIndex - 1}, ${pageNums} )">上一页</a>
 							</li>
 						</c:if>
 						<c:if test="${currIndex!=pageNums}">
 							<li class="next"><a href="javascript: gotoPage( ${currIndex + 1}, ${pageNums} )">下一页 </a>
 							</li>
-						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
-						</li>
 						</c:if>
 						
+						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
+						</li>
 					</ul>
 					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag('${pageNums}')">
 						<c:forEach begin="1" end="${pageNums}" var="pnum">
@@ -148,18 +150,18 @@
 							<c:forEach var="mater" items="${mlist}" varStatus="index" step="1">
 								<tr class="center">
 									<td><input type="checkbox" value="${mater.id}" name="materid"/></td>
-									<td>${index.index+1}</td>
-									<td>${mater.hsCode}</td>
-									<td>${mater.hsName}</td>
-									<td>${mater.unit.name}</td>
-									<td>${mater.model}</td>
+									<td>${index.index+1}&nbsp;</td>
+									<td>${mater.hsCode}&nbsp;</td>
+									<td>${mater.hsName}&nbsp;</td>
+									<td>${mater.unit.name}&nbsp;</td>
+									<td>${mater.model}&nbsp;</td>
 									<c:if test="${mater.imgExgFlag=='I'}">
 										<td>原料</td>
 									</c:if>
 									<c:if test="${mater.imgExgFlag=='E'}">
 										<td>成品</td>
 									</c:if>
-									<td>${mater.note}</td>
+									<td>${mater.note}&nbsp;</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -204,6 +206,34 @@
 			});
 		});
 		
+		//更新单价
+		$("#btn_update").click(function(){
+			var params="";//存储选中的id
+			if($("#sample-table-1 input[type='checkbox']:checked").length<=0){
+               alert("请选择单价!");
+               return;
+            }
+			$("#sample-table-1 input[type='checkbox']:checked").each(function(){
+				var prices=$(this).val();
+				params+=prices+","
+			});
+			var url = "${pageContext.request.contextPath}/quotation_updatePrice.action?ids="+params;
+			$.ajax({
+		     type: "POST",
+		     url:url,
+		     async: false,
+		     cache: false,
+		     success:function(data){
+		     	var result=jQuery.parseJSON(data);
+		     	//if(result.success){
+		     		alert(result.msg);
+		     	//}
+		     },error:function(){
+		        	alert("程序异常，请重新启动程序！");
+		      }
+		  	});
+		});
+		
 	});
 	function gototag(pageSize){
 			var n = $("#gonum option:selected").val();
@@ -222,7 +252,7 @@
 		var hsCode = $("#hsCode").val(); 
 		var begineffectDate = $("#begineffectDate").val();
 		var endeffectDate = $("#endeffectDate").val();
-		var likeStr = "scmCocName="+parse(scmCocName)+"&hsCode="+parse(hsCode)+"&begineffectDate="+begineffectDate+"&endeffectDate="+endeffectDate;
+		var likeStr = "scmCocName="+parse(scmCocName)+"&hsCode="+hsCode+"&begineffectDate="+begineffectDate+"&endeffectDate="+endeffectDate+"&currIndex=" + pageNum + "&maxIndex="+ pageSize;
 		// 拼接URL
 		var url = "${pageContext.request.contextPath}/quotation_findQuotations.action?"+likeStr;
 		// 在本窗口中显示指定URL的页面
@@ -230,6 +260,9 @@
 	}
 	
 	function parse(str){
+		if(""==str){
+			return "";
+		}
 		return encodeURI(encodeURI(str));  
 	}
 function edit(obj,arr){
@@ -256,6 +289,5 @@ function saveData(){
 		        	alert("程序异常，请重新启动程序！");
 		      }
 		  	});
-	//toMain(url);
 }	
 </script>

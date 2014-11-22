@@ -3,6 +3,22 @@ function parse(str){
 	return encodeURI(encodeURI(str));  
 }
 
+/*//全选框
+$(function(){
+	$("#checkallbox").change(function(){
+		if($("#checkallbox").attr("checked")){
+			$("#sample-table-1 input[name='sid']").each(function(){
+				$(this).attr("checked",true);
+			});
+		}else{
+			$("#sample-table-1 input[name='sid']").each(function(){
+				$(this).attr("checked",false);
+			});
+		}
+	});
+}*/
+	
+
 
 /*****************************这个独特，另外写的删除*******************/
 

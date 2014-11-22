@@ -97,7 +97,7 @@
 	src="${pageContext.request.contextPath}/js/menujump/menuBindUrl.js"></script>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/controlUI/editTable.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/json2.js"></script>
 </head>
 
 <body oncontextmenu="return false">

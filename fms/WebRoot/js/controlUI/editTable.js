@@ -8,7 +8,6 @@ function getModifyData(){
 			if(undefined!=inputcount && ""!=inputcount && inputcount>1){
 				$(this).find("input").each(function() {
 					var objectValue = $(this).val();
-					alert(objectValue);
 					if(undefined!=objectValue && ""!=objectValue){
 						var objectValue = objectValue.replace(/　/g,"").replace(/\s/g,"").replace("　","");//去除中文全角空格
 						arr.push(encodeURI(encodeURI(objectValue)));//把中文字符转换成特定编码，如：%45%56...类型,以防乱码！
@@ -20,6 +19,10 @@ function getModifyData(){
 				dataArr.push(arr);
 			}
 		});
+	
+	if(typeof JSON == undefined){
+		$('head').append($("<script type='text/javascript' src='${pageContext.request.contextPath}/js/public/json2.js'>"));
+	}
 	var jsonstr = JSON.stringify(dataArr); //返回字符串
 	return jsonstr;
 }
@@ -35,7 +38,6 @@ function showTableEdit(obj, array) {
 			for ( var k = 0; k < index.length; k++) {
 				if (index[k] == j) {
 					var inputcounts = tdarr[i].getElementsByTagName("input").length;
-					console.info("text框有"+inputcounts+"个");
 					if(inputcounts>0){
 						return;
 					}

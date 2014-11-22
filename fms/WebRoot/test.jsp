@@ -31,6 +31,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <a href="javascript:void(0);" onclick="testAction()">测试Action跳转</a>
     <hr/>
+    
+    <a href="javascript:void(0);" onclick="javascript:history.back(-1)">返回上一页面</a>
     <br/>
     <h4>测试注册功能</h4>
 		登&nbsp;录&nbsp;名: <input type="text" name="user.loginName" onblur="checkloginName()"/> <br/>

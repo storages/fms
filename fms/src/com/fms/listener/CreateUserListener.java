@@ -23,10 +23,9 @@ public class CreateUserListener implements ServletContextListener,ApplicationCon
 	}
 
 	public void contextInitialized(ServletContextEvent sc) {
-		System.out.println("----开始加载用户----");
+		System.out.println("----开始初始化默认用户----");
 		ac = WebApplicationContextUtils.getWebApplicationContext(sc.getServletContext());
 		userDao = (AclUserDao) ac.getBean("userDao");
-        System.out.println("-------------"+userDao);
 
 		Boolean isExist = this.userDao.findUserByName("admin");
 		if(!isExist){
@@ -36,8 +35,9 @@ public class CreateUserListener implements ServletContextListener,ApplicationCon
 			aclUser.setPassword(MD5Util.encryptData("admin"));
 			aclUser.setUserFlag("S");
 			userDao.saveAclUser(aclUser);
+			System.out.println("----初始化新用户成功----");
 		}
-		System.out.println("----加载用户结束----");
+		System.out.println("----初始化默认用户结束----");
 	}
 
 	public AclUserDao getUserDao() {

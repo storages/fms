@@ -93,7 +93,7 @@ protected List<List<String>> parseJsonArr(String str) {
  */
 public static boolean isNumeric(String str){ 
 	String reg = "\\d+(\\.\\d+)?"; 
-    return str.matches(reg);  
+    return str.trim().matches(reg);  
  } 
 
 	

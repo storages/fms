@@ -14,7 +14,9 @@
   <listener>
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  
+  <listener>
+	<listener-class>com.fms.listener.CreateUserListener</listener-class>
+  </listener>
     <!-- 编码过滤器 -->
   <filter>
   	<filter-name>characterEncoding</filter-name>

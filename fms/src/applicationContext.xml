@@ -166,7 +166,12 @@
 	</bean>
 	
 	
-	
+	<!-- 系统启动时，自动加载用户的监听 -->
+	<bean id="createUserListener" class="com.fms.listener.CreateUserListener">
+		<property name="userDao">
+			<ref bean="userDao" />
+		</property>
+	</bean>
 	
 	
 	

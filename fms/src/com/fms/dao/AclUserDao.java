@@ -41,9 +41,9 @@ public interface AclUserDao extends BaseDao{
    */
 	public void deleteAclUserByEmpId(String [] empId);
 	/**
-	 * 更具用户名查询用户
+	 * 根据用户名查询用户
 	 * @param name
-	 * @return
+	 * @return true:表示数据库中存在这个用户名       false:表示数据库中不存在这个用户名
 	 */
 	public boolean findUserByName(String name);
 	

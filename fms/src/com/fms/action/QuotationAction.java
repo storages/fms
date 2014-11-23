@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Currencies;
@@ -21,6 +23,7 @@ import com.fms.core.entity.Scmcoc;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.QuotationLogic;
 import com.fms.logic.ScmcocLogic;
+import com.fms.temp.TempCurr;
 import com.fms.temp.TempQuotation;
 import com.fms.utils.AjaxResult;
 import com.fms.utils.ExcelUtil;
@@ -303,8 +306,40 @@ public class QuotationAction extends BaseAction {
 		}
 	}
 	
-	
-	
+	/**
+	 * 清除excel导入验证错误的信息
+	 */
+	public void clearErrorData(){
+		List errorList = new ArrayList();
+		AjaxResult result=new AjaxResult();
+		result.setSuccess(false);
+		net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
+		List list= net.sf.json.JSONArray.toList(jsonArray, new TempQuotation(), new JsonConfig());
+		if(null!=list && list.size()>0){
+			for(int i = 0;i<list.size();i++){
+				TempQuotation tq = (TempQuotation)list.get(i);
+				if(null!=tq.getErrorInfo() && !"".equals(tq.getErrorInfo().trim())){
+					errorList.add(tq);
+				}
+			}
+			list.removeAll(errorList);
+		}
+		Gson gson=new Gson();
+		result.setObj(list);
+		result.setMsg("解析成功");
+		result.setSuccess(true);
+		String str= gson.toJson(result);
+		Writer writer;
+		try {
+			writer = response.getWriter();
+			writer.write(str.toString());
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	

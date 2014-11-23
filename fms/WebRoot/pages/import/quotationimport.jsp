@@ -46,15 +46,15 @@
 	</div>
 	
 	<script id="SXrow" type="text/x-jquery-tmpl">
-	<tr {{if erroris}} style="color: red;" {{/if}}>
-		<td class="center"  style="text-align: left;width: 300px;">{{= errorInfo}}　</td>
-		<td class="center">{{= scmcocCode}}　</td>
-		<td class="center">{{= scmcocName}}　</td>
-		<td class="hidden-480 center">{{= hsCode}}　</td>
-		<td class="hidden-480 center">{{= hsName}}　</td>
-		<td class="hidden-480 center">{{= price}}　</td>
-	</tr>
-</script>
+            <tr  {{if erroris}} style="color: red;" {{/if}}>
+				<td style="text-align: left;">{{= errorInfo}}　</td>
+				<td class="center">{{= scmcocCode}}　</td>
+				<td class="center">{{= scmcocName}}　</td>
+				<td class="center">{{= hsCode}}　</td>
+				<td class="center">{{= hsName}}　</td>
+				<td class="center">{{= price}}　</td>
+				</tr>
+       </script>
   <script type="text/javascript">
 	$(function(){
 	//上传
@@ -93,7 +93,7 @@
 	    });
 	});
 	var excelupload= document.getElementById("excelupload");
-	//图片上传回调函数  //判断IE 解决兼容问题
+	//文件上传回调函数  //判断IE 解决兼容问题
 	if(excelupload.attachEvent){ // IE  
 		excelupload.attachEvent('onload',function(){
 		var html= document.frames["excelupload"].document.body.innerHTML;
@@ -103,6 +103,7 @@
 		          //SXrow
 		         var mylist= json.obj;
 		         resultdata=mylist;
+		         alert(mylist.length);
 		         for(var x=0; x<mylist.length; x++){
 		         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
 		             mylist[x].erroris=true;
@@ -134,7 +135,7 @@
 	             mylist[x].erroris=true;
 	              }
 	         }
-	          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
+	          $("#SXrow").tmpl(json.obj).appendTo("#tbodyquotation");  
 	          }else{
 	    	       $("#waitdiv").hide();
 	    	       alert("解析文件错误！原因："+json.msg);
@@ -154,18 +155,23 @@
 		}
 		
 		function clearErrorData(){
-			var url = "${pageContext.request.contextPath}/importfile_clearErrorData.action";
+			var url = "${pageContext.request.contextPath}/quotation_clearErrorData.action";
 			var paremt={};
 			paremt["sendStr"]=JSON.stringify(resultdata);
 			$.post(url,paremt,function(data){
-				var result=jQuery.parseJSON(data);
+				$.each(data,function(index,item){
+					alert(item);
+				});
+				/* var result=jQuery.parseJSON(data);
 		    	if(result.success){
+		    	 resultdata=result.obj;
+		    	$("#tbodyquotation tr").remove();
 		    		//--------------
-		    		
+		    		var list = result.obj;
+		    		$("#SXrow").tmpl(list).appendTo("#tbodyquotation"); 
 		    		//--------------
-		    	}
+		    	} */
 			});
-			toMain(url);
 		}
 		
 		function posigif(){

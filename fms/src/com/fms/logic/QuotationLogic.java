@@ -65,6 +65,7 @@ public interface QuotationLogic {
 	public void delQuotationById(String[] ids);
 	/**
 	 * 根据报价单id找到报价单信息，再更新相关模块的单价
+	 * 这里在更新申请单单价时，是否只能允许【未申请、申请不通过】的状态才能更新？现状是全部都更新
 	 * @param ids
 	 * @return
 	 */

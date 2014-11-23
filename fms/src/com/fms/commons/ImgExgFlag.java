@@ -15,6 +15,11 @@ public class ImgExgFlag {
 	 */
 	public static final String EXG = "E";
 	
+	/**
+	 * 把值翻译成中文
+	 * @param value
+	 * @return
+	 */
 	public static String descValue(String value){
 		if(null!=value && !"".equals(value.trim())){
 			if(value.trim().equals(ImgExgFlag.IMG)){
@@ -26,6 +31,11 @@ public class ImgExgFlag {
 		return null;
 	}
 	
+	/**
+	 * 把中文解析成值
+	 * @param value
+	 * @return
+	 */
 	public static String parseValue(String value){
 		if(null!=value && !"".equals(value.trim())){
 			if(value.trim().equals("原料")){

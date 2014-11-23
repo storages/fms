@@ -3,6 +3,7 @@ package com.fms.core.entity;
 import java.util.Date;
 
 import com.fms.base.entity.BaseEntity;
+import com.fms.commons.AppBillStatus;
 
 /**
  * 请购单表体
@@ -18,8 +19,9 @@ public class AppBillItem extends BaseEntity{
 	
 	/**
 	 * 申请单状态(appStatus)   0、未申请  1、待审批  2、审批通过   3、审批不通过 【默认未申请】
+	 * 常量类【AppBillStatus】
 	 */
-	private String appStatus;
+	private String appStatus = AppBillStatus.UNAPPLY;
 	/**
 	 * 供应商(实体ScmCoc)
 	 */

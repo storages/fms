@@ -224,7 +224,13 @@ public class QuotationAction extends BaseAction {
 		}
 	}
 	
-	
+	/**
+	 * 调用excel导入页面
+	 * @return
+	 */
+	public String toImportPage(){
+		return "importexcel";
+	}
 	
 	
 	

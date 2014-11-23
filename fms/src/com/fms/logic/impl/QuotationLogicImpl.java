@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fms.commons.AppBillStatus;
+import com.fms.commons.PurchaseBillStatus;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.PurchaseBill;
@@ -110,8 +112,11 @@ public class QuotationLogicImpl implements QuotationLogic{
 		List<PurchaseBill> list = this.purchaseBillDao.findPurchaseBill(q);
 		if(null!=list && list.size()>0){
 			for(PurchaseBill bill:list){
-				bill.setPrice(q.getPrice());
-				bill.setAmount(bill.getPrice()*bill.getQty());
+				//必须是未生效的采购单才能更新单价
+				if(bill.getPurchStatus().equals(PurchaseBillStatus.UNEFFECT)){
+					bill.setPrice(q.getPrice());
+					bill.setAmount(bill.getPrice()*bill.getQty());
+				}
 			}
 			this.purchaseBillDao.batchSaveOrUpdate(list);
 			return list.size();
@@ -130,6 +135,9 @@ public class QuotationLogicImpl implements QuotationLogic{
 		List<AppBillHead> headList = new ArrayList<AppBillHead>();
 		if(null!=itemList && itemList.size()>0){
 			for(AppBillItem item:itemList){
+				//这里更新申请单单价时，是否只能允许【未申请、申请不通过】的状态才能更新？现状是全部都更新
+				//if(item.getAppStatus().equals(AppBillStatus.UNAPPLY)||item.getAppStatus().equals(AppBillStatus.APPROVEDNOT)){
+				//}
 				item.setPrice(q.getPrice());//改变单价
 				item.setAmount(item.getTotalQty()*item.getPrice());//重新计算金额
 				headList.add(item.getHead());

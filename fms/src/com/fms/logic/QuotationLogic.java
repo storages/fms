@@ -70,4 +70,14 @@ public interface QuotationLogic {
 	 * @return
 	 */
 	public int updatePrice(String[] ids);
+	
+	/**
+	 * 验证导入Excel数据
+	 */
+	public List<?> doValidata(List<?> dataList);
+	
+	/**
+	 * 保存Excel数据到数据库
+	 */
+	public Boolean doSaveExcelData(List<?> dataList); 
 }

@@ -63,6 +63,9 @@ public class FileDownLoad extends ActionSupport{
 		}else if("unitTemp".equals(fileFlag)){
 			this.fileName = "计量单位【导入】模板.xls";
 			this.inputPath = ROOTPATH+"unitTemplate.xls";
+		}else if("quotationTemp".equals(fileFlag)){
+			this.fileName = "报价单【导入】模板.xls";
+			this.inputPath = ROOTPATH+"quotationTemplate.xls";
 		}
 		// 解乱码
 		this.fileName = new String(this.fileName.getBytes("UTF-8"),"ISO-8859-1");

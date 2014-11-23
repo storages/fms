@@ -1,7 +1,10 @@
 package com.fms.action;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,12 +14,17 @@ import java.util.List;
 import net.sf.json.JSONArray;
 
 import com.fms.base.action.BaseAction;
+import com.fms.core.entity.Currencies;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.QuotationLogic;
+import com.fms.logic.ScmcocLogic;
+import com.fms.temp.TempQuotation;
 import com.fms.utils.AjaxResult;
+import com.fms.utils.ExcelUtil;
+import com.google.gson.Gson;
 import com.url.ajax.json.JSONObject;
 
 
@@ -37,6 +45,7 @@ public class QuotationAction extends BaseAction {
 
 	protected QuotationLogic quotationLogic;
 	protected MaterialLogic materLogic;
+	protected ScmcocLogic scmcocLogic;
 
 	/********* 搜索条件 ***********/
 	protected String scmCocName;//供应商名称
@@ -53,6 +62,13 @@ public class QuotationAction extends BaseAction {
 	/********* 其它参数 ***********/
 	protected String ids;
 	protected String scmid;
+	
+	/********* 获取前台选择的文件 ***********/
+	 private File     uploadFile;         //上传的文件    名称是Form 对应的name 
+	 private String   uploadFileContentType;   //文件的类型
+	 private String   uploadFileFileName;    //文件的名称
+	 //
+	 private String sendStr; 
 	
 
 	/**
@@ -233,6 +249,64 @@ public class QuotationAction extends BaseAction {
 	}
 	
 	
+	/**
+	 * 解析excel数据，并验证数据有效性
+	 * @return
+	 */
+	public void importData() {
+		AjaxResult result=new AjaxResult();
+		result.setSuccess(false);
+		try {
+			//就这句，如何获取jsp页面传过来的文件
+			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
+			
+			String [] title = new String[5];
+			title[0] = content[0][0];
+			title[1] = content[0][1];
+			title[2] = content[0][2];
+			title[3] = content[0][3];
+			title[4] = content[0][4];
+			if(!"供应商编码".equals(title[0]) || !"供应商名称".equals(title[1]) || !"物料编码".equals(title[2])|| !"物料名称".equals(title[3])|| !"单价".equals(title[4])){
+				result.setSuccess(false);
+				result.setMsg("导入的excel文件内容不正确!");
+			}else{
+				List<TempQuotation> tempList = new ArrayList<TempQuotation>();
+				for (int i = 1; i < content.length; i++) {
+					TempQuotation temp = new TempQuotation();
+					temp.setScmcocCode(content[i][0]);
+					temp.setScmcocName(content[i][1]);
+					temp.setHsCode(content[i][2]);
+					temp.setHsName(content[i][3]);
+					temp.setPrice(content[i][4]);
+					tempList.add(temp);
+				}
+				List tlist = this.quotationLogic.doValidata(tempList);
+				result.setSuccess(true);
+				result.setObj(tlist);
+			}
+		} catch (FileNotFoundException e) {
+			result.setSuccess(false);
+			result.setMsg("操作错误"+e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Gson gson=new Gson();
+		String str= gson.toJson(result);
+	    try {
+			Writer writer= response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
 	
 	private Integer pageCount(Integer maxIndex,Integer dataTotal){
 		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // 总页数
@@ -379,6 +453,46 @@ public class QuotationAction extends BaseAction {
 
 	public void setScmid(String scmid) {
 		this.scmid = scmid;
+	}
+
+	public File getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(File uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public String getUploadFileContentType() {
+		return uploadFileContentType;
+	}
+
+	public void setUploadFileContentType(String uploadFileContentType) {
+		this.uploadFileContentType = uploadFileContentType;
+	}
+
+	public String getUploadFileFileName() {
+		return uploadFileFileName;
+	}
+
+	public void setUploadFileFileName(String uploadFileFileName) {
+		this.uploadFileFileName = uploadFileFileName;
+	}
+
+	public String getSendStr() {
+		return sendStr;
+	}
+
+	public void setSendStr(String sendStr) {
+		this.sendStr = sendStr;
+	}
+
+	public ScmcocLogic getScmcocLogic() {
+		return scmcocLogic;
+	}
+
+	public void setScmcocLogic(ScmcocLogic scmcocLogic) {
+		this.scmcocLogic = scmcocLogic;
 	}
 
 

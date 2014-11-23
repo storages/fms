@@ -7,7 +7,7 @@
 <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
 
 <div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
-		<form id="uploadform" action="scmcoc_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
+		<form id="uploadform" action="quotation_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
 		<input type="file" style="height:25px; width:160px;" class="" name="uploadFile" id="importfile"/></form>
 		
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
@@ -24,16 +24,12 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px; ">
 						<thead>
 							<tr align="center">
-								<th class="center">错误信息</th>
-								<th class="center">编号</th>
-								<th class="center">供应商名称</th>
-								<th class="hidden-480 center">供应商联系人</th>
-								<th class="hidden-480 center">结算方式</th>
-								<th class="hidden-480 center">供应商联系电话</th>
-								<th class="hidden-phone center">供应商网络联系方式</th>
-								<th class="hidden-480 center">供应商地址</th>
-								<th class="hidden-480 center">约定结算日期</th>
-								<th class="hidden-480 center">备注</th>
+								<th class="center" style="width: 300px;">错误信息</th>
+								<th class="center">供应商编码</th>
+								<th class="hidden-480 center">供应商名称</th>
+								<th class="hidden-480 center">物料编码</th>
+								<th class="hidden-480 center">物料名称</th>
+								<th class="hidden-480 center">单价</th>
 							</tr>
 						</thead>
 						<tbody id="tbodyquotation"></tbody>
@@ -51,16 +47,12 @@
 	
 	<script id="SXrow" type="text/x-jquery-tmpl">
 	<tr {{if erroris}} style="color: red;" {{/if}}>
-		<td class="center"  style="text-align: left;">{{= errorInfo}}　</td>
-		<td class="center">{{= code}}　</td>
-		<td class="center">{{= name}}　</td>
-		<td class="hidden-480 center">{{= linkMan}}　</td>
-		<td class="hidden-480 center">{{= settlement.name}}　</td>
-		<td class="hidden-480 center">{{= linkPhone}}　</td>
-		<td class="hidden-480 center">{{= networkLink}}　</td>
-		<td class="hidden-480 center">{{= address}}　</td>
-		<td class="hidden-480 center">{{if endDate!=""}}每月{{= endDate}}日{{/if}}　</td>
-		<td class="hidden-480 center">{{= note}}　</td>
+		<td class="center"  style="text-align: left;width: 300px;">{{= errorInfo}}　</td>
+		<td class="center">{{= scmcocCode}}　</td>
+		<td class="center">{{= scmcocName}}　</td>
+		<td class="hidden-480 center">{{= hsCode}}　</td>
+		<td class="hidden-480 center">{{= hsName}}　</td>
+		<td class="hidden-480 center">{{= price}}　</td>
 	</tr>
 </script>
   <script type="text/javascript">
@@ -97,7 +89,7 @@
 		});
 		//下载样本 
 	    $("#download").click(function(){
-	    	window.location.href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=scmcocTemp";
+	    	window.location.href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=quotationTemp";
 	    });
 	});
 	var excelupload= document.getElementById("excelupload");
@@ -116,7 +108,7 @@
 		             mylist[x].erroris=true;
 		              }
 		         }
-		          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
+		          $("#SXrow").tmpl(json.obj).appendTo("#tbodyquotation");  
 		          }else{
 		    	       $("#waitdiv").hide();
 		    	       alert("解析文件错误！原因："+json.msg);
@@ -157,12 +149,12 @@
 				alert("请选择文件!");
 				return;
 			}
-			var url = "${pageContext.request.contextPath}/scmcoc_importData.action";
+			var url = "${pageContext.request.contextPath}/quotation_importData.action";
 			toMain(url);
 		}
 		
 		function clearErrorData(){
-			var url = "${pageContext.request.contextPath}/scmcoc_clearErrorData.action";
+			var url = "${pageContext.request.contextPath}/importfile_clearErrorData.action";
 			var paremt={};
 			paremt["sendStr"]=JSON.stringify(resultdata);
 			$.post(url,paremt,function(data){

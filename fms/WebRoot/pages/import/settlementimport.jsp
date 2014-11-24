@@ -131,6 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				             mylist[x].erroris=true;
 				         }
 			         }
+			         $("#tbodysettl tr").remove();
 			          $("#SXrow").tmpl(json.obj).appendTo("#tbodysettl");  
 			          }else{
 			    	       $("#waitdiv").hide();
@@ -157,6 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		             mylist[x].erroris=true;
 		         }
 	         }
+	         $("#tbodysettl tr").remove();
 	          $("#SXrow").tmpl(json.obj).appendTo("#tbodysettl");  
 	          }else{
 	    	       $("#waitdiv").hide();

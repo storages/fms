@@ -111,6 +111,7 @@
 		             mylist[x].erroris=true;
 		              }
 		         }
+		         $("#tbodyquotation tr").remove();
 		          $("#SXrow").tmpl(json.obj).appendTo("#tbodyquotation");  
 		          }else{
 		    	       $("#waitdiv").hide();
@@ -137,6 +138,7 @@
 	             mylist[x].erroris=true;
 	              }
 	         }
+	         $("#tbodyquotation tr").remove();
 	          $("#SXrow").tmpl(json.obj).appendTo("#tbodyquotation");  
 	          }else{
 	    	       $("#waitdiv").hide();

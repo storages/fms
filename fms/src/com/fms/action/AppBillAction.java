@@ -20,6 +20,8 @@ public class AppBillAction extends BaseAction {
 		this.appBillLogic = appBillLogic;
 	}
 	
-	
+	public String toAppBillPage(){
+		return this.SUCCESS;
+	}
 
 }

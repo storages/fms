@@ -450,7 +450,7 @@
 	</bean>
 	
 	<!-- 申请单表头表体 -->
-	<bean id="appBillHead" class="com.fms.action.AppBillAction" scope="prototype">
+	<bean id="appBillAction" class="com.fms.action.AppBillAction" scope="prototype">
 		<property name="appBillLogic">
 			<ref bean="appBillLogic"/>
 		</property>

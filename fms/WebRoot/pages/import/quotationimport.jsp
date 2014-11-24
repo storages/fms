@@ -46,7 +46,7 @@
 	</div>
 	
 	<script id="SXrow" type="text/x-jquery-tmpl">
-            <tr  {{if erroris}} style="color: red;" {{/if}}>
+            <tr {{if erroris}} style="color: red;" {{/if}}>
 				<td style="text-align: left;">{{= errorInfo}}　</td>
 				<td class="center">{{= scmcocCode}}　</td>
 				<td class="center">{{= scmcocName}}　</td>
@@ -74,7 +74,7 @@
 		$("#waitdiv").show();
 		var paremt={};
 		paremt["sendStr"]=JSON.stringify(resultdata);
-	      var url = Global+"/scmcoc_saveExcelData.action";
+	      var url = Global+"/quotation_saveExcelData.action";
 	      $.post(url,paremt,function(data){
 		    	var result=jQuery.parseJSON(data);
 		    	if(!result.success){
@@ -84,6 +84,8 @@
 		    	}
 		    	$("#waitdiv").hide();
 		    	alert(result.msg);
+		    	url = "${pageContext.request.contextPath}/quotation_findQuotations.action";
+		    	toMain(url);
 		     });
 			
 		});
@@ -155,22 +157,20 @@
 		}
 		
 		function clearErrorData(){
-			var url = "${pageContext.request.contextPath}/quotation_clearErrorData.action";
 			var paremt={};
 			paremt["sendStr"]=JSON.stringify(resultdata);
+			var url = "${pageContext.request.contextPath}/quotation_clearErrorData.action?";
+			paremt["sendStr"]=JSON.stringify(resultdata);
 			$.post(url,paremt,function(data){
-				$.each(data,function(index,item){
-					alert(item);
-				});
-				/* var result=jQuery.parseJSON(data);
+				var result=jQuery.parseJSON(data);
 		    	if(result.success){
-		    	 resultdata=result.obj;
-		    	$("#tbodyquotation tr").remove();
 		    		//--------------
-		    		var list = result.obj;
-		    		$("#SXrow").tmpl(list).appendTo("#tbodyquotation"); 
+		    		$("#tbodyquotation tr").remove();
+		    		resultdata = result.obj;
 		    		//--------------
-		    	} */
+		    		$("#SXrow").tmpl(result.obj).appendTo("#tbodyquotation"); 
+		    		//--------------
+		    	}
 			});
 		}
 		

@@ -15,4 +15,5 @@ public interface MaterialDao extends BaseDao{
 	public Material checkMaterial(String hsName,String model,String batchNO);
 	void deleteMaterial(String [] ids);
 	String findHsCode(String hsCode);
+	public Material findMaterialByHsCode(String hsCode);
 }

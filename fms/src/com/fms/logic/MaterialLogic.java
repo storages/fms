@@ -16,4 +16,5 @@ public interface MaterialLogic {
 	public void saveOrUpdate(Material material);
 	void deleteMaterial(String[] ids);
 	public String findHsCode(String hsCode);
+	public Material findMaterialByHsCode(String hsCode);
 }

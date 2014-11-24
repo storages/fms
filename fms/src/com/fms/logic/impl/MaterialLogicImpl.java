@@ -54,4 +54,8 @@ private MaterialDao materialDao;
 		return materialDao.findHsCode(hsCode);
 	}
 
+	public Material findMaterialByHsCode(String hsCode) {
+		return this.materialDao.findMaterialByHsCode(hsCode);
+	}
+
 }

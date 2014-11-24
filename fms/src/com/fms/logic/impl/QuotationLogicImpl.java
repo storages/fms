@@ -3,12 +3,17 @@ package com.fms.logic.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.mail.Quota;
+
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import com.fms.commons.AppBillStatus;
 import com.fms.commons.ApplyType;
@@ -16,6 +21,7 @@ import com.fms.commons.ImgExgFlag;
 import com.fms.commons.PurchaseBillStatus;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
+import com.fms.core.entity.Currencies;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.Quotation;
@@ -26,7 +32,9 @@ import com.fms.dao.QuotationDao;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.QuotationLogic;
 import com.fms.logic.ScmcocLogic;
+import com.fms.temp.TempCurr;
 import com.fms.temp.TempQuotation;
+import com.fms.utils.FmsDateUtils;
 import com.fms.utils.ServerUtils;
 
 public class QuotationLogicImpl implements QuotationLogic{
@@ -262,15 +270,11 @@ public class QuotationLogicImpl implements QuotationLogic{
 				String key = temp.getScmcocCode()+"~@~"+temp.getHsCode();
 				Quotation q = mapCache.get(key);
 				if(null!=q && q.getEffectDate()!=null){
-					try {
-						Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(new Date().toString());
-						Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(q.getEffectDate().toString());
-						if(date1==date2 && scmcoc.getCode().equals(temp.getScmcocCode()) && m.getHsCode().equals(temp.getHsCode())){
-							String mess = "导入的报价单在系统中已存在; ";
-							temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
-						}
-					} catch (ParseException e) {
-						e.printStackTrace();
+					String date1 = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+					String date2 = new SimpleDateFormat("yyyy-MM-dd").format(q.getEffectDate());
+					if(date1.equals(date2) && scmcoc.getCode().equals(temp.getScmcocCode()) && m.getHsCode().equals(temp.getHsCode())){
+						String mess = "导入的报价单在系统中已存在; ";
+						temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 					}
 				}
 			}
@@ -285,18 +289,46 @@ public class QuotationLogicImpl implements QuotationLogic{
 		return tempList;
 	}
 
-	/*private List<Quotation> convertEntity(List<TempQuotation> tempList){
-		if(null!=tempList && tempList.size()>0){
-			List<Quotation> importList = new ArrayList<Quotation>();
-			for(TempQuotation tq:tempList){
-				Quotation q= new Quotation();
-				
-			}
-		}
-	}*/
 	
 	public Boolean doSaveExcelData(List<?> dataList) {
-		// TODO Auto-generated method stub
+		List<Quotation> quoL = new ArrayList<Quotation>();
+		//重新验证是否有错误的数据
+		for(Object obj:dataList){
+			TempQuotation tq = (TempQuotation)obj;
+			if(null!=tq.getErrorInfo() && !"".equals(tq.getErrorInfo().trim())){
+				return false;
+			}else{
+				Quotation q = new Quotation();
+				quoL.add(decProperties(tq,q));
+				continue;
+			}
+		}
+		try{
+			this.quotationDao.batchSaveOrUpdate(quoL);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	/**
+	 * 复制属性
+	 * @param src
+	 * @param tag
+	 * @return
+	 */
+	private Quotation decProperties(TempQuotation src,Quotation tag){
+		if(null!=src && null!=tag){
+			Material m = this.materLogic.findMaterialByHsCode(src.getHsCode());
+			tag.setMaterial(m);
+			Scmcoc scm = this.scmcocLogic.findScmcocByCode(src.getScmcocCode());
+			tag.setScmcoc(scm);
+			tag.setPrice(src.getPrice()==null?0d:Double.parseDouble(src.getPrice()));
+			tag.setEffectDate(FmsDateUtils.getCurrentFormatDate());
+			Integer serialNo = quotationDao.getSerialNo("Quotation");
+			tag.setSerialNo(serialNo==null?1:serialNo+1);
+			return tag;
+		}
 		return null;
 	}
 	

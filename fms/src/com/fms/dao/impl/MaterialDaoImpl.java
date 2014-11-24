@@ -96,4 +96,8 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 		}
 		return null;
 	}
+	
+	public Material findMaterialByHsCode(String hsCode){
+		return (Material) this.uniqueResult("select a from Material a where a.hsCode = ? ", new Object[]{hsCode});
+	}
 }

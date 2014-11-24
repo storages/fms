@@ -28,6 +28,7 @@ import com.fms.temp.TempQuotation;
 import com.fms.utils.AjaxResult;
 import com.fms.utils.ExcelUtil;
 import com.google.gson.Gson;
+import com.url.ajax.json.JSONException;
 import com.url.ajax.json.JSONObject;
 
 
@@ -206,6 +207,55 @@ public class QuotationAction extends BaseAction {
 			}
 		}
 		//return this.SUCCESS;
+	}
+	
+	/**
+	 * 保存正确的excel数据
+	 * @throws JSONException 
+	 */
+	public String saveExcelData() {
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		try {
+			net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
+			List list= net.sf.json.JSONArray.toList(jsonArray, new TempQuotation(), new JsonConfig());
+			if(null==list || list.size()<=0){
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("没有数据可保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+			if (!this.quotationLogic.doSaveExcelData(list)) {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("保存的数据中有错误，请点击【删除错误】按钮后再保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			} else {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(true);
+				result.setMsg("成功保存 "+list.size()+" 条数据！");
+				session.put("tlist", null);
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 	
 	/**

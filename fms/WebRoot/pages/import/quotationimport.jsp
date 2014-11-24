@@ -161,7 +161,7 @@
 		function clearErrorData(){
 			var paremt={};
 			paremt["sendStr"]=JSON.stringify(resultdata);
-			var url = "${pageContext.request.contextPath}/quotation_clearErrorData.action?";
+			var url = "${pageContext.request.contextPath}/quotation_clearErrorData.action";
 			paremt["sendStr"]=JSON.stringify(resultdata);
 			$.post(url,paremt,function(data){
 				var result=jQuery.parseJSON(data);

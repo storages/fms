@@ -3,6 +3,26 @@ function parse(str){
 	return encodeURI(encodeURI(str));  
 }
 
+/**
+ * 获取浏览器类型
+ */
+function getBrowserType(){
+	var isChrome = navigator.userAgent.toLowerCase().match(/chrome/) != null;//判断是否是谷歌浏览器
+	if($.browser.msie) {  
+	    //IE浏览器
+		return "IE";
+	 }else if($.browser.opera) {  
+	    //opera浏览器
+	    return "OPERA";
+	 }else if($.browser.mozilla) {  
+	    //火狐浏览器
+	    return "MOZILLA";
+	 }else if(isChrome){
+		 //谷歌浏览器
+		 return "chrome";
+	 }
+}
+
 /*//全选框
 $(function(){
 	$("#checkallbox").change(function(){

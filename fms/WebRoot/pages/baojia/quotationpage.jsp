@@ -29,11 +29,11 @@
 	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 </div>
-<div class="row-fluid" >
+<div class="row-fluid">
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
 			<div class="row-fluid">
-				<div class="span12"  style="height: 430px;">
+				<div class="span12"  style="height: auto;">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 						<thead>
 							<tr align="center">

@@ -184,6 +184,7 @@ function getUrl(flag){
 			url[0] = "${pageContext.request.contextPath}/mater_deleteMaterialType.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/mater_findAllMaterialType.action";
 			break;
+			//删除报价单
 		case "Quotation":
 			url[0] = "${pageContext.request.contextPath}/quotation_deleteQuotation.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/quotation_findQuotations.action";

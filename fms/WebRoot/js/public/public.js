@@ -114,7 +114,6 @@ function delData(ids,flag){
 		splitStr = ids+",";
 	}
 	splitStr = splitStr.substring(0, splitStr.length-1);
-	console.info(splitStr);
 	var resultUrl = getUrl(flag);
 	var url = resultUrl[0]+splitStr;
 	if(confirm("你确认要删除吗？")){

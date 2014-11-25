@@ -12,6 +12,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
 <style type="text/css">
   input{margin:0px;}
+  #sample-table-1 th{padding: 0px;}
 </style>
 
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
@@ -21,13 +22,13 @@
 	<span class="">申请单号码</span><input type="text" id="scmCocName" value="${scmCocName}" style="height:25px;width:100px;" class="" /> 
 	<span class="">申请日期</span><input type="text" id="begineffectDate" value="${effectDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
 	<input type="text" id="endeffectDate" class="datebox" value="${effectDate}" style="height:25px;width:100px;"/>
-	申请单状态<select name="" class="select_css">
-		<option>全部</option>
-		<option>未申请</option>
-		<option>待审批</option>
-		<option>审批通过</option>
-		<option>审批不通过</option>
-	</select>
+	申请单状态<select name="appHeadStatus" class="select_css">
+				<option value="-1">全部</option>
+				<option value="0">未申请</option>
+				<option value="1">待审批</option>
+				<option value="2">审批通过</option>
+				<option value="3">审批不通过</option>
+			</select>
 	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 </div>
@@ -129,10 +130,9 @@
 			
 			
 			<div class="modal-footer" style="text-align: left;padding:5px;height: 25px;">
-				<span class="">供应商名称</span><input type="text" id="scmCocName" value="${scmCocName}" style="height:25px;width:100px;" class="" /> 
-				<span class="">物料编码</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
-				<span class="">生效日期</span><input type="text" id="begineffectDate" value="${effectDate}" style="height:25px;width:100px;" class="" /><span>至</span>
-				<input type="text" id="endeffectDate" value="${effectDate}" style="height:25px;width:100px;" class="" /> 
+				<span class="">申请单号码</span><input type="text" id="scmCocName" value="${scmCocName}" style="height:25px;width:100px;" class="" /> 
+	<span class="">申请日期</span><input type="text" id="begineffectDate" value="${effectDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
+	<input type="text" id="endeffectDate" class="datebox" value="${effectDate}" style="height:25px;width:100px;"/>
 				<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 					style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 			</div>
@@ -142,14 +142,16 @@
 						<th class="center" style="width:30px;">选择</th>
 						<th class="center" style="width:40px;">流水号</th>
 						<th class="center" style="width:71px;">申请单状态</th>
-						<th class="center">申请单号码</th>
-						<th class="center" style="width:91px;">项数</th>
-						<th class="center">总数量</th>
-						<th class="center">总金额</th>
-						<th class="center" style="width:70px;">申请日期</th>
-						<th class="center" style="width:60px;">已审批数</th>
-						<th class="center" style="width:60px;">未审批数</th>
-						<th class="center" style="width:200px;">备注</th>
+						<th class="center" style="width:65px;">供应商编码</th>
+						<th class="center" style="width:115px;">供应商名称</th>
+						<th class="center" style="width:55px;">物料编码</th>
+						<th class="center" style="width:115px;">物料名称</th>
+						<th class="center" style="width:95px;">物料规格型号</th>
+						<th class="center" style="width:40px;">单价</th>
+						<th class="center" style="width:55px;">申请数量</th>
+						<th class="center" style="width:40px;">金额</th>
+						<th class="center" style="width:55px;">申请日期</th>
+						<th class="center"">备注</th>
 						<th class="center" style="width:70px;">操作</th>
 					</tr>
 				</thead>
@@ -157,8 +159,8 @@
 	<div class="row-fluid" style="height:auto; overflow: auto;" >
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
-			<div class="row-fluid">
-				<div class="span12"  style="height: 40%;">
+			<div class="row-fluid" id="itemdiv">
+				<div class="span12" style="height: 40%;">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-bottom: 0px;">
 						<tbody>
 							<c:forEach var="quotation" items="${quotations}" varStatus="index" step="1">
@@ -169,14 +171,16 @@
 										<td class="center">${quotation.serialNo}</td>
 										<td class="center">${quotation.scmcoc.code}</td>
 										<td class="center">${quotation.scmcoc.name}</td>
-										<td class="hidden-480 center">${quotation.scmcoc.linkPhone}&nbsp;</td>
-										<td class="hidden-480 center">${quotation.material.hsCode}&nbsp;</td>
-										<td class="hidden-480 center">${quotation.material.hsName}&nbsp;</td>
-										<td class="hidden-480 center">${quotation.material.model}&nbsp;</td>
-										<td class="hidden-480 center">${quotation.material.unit.name}&nbsp;</td>
-										<td class="hidden-480 center">${quotation.price}&nbsp;</td>
+										<td class="center">${quotation.scmcoc.linkPhone}&nbsp;</td>
+										<td class="center">${quotation.material.hsCode}&nbsp;</td>
+										<td class="center">${quotation.material.hsName}&nbsp;</td>
+										<td class="center">${quotation.material.model}&nbsp;</td>
+										<td class="center">${quotation.material.unit.name}&nbsp;</td>
+										<td class="center">${quotation.price}&nbsp;</td>
 										<td class="center"><fmt:formatDate value="${quotation.effectDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
 <%-- 										<td class="hidden-480 center">${quotation.effectDate}　</td> --%>
+										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
+										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
 										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
 										<td class="center">
 											<a href="javascript:void(0);" onclick="edit(this,'10,11,12')">修改</a>｜
@@ -192,10 +196,20 @@
 	</div>
 	 <div class="modal-footer" style="padding:0px;">
 		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add">新增</button>
+		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">修改</button>
 		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
 		<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','Quotation')">
 			批量删除
 		</button>
-		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/quotation_toImportPage.action')">Excel导入</button>
-		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btn_update" title="根据当前所选的报价单信息，找到相对应的申请单、采购单，并把选中的生效日期以后的单价全部更新">更新单价</button>
 	</div>
+<script type="text/javascript">
+	$(function(){
+		var parentHeight = $("#tomain").outerHeight(true);
+		var itemdiv = $("#itemdiv").outerHeight(true);
+		var thead = $("#sample-table-1").outerHeight(true);
+		var headT = $(".row-fluid").outerHeight(true);
+		//alert(parentHeight+"---"+itemdiv+"---"+thead+"---"+headT);
+		//alert(parentHeight-thead-headT);
+		$("#itemdiv").height(parentHeight-thead-headT-140);
+	});
+</script>

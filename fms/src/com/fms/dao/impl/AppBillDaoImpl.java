@@ -1,6 +1,7 @@
 package com.fms.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
@@ -32,7 +33,64 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 		return this.find(hql,head.getId());
 	}
 
-	public List<AppBillItem> saveAppBillItem(List<AppBillItem> datas) {
+
+	public List<AppBillHead> betchSaveAppBillHead(List<AppBillHead> datas) {
 		return this.batchSaveOrUpdate(datas);
+	}
+
+	public List<AppBillItem> betchSaveAppBillItem(List<AppBillItem> datas) {
+		return batchSaveOrUpdate(datas);
+	}
+
+	public AppBillHead saveAppBillHead(AppBillHead head) {
+		return (AppBillHead) this.saveOrUpdateNoCache(head);
+	}
+
+	public AppBillItem saveAppBillItem(AppBillItem item) {
+		return (AppBillItem) this.saveOrUpdateNoCache(item);
+	}
+
+	public Integer findDataCount(String appNo, Date beginappDate,Date endappDate,String appStatus) {
+		List params = new ArrayList();
+		String hql = "select count(a) from AppBillHead a where 1=1 ";
+		if(null!=appNo && !"".equals(appNo)){
+			hql+=" and a.appNo like ? ";
+			params.add(appNo.trim());
+		}
+		if(null!=beginappDate){
+			hql+=" and a.appDate >=? ";
+			params.add(beginappDate);
+		}
+		if(null!=endappDate){
+			hql+=" and a.appDate <=? ";
+			params.add(endappDate);
+		}
+		if(null!=appStatus && !"".equals(appStatus) && !"-1".equals(appStatus)){
+			hql+=" and a.appStatus=? ";
+			params.add(appStatus);
+		}
+		return this.count(hql, params.toArray());
+	}
+
+	public List<AppBillHead> findAppBillHeads(String appNo, Date beginappDate,Date endappDate,String appStatus, int index, int length) {
+		List params = new ArrayList();
+		String hql = "select a from AppBillHead a where 1=1 ";
+		if(null!=appNo && !"".equals(appNo)){
+			hql+=" and a.appNo like ? ";
+			params.add(appNo.trim());
+		}
+		if(null!=beginappDate){
+			hql+=" and a.appDate >=? ";
+			params.add(beginappDate);
+		}
+		if(null!=endappDate){
+			hql+=" and a.appDate <=? ";
+			params.add(endappDate);
+		}
+		if(null!=appStatus && !"-1".equals(appStatus)){
+			hql+=" and a.appStatus=? ";
+			params.add(appStatus);
+		}
+		return this.findPageList(hql, params.toArray(), index, length);
 	}
 }

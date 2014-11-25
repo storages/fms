@@ -3,6 +3,7 @@ package com.fms.core.entity;
 import java.util.Date;
 
 import com.fms.base.entity.BaseEntity;
+import com.fms.commons.AppBillStatus;
 
 /**
  * 请购单表头
@@ -21,25 +22,25 @@ public class AppBillHead extends BaseEntity{
 	 */
 	private Integer serialNo;
 	/**
-	 * 申请单状态   0、未申请  1、待审批  2、审批通过   3、审批不通过 【默认未申请】
+	 * 申请单状态   0、未申请  1、待审批  2、审批通过   3、审批不通过 【默认未申请】常量类：AppBillStatus
 	 */
-	private String appStatus;
+	private String appStatus = AppBillStatus.UNAPPLY;
 	/**
-	 * 申请单号码    系统自动生成累加1 格式：R+年月日+0001例如：R201411070001
+	 * 申请单号码    系统自动生成 格式：R+年月日时分秒例如：R20141107130822
 	 */
 	private String appNo;
 	/**
 	 * 项数    系统自动计算AppBillItem中的条数
 	 */
-	private Integer itemQty;
+	private Integer itemQty=0;
 	/**
 	 * 总数量    系统自动计算AppBillItem中的数量加总
 	 */
-	private Double totalQty;
+	private Double totalQty=0d;
 	/**
 	 * 总金额    系统自动计算AppBillItem中的金额加总
 	 */
-	private Double totalAmount;
+	private Double totalAmount=0d;
 	/**
 	 * 申请日期
 	 */
@@ -47,11 +48,11 @@ public class AppBillHead extends BaseEntity{
 	/**
 	 * 已审批数    系统自动计算AppBillItem中的已审批的条数加总
 	 */
-	private Double approvaledQty;
+	private Double approvaledQty=0d;
 	/**
 	 * 未审批数     系统自动计算AppBillItem中的未审批的条数加总
 	 */
-	private Double unApprovalQty;
+	private Double unApprovalQty=0d;
 	/**
 	 * 备注
 	 */

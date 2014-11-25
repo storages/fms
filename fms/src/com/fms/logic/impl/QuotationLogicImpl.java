@@ -1,27 +1,17 @@
 package com.fms.logic.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
-import javax.mail.Quota;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
-
-import com.fms.commons.AppBillStatus;
-import com.fms.commons.ApplyType;
 import com.fms.commons.ImgExgFlag;
 import com.fms.commons.PurchaseBillStatus;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
-import com.fms.core.entity.Currencies;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.Quotation;
@@ -32,7 +22,6 @@ import com.fms.dao.QuotationDao;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.QuotationLogic;
 import com.fms.logic.ScmcocLogic;
-import com.fms.temp.TempCurr;
 import com.fms.temp.TempQuotation;
 import com.fms.utils.FmsDateUtils;
 import com.fms.utils.ServerUtils;
@@ -163,7 +152,7 @@ public class QuotationLogicImpl implements QuotationLogic{
 				item.setAmount(item.getTotalQty()*item.getPrice());//重新计算金额
 				headList.add(item.getHead());
 			}
-			List<AppBillItem> list = this.appBillDao.saveAppBillItem(itemList);
+			List<AppBillItem> list = this.appBillDao.betchSaveAppBillItem(itemList);
 			//更新申请单表头总金额
 			for(AppBillHead head:headList){
 				newItemList = this.appBillDao.findAppBillItemByHead(head);

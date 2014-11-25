@@ -1,7 +1,10 @@
 package com.fms.logic.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Quotation;
 import com.fms.dao.AppBillDao;
@@ -21,6 +24,35 @@ public class AppBillLogicImpl implements AppBillLogic {
 
 	public void setAppBillDao(AppBillDao appBillDao) {
 		this.appBillDao = appBillDao;
+	}
+
+	public AppBillHead saveAppBillHead(AppBillHead head) {
+		Integer serialNo = this.appBillDao.getSerialNo("AppBillHead");
+		if(serialNo==null || serialNo==0){
+			serialNo = 1;
+		}else if(serialNo>0){
+			serialNo+=1;
+		}
+		head.setSerialNo(serialNo);
+		String appBillNo = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmss");
+		appBillNo = "R"+sdf.format(new Date());
+		head.setAppNo(appBillNo);
+		head.setAppDate(new Date());
+		head = this.appBillDao.saveAppBillHead(head);
+		return head;
+	}
+
+	public AppBillItem saveAppBillItem(AppBillItem item) {
+		return this.appBillDao.saveAppBillItem(item);
+	}
+
+	public Integer findDataCount(String appNo, Date beginappDate,Date endappDate,String appStatus) {
+		return this.appBillDao.findDataCount(appNo, beginappDate, endappDate,appStatus);
+	}
+
+	public List<AppBillHead> findAppBillHeads(String appNo, Date beginappDate,Date endappDate,String appStatus, int index, int length) {
+		return this.appBillDao.findAppBillHeads(appNo, beginappDate, endappDate,appStatus, index, length);
 	}
 
 }

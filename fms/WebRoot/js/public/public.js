@@ -23,21 +23,14 @@ function getBrowserType(){
 	 }
 }
 
-/*//全选框
 $(function(){
-	$("#checkallbox").change(function(){
-		if($("#checkallbox").attr("checked")){
-			$("#sample-table-1 input[name='sid']").each(function(){
-				$(this).attr("checked",true);
-			});
-		}else{
-			$("#sample-table-1 input[name='sid']").each(function(){
-				$(this).attr("checked",false);
-			});
-		}
-	});
-}*/
-	
+	$(".datebox").datepicker({
+			changeYear: true,
+		changeMonth: true,
+		yearRange: '1900:', 
+		dateFormat: 'yy-mm-dd'
+		});
+});
 
 
 /*****************************这个独特，另外写的删除*******************/

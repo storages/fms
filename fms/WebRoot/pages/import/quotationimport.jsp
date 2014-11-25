@@ -163,6 +163,7 @@
 			paremt["sendStr"]=JSON.stringify(resultdata);
 			var url = "${pageContext.request.contextPath}/quotation_clearErrorData.action";
 			paremt["sendStr"]=JSON.stringify(resultdata);
+			var result;
 			$.post(url,paremt,function(data){
 				var result=jQuery.parseJSON(data);
 		    	if(result.success){

@@ -63,7 +63,7 @@
 			</ul>
 		</li>
 		<li><span class="file"><a href="javascript:void(0);" data-url="/quotation_findQuotations.action" >报价单</a></span></li>
-		<li><span class="file"><a href="javascript:void(0);" data-url="/appbill_toAppBillPage.action" >请购单</a></span></li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="/appbill_toAppBillPage.action" >申请单</a></span></li>
 		<li><span class="file"><a href="javascript:void(0);" data-url="#" >采购单</a></span></li>
 		<li  class="closed"><span class="folder directer">物料</span>
 			<ul>

@@ -15,13 +15,19 @@
 </style>
 
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
-	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">请购单</span>
+	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单</span>
 </div>
 <div class="modal-footer" style="text-align: left;padding:5px;height: 25px;">
-	<span class="">供应商名称</span><input type="text" id="scmCocName" value="${scmCocName}" style="height:25px;width:100px;" class="" /> 
-	<span class="">物料编码</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
-	<span class="">生效日期</span><input type="text" id="begineffectDate" value="${effectDate}" style="height:25px;width:100px;" class="" /><span>至</span>
-	<input type="text" id="endeffectDate" value="${effectDate}" style="height:25px;width:100px;" class="" /> 
+	<span class="">申请单号码</span><input type="text" id="scmCocName" value="${scmCocName}" style="height:25px;width:100px;" class="" /> 
+	<span class="">申请日期</span><input type="text" id="begineffectDate" value="${effectDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
+	<input type="text" id="endeffectDate" class="datebox" value="${effectDate}" style="height:25px;width:100px;"/>
+	申请单状态<select name="" class="select_css">
+		<option>全部</option>
+		<option>未申请</option>
+		<option>待审批</option>
+		<option>审批通过</option>
+		<option>审批不通过</option>
+	</select>
 	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 </div>
@@ -46,8 +52,8 @@
 					</tr>
 				</thead>
 			</table>
-			<div class="row-fluid" style="height: 20%; overflow: auto;">
-				<div class="span12"  style="height: 430px;">
+			<div class="row-fluid" style="height: auto; overflow: auto;">
+				<div class="span12"  style="height: 20%;">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 						<tbody>
 							<c:forEach var="quotation" items="${quotations}" varStatus="index" step="1">
@@ -79,10 +85,11 @@
 			<div class="modal-footer" style="padding:0px;">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','Quotation')">
-					批量删除
-				</button>
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','Quotation')">批量删除</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/quotation_toImportPage.action')">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">提交申请</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">审批</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">撤销审批</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
@@ -147,11 +154,11 @@
 					</tr>
 				</thead>
 			</table>
-	<div class="row-fluid" style="height:35%; overflow: auto;" >
+	<div class="row-fluid" style="height:auto; overflow: auto;" >
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
 			<div class="row-fluid">
-				<div class="span12"  style="height: 430px;">
+				<div class="span12"  style="height: 40%;">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-bottom: 0px;">
 						<tbody>
 							<c:forEach var="quotation" items="${quotations}" varStatus="index" step="1">

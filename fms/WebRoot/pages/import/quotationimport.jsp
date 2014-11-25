@@ -105,7 +105,6 @@
 		          //SXrow
 		         var mylist= json.obj;
 		         resultdata=mylist;
-		         alert(mylist.length);
 		         for(var x=0; x<mylist.length; x++){
 		         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
 		             mylist[x].erroris=true;

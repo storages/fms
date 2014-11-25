@@ -58,7 +58,7 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 						<tbody>
 							<c:forEach var="head" items="${heads}" varStatus="index" step="1">
-								<tr>
+								<tr onclick="showItem($(this))">
 									<td class="center" style="width:20px;" >
 										<input type="checkbox" value="${head.id}" name="sid" style="width:20px;"/>
 									</td>
@@ -135,8 +135,6 @@
 					</select>
 				</div>
 			</div>
-		</div>
-	</div>
 			<hr style="border: 3px solid; margin: 5px 0px 5px 0px;"/>
 			
 			<!-- 表体数据 -->
@@ -164,7 +162,7 @@
 						<th class="center" style="width:55px;">申请数量</th>
 						<th class="center" style="width:40px;">金额</th>
 						<th class="center" style="width:55px;">申请日期</th>
-						<th class="center"">备注</th>
+						<th class="center">备注</th>
 						<th class="center" style="width:70px;">操作</th>
 					</tr>
 				</thead>
@@ -176,25 +174,27 @@
 				<div class="span12" style="height: 40%;">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-bottom: 0px;">
 						<tbody>
-							<c:forEach var="quotation" items="${quotations}" varStatus="index" step="1">
+							<c:forEach var="item" items="${items}" varStatus="index" step="1">
 								<tr>
 									<td class="center" style="width:30px;" >
-										<input type="checkbox" value="${quotation.id}" name="sid" style="width:30px;"/>
+										<input type="checkbox" value="${item.id}" name="sid" style="width:30px;"/>
 									</td>
-										<td class="center">${quotation.serialNo}</td>
-										<td class="center">${quotation.scmcoc.code}</td>
-										<td class="center">${quotation.scmcoc.name}</td>
-										<td class="center">${quotation.scmcoc.linkPhone}&nbsp;</td>
-										<td class="center">${quotation.material.hsCode}&nbsp;</td>
-										<td class="center">${quotation.material.hsName}&nbsp;</td>
-										<td class="center">${quotation.material.model}&nbsp;</td>
-										<td class="center">${quotation.material.unit.name}&nbsp;</td>
-										<td class="center">${quotation.price}&nbsp;</td>
-										<td class="center"><fmt:formatDate value="${quotation.effectDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
-<%-- 										<td class="hidden-480 center">${quotation.effectDate}　</td> --%>
-										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
-										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
-										<td class="hidden-480 center">${quotation.note}&nbsp;</td>
+										<td class="center">${item.serialNo}</td>
+										<td class="center">
+											<c:if test="${item.appStatus==0}">未申请</c:if>
+											<c:if test="${item.appStatus==1}">待审批</c:if>
+											<c:if test="${item.appStatus==2}">审批通过</c:if>
+											<c:if test="${item.appStatus==3}">审批不通过</c:if>
+										</td>
+										<td class="center">${item.scmcoc.code}</td>
+										<td class="center">${item.scmcoc.name}&nbsp;</td>
+										<td class="center">${item.material.hsCode}&nbsp;</td>
+										<td class="center">${item.material.hsName}&nbsp;</td>
+										<td class="center">${item.material.model}&nbsp;</td>
+										<td class="center">${item.price}&nbsp;</td>
+										<td class="hidden-480 center">${item.totalQty}&nbsp;</td>
+										<td class="hidden-480 center">${item.amount}&nbsp;</td>
+										<td class="center"><fmt:formatDate value="${item.appDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
 										<td class="center">
 											<a href="javascript:void(0);" onclick="edit(this,'10,11,12')">修改</a>｜
 											<a href="javascript:void(0);" onclick="delData('${quotation.id}','Quotation')">删除</a>
@@ -206,14 +206,62 @@
 			</div>
 		</div>
 		<!--PAGE CONTENT ENDS-->
+		<div class="dialog" id="dialog" title="选择物料" style="display: none;">
+		<%-- <input style="height: 25px;width: 160px;" type="text" name="${hsCode}" id="hsCode"/><input class="btn btn-small btn-danger" style="height: 25px; margin-top: -10px;border-top-width: 1px;" data-toggle="button" type="submit" value="查询"/> --%>
+			<p style="height: 28px; margin-bottom: 0px;"><span>供应商</span>
+				<select id="scmcoc">
+						<option value="chooice">---请选择供应商---</option>
+					<c:forEach var="scm" items="${scmcocs}">
+						<option value="${scm.id}">${scm.name}</option>
+					</c:forEach>
+				</select>
+			</p>
+					<table id="sample-table-2" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-top:2px;">
+						<thead>
+							<tr align="center">
+								<th class="center" style="width:30px;">选择</th>
+								<th class="center" style="width:30px;">序号</th>
+								<th class="center" style="width:60px;">物料编码</th>
+								<th class="center">物料名称</th>
+								<th class="center" style="width:60px;">计量单位</th>
+								<th class="center" style="width:60px;">规格</th>
+								<th class="center" style="width:60px;">物料标记</th>
+								<th class="center">备注</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="mater" items="${mlist}" varStatus="index" step="1">
+								<tr class="center">
+									<td><input type="checkbox" value="${mater.id}" name="materid"/></td>
+									<td>${index.index+1}&nbsp;</td>
+									<td>${mater.hsCode}&nbsp;</td>
+									<td>${mater.hsName}&nbsp;</td>
+									<td>${mater.unit.name}&nbsp;</td>
+									<td>${mater.model}&nbsp;</td>
+									<c:if test="${mater.imgExgFlag=='I'}">
+										<td>原料</td>
+									</c:if>
+									<c:if test="${mater.imgExgFlag=='E'}">
+										<td>成品</td>
+									</c:if>
+									<td>${mater.note}&nbsp;</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+		</div>
 	</div>
 	 <div class="modal-footer" style="padding:0px;">
-		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add">新增</button>
+		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" onclick="showAddBox()">新增</button>
 		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
 		<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','Quotation')">
 			批量删除
 		</button>
 	</div>
+	
+	
+	
+	
 <script type="text/javascript">
 	$(function(){
 		var parentHeight = $("#tomain").outerHeight(true);
@@ -248,4 +296,53 @@
 		// 在本窗口中显示指定URL的页面
 		toMain(url);
 	}
+	
+	
+	//当表头被选中一行时，自动加载相对应的表体
+	function showItem(obj){
+		var ids = obj.find('td').find(':checkbox').val(); //获取选中行的checkbox中的value值,也就是获取表头的id
+		var url="${pageContext.request.contextPath}/appbill_findItemByHidToJson.action?ids="+ids;
+		$.ajax({
+		     type: "POST",
+		     url:url,
+		     async: false,
+		     cache: false,
+		     success:function(data){
+		     var result=jQuery.parseJSON(data);
+		     if(!result.success){
+		     		alert(result.msg);
+		     	}else{
+		     		
+		     	}
+		     },error:function(){
+		        	alert("程序异常，请重新启动程序！");
+		      }
+		  	});
+	}
+	
+	//添加申请单表体，弹出对话框
+	function showAddBox(){
+  			showDialog();
+  			var hsCode = $("#hsCode").val();
+  			$("#okbutton").click(function(){
+            	var scmid = $("#scmcoc").val();
+            	if(scmid=="" || scmid=="chooice"){
+            		alert("请选择供应商");
+            		return;
+            	}
+				//jquery获取复选框值      
+            	var paramstr = "";      
+            	$('input[name="materid"]:checked').each(function(){//遍历每一个名字为materid的复选框，其中选中的执行函数      
+            		paramstr+=$(this).val()+"/";//将选中的值组装成一个以'/'分割的字符串
+            	}); 
+            	if(paramstr==""){
+            		alert("请选择物料");
+            		return;
+            	}
+            	var url = "${pageContext.request.contextPath}/appbill_findMaterialByIds.action?ids="+paramstr+"&scmid="+scmid;
+                toMain(url); 
+				closeListenler();
+			});
+	}
+
 </script>

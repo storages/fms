@@ -33,7 +33,7 @@ public interface AppBillDao extends BaseDao{
 	List<AppBillHead> betchSaveAppBillHead(List<AppBillHead> datas);
 	
 	/**
-	 * 批量保存申请单表头
+	 * 批量保存申请单表体
 	 */
 	List<AppBillItem> betchSaveAppBillItem(List<AppBillItem> datas);
 	
@@ -57,7 +57,7 @@ public interface AppBillDao extends BaseDao{
 	Integer findDataCount(String appNo, Date beginappDate,Date endappDate,String appStatus);
 	
 	/**
-	 * 查找申请单列表数据（分页）
+	 * 查找申请单表头列表数据（分页）
 	 * @param appNo
 	 * @param beginappDate
 	 * @param endappDate
@@ -65,5 +65,25 @@ public interface AppBillDao extends BaseDao{
 	 */
 	List<AppBillHead> findAppBillHeads(String appNo, Date beginappDate,Date endappDate,String appStatus, int index,int length);
 	
+	/**
+	 * 根据表头id查询所有的表体
+	 * @param hid
+	 * @return
+	 */
+	List<AppBillItem> findItemByHid(String hid);
+	
+	/**
+	 * 根据表头id查询表头对象
+	 * @param hid
+	 * @return
+	 */
+	AppBillHead findHeadById(String hid);
+	
+	/**
+	 * 根据表体id查询表体对象
+	 * @param hid
+	 * @return
+	 */
+	AppBillItem findItemById(String id);
 	
 }

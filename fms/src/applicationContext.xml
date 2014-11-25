@@ -454,6 +454,12 @@
 		<property name="appBillLogic">
 			<ref bean="appBillLogic"/>
 		</property>
+		<property name="materLogic">
+			<ref bean="materLogic"/>
+		</property>
+		<property name="scmLogic">
+			<ref bean="scmcocLogic"/>
+		</property>
 	</bean>
 	
 	<!-- 采购单 -->

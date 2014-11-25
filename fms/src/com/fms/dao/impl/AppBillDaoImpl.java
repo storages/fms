@@ -93,4 +93,19 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 		}
 		return this.findPageList(hql, params.toArray(), index, length);
 	}
+	
+	public List<AppBillItem> findItemByHid(String hid){
+		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat where item.head = ? ";
+		return this.find(hql, hid);
+	}
+
+	public AppBillHead findHeadById(String hid) {
+		String hql = "select a from AppBillHead a where a.id=?";
+		return (AppBillHead) this.uniqueResult(hql, new Object[]{hid});
+	}
+
+	public AppBillItem findItemById(String id) {
+		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat where item.id = ? ";
+		return (AppBillItem) this.uniqueResult(hql, new Object[]{id});
+	}
 }

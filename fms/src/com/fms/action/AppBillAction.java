@@ -1,5 +1,7 @@
 package com.fms.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,10 +9,14 @@ import java.util.List;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.AppBillHead;
+import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
-import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.logic.AppBillLogic;
+import com.fms.logic.MaterialLogic;
+import com.fms.logic.ScmcocLogic;
+import com.fms.utils.AjaxResult;
+import com.google.gson.Gson;
 
 public class AppBillAction extends BaseAction {
 
@@ -20,6 +26,8 @@ public class AppBillAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	
 	protected AppBillLogic appBillLogic;
+	protected MaterialLogic materLogic;
+	protected ScmcocLogic scmLogic;
 	/********* 搜索条件 ***********/
 	protected String appNo;//申请单号码
 	protected String beginappDate;//申请日期（开始）
@@ -34,6 +42,11 @@ public class AppBillAction extends BaseAction {
 	private String className = "AppBillItem";// 表名称
 	private static final Integer DEFAULT_PAGESIZE = 10;
 	
+	/********* 其它属性 ***********/
+	protected String ids;//物料id数组
+	protected String scmid;//供应商id
+	protected String hid;//申请单表头id
+	
 	
 	public AppBillLogic getAppBillLogic() {
 		return appBillLogic;
@@ -43,6 +56,22 @@ public class AppBillAction extends BaseAction {
 		this.appBillLogic = appBillLogic;
 	}
 	
+	public MaterialLogic getMaterLogic() {
+		return materLogic;
+	}
+
+	public void setMaterLogic(MaterialLogic materLogic) {
+		this.materLogic = materLogic;
+	}
+
+	public ScmcocLogic getScmLogic() {
+		return scmLogic;
+	}
+
+	public void setScmLogic(ScmcocLogic scmLogic) {
+		this.scmLogic = scmLogic;
+	}
+
 	public String getAppNo() {
 		return appNo;
 	}
@@ -107,6 +136,30 @@ public class AppBillAction extends BaseAction {
 		this.appStatus = appStatus;
 	}
 
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public String getScmid() {
+		return scmid;
+	}
+
+	public void setScmid(String scmid) {
+		this.scmid = scmid;
+	}
+
+	public String getHid() {
+		return hid;
+	}
+
+	public void setHid(String hid) {
+		this.hid = hid;
+	}
+
 	/**
 	 * 跳转到申请单页面
 	 * @return
@@ -136,11 +189,12 @@ public class AppBillAction extends BaseAction {
 			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
 			dataTotal = this.appBillLogic.findDataCount(appNo,(beginappDate==null||"".equals(beginappDate))?null:date,(endappDate==null||"".equals(endappDate))?null:date2,appStatus);
 			List<AppBillHead> heads = this.appBillLogic.findAppBillHeads(appNo, (beginappDate==null||"".equals(beginappDate))?null:date,(endappDate==null||"".equals(endappDate))?null:date2,appStatus,(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
-/*			List<Material> mlist = materLogic.findAllMaterialInfo(hsCode, null, -1, -1);
-			List<Scmcoc> scmcocs = quotationLogic.findAll();
-*/			//this.request.put("scmcocs", scmcocs);
+			findItemByHid();
+			List<Material> mlist = materLogic.findAllMaterialInfo(null, null, -1, -1);
+			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
+			this.request.put("scmcocs", scmcocs);
 			this.request.put("heads", heads);
-			//this.request.put("mlist", mlist);
+			this.request.put("mlist", mlist);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
 			this.request.put("pageNums", pageCount(max, dataTotal));
@@ -163,6 +217,10 @@ public class AppBillAction extends BaseAction {
 		return pageNums;
 	}
 	
+	/**
+	 * 新增申请单表头
+	 * @return
+	 */
 	public String addAppBillHead(){
 		AppBillHead head = new AppBillHead();
 		List<AppBillHead> list = new ArrayList<AppBillHead>();
@@ -171,4 +229,59 @@ public class AppBillAction extends BaseAction {
 		return this.SUCCESS;
 	}
 	
+
+	
+	public void findItemByHid(){
+		if(ids!=null && !"".equals(ids)){
+			List<AppBillItem> items = this.appBillLogic.findItemByHid(ids);
+			this.request.put("items", items);
+		}
+	}
+	
+	public void findItemByHidToJson(){
+		if(ids!=null && !"".equals(ids)){
+			PrintWriter out = null;
+			AjaxResult result = new AjaxResult();
+			Gson gson = new Gson();
+			try {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				List<AppBillItem> items = this.appBillLogic.findItemByHid(ids);
+				result.setSuccess(true);
+				result.setObj(items);
+				result.setMsg("获取成功");
+				String str = gson.toJson(result);
+				out.print(str);
+				out.flush();
+			} catch (IOException e) {
+				result.setSuccess(false);
+				result.setMsg("获取失败");
+				String str = gson.toJson(result);
+				out.print(str);
+				out.flush();
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void findMaterialByIds(){
+		if(ids!=null && !"".equals(ids)){
+			String [] matrIds = ids.split("/");
+			if(null!=matrIds && matrIds.length>0){
+				List<AppBillItem> itemList = new ArrayList<AppBillItem>();
+				List<Material> list = this.materLogic.findMaterialById(matrIds);
+				Scmcoc scm = this.scmLogic.findScmcocById(scmid);
+				AppBillHead head = this.appBillLogic.findHeadById(hid);
+				for(Material m:list){
+					AppBillItem item = new AppBillItem();
+					item.setAppDate(new Date());
+					item.setHead(head);
+					item.setMaterial(m);
+					itemList.add(item);
+				}
+				itemList = this.appBillLogic.betchSaveAppBillItem(itemList);
+			}
+		}
+	}
 }

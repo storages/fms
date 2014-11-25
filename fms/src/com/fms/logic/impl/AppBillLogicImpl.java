@@ -55,4 +55,24 @@ public class AppBillLogicImpl implements AppBillLogic {
 		return this.appBillDao.findAppBillHeads(appNo, beginappDate, endappDate,appStatus, index, length);
 	}
 
+	public List<AppBillItem> findItemByHid(String hid) {
+		return this.appBillDao.findItemByHid(hid);
+	}
+
+	public AppBillHead findHeadById(String hid) {
+		return this.appBillDao.findHeadById(hid);
+	}
+
+	public AppBillItem findItemById(String id) {
+		return this.appBillDao.findItemById(id);
+	}
+
+	public List<AppBillHead> betchSaveAppBillHead(List<AppBillHead> datas) {
+		return this.appBillDao.betchSaveAppBillHead(datas);
+	}
+
+	public List<AppBillItem> betchSaveAppBillItem(List<AppBillItem> datas) {
+		return this.appBillDao.betchSaveAppBillItem(datas);
+	}
+
 }

@@ -3,6 +3,7 @@ package com.fms.logic;
 import java.util.Date;
 import java.util.List;
 
+import com.fms.core.entity.Material;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 
@@ -80,4 +81,12 @@ public interface QuotationLogic {
 	 * 保存Excel数据到数据库
 	 */
 	public Boolean doSaveExcelData(List<?> dataList); 
+	
+	/**
+	 * 根据物料、供应商、和日期来查询报价单
+	 * @param m
+	 * @param date
+	 * @return
+	 */
+	public Quotation findQuotationByCondention(Material m,Scmcoc scm);
 }

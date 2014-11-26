@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.AppBillItem;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.dao.QuotationDao;
@@ -86,4 +87,16 @@ public class QuotationDaoImpl extends BaseDaoImpl implements QuotationDao{
 		this.batchUpdateOrDelete(hql, param.toArray());
 	}
 	
+	public Quotation findQuotationByCondention(Material m,Scmcoc scm){
+		String hql = "SELECT a FROM Quotation a WHERE a.material.id = ? and a.scmcoc.id=?"+
+				" AND a.effectDate = " +
+				" (SELECT MAX(a.effectDate) FROM Quotation a left join a.material b left join a.scmcoc c WHERE b = ? and c=? )";
+		List param = new ArrayList();
+		param.add(m.getId());
+		param.add(scm.getId());
+		param.add(m);
+		param.add(scm);
+		List<Quotation> q = this.find(hql, param.toArray());
+		return q==null?null:q.get(0);
+	}
 }

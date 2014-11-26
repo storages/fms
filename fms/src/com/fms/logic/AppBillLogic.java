@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.Quotation;
+import com.fms.core.entity.Scmcoc;
 
 public interface AppBillLogic {
 	List<AppBillItem> findAppBillItem(Quotation q);
@@ -69,4 +71,5 @@ public interface AppBillLogic {
 	 * @return
 	 */
 	AppBillItem findItemById(String id);
+	
 }

@@ -11,9 +11,11 @@ import com.fms.base.action.BaseAction;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
+import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.logic.AppBillLogic;
 import com.fms.logic.MaterialLogic;
+import com.fms.logic.QuotationLogic;
 import com.fms.logic.ScmcocLogic;
 import com.fms.utils.AjaxResult;
 import com.google.gson.Gson;
@@ -28,6 +30,7 @@ public class AppBillAction extends BaseAction {
 	protected AppBillLogic appBillLogic;
 	protected MaterialLogic materLogic;
 	protected ScmcocLogic scmLogic;
+	protected QuotationLogic quotationLogic;
 	/********* 搜索条件 ***********/
 	protected String appNo;//申请单号码
 	protected String beginappDate;//申请日期（开始）
@@ -70,6 +73,14 @@ public class AppBillAction extends BaseAction {
 
 	public void setScmLogic(ScmcocLogic scmLogic) {
 		this.scmLogic = scmLogic;
+	}
+
+	public QuotationLogic getQuotationLogic() {
+		return quotationLogic;
+	}
+
+	public void setQuotationLogic(QuotationLogic quotationLogic) {
+		this.quotationLogic = quotationLogic;
 	}
 
 	public String getAppNo() {
@@ -274,13 +285,23 @@ public class AppBillAction extends BaseAction {
 				Scmcoc scm = this.scmLogic.findScmcocById(scmid);
 				AppBillHead head = this.appBillLogic.findHeadById(hid);
 				for(Material m:list){
+					try{
+					Quotation q = this.quotationLogic.findQuotationByCondention(m, scm);
 					AppBillItem item = new AppBillItem();
 					item.setAppDate(new Date());
 					item.setHead(head);
 					item.setMaterial(m);
+					item.setScmcoc(scm);
+					item.setPrice(q.getPrice());
 					itemList.add(item);
+					itemList = this.appBillLogic.betchSaveAppBillItem(itemList);
+					Gson gson = new Gson();
+					
+					System.out.println(gson.toJson(itemList));
+					}catch(Exception e){
+						e.printStackTrace();
+					}
 				}
-				itemList = this.appBillLogic.betchSaveAppBillItem(itemList);
 			}
 		}
 	}

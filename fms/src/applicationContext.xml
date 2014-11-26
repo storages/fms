@@ -460,6 +460,9 @@
 		<property name="scmLogic">
 			<ref bean="scmcocLogic"/>
 		</property>
+		<property name="quotationLogic">
+			<ref bean="quotationLogic"/>
+		</property>
 	</bean>
 	
 	<!-- 采购单 -->

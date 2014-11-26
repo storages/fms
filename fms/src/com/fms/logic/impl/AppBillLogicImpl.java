@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.Quotation;
+import com.fms.core.entity.Scmcoc;
 import com.fms.dao.AppBillDao;
 import com.fms.logic.AppBillLogic;
 
@@ -73,6 +75,10 @@ public class AppBillLogicImpl implements AppBillLogic {
 
 	public List<AppBillItem> betchSaveAppBillItem(List<AppBillItem> datas) {
 		return this.appBillDao.betchSaveAppBillItem(datas);
+	}
+
+	public Quotation findQuotationByCondention(Material m, Scmcoc scm, Date date) {
+		return this.findQuotationByCondention(m, scm, date);
 	}
 
 }

@@ -321,5 +321,14 @@ public class QuotationLogicImpl implements QuotationLogic{
 		return null;
 	}
 	
-	
+	/**
+	 * 根据物料、供应商、和日期来查询报价单
+	 * @param m
+	 * @param date
+	 * @return
+	 */
+	public Quotation findQuotationByCondention(Material m,Scmcoc scm){
+		return this.quotationDao.findQuotationByCondention(m, scm);
+		
+	}
 }

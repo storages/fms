@@ -204,6 +204,24 @@ function getUrl(flag){
 	return url;
 }
 
+//获取浏览器高
+function getTotalHeight(){
+	if($.browser.msie){
+		return document.compatMode == "CSS1Compat"? document.documentElement.clientHeight : document.body.clientHeight;
+	}else {
+		return self.innerHeight;
+	}
+}
+
+//获取浏览器宽
+function getTotalWidth (){
+	if($.browser.msie){
+		return document.compatMode == "CSS1Compat"? document.documentElement.clientWidth : document.body.clientWidth;
+	}else{
+		return self.innerWidth;
+	}
+}
+
 //等待加载，转圈gif样式脚本
 function loadgif(){
 	

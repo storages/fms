@@ -166,8 +166,10 @@
 	}
 	
 	function adddetail(){
+		var do_height = getTotalHeight();
+		var do_width = getTotalWidth();
 		var url = "${pageContext.request.contextPath}/unit_findAllUnit.action";
-		window.open ( url , "_blank" ,"height=500,width=900,scrollbars=no,location=no,resizable=no,channelmode=1" ) ;
+		
+		window.open ( url , "_blank" ,"height=500,width=900,scrollbars=no,location=no,resizable=no,channelmode=1,top="+ (do_height-500)/2 +",left="+(do_width-900)/2 ) ;
 	}
-
 </script>

@@ -53,6 +53,11 @@ public class AppBillHead extends BaseEntity{
 	 * 未审批数     系统自动计算AppBillItem中的未审批的条数加总
 	 */
 	private Double unApprovalQty=0d;
+	
+	/**
+	 * 申请人
+	 */
+	private AclUser submitUser;
 	/**
 	 * 备注
 	 */
@@ -117,6 +122,12 @@ public class AppBillHead extends BaseEntity{
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public AclUser getSubmitUser() {
+		return submitUser;
+	}
+	public void setSubmitUser(AclUser submitUser) {
+		this.submitUser = submitUser;
 	}
 	
 	

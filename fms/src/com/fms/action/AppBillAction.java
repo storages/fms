@@ -2,12 +2,14 @@ package com.fms.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.fms.base.action.BaseAction;
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
@@ -19,6 +21,7 @@ import com.fms.logic.QuotationLogic;
 import com.fms.logic.ScmcocLogic;
 import com.fms.utils.AjaxResult;
 import com.google.gson.Gson;
+import com.url.ajax.json.JSONObject;
 
 public class AppBillAction extends BaseAction {
 
@@ -43,14 +46,26 @@ public class AppBillAction extends BaseAction {
 	private String maxIndex;// 每页显示最多条数
 	private Integer pageNums;// 共有多少页
 	private String className = "AppBillItem";// 表名称
-	private static final Integer DEFAULT_PAGESIZE = 10;
+	private static final Integer DEFAULT_PAGESIZE = 12;
 	
 	/********* 其它属性 ***********/
 	protected String ids;//物料id数组
 	protected String scmid;//供应商id
 	protected String hid;//申请单表头id
 	
-	
+
+	/**
+	 * 前台传来的json格式字符串
+	 */
+	protected String jsonstr;
+
+	public String getJsonstr() {
+		return jsonstr;
+	}
+
+	public void setJsonstr(String jsonstr) {
+		this.jsonstr = jsonstr;
+	}
 	public AppBillLogic getAppBillLogic() {
 		return appBillLogic;
 	}
@@ -200,7 +215,6 @@ public class AppBillAction extends BaseAction {
 			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
 			dataTotal = this.appBillLogic.findDataCount(appNo,(beginappDate==null||"".equals(beginappDate))?null:date,(endappDate==null||"".equals(endappDate))?null:date2,appStatus);
 			List<AppBillHead> heads = this.appBillLogic.findAppBillHeads(appNo, (beginappDate==null||"".equals(beginappDate))?null:date,(endappDate==null||"".equals(endappDate))?null:date2,appStatus,(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
-			findItemByHid();
 			List<Material> mlist = materLogic.findAllMaterialInfo(null, null, -1, -1);
 			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
 			this.request.put("scmcocs", scmcocs);
@@ -234,6 +248,8 @@ public class AppBillAction extends BaseAction {
 	 */
 	public String addAppBillHead(){
 		AppBillHead head = new AppBillHead();
+		AclUser user = (AclUser) this.session.get("u");
+		head.setSubmitUser(user);
 		List<AppBillHead> list = new ArrayList<AppBillHead>();
 		list.add(this.appBillLogic.saveAppBillHead(head));
 		this.request.put("heads",list);
@@ -242,41 +258,22 @@ public class AppBillAction extends BaseAction {
 	
 
 	
-	public void findItemByHid(){
+	public String findItemByHid(){
 		if(ids!=null && !"".equals(ids)){
 			List<AppBillItem> items = this.appBillLogic.findItemByHid(ids);
+			List<Material> mlist = materLogic.findAllMaterialInfo(null, null, -1, -1);
+			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
+			this.request.put("scmcocs", scmcocs);
 			this.request.put("items", items);
+			this.request.put("mlist", mlist);
+			this.request.put("his", ids);
 		}
+		return "item";
 	}
 	
-	public void findItemByHidToJson(){
-		if(ids!=null && !"".equals(ids)){
-			PrintWriter out = null;
-			AjaxResult result = new AjaxResult();
-			Gson gson = new Gson();
-			try {
-				out = response.getWriter();
-				response.setContentType("application/text");
-				response.setCharacterEncoding("UTF-8");
-				List<AppBillItem> items = this.appBillLogic.findItemByHid(ids);
-				result.setSuccess(true);
-				result.setObj(items);
-				result.setMsg("获取成功");
-				String str = gson.toJson(result);
-				out.print(str);
-				out.flush();
-			} catch (IOException e) {
-				result.setSuccess(false);
-				result.setMsg("获取失败");
-				String str = gson.toJson(result);
-				out.print(str);
-				out.flush();
-				e.printStackTrace();
-			}
-		}
-	}
 	
-	public void findMaterialByIds(){
+	
+	public String findMaterialByIds(){
 		if(ids!=null && !"".equals(ids)){
 			String [] matrIds = ids.split("/");
 			if(null!=matrIds && matrIds.length>0){
@@ -292,15 +289,177 @@ public class AppBillAction extends BaseAction {
 					item.setHead(head);
 					item.setMaterial(m);
 					item.setScmcoc(scm);
-					item.setPrice(q.getPrice());
+					item.setPrice(q==null?0d:q.getPrice());
 					itemList.add(item);
-					itemList = this.appBillLogic.betchSaveAppBillItem(itemList);
-					Gson gson = new Gson();
-					
-					System.out.println(gson.toJson(itemList));
 					}catch(Exception e){
 						e.printStackTrace();
 					}
+				}
+				itemList = this.appBillLogic.betchSaveAppBillItem(itemList);
+				List<AppBillItem> items = this.appBillLogic.findItemByHid(hid);
+				List<Material> mlist = materLogic.findAllMaterialInfo(null, null, -1, -1);
+				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
+				this.request.put("scmcocs", scmcocs);
+				this.request.put("items", items);
+				this.request.put("mlist", mlist);
+				this.request.put("his", ids);
+			}
+		}
+		return "item";
+	}
+	
+	
+	/**
+	 * 修改申请单
+	 */
+	public void editAppBillItem(){
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		List<List<String>> list = this.parseJsonArr(jsonstr);
+		List<AppBillItem> editData = new ArrayList<AppBillItem>();
+		if(null!=list && list.size()>0){
+			for(List<String> ldata:list){
+				List<String> contents = ldata;
+				if(null!=contents && contents.size()>0){
+					try {
+						String msg = "";
+						AppBillItem item = this.appBillLogic.findItemById(contents.get(0));
+						if(contents.get(1)==null||"".equals(contents.get(1))||"".equals(contents.get(1).trim())||"null".equals(contents.get(1).trim())){
+							msg= "申请数量不能为空";
+						}else if(!isNumeric(contents.get(1).trim())){
+							msg= "申请数量必须是数字";
+						}
+						if(contents.size()<4){
+							contents.add(null);
+						}
+						out = response.getWriter();
+						response.setContentType("application/text");
+						response.setCharacterEncoding("UTF-8");
+						if("".equals(msg)){
+							item.setTotalQty(contents.get(1)==null||"".equals(contents.get(1))||"".equals(contents.get(1).trim())||"null".equals(contents.get(1).trim())?null:Double.parseDouble(contents.get(1).trim()));//申请数量
+							item.setNote((contents.get(2)==null||"".equals(contents.get(2))||"".equals(contents.get(2).trim())||"null".equals(contents.get(2).trim())?null:parseValue(contents.get(2).trim())));//备注
+							item.setAmount(item.getPrice()*(item.getTotalQty()==null?0d:item.getTotalQty()));
+							editData.add(item);
+							result.setSuccess(true);
+							this.appBillLogic.betchSaveAppBillItem(editData);
+						}else{
+							result.setSuccess(false);
+							result.setMsg(msg);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		}
+	}
+	
+	/**
+	 * 删除申请单表体
+	 * 
+	 * @return
+	 */
+	public void deleteAppBillItem() {
+		if (null != ids && !"".equals(ids)) {
+			String[] idArr = ids.split(",");
+			if (idArr != null && idArr.length > 0) {
+				PrintWriter out = null;
+				AjaxResult result = new AjaxResult();
+				try {
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					this.appBillLogic.delAppBillItem(idArr);
+					result.setSuccess(true);
+					result.setMsg("删除成功！");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					result.setSuccess(false);
+					result.setMsg("数据被其它地方引用，不能删除！");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
+			}
+		}
+	} 
+	
+	/**
+	 * 删除申请单表头
+	 * 
+	 * @return
+	 */
+	public void deleteAppBillHead() {
+		if (null != ids && !"".equals(ids)) {
+			String[] idArr = ids.split(",");
+			if (idArr != null && idArr.length > 0) {
+				PrintWriter out = null;
+				AjaxResult result = new AjaxResult();
+				try {
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					this.appBillLogic.delAppBillHead(idArr);
+					result.setSuccess(true);
+					result.setMsg("删除成功！");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					result.setSuccess(false);
+					result.setMsg("数据被其它地方引用，不能删除！");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
+			}
+		}
+	} 
+	
+	public void submitApp(){
+		boolean flag = true;
+		if (null != ids && !"".equals(ids)) {
+			String[] idArr = ids.split(",");
+			if (idArr != null && idArr.length > 0) {
+				PrintWriter out = null;
+				AjaxResult result = new AjaxResult();
+				try {
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					for(int i=0;i<idArr.length;i++){
+						List<AppBillItem> list = this.appBillLogic.findItemByHid(idArr[i]);
+						if(null==list || list.size()<=0){
+							result.setMsg("提交的申请单中不能包含空的申请明细");
+							flag = false;
+							result.setSuccess(flag);
+							break;
+						}
+					}
+					if(flag){
+						this.appBillLogic.submitApp(idArr);
+						result.setSuccess(true);
+					}
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					result.setSuccess(false);
+					result.setMsg("数据提交失败！");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
 				}
 			}
 		}

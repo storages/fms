@@ -148,6 +148,7 @@
 		<!-- 申请单 -->
 		<action name="appbill_*" class="appBillAction" method="{1}">
 			<result name="success">/pages/appbill/appbillpage.jsp</result>
+			<result name="item">/pages/appbill/appbillitem.jsp</result>
 		</action>
 		
 		

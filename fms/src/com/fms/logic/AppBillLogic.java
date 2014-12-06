@@ -72,4 +72,21 @@ public interface AppBillLogic {
 	 */
 	AppBillItem findItemById(String id);
 	
+	/**
+	 * 删除申请单表体
+	 * @param ids
+	 */
+	public void delAppBillItem(String[] ids);
+	
+	/**
+	 * 删除申请单表头
+	 * @param ids
+	 */
+	public void delAppBillHead(String[] ids);
+	
+	/**
+	 * 提交申请
+	 * @param ids
+	 */
+	public void submitApp(String [] ids);
 }

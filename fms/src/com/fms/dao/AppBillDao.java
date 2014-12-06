@@ -86,4 +86,38 @@ public interface AppBillDao extends BaseDao{
 	 */
 	AppBillItem findItemById(String id);
 	
+	
+	/**
+	 * 删除申请单表体
+	 * @param ids
+	 */
+	void delAppBillItem(String [] ids);
+	
+	/**
+	 * 根据表头id删除表体
+	 * @param hid
+	 * @return
+	 */
+	void deleteItemsByHeadId(String [] hid);
+	
+	/**
+	 * 根据表头id删除表头信息
+	 * @param ids
+	 * @return
+	 */
+	public void deleteAppBillHead(String [] ids);
+	
+	/**
+	 * 根据id查询表体
+	 * @param ids
+	 * @return
+	 */
+	public List<AppBillItem> findAppBillItem(String [] ids);
+	
+	/**
+	 * 根据id查询表头
+	 * @param ids
+	 * @return
+	 */
+	public List<AppBillHead> findAppBillHead(String [] ids);
 }

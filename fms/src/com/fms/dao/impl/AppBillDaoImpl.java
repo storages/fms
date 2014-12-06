@@ -29,7 +29,7 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 	}
 
 	public List<AppBillItem> findAppBillItemByHead(AppBillHead head){
-		String hql = "select a from AppBillItem a where a.head = ? ";
+		String hql = "select a from AppBillItem a where a.head.id = ? ";
 		return this.find(hql,head.getId());
 	}
 
@@ -74,7 +74,7 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 
 	public List<AppBillHead> findAppBillHeads(String appNo, Date beginappDate,Date endappDate,String appStatus, int index, int length) {
 		List params = new ArrayList();
-		String hql = "select a from AppBillHead a where 1=1 ";
+		String hql = "select a from AppBillHead a left join fetch a.submitUser u where 1=1 ";
 		if(null!=appNo && !"".equals(appNo)){
 			hql+=" and a.appNo like ? ";
 			params.add(appNo.trim());
@@ -95,7 +95,7 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 	}
 	
 	public List<AppBillItem> findItemByHid(String hid){
-		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat where item.head = ? ";
+		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat left join fetch mat.unit u where item.head.id = ? ";
 		return this.find(hql, hid);
 	}
 
@@ -107,5 +107,70 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 	public AppBillItem findItemById(String id) {
 		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat where item.id = ? ";
 		return (AppBillItem) this.uniqueResult(hql, new Object[]{id});
+	}
+
+	public void delAppBillItem(String[] ids) {
+		String hql = "DELETE FROM AppBillItem a WHERE a.id = ? ";
+		List param = new ArrayList();
+		param.add(ids[0]);
+		for(int i = 1 ; i < ids.length ; i++){
+			hql+=" or a.id = ? ";
+			param.add(ids[i]);
+		}
+		this.batchUpdateOrDelete(hql, param.toArray());
+	}
+
+	public void deleteItemsByHeadId(String[] hid) {
+		if(hid!=null&&hid.length>0){
+		String hql = "DELETE FROM AppBillItem a WHERE a.head.id = ? ";
+		List param = new ArrayList();
+		param.add(hid[0]);
+		for(int i = 1 ; i < hid.length ; i++){
+			hql+=" or a.head.id = ? ";
+			param.add(hid[i]);
+		}
+		this.batchUpdateOrDelete(hql,param.toArray());
+		}
+	}
+	
+	public void deleteAppBillHead(String [] ids){
+		if(ids!=null&&ids.length>0){
+			String hql = "DELETE FROM AppBillHead a WHERE a.id = ? ";
+			List param = new ArrayList();
+			param.add(ids[0]);
+			for(int i = 1 ; i < ids.length ; i++){
+				hql+=" or a.id = ? ";
+				param.add(ids[i]);
+			}
+			this.batchUpdateOrDelete(hql,param.toArray());
+		}
+	}
+	
+	public List<AppBillItem> findAppBillItem(String [] ids){
+		if(ids!=null&&ids.length>0){
+			String hql = "SELECT a FROM AppBillItem a WHERE a.head.id = ? ";
+			List param = new ArrayList();
+			param.add(ids[0]);
+			for(int i = 1 ; i < ids.length ; i++){
+				hql+=" or a.id = ? ";
+				param.add(ids[i]);
+			}
+			return this.find(hql,param.toArray());
+		}
+		return null;
+	}
+	
+	public List<AppBillHead> findAppBillHead(String [] ids){
+		if(ids!=null&&ids.length>0){
+			String hql = "SELECT a FROM AppBillHead a WHERE a.id = ? ";
+			List param = new ArrayList();
+			param.add(ids[0]);
+			for(int i = 1 ; i < ids.length ; i++){
+				hql+=" or a.id = ? ";
+				param.add(ids[i]);
+			}
+			return this.find(hql,param.toArray());
+		}
+		return null;
 	}
 }

@@ -97,6 +97,6 @@ public class QuotationDaoImpl extends BaseDaoImpl implements QuotationDao{
 		param.add(m);
 		param.add(scm);
 		List<Quotation> q = this.find(hql, param.toArray());
-		return q==null?null:q.get(0);
+		return (q==null||q.size()<=0)?null:q.get(0);
 	}
 }

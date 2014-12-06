@@ -148,7 +148,11 @@ function delData(ids,flag){
 		      }
 		  	});
 		var refreshUrl = resultUrl[1];
-		toMain(refreshUrl);
+		if('AppBillItem'==flag){
+			window.location.href = refreshUrl;
+		}else{
+			toMain(refreshUrl);
+		}
 	}
 }
 
@@ -200,6 +204,17 @@ function getUrl(flag){
 		case "Quotation":
 			url[0] = "${pageContext.request.contextPath}/quotation_deleteQuotation.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/quotation_findQuotations.action";
+			break;
+			//删除申请单表头
+		case "AppBillHead":
+			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillHead.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
+			break;
+			//删除申请单表体
+		case "AppBillItem":
+			var id = $('#head').val();
+			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillItem.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
 	}
 	return url;
 }

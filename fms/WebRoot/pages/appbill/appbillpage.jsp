@@ -49,6 +49,7 @@
 						<th class="center" style="width:71px;">总数量</th>
 						<th class="center" style="width:71px;">总金额</th>
 						<th class="center" style="width:90px;">申请日期</th>
+						<th class="center" style="width:90px;">申请人</th>
 						<th class="center" style="width:60px;">已审批数</th>
 						<th class="center" style="width:60px;">未审批数</th>
 						<th class="center"  style="width: 164px;">操作</th>
@@ -56,7 +57,7 @@
 				</thead>
 						<tbody id="headmodel">
 							<c:forEach var="head" items="${heads}" varStatus="index" step="1">
-								<tr onclick="showItem($(this))">
+								<tr">
 									<td class="center" style="width:20px;" >
 										<input type="checkbox" value="${head.id}" name="sid" style="width:20px;"/>
 									</td>
@@ -81,10 +82,11 @@
 										<td class="center" style="width:71px;">${head.totalQty}&nbsp;</td>
 										<td class="center" style="width:65px;">${head.totalAmount}&nbsp;</td>
 										<td class="center" style="width:92px;"><fmt:formatDate value="${head.appDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
+										<td class="center" style="width:53px;">${head.submitUser.loginName}&nbsp;</td>
 										<td class="center" style="width:53px;">${head.approvaledQty}&nbsp;</td>
 										<td class="center" style="width:57px;">${head.unApprovalQty}&nbsp;</td>
 										<td class="center" style="width:164px;">
-											<a href="javascript:void(0);" onclick="adddetail();">详细</a>｜
+											<a href="javascript:void(0);" onclick="adddetail('${head.id}');">详细</a>｜
 											<a href="javascript:void(0);" onclick="delData('${head.id}','AppBillHead')"><span style="color: red;">删除</span></a>
 										</td>
 								</tr>
@@ -97,11 +99,13 @@
 			<div class="modal-footer" style="padding:0px;">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" onclick="javascript:toMain('${pageContext.request.contextPath}/appbill_addAppBillHead.action')">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','Quotation')">批量删除</button>
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','AppBillHead')">批量删除</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/quotation_toImportPage.action')">Excel导入</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">提交申请</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">审批</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">撤销审批</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="submitBill()">提交申请</button>
+				<c:if test="${u.userFlag=='S'||u.userFlag=='L'}">
+					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">审批</button>
+					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">撤销审批</button>
+				</c:if>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
@@ -165,11 +169,46 @@
 		toMain(url);
 	}
 	
-	function adddetail(){
+	function adddetail(id){
 		var do_height = getTotalHeight();
 		var do_width = getTotalWidth();
-		var url = "${pageContext.request.contextPath}/unit_findAllUnit.action";
+		var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
+		//window.open ( url , "_blank" ,"height=600,width=1100,scrollbars=no,location=no,resizable=no,channelmode=1,top="+ (do_height-600)/2 +",left="+(do_width-1100)/2 ) ;
+		if(getBrowserType()=="chrome"){
+			window.open ( url , "_blank" ,"dialogHeight="+ do_height-200 +"px;dialogWidth="+ do_width-100 +"px;scrollbars=no;location=no;resizable=no;channelmode=1;top="+ (do_height-(do_height-200))/2 +";left="+(do_width-(do_width-100))/2 ) ;
+		}else{
+			window.showModalDialog ( url , "_blank" ,"dialogHeight=600;dialogWidth=1300;scrollbars=no;location=no;resizable=no;channelmode=1;top="+ (do_height-(do_height-200))/2 +";left="+(do_width-(do_width-100))/2 );
+		}
 		
-		window.open ( url , "_blank" ,"height=500,width=900,scrollbars=no,location=no,resizable=no,channelmode=1,top="+ (do_height-500)/2 +",left="+(do_width-900)/2 ) ;
+	}
+	
+	//提交申请
+	function submitBill(){
+		var ids = "";
+		$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框      
+    		ids+=$(this).val()+",";//将选中的值组装成一个以','分割的字符串
+    	});
+		if(ids==""){
+			alert("请勾选要申请的内容");
+			return;
+		}
+		var url = "${pageContext.request.contextPath}/appbill_submitApp.action?ids="+ids;
+		$.ajax({
+			     type: "POST",
+			     url:url,
+			     async: false,
+			     cache: false,
+			     success:function(data){
+			     var result=jQuery.parseJSON(data);
+			     if(!result.success){
+			     		alert(result.msg);
+			     	}else{
+			     		url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
+			     		toMain(url);
+			     	}
+			     },error:function(){
+			        	alert("程序异常，请重新启动程序！");
+			      }
+			  	});
 	}
 </script>

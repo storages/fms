@@ -209,6 +209,36 @@
 			     },error:function(){
 			        	alert("程序异常，请重新启动程序！");
 			      }
-			  	});
+		});
+	}
+	
+	//审批
+	function verifyBill(){
+		var ids = "";
+		$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框      
+    		ids+=$(this).val()+",";//将选中的值组装成一个以','分割的字符串
+    	});
+		if(ids==""){
+			alert("请勾选要审批的内容");
+			return;
+		}
+		var url = "${pageContext.request.contextPath}/appbill_*.action?ids="+ids;
+		$.ajax({
+			     type: "POST",
+			     url:url,
+			     async: false,
+			     cache: false,
+			     success:function(data){
+			     var result=jQuery.parseJSON(data);
+			     if(!result.success){
+			     		alert(result.msg);
+			     	}else{
+			     		url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
+			     		toMain(url);
+			     	}
+			     },error:function(){
+			        	alert("程序异常，请重新启动程序！");
+			      }
+		});
 	}
 </script>

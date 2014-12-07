@@ -120,4 +120,11 @@ public interface AppBillDao extends BaseDao{
 	 * @return
 	 */
 	public List<AppBillHead> findAppBillHead(String [] ids);
+	
+	/**
+	 * 根据表体id来查询表头
+	 * @param itemId
+	 * @return
+	 */
+	public AppBillHead findHeadByItemId(String itemId);
 }

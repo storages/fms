@@ -13,8 +13,8 @@
 
 
 		<property name="appStatus" column="APPSTATUS" />
-		<many-to-one name="scmcoc" class="Scmcoc" column="SCMCOC"/>
-		<many-to-one name="material" class="Material" column="MATERIAL"/>
+		<many-to-one name="scmcoc" class="Scmcoc" column="SCMCOC" lazy="false"/>
+		<many-to-one name="material" class="Material" column="MATERIAL" lazy="false"/>
 		<property name="price" column="PRICE" />
 		<property name="totalQty" column="TOTALQTY" />
 		<property name="amount" column="AMOUNT" />

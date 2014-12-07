@@ -89,4 +89,11 @@ public interface AppBillLogic {
 	 * @param ids
 	 */
 	public void submitApp(String [] ids);
+	
+	/**
+	 * 根据表体id来查询表头
+	 * @param itemId
+	 * @return
+	 */
+	public AppBillHead findHeadByItemId(String itemId);
 }

@@ -32,6 +32,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 
 	public AppBillHead saveAppBillHead(AppBillHead head) {
 		Integer serialNo = this.appBillDao.getSerialNo("AppBillHead");
+		head = this.appBillDao.findHeadById(head.getId());
 		if(serialNo==null || serialNo==0){
 			serialNo = 1;
 		}else if(serialNo>0){
@@ -43,7 +44,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 		appBillNo = "R"+sdf.format(new Date());
 		head.setAppNo(appBillNo);
 		head.setAppDate(new Date());
-		head = this.appBillDao.saveAppBillHead(head);
+		this.appBillDao.saveAppBillHead(head);
 		return head;
 	}
 
@@ -92,7 +93,9 @@ public class AppBillLogicImpl implements AppBillLogic {
 			head.setTotalQty(num);
 			head.setApprovaledQty(this.countVerifyQty(newList));
 			head.setUnApprovalQty(this.countUnVerifyQty(newList));
-			head = this.saveAppBillHead(head);
+			
+			head = this.appBillDao.saveAppBillHead(head);
+			//head = this.findHeadById(head.getId());
 			for(AppBillItem item:newList){
 				item.setHead(head);
 			}
@@ -182,5 +185,14 @@ public class AppBillLogicImpl implements AppBillLogic {
 				this.appBillDao.betchSaveAppBillHead(heads);
 			}
 		}
+	}
+	
+	/**
+	 * 根据表体id来查询表头
+	 * @param itemId
+	 * @return
+	 */
+	public AppBillHead findHeadByItemId(String itemId){
+		return this.appBillDao.findHeadByItemId(itemId);
 	}
 }

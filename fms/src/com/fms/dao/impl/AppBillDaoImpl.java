@@ -173,4 +173,9 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 		}
 		return null;
 	}
+	
+	public AppBillHead findHeadByItemId(String itemId){
+		String hql = "select b from AppBillItem a left join a.head b where a.id=? ";
+		return (AppBillHead) this.uniqueResult(hql, new Object[]{itemId});
+	}
 }

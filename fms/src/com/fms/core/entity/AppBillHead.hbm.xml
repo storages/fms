@@ -19,7 +19,7 @@
 		<property name="totalQty" column="TOTALQTY" />
 		<property name="totalAmount" column="TOTALAMOUNT" />
 		<property name="appDate" column="APPDATE" />
-		<many-to-one name="submitUser" class="AclUser" column="SUBMITUSER"/>
+		<many-to-one name="submitUser" class="AclUser" column="SUBMITUSER" lazy="false"/>
 		<property name="approvaledQty" column="APPROVALEDQTY" />
 		<property name="unApprovalQty" column="UNAPPROVALQTY" />
 		<property name="note" column="NOTE" />

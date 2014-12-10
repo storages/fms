@@ -140,6 +140,8 @@
 			
 	
 <script type="text/javascript">
+//dialog窗口对象
+var win = true;
 	$(function(){
 		$("#hbeginappDate").val($("#d1").val());
 		$("#hendappDate").val($("#d2").val());
@@ -170,15 +172,21 @@
 	}
 	
 	function adddetail(id){
-		var do_height = getTotalHeight();
-		var do_width = getTotalWidth();
-		var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
-		//window.open ( url , "_blank" ,"height=600,width=1100,scrollbars=no,location=no,resizable=no,channelmode=1,top="+ (do_height-600)/2 +",left="+(do_width-1100)/2 ) ;
-		if(getBrowserType()=="chrome"){
-			window.open ( url , "_blank" ,"dialogHeight="+ do_height-200 +"px;dialogWidth="+ do_width-100 +"px;scrollbars=no;location=no;resizable=no;channelmode=1;top="+ (do_height-(do_height-200))/2 +";left="+(do_width-(do_width-100))/2 ) ;
-		}else{
-			window.showModalDialog ( url , "_blank" ,"dialogHeight=600;dialogWidth=1300;scrollbars=no;location=no;resizable=no;channelmode=1;top="+ (do_height-(do_height-200))/2 +";left="+(do_width-(do_width-100))/2 );
-		}
+			var do_height = getTotalHeight();
+			var do_width = getTotalWidth();
+			var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
+			if(win!=false && win!=undefined){
+				if(getBrowserType()=="chrome"){
+					win = window.open ( url , "_blank" ,"dialogHeight="+ do_height-200 +"px;dialogWidth="+ do_width-100 +"px;scrollbars=no;location=no;resizable=no;channelmode=1;top="+ (do_height-(do_height-200))/2 +";left="+(do_width-(do_width-100))/2 ) ;
+				}else{
+					win = window.showModalDialog ( url , "_blank" ,"dialogHeight=600;dialogWidth=1300;scrollbars=no;location=no;resizable=no;channelmode=1;top="+ (do_height-(do_height-200))/2 +";left="+(do_width-(do_width-100))/2 );
+				}
+				win = false;
+			}else{
+				var url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
+				toMain(url);
+			}
+		
 		
 	}
 	

@@ -23,8 +23,12 @@ function getModifyData(){
 	if(typeof JSON == undefined){
 		$('head').append($("<script type='text/javascript' src='${pageContext.request.contextPath}/js/public/json2.js'>"));
 	}
-	var jsonstr = JSON.stringify(dataArr); //返回字符串
-	return jsonstr;
+	if(dataArr.length<=0){
+		return "";
+	}else{
+		var jsonstr = JSON.stringify(dataArr); //返回字符串
+		return jsonstr;
+	}
 }
 
 function showTableEdit(obj, array) {

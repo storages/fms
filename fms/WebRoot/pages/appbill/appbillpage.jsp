@@ -138,7 +138,6 @@
 				</div>
 			</div>
 			
-	
 <script type="text/javascript">
 //dialog窗口对象
 var win = true;

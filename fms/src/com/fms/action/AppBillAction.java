@@ -236,10 +236,8 @@ public class AppBillAction extends BaseAction {
 			this.request.put("maxIndex", max);
 			this.request.put("pageNums", pageCount(max, dataTotal));
 			this.request.put("appNo", appNo);
-			this.request.put("beginappDate", beginappDate == null ? null
-					: beginappDate);
-			this.request.put("endappDate", endappDate == null ? null
-					: endappDate);
+			this.request.put("beginappDate", beginappDate == null ? null: beginappDate);
+			this.request.put("endappDate", endappDate == null ? null: endappDate);
 			// findMaterial();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -274,14 +272,35 @@ public class AppBillAction extends BaseAction {
 
 	public String findItemByHid() {
 		if (ids != null && !"".equals(ids)) {
-			List<AppBillItem> items = this.appBillLogic.findItemByHid(ids);
-			List<Material> mlist = materLogic.findAllMaterialInfo(null, null,
-					-1, -1);
-			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
-			this.request.put("scmcocs", scmcocs);
-			this.request.put("items", items);
-			this.request.put("mlist", mlist);
-			this.request.put("his", ids);
+			
+			try {
+				beginappDate = "".equals(beginappDate) ? null : beginappDate;
+				endappDate = "".equals(endappDate) ? null : endappDate;
+				Date date = null;
+				if (null != beginappDate) {
+					date = new SimpleDateFormat("yyyy-MM-dd").parse(beginappDate);
+				}
+				Date date2 = null;
+				if (null != endappDate) {
+					date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endappDate);
+				}
+				
+				List<AppBillItem> items = this.appBillLogic.findItemByHid(ids, (beginappDate == null || "".equals(beginappDate)) ? null
+						: date, (endappDate == null || ""
+						.equals(endappDate)) ? null : date2, appStatus);
+				List<Material> mlist = materLogic.findAllMaterialInfo(null, null,-1, -1);
+				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
+				this.request.put("scmcocs", scmcocs);
+				this.request.put("items", items);
+				this.request.put("mlist", mlist);
+				this.request.put("his", ids);
+				this.request.put("beginappDate", beginappDate == null ? null: beginappDate);
+				this.request.put("endappDate", endappDate == null ? null: endappDate);
+				this.request.put("appStatus", appStatus);
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		return "item";
 	}
@@ -310,7 +329,7 @@ public class AppBillAction extends BaseAction {
 					}
 				}
 				itemList = this.appBillLogic.betchSaveAppBillItem(itemList);
-				List<AppBillItem> items = this.appBillLogic.findItemByHid(hid);
+				List<AppBillItem> items = this.appBillLogic.findItemByHid(hid,null,null,null);
 				List<Material> mlist = materLogic.findAllMaterialInfo(null,null, -1, -1);
 				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1,-1);
 				this.request.put("scmcocs", scmcocs);
@@ -375,6 +394,10 @@ public class AppBillAction extends BaseAction {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
+						/*result.setMsg(e.getMessage().toString());
+						JSONObject json = new JSONObject(result);
+						out.println(json.toString());
+						out.flush();*/
 					}
 				}
 			}
@@ -468,7 +491,7 @@ public class AppBillAction extends BaseAction {
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
 					for (int i = 0; i < idArr.length; i++) {
-						List<AppBillItem> list = this.appBillLogic.findItemByHid(idArr[i]);
+						List<AppBillItem> list = this.appBillLogic.findItemByHid(idArr[i],null,null,null);
 						if (null == list || list.size() <= 0) {
 							AppBillHead head = this.appBillLogic.findHeadById(idArr[i]);
 							msg+="    申请单【"+ head.getAppNo() +"】不能包含空的申请明细\n";

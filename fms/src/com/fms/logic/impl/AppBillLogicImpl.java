@@ -60,8 +60,8 @@ public class AppBillLogicImpl implements AppBillLogic {
 		return this.appBillDao.findAppBillHeads(appNo, beginappDate, endappDate,appStatus, index, length);
 	}
 
-	public List<AppBillItem> findItemByHid(String hid) {
-		return this.appBillDao.findItemByHid(hid);
+	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus) {
+		return this.appBillDao.findItemByHid(hid,beginappDate,endappDate,appStatus);
 	}
 
 	public AppBillHead findHeadById(String hid) {

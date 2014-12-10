@@ -94,9 +94,23 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 		return this.findPageList(hql, params.toArray(), index, length);
 	}
 	
-	public List<AppBillItem> findItemByHid(String hid){
+	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus){
+		List list = new ArrayList();
 		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat left join fetch mat.unit u where item.head.id = ? ";
-		return this.find(hql, hid);
+		list.add(hid);
+		if(null!=beginappDate && !"".equals(beginappDate)){
+			hql+=" and item.appDate>=?";
+			list.add(beginappDate);
+		}
+		if(null!=endappDate && !"".equals(endappDate)){
+			hql+=" and item.appDate<=?";
+			list.add(endappDate);
+		}
+		if(null!=appStatus && !"".equals(appStatus)){
+			hql+=" and item.appStatus=?";
+			list.add(appStatus);
+		}
+		return this.find(hql, list.toArray());
 	}
 
 	public AppBillHead findHeadById(String hid) {

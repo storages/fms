@@ -56,7 +56,7 @@ public interface AppBillLogic {
 	 * @param hid
 	 * @return
 	 */
-	public List<AppBillItem> findItemByHid(String hid);
+	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus);
 	
 	/**
 	 * 根据表头id查询表头对象

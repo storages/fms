@@ -70,7 +70,7 @@ public interface AppBillDao extends BaseDao{
 	 * @param hid
 	 * @return
 	 */
-	List<AppBillItem> findItemByHid(String hid);
+	List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus);
 	
 	/**
 	 * 根据表头id查询表头对象

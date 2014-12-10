@@ -260,13 +260,18 @@ public class AppBillAction extends BaseAction {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public String addAppBillHead() {
-		AppBillHead head = new AppBillHead();
-		AclUser user = (AclUser) this.session.get("u");
-		head.setSubmitUser(user);
-		List<AppBillHead> list = new ArrayList<AppBillHead>();
-		list.add(this.appBillLogic.saveAppBillHead(head));
-		this.request.put("heads", list);
+		try {
+			AppBillHead head = new AppBillHead();
+			AclUser user = (AclUser) this.session.get("u");
+			head.setSubmitUser(user);
+			List<AppBillHead> list = new ArrayList<AppBillHead>();
+			list.add(this.appBillLogic.saveAppBillHead(head));
+			this.request.put("heads", list);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return this.SUCCESS;
 	}
 

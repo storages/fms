@@ -32,7 +32,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 
 	public AppBillHead saveAppBillHead(AppBillHead head) {
 		Integer serialNo = this.appBillDao.getSerialNo("AppBillHead");
-		head = this.appBillDao.findHeadById(head.getId());
+		//head = this.appBillDao.findHeadById(head.getId());
 		if(serialNo==null || serialNo==0){
 			serialNo = 1;
 		}else if(serialNo>0){

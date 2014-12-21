@@ -105,14 +105,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			//备注
 			var note= $("#note").val(); 
 			var isEdit = $('#flag').val();
-			if(name==""){
+			if(code=="" || code==null){
+				alert("编码不能为空！");
+				isPass = false;
+				return;
+			}else if(name=="" || name==null){
 				alert("名称不能为空！");
+				isPass = false;
+				return;
+			}else if(color=="" || color==null){
+				alert("颜色不能为空！");
+				isPass = false;
+				return;
+			}else if(unit=="" || unit==null){
+				alert("计量单位不能为空！");
+				isPass = false;
+				return;
+			}else if(model=="" || model==null){
+				alert("规格不能为空！");
+				isPass = false;
+				return;
+			}else if(qty=="" || qty==null){
+				alert("数量不能为空！");
+				isPass = false;
+				return;
+			}else if(batchNO=="" || batchNO==null){
+				alert("批次号不能为空！");
+				isPass = false;
+				return;
+			}else if(lowerQty=="" || lowerQty==null){
+				alert("最低库存不能为空！");
 				isPass = false;
 				return;
 			}
 			//新增
 			if(isEdit==""){
-			alert(code);
 				var url = "${pageContext.request.contextPath}/materInfo_checkMaterial.action?hsCode="+ code +"&hsName="+name+"&batchNO="+batchNO+"&model="+model;
 				$.ajax({
 			     type: "POST",
@@ -158,7 +185,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			     async: false,
 			     cache: false,
 			     success:function(data){
-					alert(code);
 				     var result=jQuery.parseJSON(data);
 				     if(!result.success){
 				     	alert(result.msg);

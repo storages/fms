@@ -504,10 +504,15 @@ public class AppBillAction extends BaseAction {
 							flag = false;
 							result.setSuccess(flag);
 						} else {
-							msg += checkData(list);
-							result.setMsg(msg);
-							flag = false;
-							result.setSuccess(flag);
+							String err = checkData(list);
+							if("".equals(err)){
+								flag = true;
+							}else{
+								msg += err;
+								result.setMsg(msg);
+								flag = false;
+								result.setSuccess(flag);
+							}
 						}
 
 					}

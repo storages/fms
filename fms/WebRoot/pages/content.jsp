@@ -67,6 +67,7 @@
 		<li><span class="file"><a href="javascript:void(0);" data-url="#" >采购单</a></span></li>
 		<li  class="closed"><span class="folder directer">物料</span>
 			<ul>
+				<li><span class="file"><a href="javascript:void(0);" data-url="">物料BOM表管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/mater_findAllMaterialType.action">物料分类</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料清单</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/storage_findAllInStorage.action">入库</a></span></li>

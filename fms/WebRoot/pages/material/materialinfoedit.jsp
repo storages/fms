@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td class="captioncss" style="text-align: right; ">颜色</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.color}" name="material.color" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; ">物料类别</td>
+					<td class="captioncss" style="text-align: right; ">物料标记</td>
 					<td class="hidden-480 addcss" style="">
 					<select id="form-field-select-1">
 						<option value="I">原料</option>
@@ -59,28 +59,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right; ">计量单位</td>
+					<td class="captioncss" style="text-align: right; ">物料类别</td>
 					<td class="hidden-480 addcss" style="">
-					<select name="material.unit" id="form-field-select-1">
-						<c:forEach var="unit" items="${units}">
-							<option value="${unit.name}">${unit.name}</option>
+					<select name="material.materialType" id="form-field-select-1">
+						<c:forEach var="mater" items="${materialTypes}">
+							<c:if test="${materinfo.materialType.typeName==mater.typeName}">
+								<option value="${mater.id}" selected="selected">${mater.typeName}</option>
+							</c:if>
+							<c:if test="${materinfo.materialType.typeName!=mater.typeName}">
+								<option value="${mater.id}">${mater.typeName}</option>
+							</c:if>
 						</c:forEach>
 					</select>
 					<%-- <input type="text" value="${materinfo.unit.name}" name="material.unit" style="height:25px;"/> --%>
 					
 					<span style="color:red;">*</span></td>
+					<td class="captioncss" style="text-align: right; ">计量单位</td>
+					<td class="hidden-480 addcss" style="">
+					<select name="material.unit" id="form-field-select-1">
+						<c:forEach var="unit" items="${units}">
+						<c:if test="${materinfo.unit.name==unit.name}">
+								<option value="${unit.name}" selected="selected">${unit.name}</option>
+							</c:if>
+							<c:if test="${materinfo.unit.name!=unit.name}">
+								<option value="${unit.name}">${unit.name}</option>
+							</c:if>
+						</c:forEach>
+					</select>
+					<%-- <input type="text" value="${materinfo.unit.name}" name="material.unit" style="height:25px;"/> --%>
+					
+					<span style="color:red;">*</span></td>
+				</tr>
+				<tr>
 					<td class="captioncss" style="text-align: right; " onblur="check()">规格</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.model}" name="material.model" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-				<tr>
 					<td class="captioncss" style="text-align: right; ">数量</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.qty}" name="material.qty" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; " onblur="check()">批次号</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.batchNO}" name="material.batchNO" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
+					<td class="captioncss" style="text-align: right; " onblur="check()">批次号</td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.batchNO}" name="material.batchNO" style="height:25px;"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; ">最低库存</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.lowerQty}" name="material.lowerQty" style="height:25px;"/><span style="color:red;">*</span></td>
+				</tr>
+				<tr>
 					<td class="captioncss" style="text-align: right; ">备注</td>
 					<td class="hidden-480 addcss" style=""><textarea cols="120" rows="3" name="material.note" id="note">${materinfo.note}</textarea></td>
 				</tr>
@@ -96,6 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var code= $(":input[name='material.hsCode']").val(); 
 			var name= $(":input[name='material.hsName']").val(); 
 			var color= $(":input[name='material.color']").val(); 
+			var types= $(":input[name='material.materialType']").val(); 
 			var imgExgFlag= $("#form-field-select-1").val() ;
 			var model= $(":input[name='material.model']").val(); 
 			var unit= $(":input[name='material.unit']").val(); 
@@ -158,7 +181,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  	});
 			}
 			if(isPass){
-				var param = "hsCode="+code+"&hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit
+				var param = "hsCode="+code+"&hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit+"&typeId="+types;
 				var submitUrl = "${pageContext.request.contextPath}/materInfo_save.action?"+param;
 				toMain(submitUrl);
 			}

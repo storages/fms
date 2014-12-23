@@ -7,7 +7,9 @@
 <hibernate-configuration>
 
 <session-factory>
-	<property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
+	<property name="dialect">
+		org.hibernate.dialect.SQLServerDialect
+	</property>
 	<property name="hbm2ddl.auto">update</property>
 	<property name="show_sql">true</property>
 	<property name="format_sql">true</property>
@@ -46,6 +48,8 @@
 	<mapping resource="com/fms/core/entity/OrderHead.hbm.xml" />
 	<mapping resource="com/fms/core/entity/OrderItem.hbm.xml" />
 	<mapping resource="com/fms/core/entity/InStorage.hbm.xml" />
+	<mapping resource="com/fms/core/entity/BomVersion.hbm.xml" />
+	<mapping resource="com/fms/core/entity/MatrialBom.hbm.xml" />
 </session-factory>
 
 </hibernate-configuration>

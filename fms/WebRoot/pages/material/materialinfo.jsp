@@ -53,6 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<th class="center">物料编码</th>
 								<th class="center">物料名称</th>
 								<th class="center">颜色</th>
+								<th class="center">物料标记</th>
 								<th class="center">物料类别</th>
 								<th class="center">计量单位</th>
 								<th class="center">数量</th>
@@ -72,19 +73,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td class="center">${info.hsCode}　</td>
 									<td class="center">${info.hsName}　</td>
 									<td class="center">${info.color}　</td>
+									
 									<c:if test="${info.imgExgFlag=='I'}">
 										<td class="center">原料</td>
 									</c:if>
 									<c:if test="${info.imgExgFlag=='E'}">
 										<td class="center">成品</td>
 									</c:if>
+									<td class="center">${info.materialType.typeName}　</td>
 									<td class="center">${info.unit.name}　</td>
 									<td class="center">${info.qty}　</td>
 									<td class="center">${info.batchNO}　</td>
 									<td class="center">${info.lowerQty}　</td>
 									<td class="center">${info.note}　</td>
 									<td class="center">
-										<a href="javascript:void(0);" onclick="toedit('${info.id}')">修改</a>｜
+										<a href="javascript:toMain('${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids=${info.id}')">修改</a>｜
 										<a href="javascript:void(0);" onclick="delSingleMaterial('${info.id}','${info.imgExgFlag}')">删除</a>
 									</td>
 							</tr>
@@ -159,7 +162,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function toedit(id){
 	alert(id);
 		var url = "${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids="+id;
-		toMain(url);
+		toMain("${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids=");
 	}
 	function showImport(){
 	  	var url = "${pageContext.request.contextPath}/pages/import/unitimport.jsp";

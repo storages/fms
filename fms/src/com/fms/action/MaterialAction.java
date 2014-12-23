@@ -12,12 +12,14 @@ import com.fms.core.entity.Material;
 import com.fms.core.entity.MaterialType;
 import com.fms.core.entity.Unit;
 import com.fms.logic.MaterialLogic;
+import com.fms.logic.MaterialTypeLogic;
 import com.fms.utils.AjaxResult;
 import com.url.ajax.json.JSONObject;
 
 public class MaterialAction extends BaseAction {
 
 	protected MaterialLogic materLogic;
+	protected MaterialTypeLogic logic;
 	/**
 	 * 
 	 */
@@ -44,8 +46,10 @@ public class MaterialAction extends BaseAction {
 	private String lowerQty;
 	// 备注
 	private String note;
-	
+	//物料编码
 	private String hsCode;
+	//物料类型编码id
+	private String typeId;
 	
 	/*********分页用的属性***********/
 	private Integer dataTotal;//总记录数
@@ -104,6 +108,8 @@ public class MaterialAction extends BaseAction {
 				Material materinfo = this.materLogic.findMaterialById(id);
 				if (null != materinfo) {
 					findAllUnit();
+					List<MaterialType> types = this.logic.findAllType(null);
+					this.request.put("materialTypes", types);
 					this.request.put("materinfo", materinfo);
 				}
 			}
@@ -116,6 +122,8 @@ public class MaterialAction extends BaseAction {
 		if(null!=ids && !"".equals(ids)){
 			m.setId(ids);
 		}
+		MaterialType types= this.logic.findTypeById(typeId);
+		m.setMaterialType(types);
 		m.setHsCode(this.parseValue(hsCode));
 		m.setHsName(this.parseValue(hsName));
 		m.setColor(this.parseValue(color));
@@ -139,6 +147,8 @@ public class MaterialAction extends BaseAction {
 	
 	public String add(){
 		findAllUnit();
+		List<MaterialType> types = this.logic.findAllType(null);
+		this.request.put("materialTypes", types);
 		return "add";
 	}
 	
@@ -352,6 +362,26 @@ public class MaterialAction extends BaseAction {
 
 	public void setHsCode(String hsCode) {
 		this.hsCode = hsCode;
+	}
+
+
+	public MaterialTypeLogic getLogic() {
+		return logic;
+	}
+
+
+	public void setLogic(MaterialTypeLogic logic) {
+		this.logic = logic;
+	}
+
+
+	public String getTypeId() {
+		return typeId;
+	}
+
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
 	}
 	
 }

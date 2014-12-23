@@ -16,7 +16,7 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 	public List<Material> findAllMaterialInfo(String likeStr,
 			String imgExgFlag, Integer index, Integer length) {
 		try {
-			String hql = "select a from Material a left join fetch a.unit where 1=1 ";
+			String hql = "select a from Material a left join fetch a.unit left join fetch a.materialType where 1=1 ";
 			List param = new ArrayList();
 			if(null != imgExgFlag && !"".equals(imgExgFlag)){
 				hql+=" and a.imgExgFlag = ? ";
@@ -53,7 +53,7 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 
 	public Material findMaterialById(String id) {
 		return (Material) this
-				.findUniqueResult("select a from Material a where a.id = ? ",
+				.findUniqueResult("select a from Material a left join fetch a.unit left join fetch a.materialType where a.id = ? ",
 						new Object[] { id });
 	}
 

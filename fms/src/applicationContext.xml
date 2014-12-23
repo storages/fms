@@ -419,6 +419,9 @@
 		<property name="materLogic">
 			<ref bean="materLogic" />
 		</property>
+		<property name="logic">
+			<ref bean="logic" />
+		</property>
 	</bean>
 	<!-- 进出库 -->
 	<bean id="storageAction" class="com.fms.action.StorageAction" scope="prototype">

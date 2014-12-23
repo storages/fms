@@ -11,9 +11,7 @@
 	/* margin: auto 0px 0px 150px; */
 }
 </style>
-</head>
 
-<body>
 	<div class="goodluck"></div>
-</body>
+
 

@@ -151,7 +151,7 @@
 		</div>
 	</div>
 	
-	<div class="dialog" id="dialog" title="选择物料" style="display: none;">
+	<div class="dialog" id="dialog" title="选择物料" style="display: none;width:70%;">
 		<%-- <input style="height: 25px;width: 160px;" type="text" name="${hsCode}" id="hsCode"/><input class="btn btn-small btn-danger" style="height: 25px; margin-top: -10px;border-top-width: 1px;" data-toggle="button" type="submit" value="查询"/> --%>
 			<p style="height: 28px; margin-bottom: 0px;"><span>供应商</span>
 				<select id="scmcoc">

@@ -71,6 +71,10 @@ public class AppBillLogicImpl implements AppBillLogic {
 	public AppBillItem findItemById(String id) {
 		return this.appBillDao.findItemById(id);
 	}
+	
+	public List<AppBillItem> findItemByIds(String[] ids) {
+		return this.appBillDao.findAppBillItem(ids);
+	}
 
 	public List<AppBillHead> betchSaveAppBillHead(List<AppBillHead> datas) {
 		return this.appBillDao.betchSaveAppBillHead(datas);
@@ -194,5 +198,11 @@ public class AppBillLogicImpl implements AppBillLogic {
 	 */
 	public AppBillHead findHeadByItemId(String itemId){
 		return this.appBillDao.findHeadByItemId(itemId);
+	}
+	
+	public void verifyItem(List<AppBillItem> data){
+		if(null!=data && data.size()>0){
+			
+		}
 	}
 }

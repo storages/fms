@@ -122,6 +122,21 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat where item.id = ? ";
 		return (AppBillItem) this.uniqueResult(hql, new Object[]{id});
 	}
+	
+	public List<AppBillItem> findItemByIds(String[] ids) {
+		List param = new ArrayList();
+		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat where 1=1 ";
+		hql+=" and (item.id = ? ";
+		param.add(ids[0]);
+		if(ids.length>1){
+			for(int i =1 ;i<ids.length;i++){
+				hql+=" or item.id = ? ";
+				param.add(ids[i]);
+			}
+		}
+		hql+=")";
+		return this.find(hql, param.toArray());
+	}
 
 	public void delAppBillItem(String[] ids) {
 		String hql = "DELETE FROM AppBillItem a WHERE a.id = ? ";
@@ -162,11 +177,11 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 	
 	public List<AppBillItem> findAppBillItem(String [] ids){
 		if(ids!=null&&ids.length>0){
-			String hql = "SELECT a FROM AppBillItem a WHERE a.head.id = ? ";
+			String hql = "SELECT item FROM AppBillItem item left join fetch item.head h left join fetch item.scmcoc scm left join fetch item.material mat left join fetch mat.unit WHERE h.id = ? ";
 			List param = new ArrayList();
 			param.add(ids[0]);
 			for(int i = 1 ; i < ids.length ; i++){
-				hql+=" or a.id = ? ";
+				hql+=" or h.id = ? ";
 				param.add(ids[i]);
 			}
 			return this.find(hql,param.toArray());

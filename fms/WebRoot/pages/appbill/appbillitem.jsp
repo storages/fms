@@ -70,10 +70,10 @@
 	<span class="">申请单状态</span>
 	<select id="appStatus" style="width:100px;"> 
 		<option value="" <c:if test="${appStatus==''}">selected="selected"</c:if>>全部</option>
-		<option value="0" <c:if test="${appStatus=='0'}">selected="selected"</c:if> >未申请</option>
+		<c:if test="${u.userFlag=='P'}"><option value="0" <c:if test="${appStatus=='0'}">selected="selected"</c:if> >未申请</option></c:if>
 		<option value="1" <c:if test="${appStatus=='1'}">selected="selected"</c:if> >待审批</option>
 		<option value="2" <c:if test="${appStatus=='2'}">selected="selected"</c:if> >审批通过</option>
-		<option value="3" <c:if test="${appStatus=='3'}">selected="selected"</c:if> >审批不通过</option>
+		<c:if test="${u.userFlag=='P'}"><option value="3" <c:if test="${appStatus=='3'&& u.userFlag=='P'}">selected="selected"</c:if> >审批不通过</option></c:if>
 	</select>
 	<span class="">申请日期</span><input type="text" id="begineffectDate" value="${beginappDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
 	<input type="text" id="endeffectDate" class="datebox" value="${endappDate}" style="height:25px;width:100px;"/>
@@ -113,7 +113,7 @@
 									</td>
 										<td class="center">${index.index+1}</td>
 										<td class="center">
-											<c:if test="${item.appStatus==0}">未申请</c:if>
+											<c:if test="${item.appStatus==0 }">未申请</c:if>
 											<c:if test="${item.appStatus==1}">待审批</c:if>
 											<c:if test="${item.appStatus==2}">审批通过</c:if>
 											<c:if test="${item.appStatus==3}">审批不通过</c:if>

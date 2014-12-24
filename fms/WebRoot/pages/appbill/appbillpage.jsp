@@ -25,10 +25,10 @@
 	<input type="text" id="hendappDate" class="datebox" value="${appDate}" style="height:25px;width:100px;"/>
 	申请单状态<select name="appHeadStatus" class="select_css" id="appHeadStatus">
 				<option value="-1" <c:if test="${appStatus=='-1'}">selected="selected"</c:if> >全部</option>
-				<option value="0" <c:if test="${appStatus=='0'}">selected="selected"</c:if> >未申请</option>
+				<c:if test="${u.userFlag=='P'}"><option value="0" <c:if test="${appStatus=='0' && u.userFlag=='P'}">selected="selected"</c:if> >未申请</option></c:if>
 				<option value="1" <c:if test="${appStatus=='1'}">selected="selected"</c:if> >待审批</option>
 				<option value="2" <c:if test="${appStatus=='2'}">selected="selected"</c:if> >审批通过</option>
-				<option value="3" <c:if test="${appStatus=='3'}">selected="selected"</c:if> >审批不通过</option>
+				<c:if test="${u.userFlag=='P'}"><option value="3" <c:if test="${appStatus=='3' && u.userFlag=='P'}">selected="selected"</c:if> >审批不通过</option></c:if>
 			</select>
 	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
@@ -103,7 +103,7 @@
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/quotation_toImportPage.action')">Excel导入</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="submitBill()">提交申请</button>
 				<c:if test="${u.userFlag=='S'||u.userFlag=='L'}">
-					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">审批</button>
+					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="gotoVerifyPage()">审批</button>
 					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">撤销审批</button>
 				</c:if>
 				<!-- 分页 -->
@@ -219,6 +219,20 @@ var win = true;
 		});
 	}
 	
+	//去审批页面
+	function gotoVerifyPage(){
+		var ids = "";
+		$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框      
+    		ids+=$(this).val()+",";//将选中的值组装成一个以','分割的字符串
+    	});
+		if(ids==""){
+			alert("请勾选要审批的内容");
+			return;
+		}
+		var url = "${pageContext.request.contextPath}/appbill_verifyList.action?ids="+ids;
+		toMain(url);
+	}
+	
 	//审批
 	function verifyBill(){
 		var ids = "";
@@ -229,7 +243,7 @@ var win = true;
 			alert("请勾选要审批的内容");
 			return;
 		}
-		var url = "${pageContext.request.contextPath}/appbill_*.action?ids="+ids;
+		var url = "${pageContext.request.contextPath}/appbill_verifyBill.action?ids="+ids;
 		$.ajax({
 			     type: "POST",
 			     url:url,

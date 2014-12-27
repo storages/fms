@@ -19,6 +19,9 @@
 		<property name="totalQty" column="TOTALQTY" />
 		<property name="amount" column="AMOUNT" />
 		<property name="appDate" column="APPDATE" />
+		<property name="verifyDate" column="VERIFYDATE" />
+		<property name="verifyUser" column="VERIFYUSER" />
+		<property name="noPassReason" column="NOPASSREASON" />
 		<many-to-one name="head" class="AppBillHead" column="HEAD"/>
 		<property name="note" column="NOTE" />
 	</class>

@@ -54,6 +54,15 @@ public class AppBillAction extends BaseAction {
 	protected String ids;// 物料id数组
 	protected String scmid;// 供应商id
 	protected String hid;// 申请单表头id
+	protected String verify;// 审批是否通过标记：2表示：通过    3表示不通过
+
+	public String getVerify() {
+		return verify;
+	}
+
+	public void setVerify(String verify) {
+		this.verify = verify;
+	}
 
 	/**
 	 * 前台传来的json格式字符串
@@ -225,15 +234,23 @@ public class AppBillAction extends BaseAction {
 					(beginappDate == null || "".equals(beginappDate)) ? null
 							: date, (endappDate == null || ""
 							.equals(endappDate)) ? null : date2, appStatus);
+			AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
+			if(user.getUserFlag().equals("P")){
+				if(null==appStatus){
+					appStatus = "-1";
+				}
+			}else{
+				if(null==appStatus){
+					appStatus = AppBillStatus.APPROVALING;
+				}
+			}
 			List<AppBillHead> heads = this.appBillLogic.findAppBillHeads(appNo,
 					(beginappDate == null || "".equals(beginappDate)) ? null
 							: date, (endappDate == null || ""
 							.equals(endappDate)) ? null : date2, appStatus,
 					(curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
-			List<Material> mlist = materLogic.findAllMaterialInfo(null, null,
-					-1, -1);
+			List<Material> mlist = materLogic.findAllMaterialInfo(null, null,-1, -1);
 			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
-			AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
 			this.request.put("u", user);
 			this.request.put("scmcocs", scmcocs);
 			this.request.put("heads", heads);
@@ -591,6 +608,8 @@ public class AppBillAction extends BaseAction {
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
+				}finally{
+					
 				}
 			}
 
@@ -612,5 +631,42 @@ public class AppBillAction extends BaseAction {
 			}
 		}
 		return "item";
+	}
+	
+	/**
+	 * 开始审批数据
+	 */
+	public void verifyInfo(){
+		if (ids != null && !"".equals(ids)) {
+			String[] idArr = ids.split(",");
+			if (idArr != null && idArr.length > 0) {
+				AjaxResult result = new AjaxResult();
+				try {
+					AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
+					List<AppBillItem> data = this.appBillLogic.verifyItem(idArr,verify,user);
+					PrintWriter out = null;
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					if(null!=data && data.size()>0){
+						result.setMsg("审批完成");
+						result.setSuccess(true);
+						JSONObject json = new JSONObject(result);
+						out.println(json.toString());
+						out.flush();
+						out.close();
+					}
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					result.setMsg("审批失败"+e.getMessage());
+					result.setSuccess(false);
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
+			}
+		}
 	}
 }

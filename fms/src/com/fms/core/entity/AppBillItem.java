@@ -46,6 +46,20 @@ public class AppBillItem extends BaseEntity{
 	 * 申请日期(appDate)
 	 */
 	private Date appDate;
+	
+	/**
+	 * 审批日期
+	 */
+	private Date verifyDate;
+	/**
+	 * 审批人
+	 */
+	private String verifyUser;
+	
+	/**
+	 * 不通过原因
+	 */
+	private String noPassReason;
 	/**
 	 * 申请单表头(实体AppBillHead)
 	 */
@@ -108,6 +122,24 @@ public class AppBillItem extends BaseEntity{
 	}
 	public void setHead(AppBillHead head) {
 		this.head = head;
+	}
+	public Date getVerifyDate() {
+		return verifyDate;
+	}
+	public void setVerifyDate(Date verifyDate) {
+		this.verifyDate = verifyDate;
+	}
+	public String getVerifyUser() {
+		return verifyUser;
+	}
+	public void setVerifyUser(String verifyUser) {
+		this.verifyUser = verifyUser;
+	}
+	public String getNoPassReason() {
+		return noPassReason;
+	}
+	public void setNoPassReason(String noPassReason) {
+		this.noPassReason = noPassReason;
 	}
 	
 	

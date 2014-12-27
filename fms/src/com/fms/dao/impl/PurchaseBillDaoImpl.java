@@ -26,4 +26,8 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao{
 		return this.find(hql,list.toArray());
 	}
 
+	public List<PurchaseBill> betchSavePurchaseBill(List<PurchaseBill> data) {
+		return this.batchSaveOrUpdate(data);
+	}
+
 }

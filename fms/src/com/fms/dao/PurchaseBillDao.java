@@ -18,4 +18,11 @@ public interface PurchaseBillDao extends BaseDao{
 	 * @return
 	 */
 	List<PurchaseBill> findPurchaseBill(Quotation quotation);
+	
+	/**
+	 * 批量保存采购单
+	 * @param data
+	 * @return
+	 */
+	List<PurchaseBill> betchSavePurchaseBill(List<PurchaseBill> data);
 }

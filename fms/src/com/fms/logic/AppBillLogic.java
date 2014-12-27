@@ -3,6 +3,7 @@ package com.fms.logic;
 import java.util.Date;
 import java.util.List;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
@@ -108,5 +109,5 @@ public interface AppBillLogic {
 	 * 批量审批申请单
 	 * @param data
 	 */
-	void verifyItem(List<AppBillItem> data);
+	List<AppBillItem> verifyItem(String[] itemIds,String verifyFlag,AclUser user);
 }

@@ -22,35 +22,35 @@ public class PurchaseBill extends BaseEntity{
 	private Integer serialNo;
 	
 	/**
-	 * 采购单号(purchaseNo)  系统自动生成累加1 格式：C+年月日+0001   例如：C201411070001
+	 * 采购单号(purchaseNo)  系统自动生成   格式：C+年月日时分秒
 	 */
 	private String purchaseNo;
 	/**
 	 * 采购单状态(purchStatus)   0、未生效   1、生效   系统默认未生效
 	 */
-	private String purchStatus;
+	private String purchStatus = "0";
 	/**
-	 * 申请单号(appBillNo) 由申请单【审核】后系统生成
+	 * 申请单号(appBillNo) 由申请单【审核】后系统抓取申请单
 	 */
 	private String appBillNo;
 	/**
-	 * 供应商(实体ScmCoc)  由申请单【审核】后系统生成
+	 * 供应商(实体ScmCoc)  由申请单【审核】后系统抓取申请单
 	 */
 	private Scmcoc scmcoc;
 	/**
-	 * 物料(实体Material)   由申请单【审核】后系统生成
+	 * 物料(实体Material)   由申请单【审核】后系统抓取申请单
 	 */
 	private Material material;
 	/**
-	 * 采购数量(qty)   由申请单【审核】后系统生成
+	 * 采购数量(qty)   由申请单【审核】后系统抓取申请单
 	 */
 	private Double qty;
 	/**
-	 * 单价(price)  由申请单【审核】后系统生成
+	 * 单价(price)  由申请单【审核】后系统抓取申请单
 	 */
 	private Double price;
 	/**
-	 * 金额(amount)  由申请单【审核】后系统生成
+	 * 金额(amount)  由申请单【审核】后系统抓取申请单
 	 */
 	private Double amount;
 	/**
@@ -64,11 +64,11 @@ public class PurchaseBill extends BaseEntity{
 	/**
 	 * 打印次数(printCount)  点击打印后系统自动加1
 	 */
-	private Integer printCount;
+	private Integer printCount = 0;
 	/**
-	 * 是否完结(isComplete) 当仓库收货收齐后，系统自动反写成已完结  0、未完结   1、已完结  默认未完结
+	 * 是否完结(isComplete) 当仓库收货收齐后，系统自动反写成已完结 false、未完结   true、已完结  默认未完结
 	 */
-	private Boolean isComplete;
+	private Boolean isComplete = Boolean.FALSE;
 	/**
 	 * 特别说明(specialNote)
 	 */

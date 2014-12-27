@@ -85,8 +85,12 @@ public interface AppBillDao extends BaseDao{
 	 * @return
 	 */
 	AppBillItem findItemById(String id);
-	
-	
+	/**
+	 * 根据表体id批量查询表体对象
+	 * @param ids
+	 * @return
+	 */
+	List<AppBillItem> findItemByIds(String[] ids);
 	/**
 	 * 删除申请单表体
 	 * @param ids
@@ -127,4 +131,5 @@ public interface AppBillDao extends BaseDao{
 	 * @return
 	 */
 	public AppBillHead findHeadByItemId(String itemId);
+	
 }

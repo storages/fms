@@ -311,6 +311,9 @@
 		<property name="appBillDao">
 			<ref bean="appBillDao"/>
 		</property>
+		<property name="purchaseBillDao">
+			<ref bean="purchaseBillDao"/>
+		</property>
 	</bean>
 	
 	<!-- 采购单 -->

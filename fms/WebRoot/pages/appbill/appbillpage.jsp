@@ -24,7 +24,7 @@
 	<span class="">申请日期</span><input type="text" id="hbeginappDate" value="${appDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
 	<input type="text" id="hendappDate" class="datebox" value="${appDate}" style="height:25px;width:100px;"/>
 	申请单状态<select name="appHeadStatus" class="select_css" id="appHeadStatus">
-				<option value="-1" <c:if test="${appStatus=='-1'}">selected="selected"</c:if> >全部</option>
+				<c:if test="${u.userFlag=='P'}"><option value="-1" <c:if test="${appStatus=='-1'}">selected="selected"</c:if> >全部</option></c:if>
 				<c:if test="${u.userFlag=='P'}"><option value="0" <c:if test="${appStatus=='0' && u.userFlag=='P'}">selected="selected"</c:if> >未申请</option></c:if>
 				<option value="1" <c:if test="${appStatus=='1'}">selected="selected"</c:if> >待审批</option>
 				<option value="2" <c:if test="${appStatus=='2'}">selected="selected"</c:if> >审批通过</option>
@@ -87,7 +87,10 @@
 										<td class="center" style="width:57px;">${head.unApprovalQty}&nbsp;</td>
 										<td class="center" style="width:164px;">
 											<a href="javascript:void(0);" onclick="adddetail('${head.id}');">详细</a>｜
-											<a href="javascript:void(0);" onclick="delData('${head.id}','AppBillHead')"><span style="color: red;">删除</span></a>
+											<c:if test="${head.appStatus==0 || head.appStatus==3}"><a href="javascript:void(0);" onclick="delData('${head.id}','AppBillHead')"><span style="color: red;">删除</span></a></c:if>
+											<c:if test="${head.appStatus==1 || head.appStatus==2}">
+												<span style="color:gray;" title="<c:if test='${head.appStatus==1}'>待审批状态，不能删除</c:if><c:if test='${head.appStatus==2}'>审批通过状态，不能删除</c:if>">删除</span>
+											</c:if>
 										</td>
 								</tr>
 							</c:forEach>
@@ -97,11 +100,13 @@
 			</div>
 			</div>
 			<div class="modal-footer" style="padding:0px;">
+			<c:if test="${u.userFlag!='S'||u.userFlag=='L'}">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" onclick="javascript:toMain('${pageContext.request.contextPath}/appbill_addAppBillHead.action')">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','AppBillHead')">批量删除</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/quotation_toImportPage.action')">Excel导入</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="submitBill()">提交申请</button>
+			</c:if>
 				<c:if test="${u.userFlag=='S'||u.userFlag=='L'}">
 					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="gotoVerifyPage()">审批</button>
 					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">撤销审批</button>
@@ -233,33 +238,5 @@ var win = true;
 		toMain(url);
 	}
 	
-	//审批
-	function verifyBill(){
-		var ids = "";
-		$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框      
-    		ids+=$(this).val()+",";//将选中的值组装成一个以','分割的字符串
-    	});
-		if(ids==""){
-			alert("请勾选要审批的内容");
-			return;
-		}
-		var url = "${pageContext.request.contextPath}/appbill_verifyBill.action?ids="+ids;
-		$.ajax({
-			     type: "POST",
-			     url:url,
-			     async: false,
-			     cache: false,
-			     success:function(data){
-			     var result=jQuery.parseJSON(data);
-			     if(!result.success){
-			     		alert(result.msg);
-			     	}else{
-			     		url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
-			     		toMain(url);
-			     	}
-			     },error:function(){
-			        	alert("程序异常，请重新启动程序！");
-			      }
-		});
-	}
+	
 </script>

@@ -60,16 +60,16 @@
 	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单</span>
 </div>
 <div class="modal-footer" style="padding:0px;">
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" id="add">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
+				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" id="add">新增</button></c:if>
+				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button></c:if>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btn_verify" >审批</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','AppBillItem')">批量删除</button>
+				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','AppBillItem')">批量删除</button></c:if>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="closeform();">关闭</button>
 </div>
 <div class="modal-footer" style="text-align: left;padding:5px;height: 25px;">
 	<span class="">申请单状态</span>
 	<select id="appStatus" style="width:100px;"> 
-		<option value="" <c:if test="${appStatus==''}">selected="selected"</c:if>>全部</option>
+		<c:if test="${u.userFlag=='P'}"><option value="-1" <c:if test="${appStatus=='-1'}">selected="selected"</c:if> >全部</option></c:if>
 		<c:if test="${u.userFlag=='P'}"><option value="0" <c:if test="${appStatus=='0'}">selected="selected"</c:if> >未申请</option></c:if>
 		<option value="1" <c:if test="${appStatus=='1'}">selected="selected"</c:if> >待审批</option>
 		<option value="2" <c:if test="${appStatus=='2'}">selected="selected"</c:if> >审批通过</option>
@@ -102,7 +102,7 @@
 						<th class="center" style="width:40px;">金额</th>
 						<th class="center" style="width:55px;">申请日期</th>
 						<th class="center">备注</th>
-						<th class="center" style="width:70px;">操作</th>
+						<c:if test="${u.userFlag=='P'}"><th class="center" style="width:70px;">操作</th></c:if>
 					</tr>
 				</thead>
 						<tbody>
@@ -113,10 +113,10 @@
 									</td>
 										<td class="center">${index.index+1}</td>
 										<td class="center">
-											<c:if test="${item.appStatus==0 }">未申请</c:if>
-											<c:if test="${item.appStatus==1}">待审批</c:if>
-											<c:if test="${item.appStatus==2}">审批通过</c:if>
-											<c:if test="${item.appStatus==3}">审批不通过</c:if>
+											<c:if test="${item.appStatus=='0' }">未申请</c:if>
+											<c:if test="${item.appStatus=='1'}">待审批</c:if>
+											<c:if test="${item.appStatus=='2'}">审批通过</c:if>
+											<c:if test="${item.appStatus=='3'}">审批不通过</c:if>
 										</td>
 										<td class="center">${item.scmcoc.code}</td>
 										<td class="center">${item.scmcoc.name}&nbsp;</td>
@@ -129,6 +129,7 @@
 										<td class="hidden-480 center">${item.amount}&nbsp;</td>
 										<td class="center"><fmt:formatDate value="${item.appDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
 										<td class="center" width="80px;">${item.note}&nbsp;</td>
+										<c:if test="${u.userFlag=='P'}">
 										<c:if test="${item.appStatus==0 || item.appStatus==3}">
 											<td class="center">
 												<a href="javascript:void(0);" onclick="edit(this,'10,14')">修改</a>|
@@ -143,6 +144,7 @@
 													title="<c:if test='${item.appStatus==1}'>待审批状态，不能删除</c:if><c:if test='${item.appStatus==2}'>审批通过状态，不能删除</c:if>">删除</span>
 											</td>
 										</c:if>
+									</c:if>
 								</tr>
 							</c:forEach>
 					</table>
@@ -195,6 +197,15 @@
 						</tbody>
 					</table>
 		</div>
+		<!-- 审批时显示输入不通过的原因div层 -->
+		<div id="verifyForm" style="width:400px;height:200px;border:solid 1px black; background-color:#F5FFE8; position: absolute; left:400; top:200; display: none; padding:5px;">
+			<input type="radio" name="verify" value="2" checked="checked">审批通过　　<input type="radio" name="verify" value="3">审批不通过
+			<br>不通过原因:<br><textarea style="height: 120px;width:380px;" id="reason"></textarea>
+			<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="确定"
+					style="height:25px; border: 2px; width:45px; margin-top:-10px;" id="btn_ok"/>
+			<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="取消"
+					style="height:25px; border: 2px; width:45px; margin-top:-10px;" id="btn_cancel"/>
+		</div>
 	</body>	
 		<script type="text/javascript">
 			$(function(){
@@ -236,18 +247,65 @@
 		
 				//审批
 				$("#btn_verify").click(function(){
-					//jquery获取复选框值      
+				//jquery获取复选框值      
 		            	var paramstr = "";      
 		            	$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框，其中选中的执行函数      
 		            		paramstr+=$(this).val()+"/";//将选中的值组装成一个以'/'分割的字符串
-		            	}); 
-		            	if(paramstr==""){
-		            		alert("请勾选要审批的内容");
-		            		return;
-		            	}
-		            	alert(paramstr);
+		            	});
+		           if(paramstr==""){
+		           	alert("请勾选要审批的内容");
+		           	return;
+		           }
+		           $("#verifyForm").show();
 				});
 				
+			});
+			//审批时显示输入不通过的原因div层【取消按钮】
+			$("#btn_cancel").click(function(){
+				$("#verifyForm").hide();
+			});
+			
+			//审批时显示输入不通过的原因div层【确认按钮】
+			$("#btn_ok").click(function(){
+				var verify = $('input[name="verify"]:checked').val();
+				var reason = $("#reason").val().trim();
+				if(verify==""){
+					alert("请选择是否通过!");
+					return;
+				}else if(verify=="3" && reason==""){
+					alert("请输入不通过的原因!");
+					return;
+				}else{
+					$("#verifyForm").hide();
+					
+					//开始审批
+					//jquery获取复选框值      
+		            	var paramstr = "";  
+		            	$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框，其中选中的执行函数      
+		            		paramstr+=$(this).val()+",";//将选中的值组装成一个以'/'分割的字符串
+		            	});
+		            	var url = "${pageContext.request.contextPath}/appbill_verifyInfo.action?ids="+paramstr+"&verify="+verify;
+		            	alert(url);
+		            	$.ajax({
+						     type: "POST",
+						     url:url,
+						     async: false,
+						     cache: false,
+						     success:function(data){
+								 var result=jQuery.parseJSON(data);
+								 if(result.success){
+								 	alert(result.msg);
+								 	var hid = $('#head').val();
+								 	url = "${pageContext.request.contextPath}/appbill_verifyList.action?ids="+hid;
+								 	toMain(url);
+								 }else{
+								 alert(result.msg);
+								 }
+							 },error:function(){
+							    alert("程序异常，请重新启动程序！");
+							 }
+					  	});
+				}
 			});
 			
 			function closeform(){

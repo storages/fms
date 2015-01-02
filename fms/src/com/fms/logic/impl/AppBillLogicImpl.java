@@ -3,7 +3,9 @@ package com.fms.logic.impl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fms.commons.AppBillStatus;
 import com.fms.core.entity.AclUser;
@@ -11,6 +13,7 @@ import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
+import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.dao.AppBillDao;
@@ -72,8 +75,8 @@ public class AppBillLogicImpl implements AppBillLogic {
 		return this.appBillDao.findAppBillHeads(appNo, beginappDate, endappDate,appStatus, index, length);
 	}
 
-	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus) {
-		return this.appBillDao.findItemByHid(hid,beginappDate,endappDate,appStatus);
+	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus,AclUser user) {
+		return this.appBillDao.findItemByHid(hid,beginappDate,endappDate,appStatus,user);
 	}
 
 	public AppBillHead findHeadById(String hid) {
@@ -84,14 +87,15 @@ public class AppBillLogicImpl implements AppBillLogic {
 		return this.appBillDao.findItemById(id);
 	}
 	
-	public List<AppBillItem> findItemByIds(String[] ids) {
-		return this.appBillDao.findAppBillItem(ids);
+	public List<AppBillItem> findItemByHeadIds(String[] ids) {
+		return this.appBillDao.findAppBillItemByHeadIds(ids);
 	}
 
 	public List<AppBillHead> betchSaveAppBillHead(List<AppBillHead> datas) {
 		return this.appBillDao.betchSaveAppBillHead(datas);
 	}
 
+	
 	public List<AppBillItem> betchSaveAppBillItem(List<AppBillItem> datas) {
 		List<AppBillItem> newList = new ArrayList<AppBillItem>();
 		if(datas!=null&&datas.size()>0){
@@ -115,6 +119,8 @@ public class AppBillLogicImpl implements AppBillLogic {
 			head.setUnApprovalQty(this.countUnVerifyQty(newList));
 			if(isVerify){
 				head.setAppStatus(AppBillStatus.APPROVED);//设置表头状态审批通过
+			}else{
+				head.setAppStatus(AppBillStatus.UNAPPLY);//设置表头状态未申请
 			}
 			head = this.appBillDao.saveAppBillHead(head);
 			//head = this.findHeadById(head.getId());
@@ -193,7 +199,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 	}
 
 	public void submitApp(String [] ids){
-		List<AppBillItem> items = this.appBillDao.findAppBillItem(ids);
+		List<AppBillItem> items = this.appBillDao.findAppBillItemByHeadIds(ids);
 		if(items!=null&&items.size()>0){
 			for(AppBillItem item:items){
 				item.setAppStatus(AppBillStatus.APPROVALING);
@@ -221,11 +227,14 @@ public class AppBillLogicImpl implements AppBillLogic {
 	/**
 	 * 审批申请单
 	 */
-	public List<AppBillItem> verifyItem(String [] itemIds,String verifyFlag,AclUser user){
+	public List<AppBillItem> verifyItem(String [] itemIds,String verifyFlag,AclUser user,String mess){
 		List<AppBillItem> data = new ArrayList<AppBillItem>();
 		if(null!=itemIds && itemIds.length>0 && !"".equals(verifyFlag)){
 			data = this.appBillDao.findItemByIds(itemIds);
 			for(AppBillItem item:data){
+				if("3".equals(verifyFlag)){
+					item.setNoPassReason(mess);
+				}
 				item.setAppStatus(verifyFlag);
 				item.setVerifyDate(new Date());
 				item.setVerifyUser(user.getLoginName());
@@ -243,30 +252,85 @@ public class AppBillLogicImpl implements AppBillLogic {
 	 */
 	private void appBillConvertPurchaseBill(List<AppBillItem> data){
 		List<PurchaseBill> purchaseBills = new ArrayList<PurchaseBill>();
+		List<PurchaseItem> PurchaseItems = new ArrayList<PurchaseItem>();
+		Map<String,PurchaseBill> PurchaseMap = new HashMap<String,PurchaseBill>();
 		if(null!=data && data.size()>0){
-			Integer serialNo = this.appBillDao.getSerialNo("PurchaseBill");
 			for(AppBillItem item:data){
-				PurchaseBill purch = new PurchaseBill();
-				if(serialNo==null || serialNo==0){
-					serialNo = 1;
-				}else if(serialNo>0){
-					serialNo+=1;
+				if(item.getAppStatus().equals(AppBillStatus.APPROVEDNOT)){
+					continue;
 				}
-				purch.setSerialNo(serialNo);//流水号
+				String key = item.getScmcoc().getCode()+"/"+item.getScmcoc().getName();
+				PurchaseBill purch = null;
+				if(PurchaseMap.get(key)!=null){
+					purch = PurchaseMap.get(key);
+				}else{
+					//创建新采购单表头
+					purch = new PurchaseBill();
+					Integer serialNo = this.appBillDao.getSerialNo("PurchaseBill");
+					if(serialNo==null || serialNo==0){
+						serialNo = 1;
+					}else if(serialNo>0){
+						serialNo+=1;
+					}
+					purch.setSerialNo(serialNo);//流水号
+					
+					String purchaseNo = "";
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmss");
+					purchaseNo = "C"+sdf.format(new Date());
+					purch.setPurchaseNo(purchaseNo);//采购单号
+					purch.setAppBillNo(item.getHead().getAppNo());//申请单号
+					purch.setScmcoc(item.getScmcoc());//供应商
+					//先保存采购单表头
+					purch = this.purchaseBillDao.saveOrUpdatePurchaseBill(purch);
+					purchaseBills.add(purch);
+					key = item.getScmcoc().getCode()+"/"+item.getScmcoc().getName();
+					PurchaseMap.put(key, purch);
+				}
 				
-				String purchaseNo = "";
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmss");
-				purchaseNo = "C"+sdf.format(new Date());
-				purch.setPurchaseNo(purchaseNo);//采购单号
-				purch.setAppBillNo(item.getHead().getAppNo());//申请单号
-				purch.setScmcoc(item.getScmcoc());//供应商
-				purch.setMaterial(item.getMaterial());//物料
-				purch.setQty(item.getTotalQty());//采购数量
-				purch.setPrice(item.getPrice());//单价
-				purch.setAmount(item.getAmount());//金额
-				purchaseBills.add(purch);
+				//创建详细信息
+				PurchaseItem purchaseItem = new PurchaseItem();
+				
+				purchaseItem.setMaterial(item.getMaterial());//物料
+				purchaseItem.setQty(item.getTotalQty());//采购数量
+				purchaseItem.setPrice(item.getPrice());//单价
+				purchaseItem.setAmount(item.getAmount());//金额
+				purchaseItem.setPurchaseBill(purch); 
+				purchaseItem = (PurchaseItem) this.purchaseBillDao.saveOrUpdateNoCache(purchaseItem);
+				
+				 
 			}
-			purchaseBills = this.purchaseBillDao.betchSavePurchaseBill(purchaseBills);
+			//purchaseBills = this.purchaseBillDao.betchSavePurchaseBill(purchaseBills);
+			//更新采购单表头信息
+			updatePurchaseBillInfo(purchaseBills);
 		}
 	}
+	
+	/**
+	 * 根据采购单表体来更新采购单表头信息
+	 * @param purchaseBills
+	 */
+	private void updatePurchaseBillInfo(List<PurchaseBill> purchaseBills){
+		try{
+		for(PurchaseBill head:purchaseBills){
+			head = this.purchaseBillDao.findPurchaseBillById(head.getId());
+			List<PurchaseItem> items = this.purchaseBillDao.findItemById(head.getId());
+			if(items!=null && items.size()>0){
+				head.setItemNo(items.size());
+				Double amount = 0d;
+				for(PurchaseItem i:items){
+					amount+=i.getAmount();
+				}
+				head.setTotalAmount(amount);
+				this.purchaseBillDao.saveOrUpdatePurchaseBill(head);
+			}
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public List<AppBillItem> findItemByIds(String[] ids) {
+		return this.appBillDao.findItemByIds(ids);
+	}
+
 }

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="PurchaseItem" table="PURCHASEITEM">
+		<id name="id" column="ID">
+			<generator class="uuid" />
+		</id>
+		<property name="createDate" column="CREATEDATE" />
+		<property name="modifyDate" column="MODIFYDATE" />
+
+		<many-to-one name="material" class="Material" column="MATERIAL" />
+		<property name="qty" column="QTY" />
+		<property name="price" column="PRICE" />
+		<property name="amount" column="AMOUNT" />
+		<property name="purchaseDate" column="PURCHASEDATE" />
+		<property name="deliveryDate" column="DELIVERYDATE" />
+		<property name="isBuy" column="ISBUY" />
+		<many-to-one name="purchaseBill" class="PurchaseBill" column="PURCHASEBILL" />
+	</class>
+</hibernate-mapping>

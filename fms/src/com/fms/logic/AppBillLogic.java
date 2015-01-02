@@ -57,7 +57,7 @@ public interface AppBillLogic {
 	 * @param hid
 	 * @return
 	 */
-	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus);
+	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus,AclUser user);
 	
 	/**
 	 * 根据表头id查询表头对象
@@ -78,7 +78,14 @@ public interface AppBillLogic {
 	 * @param ids
 	 * @return
 	 */
-	public List<AppBillItem> findItemByIds(String[] ids);
+	List<AppBillItem> findItemByIds(String[] ids);
+	
+	/**
+	 * 根据表头id数组批量查询表体对象
+	 * @param ids
+	 * @return
+	 */
+	public List<AppBillItem> findItemByHeadIds(String[] ids);
 	
 	/**
 	 * 删除申请单表体
@@ -109,5 +116,5 @@ public interface AppBillLogic {
 	 * 批量审批申请单
 	 * @param data
 	 */
-	List<AppBillItem> verifyItem(String[] itemIds,String verifyFlag,AclUser user);
+	List<AppBillItem> verifyItem(String[] itemIds,String verifyFlag,AclUser user,String mess);
 }

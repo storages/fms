@@ -34,33 +34,17 @@ public class PurchaseBill extends BaseEntity{
 	 */
 	private String appBillNo;
 	/**
+	 * 申请单项数
+	 */
+	private Integer itemNo;
+	/**
 	 * 供应商(实体ScmCoc)  由申请单【审核】后系统抓取申请单
 	 */
 	private Scmcoc scmcoc;
 	/**
-	 * 物料(实体Material)   由申请单【审核】后系统抓取申请单
+	 * 采购单总金额
 	 */
-	private Material material;
-	/**
-	 * 采购数量(qty)   由申请单【审核】后系统抓取申请单
-	 */
-	private Double qty;
-	/**
-	 * 单价(price)  由申请单【审核】后系统抓取申请单
-	 */
-	private Double price;
-	/**
-	 * 金额(amount)  由申请单【审核】后系统抓取申请单
-	 */
-	private Double amount;
-	/**
-	 * 采购时间(purchaseDate)
-	 */
-	private Date purchaseDate;
-	/**
-	 * 交货日期(deliveryDate)
-	 */
-	private Date deliveryDate;
+	private Double totalAmount;
 	/**
 	 * 打印次数(printCount)  点击打印后系统自动加1
 	 */
@@ -104,42 +88,7 @@ public class PurchaseBill extends BaseEntity{
 	public void setScmcoc(Scmcoc scmcoc) {
 		this.scmcoc = scmcoc;
 	}
-	public Material getMaterial() {
-		return material;
-	}
-	public void setMaterial(Material material) {
-		this.material = material;
-	}
-	public Double getQty() {
-		return qty;
-	}
-	public void setQty(Double qty) {
-		this.qty = qty;
-	}
-	public Double getPrice() {
-		return price;
-	}
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-	public Double getAmount() {
-		return amount;
-	}
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-	public Date getPurchaseDate() {
-		return purchaseDate;
-	}
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
-	public Date getDeliveryDate() {
-		return deliveryDate;
-	}
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
-	}
+	
 	public Integer getPrintCount() {
 		return printCount;
 	}
@@ -157,6 +106,18 @@ public class PurchaseBill extends BaseEntity{
 	}
 	public void setSpecialNote(String specialNote) {
 		this.specialNote = specialNote;
+	}
+	public Integer getItemNo() {
+		return itemNo;
+	}
+	public void setItemNo(Integer itemNo) {
+		this.itemNo = itemNo;
+	}
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 	
 	

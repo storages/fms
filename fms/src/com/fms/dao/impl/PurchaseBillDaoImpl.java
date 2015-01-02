@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.PurchaseBill;
+import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
 import com.fms.dao.PurchaseBillDao;
 
@@ -30,4 +31,16 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao{
 		return this.batchSaveOrUpdate(data);
 	}
 
+	public PurchaseBill saveOrUpdatePurchaseBill(PurchaseBill head) {
+		return (PurchaseBill) this.saveOrUpdateNoCache(head);
+	}
+
+	public List<PurchaseItem> findItemById(String id) {
+		String hql = "select item from PurchaseItem item left join fetch item.material mater left join fetch item.purchaseBill head where head.id = ? ";
+		return this.find(hql, id);
+	}
+	
+	public PurchaseBill findPurchaseBillById(String id){
+		return (PurchaseBill) this.uniqueResult("from PurchaseBill head left join fetch head.scmcoc scm where head.id=? ", new Object[]{id});
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Quotation;
@@ -94,7 +95,7 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 		return this.findPageList(hql, params.toArray(), index, length);
 	}
 	
-	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus){
+	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus,AclUser user){
 		List list = new ArrayList();
 		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat left join fetch mat.unit u where item.head.id = ? ";
 		list.add(hid);
@@ -107,9 +108,14 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 			list.add(endappDate);
 		}
 		if(null!=appStatus && !"".equals(appStatus)){
+			if(user.getUserFlag().equals("S")){
+				hql+=" and (item.appStatus not is 0 or item.appStatus not is 3 )";
+			}else{
 			hql+=" and item.appStatus=?";
+			}
 			list.add(appStatus);
 		}
+		
 		return this.find(hql, list.toArray());
 	}
 
@@ -175,7 +181,7 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 		}
 	}
 	
-	public List<AppBillItem> findAppBillItem(String [] ids){
+	public List<AppBillItem> findAppBillItemByHeadIds(String [] ids){
 		if(ids!=null&&ids.length>0){
 			String hql = "SELECT item FROM AppBillItem item left join fetch item.head h left join fetch item.scmcoc scm left join fetch item.material mat left join fetch mat.unit WHERE h.id = ? ";
 			List param = new ArrayList();

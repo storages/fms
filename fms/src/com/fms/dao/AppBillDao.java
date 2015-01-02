@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Quotation;
@@ -70,7 +71,7 @@ public interface AppBillDao extends BaseDao{
 	 * @param hid
 	 * @return
 	 */
-	List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus);
+	List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus,AclUser user);
 	
 	/**
 	 * 根据表头id查询表头对象
@@ -116,7 +117,7 @@ public interface AppBillDao extends BaseDao{
 	 * @param ids
 	 * @return
 	 */
-	public List<AppBillItem> findAppBillItem(String [] ids);
+	public List<AppBillItem> findAppBillItemByHeadIds(String [] ids);
 	
 	/**
 	 * 根据id查询表头

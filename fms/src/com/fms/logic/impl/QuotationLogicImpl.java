@@ -14,6 +14,7 @@ import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
+import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.dao.AppBillDao;
@@ -124,11 +125,21 @@ public class QuotationLogicImpl implements QuotationLogic{
 			for(PurchaseBill bill:list){
 				//必须是未生效的采购单才能更新单价
 				if(bill.getPurchStatus().equals(PurchaseBillStatus.UNEFFECT)){
-					bill.setPrice(q.getPrice());
-					bill.setAmount(bill.getPrice()*bill.getQty());
+					//根据采购单表头id来查询所有表体
+					List<PurchaseItem> items = this.purchaseBillDao.findItemById(bill.getId());
+					Double amount = 0d;
+					for(PurchaseItem temp:items){
+						if(!temp.getIsBuy()){
+							temp.setPrice(q.getPrice());
+							temp.setAmount(temp.getPrice()*temp.getQty());
+						}
+						amount+=temp.getAmount();
+					}
+					bill.setTotalAmount(amount);
+					this.purchaseBillDao.batchSaveOrUpdate(list);
+					this.purchaseBillDao.batchSaveOrUpdate(items);
 				}
 			}
-			this.purchaseBillDao.batchSaveOrUpdate(list);
 			return list.size();
 		}
 		return 0;

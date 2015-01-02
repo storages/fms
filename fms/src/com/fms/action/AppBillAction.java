@@ -55,6 +55,7 @@ public class AppBillAction extends BaseAction {
 	protected String scmid;// 供应商id
 	protected String hid;// 申请单表头id
 	protected String verify;// 审批是否通过标记：2表示：通过    3表示不通过
+	protected String noPassReason;// 审批不通过原因
 
 	public String getVerify() {
 		return verify;
@@ -196,9 +197,14 @@ public class AppBillAction extends BaseAction {
 	public void setHid(String hid) {
 		this.hid = hid;
 	}
-	
-	
 
+	public String getNoPassReason() {
+		return noPassReason;
+	}
+
+	public void setNoPassReason(String noPassReason) {
+		this.noPassReason = noPassReason;
+	}
 
 	/**
 	 * 跳转到申请单页面
@@ -315,9 +321,9 @@ public class AppBillAction extends BaseAction {
 				if (null != endappDate) {
 					date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endappDate);
 				}
-
+				AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
 				List<AppBillItem> items = this.appBillLogic.findItemByHid(ids,(beginappDate == null || "".equals(beginappDate)) ? null : date,
-								(endappDate == null || "".equals(endappDate)) ? null: date2, appStatus);
+								(endappDate == null || "".equals(endappDate)) ? null: date2, appStatus,user);
 				List<Material> mlist = materLogic.findAllMaterialInfo(null,null, -1, -1);
 				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1,-1);
 				this.request.put("scmcocs", scmcocs);
@@ -336,19 +342,68 @@ public class AppBillAction extends BaseAction {
 		}
 		return "item";
 	}
+	
+	/**
+	 * 检查是否可以新增
+	 */
+	public void checkStatus(){
+		if(ids!=null && !"".equals(ids)){
+			PrintWriter out = null;
+			String err = "";
+			AjaxResult result = new AjaxResult();
+			try {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				
+				AppBillHead head = this.appBillLogic.findHeadById(ids);
+				String idsArr[] = ids.split("/");
+				List<AppBillItem> items = this.appBillLogic.findItemByIds(idsArr);
+				for(AppBillItem item:items){
+					if(item.getAppStatus().equals(AppBillStatus.APPROVED)){
+						err+="选择的申请单中包含已经审批通过，不能再次审批!";
+					}
+				}
+				if(!err.trim().equals("")){
+					result.setMsg(err);
+					result.setSuccess(false);
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}else if(head!=null&&(head.getAppStatus().equals(AppBillStatus.APPROVALING)||head.getAppStatus().equals(AppBillStatus.APPROVED))){
+					result.setSuccess(false);
+					result.setMsg(head.getAppStatus().equals(AppBillStatus.APPROVALING)?"选择的申请单在等待审批，不能再次操作!":"选择的申请单已经审批通过，不能再次操作!");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}else{
+					result.setSuccess(true);
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public String findMaterialByIds() {
 		if (ids != null && !"".equals(ids)) {
+			hid = hid.split("/")[0];
 			String[] matrIds = ids.split("/");
 			if (null != matrIds && matrIds.length > 0) {
+				AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
 				List<AppBillItem> itemList = new ArrayList<AppBillItem>();
 				List<Material> list = this.materLogic.findMaterialById(matrIds);
 				Scmcoc scm = this.scmLogic.findScmcocById(scmid);
 				AppBillHead head = this.appBillLogic.findHeadById(hid);
 				for (Material m : list) {
 					try {
-						Quotation q = this.quotationLogic
-								.findQuotationByCondention(m, scm);
+						Quotation q = this.quotationLogic.findQuotationByCondention(m, scm);
 						AppBillItem item = new AppBillItem();
 						item.setAppDate(new Date());
 						item.setHead(head);
@@ -362,7 +417,7 @@ public class AppBillAction extends BaseAction {
 				}
 				itemList = this.appBillLogic.betchSaveAppBillItem(itemList);
 				List<AppBillItem> items = this.appBillLogic.findItemByHid(hid,
-						null, null, null);
+						null, null, null,user);
 				List<Material> mlist = materLogic.findAllMaterialInfo(null,
 						null, -1, -1);
 				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1,
@@ -370,7 +425,9 @@ public class AppBillAction extends BaseAction {
 				this.request.put("scmcocs", scmcocs);
 				this.request.put("items", items);
 				this.request.put("mlist", mlist);
-				this.request.put("his", ids);
+				if(null!=itemList && itemList.size()>0){
+					this.request.put("his", itemList.get(0).getHead().getId());
+				}
 			}
 		}
 		return "item";
@@ -528,7 +585,7 @@ public class AppBillAction extends BaseAction {
 					response.setCharacterEncoding("UTF-8");
 					for (int i = 0; i < idArr.length; i++) {
 						List<AppBillItem> list = this.appBillLogic
-								.findItemByHid(idArr[i], null, null, null);
+								.findItemByHid(idArr[i], null, null, null,null);
 						if (null == list || list.size() <= 0) {
 							AppBillHead head = this.appBillLogic
 									.findHeadById(idArr[i]);
@@ -601,8 +658,7 @@ public class AppBillAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					List<AppBillItem> list = this.appBillLogic
-							.findItemByIds(idArr);
+					List<AppBillItem> list = this.appBillLogic.findItemByHeadIds(idArr);
 					if (null != list && list.size() > 0) {
 						// 批量审批
 					}
@@ -624,10 +680,11 @@ public class AppBillAction extends BaseAction {
 		if (ids != null && !"".equals(ids)) {
 			String[] idArr = ids.split(",");
 			if (idArr != null && idArr.length > 0) {
-				List<AppBillItem> list = this.appBillLogic.findItemByIds(idArr);
+				List<AppBillItem> list = this.appBillLogic.findItemByHeadIds(idArr);
 				AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
 				this.request.put("u", user);
 				this.request.put("items", list);
+				this.request.put("his", ids);
 			}
 		}
 		return "item";
@@ -643,7 +700,7 @@ public class AppBillAction extends BaseAction {
 				AjaxResult result = new AjaxResult();
 				try {
 					AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
-					List<AppBillItem> data = this.appBillLogic.verifyItem(idArr,verify,user);
+					List<AppBillItem> data = this.appBillLogic.verifyItem(idArr,verify,user,(noPassReason==null||"".equals(noPassReason.trim())?"":this.parseValue(noPassReason)));
 					PrintWriter out = null;
 					out = response.getWriter();
 					response.setContentType("application/text");

@@ -62,7 +62,7 @@
 <div class="modal-footer" style="padding:0px;">
 				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" id="add">新增</button></c:if>
 				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button></c:if>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btn_verify" >审批</button>
+				<c:if test="${u.userFlag!='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btn_verify" >审批</button></c:if>
 				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','AppBillItem')">批量删除</button></c:if>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="closeform();">关闭</button>
 </div>
@@ -92,7 +92,7 @@
 						<th class="center" style="width:40px;">行号</th>
 						<th class="center" style="width:71px;">申请单状态</th>
 						<th class="center" style="width:65px;">供应商编码</th>
-						<th class="center" style="width:115px;">供应商名称</th>
+						<th class="center" style="width:95px;">供应商名称</th>
 						<th class="center" style="width:55px;">物料编码</th>
 						<th class="center" style="width:115px;">物料名称</th>
 						<th class="center" style="width:95px;">物料规格型号</th>
@@ -101,6 +101,7 @@
 						<th class="center" style="width:50px;">单位</th>
 						<th class="center" style="width:40px;">金额</th>
 						<th class="center" style="width:55px;">申请日期</th>
+						<th class="center" style="width:75px;">审批不通过原因</th>
 						<th class="center">备注</th>
 						<c:if test="${u.userFlag=='P'}"><th class="center" style="width:70px;">操作</th></c:if>
 					</tr>
@@ -128,11 +129,12 @@
 										<td class="hidden-480 center">${item.material.unit.name}&nbsp;</td>
 										<td class="hidden-480 center">${item.amount}&nbsp;</td>
 										<td class="center"><fmt:formatDate value="${item.appDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
+										<td class="center" width="80px;">${item.noPassReason}&nbsp;</td>
 										<td class="center" width="80px;">${item.note}&nbsp;</td>
 										<c:if test="${u.userFlag=='P'}">
 										<c:if test="${item.appStatus==0 || item.appStatus==3}">
 											<td class="center">
-												<a href="javascript:void(0);" onclick="edit(this,'10,14')">修改</a>|
+												<a href="javascript:void(0);" onclick="edit(this,'10,15')">修改</a>|
 												<a href="javascript:void(0);" onclick="delData('${item.id}','AppBillItem')">删除</a>
 											</td>
 										</c:if>
@@ -210,7 +212,29 @@
 		<script type="text/javascript">
 			$(function(){
 				$("#add").click(function(){
-		  			showDialog();
+				var hid = $('#head').val();
+					//检查是否可以新增(待审批和审批 通过状态不能新增)
+					var checkUrl = "${pageContext.request.contextPath}/appbill_checkStatus.action?ids="+hid;
+					$.ajax({
+						     type: "POST",
+						     url:checkUrl,
+						     async: false,
+						     cache: false,
+						     success:function(data){
+								 var result=jQuery.parseJSON(data);
+								 if(!result.success){
+								 	alert(result.msg);
+								 	return;
+								 }else{
+								 	//弹出物料对话框
+								 	alert(hid);
+		  							showDialog();
+								 }
+							 },error:function(){
+							    alert("程序异常，请重新启动程序！");
+							 }
+					  	});
+					
 		  			var hsCode = $("#hsCode").val();
 		  			$("#okbutton").click(function(){
 		            	var scmid = $("#scmcoc").val();
@@ -227,7 +251,6 @@
 		            		alert("请选择物料");
 		            		return;
 		            	}
-		            	var hid = $('#head').val();
 		            	var url = "${pageContext.request.contextPath}/appbill_findMaterialByIds.action?ids="+paramstr+"&scmid="+scmid+"&hid="+hid;
 		                window.location.href=url;
 						closeListenler();
@@ -256,7 +279,23 @@
 		           	alert("请勾选要审批的内容");
 		           	return;
 		           }
-		           $("#verifyForm").show();
+		           //var hid = $("#head").val();
+		           var url = "${pageContext.request.contextPath}/appbill_checkStatus.action?ids="+paramstr;
+		           $.ajax({
+		           		url:url,
+		           		dateType:"json",
+		           		async: false,
+						cache: false,
+						success:function(data){
+							var result=jQuery.parseJSON(data);
+							if(result.success){
+								$("#verifyForm").show();
+							}else{
+								alert(result.msg);
+							}
+						}
+		           });
+		           //
 				});
 				
 			});
@@ -284,8 +323,7 @@
 		            	$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框，其中选中的执行函数      
 		            		paramstr+=$(this).val()+",";//将选中的值组装成一个以'/'分割的字符串
 		            	});
-		            	var url = "${pageContext.request.contextPath}/appbill_verifyInfo.action?ids="+paramstr+"&verify="+verify;
-		            	alert(url);
+		            	var url = "${pageContext.request.contextPath}/appbill_verifyInfo.action?ids="+paramstr+"&verify="+verify+"&noPassReason="+parse(reason);
 		            	$.ajax({
 						     type: "POST",
 						     url:url,
@@ -295,8 +333,8 @@
 								 var result=jQuery.parseJSON(data);
 								 if(result.success){
 								 	alert(result.msg);
-								 	var hid = $('#head').val();
-								 	url = "${pageContext.request.contextPath}/appbill_verifyList.action?ids="+hid;
+								 	var ids = $('#head').val();
+								 	url = "${pageContext.request.contextPath}/appbill_verifyList.action?ids="+ids;
 								 	toMain(url);
 								 }else{
 								 alert(result.msg);

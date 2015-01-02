@@ -120,7 +120,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 			if(isVerify){
 				head.setAppStatus(AppBillStatus.APPROVED);//设置表头状态审批通过
 			}else{
-				head.setAppStatus(AppBillStatus.UNAPPLY);//设置表头状态未申请
+				head.setAppStatus(AppBillStatus.APPROVEDNOT);//设置表头状态未申请
 			}
 			head = this.appBillDao.saveAppBillHead(head);
 			//head = this.findHeadById(head.getId());

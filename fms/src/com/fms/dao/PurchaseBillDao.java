@@ -3,6 +3,7 @@ package com.fms.dao;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
+import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
@@ -47,4 +48,31 @@ public interface PurchaseBillDao extends BaseDao{
 	 * @return
 	 */
 	PurchaseBill findPurchaseBillById(String id);
+	
+	/**
+	 *	根据申请单号来查询采购单信息
+	 */
+	public List<PurchaseItem> findBillItemByAppNo(String[] appNos);
+	/**
+	 * 根据申请单id来查询采购单信息
+	 * @param appBillItemIds
+	 * @return
+	 */
+	List<PurchaseItem> findBillItemByAppBillItemIds(String[] appBillItemIds);
+	/**
+	 * 删除采购单表体
+	 * @param data
+	 */
+	void deletePurchaseItem(List<PurchaseItem> data);
+	/**
+	 * 删除采购单表头
+	 * @param data
+	 */
+	void deletePurchaseHead(List<PurchaseBill> data);
+	/**
+	 * 根据表体获取表头
+	 * @param list
+	 * @return
+	 */
+	List<PurchaseBill> getHeadByPurchaseItem(List<PurchaseItem> list);
 }

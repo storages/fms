@@ -133,4 +133,10 @@ public interface AppBillDao extends BaseDao{
 	 */
 	public AppBillHead findHeadByItemId(String itemId);
 	
+	/**
+	 * 根据表头id查询所有表头信息
+	 * @param headIds
+	 * @return
+	 */
+	public List<AppBillHead> findHeadsByHeadIds(String[] headIds);
 }

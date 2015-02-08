@@ -43,4 +43,46 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao{
 	public PurchaseBill findPurchaseBillById(String id){
 		return (PurchaseBill) this.uniqueResult("from PurchaseBill head left join fetch head.scmcoc scm where head.id=? ", new Object[]{id});
 	}
+
+	public List<PurchaseItem> findBillItemByAppNo(String[] appNos) {
+		String hql="select a from PurchaseItem a left join fetch a.purchaseBill h where h.appBillNo = ? ";
+		List list = new ArrayList();
+		list.add(appNos[0]);
+		for(int i =1;i<appNos.length;i++){
+			hql+=" or h.appBillNo = ? ";
+			list.add(appNos[i]);
+		}
+		return this.find(hql,list.toArray());
+	}
+
+	public List<PurchaseItem> findBillItemByAppBillItemIds(String[] appBillItemIds) {
+		String hql="select a from PurchaseItem a left join fetch a.purchaseBill h where a.linkAppBillItemId = ? ";
+		List list = new ArrayList();
+		list.add(appBillItemIds[0]);
+		for(int i =1;i<appBillItemIds.length;i++){
+			hql+=" or h.appBillNo = ? ";
+			list.add(appBillItemIds[i]);
+		}
+		return this.find(hql,list.toArray());
+	}
+
+	public void deletePurchaseItem(List<PurchaseItem> data) {
+		this.deleteAll(data);
+	}
+
+	public void deletePurchaseHead(List<PurchaseBill> data) {
+		this.deleteAll(data);
+	}
+
+	public List<PurchaseBill> getHeadByPurchaseItem(List<PurchaseItem> list) {
+		String hql = "select distinct head from PurchaseItem a left join fetch a.purchaseBill head where a = ? ";
+		List param = new ArrayList();
+		param.add(list.get(0));
+		for(int i=1;i<list.size();i++){
+			hql+=" or a = ? ";
+			param.add(list.get(i));
+		}
+		List<PurchaseBill> result = find(hql,param.toArray());
+		return result;
+	}
 }

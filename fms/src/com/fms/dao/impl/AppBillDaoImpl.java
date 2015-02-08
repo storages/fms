@@ -109,7 +109,7 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 		}
 		if(null!=appStatus && !"".equals(appStatus)){
 			if(user.getUserFlag().equals("S")){
-				hql+=" and (item.appStatus not is 0 or item.appStatus not is 3 )";
+				hql+=" and (item.appStatus<>'0' or item.appStatus <>'3' )";
 			}else{
 			hql+=" and item.appStatus=?";
 			}
@@ -212,5 +212,16 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 	public AppBillHead findHeadByItemId(String itemId){
 		String hql = "select b from AppBillItem a left join a.head b where a.id=? ";
 		return (AppBillHead) this.uniqueResult(hql, new Object[]{itemId});
+	}
+
+	public List<AppBillHead> findHeadsByHeadIds(String[] headIds) {
+		String hql="from AppBillHead head where head.id=? ";
+		List param = new ArrayList();
+		param.add(headIds[0]);
+		for(int i = 1 ;i<headIds.length;i++){
+			hql+=" or head.id=? ";
+			param.add(headIds[i]);
+		}
+		return this.find(hql,param.toArray());
 	}
 }

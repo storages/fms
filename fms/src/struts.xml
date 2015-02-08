@@ -151,6 +151,11 @@
 			<result name="item">/pages/appbill/appbillitem.jsp</result>
 		</action>
 		
+		<!-- 采购单 -->
+		<action name="purchase_*" class="purchaseAction" method="{1}">
+			<result name="success">/pages/purchase/purchasehead.jsp</result>
+		</action>
+		
 		
 		
 		

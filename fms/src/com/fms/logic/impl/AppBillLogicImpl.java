@@ -59,6 +59,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 		appBillNo = "R"+sdf.format(new Date());
 		head.setAppNo(appBillNo);
 		head.setAppDate(new Date());
+		head.setAppStatus(AppBillStatus.UNAPPLY);
 		this.appBillDao.saveAppBillHead(head);
 		return head;
 	}
@@ -120,7 +121,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 			if(isVerify){
 				head.setAppStatus(AppBillStatus.APPROVED);//设置表头状态审批通过
 			}else{
-				head.setAppStatus(AppBillStatus.APPROVEDNOT);//设置表头状态未申请
+				head.setAppStatus(AppBillStatus.UNAPPLY);//设置表头状态未申请
 			}
 			head = this.appBillDao.saveAppBillHead(head);
 			//head = this.findHeadById(head.getId());
@@ -294,6 +295,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 				purchaseItem.setQty(item.getTotalQty());//采购数量
 				purchaseItem.setPrice(item.getPrice());//单价
 				purchaseItem.setAmount(item.getAmount());//金额
+				purchaseItem.setLinkAppBillItemId(item.getId()); 
 				purchaseItem.setPurchaseBill(purch); 
 				purchaseItem = (PurchaseItem) this.purchaseBillDao.saveOrUpdateNoCache(purchaseItem);
 				
@@ -333,4 +335,41 @@ public class AppBillLogicImpl implements AppBillLogic {
 		return this.appBillDao.findItemByIds(ids);
 	}
 
+	public List<AppBillHead> findHeadsByHeadIds(String[] headIds) {
+		return this.appBillDao.findHeadsByHeadIds(headIds);
+	}
+
+	public void cancelAppBill(String[] appBillItemIds) {
+		if(null!=appBillItemIds && !"".equals(appBillItemIds)){
+			List<PurchaseItem> list = this.purchaseBillDao.findBillItemByAppBillItemIds(appBillItemIds);
+			for(PurchaseItem item:list){
+				if(item.getIsBuy()){
+					return;
+				}
+			}
+			List<PurchaseBill> heads = getHeadsByPurchaseItem(list);
+			//删除表体
+			this.purchaseBillDao.deletePurchaseItem(list);
+			//删除表头
+			deleteHeadNotItem(heads);
+		}
+		
+	}
+
+	private List<PurchaseBill> getHeadsByPurchaseItem(List<PurchaseItem> list){
+		return this.purchaseBillDao.getHeadByPurchaseItem(list);
+	}
+	
+	private void deleteHeadNotItem(List<PurchaseBill> list){
+		List<PurchaseBill> heads = new ArrayList<PurchaseBill>();
+		for(PurchaseBill bill:list){
+			List<PurchaseItem> items = this.purchaseBillDao.findItemById(bill.getId());
+			if(null==items || items.size()<=0){
+				heads.add(bill);
+			}
+		}
+		if(null!=heads && heads.size()>=0){
+			this.purchaseBillDao.deleteAll(heads);
+		}
+	}
 }

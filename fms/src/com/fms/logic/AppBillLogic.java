@@ -117,4 +117,17 @@ public interface AppBillLogic {
 	 * @param data
 	 */
 	List<AppBillItem> verifyItem(String[] itemIds,String verifyFlag,AclUser user,String mess);
+	
+	/**
+	 * 根据表头id查询所有表头信息
+	 * @param headIds
+	 * @return
+	 */
+	List<AppBillHead> findHeadsByHeadIds(String [] headIds);
+	
+	/**
+	 * 撤销审批
+	 * @param biilIds
+	 */
+	void cancelAppBill(String [] appBillItemIds);
 }

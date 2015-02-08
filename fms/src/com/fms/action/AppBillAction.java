@@ -15,10 +15,13 @@ import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
+import com.fms.core.entity.PurchaseBill;
+import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.logic.AppBillLogic;
 import com.fms.logic.MaterialLogic;
+import com.fms.logic.PurchaseBillLogic;
 import com.fms.logic.QuotationLogic;
 import com.fms.logic.ScmcocLogic;
 import com.fms.utils.AjaxResult;
@@ -36,6 +39,7 @@ public class AppBillAction extends BaseAction {
 	protected MaterialLogic materLogic;
 	protected ScmcocLogic scmLogic;
 	protected QuotationLogic quotationLogic;
+	protected PurchaseBillLogic purchaseBillLogic;
 	/********* 搜索条件 ***********/
 	protected String appNo;// 申请单号码
 	protected String beginappDate;// 申请日期（开始）
@@ -204,6 +208,14 @@ public class AppBillAction extends BaseAction {
 
 	public void setNoPassReason(String noPassReason) {
 		this.noPassReason = noPassReason;
+	}
+
+	public PurchaseBillLogic getPurchaseBillLogic() {
+		return purchaseBillLogic;
+	}
+
+	public void setPurchaseBillLogic(PurchaseBillLogic purchaseBillLogic) {
+		this.purchaseBillLogic = purchaseBillLogic;
 	}
 
 	/**
@@ -725,5 +737,92 @@ public class AppBillAction extends BaseAction {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * 撤销审批
+	 */
+	public void cancelVerify(){
+		if (ids != null && !"".equals(ids)) {
+			String[] idArr = ids.split(",");
+			if (idArr != null && idArr.length > 0) {
+				AjaxResult result = new AjaxResult();
+				String err="";
+				try{
+					AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
+					List<AppBillHead> data = this.appBillLogic.findHeadsByHeadIds(idArr);
+					PrintWriter out = null;
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					String [] appBillNos = new String [data.size()];
+					for(int i=0;i<data.size();i++){
+						appBillNos[i] = data.get(i).getAppNo();
+					}
+					List<PurchaseItem> purchaseItems = this.purchaseBillLogic.findBillItemByAppNo(appBillNos);
+					for(PurchaseItem item:purchaseItems){
+						if(item.getIsBuy()){
+							err+="选择的撤销申请单中包含已经向供应商下单购买，不能撤销!";
+						}
+					}
+					if(!"".equals(err)){
+						result.setMsg(err);
+						result.setSuccess(false);
+						JSONObject json = new JSONObject(result);
+						out.println(json.toString());
+						out.flush();
+						out.close();
+					}else{
+						//撤销审批
+						//1、删除采购单数据
+						this.purchaseBillLogic.betchDelPurchase(purchaseItems);
+						//2、把申请单的状态修改成未审批状态
+						boolean isBack = rollBackAppBillStateToInit(idArr);
+						
+						if(isBack){
+							err="撤销成功!";
+						}else{
+							err="撤销失败!";
+						}
+						result.setMsg(err);
+						result.setSuccess(true);
+						JSONObject json = new JSONObject(result);
+						out.println(json.toString());
+						out.flush();
+						out.close();
+					}
+				}catch(Exception ex){
+					err="撤销失败!";
+					result.setMsg(err);
+					result.setSuccess(false);
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 撤销审批
+	 * @param idArr
+	 */
+	private boolean rollBackAppBillStateToInit(String [] idArr){
+		boolean isBack = true;
+		List<AppBillHead> heads = new ArrayList<AppBillHead>();
+		try{
+			List<AppBillItem> appItems = this.appBillLogic.findItemByHeadIds(idArr);
+			for(AppBillItem item:appItems){
+				item.setAppStatus(AppBillStatus.UNAPPLY);//申请单表体申请状态还原成未申请状态
+				item.getHead().setAppStatus(AppBillStatus.UNAPPLY);//申请单表头申请状态还原成未申请状态
+				heads.add(item.getHead());
+			}
+			this.appBillLogic.betchSaveAppBillHead(heads);
+			this.appBillLogic.betchSaveAppBillItem(appItems);
+		}catch(Exception e){
+			isBack = false;
+		}
+		return isBack;
 	}
 }

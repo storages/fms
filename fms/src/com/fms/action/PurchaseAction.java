@@ -8,7 +8,7 @@ import com.fms.logic.PurchaseBillLogic;
  * @author Administrator
  *
  */
-public class PurchaseBillAction extends BaseAction {
+public class PurchaseAction extends BaseAction {
 
 	/**
 	 * 
@@ -22,6 +22,13 @@ public class PurchaseBillAction extends BaseAction {
 		this.purchaseBillLogic = purchaseBillLogic;
 	}
 	
-	
+	/**
+	 * 获取采购单表头
+	 * @return
+	 */
+	public String findPurchaseHeads(){
+		System.out.println("---------------");
+		return this.SUCCESS;
+	}
 
 }

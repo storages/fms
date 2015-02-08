@@ -40,6 +40,10 @@ public class PurchaseItem extends BaseEntity {
 	 */
 	private Boolean isBuy = Boolean.FALSE;
 	/**
+	 * 关联申请单表体id
+	 */
+	private String linkAppBillItemId;
+	/**
 	 * 采购单表头对象
 	 */
 	private PurchaseBill purchaseBill;
@@ -90,6 +94,12 @@ public class PurchaseItem extends BaseEntity {
 	}
 	public void setIsBuy(Boolean isBuy) {
 		this.isBuy = isBuy;
+	}
+	public String getLinkAppBillItemId() {
+		return linkAppBillItemId;
+	}
+	public void setLinkAppBillItemId(String linkAppBillItemId) {
+		this.linkAppBillItemId = linkAppBillItemId;
 	}
 	
 	

@@ -62,16 +62,16 @@
 										<input type="checkbox" value="${head.id}" name="sid" style="width:20px;"/>
 									</td>
 										<td class="center" style="width:31px;">${head.serialNo}&nbsp;</td>
-										<c:if test="${head.appStatus==0}">
+										<c:if test="${head.appStatus=='0'}">
 											<td class="center" style="width:70px;">未申请&nbsp;</td>
 										</c:if>
-										<c:if test="${head.appStatus==1}">
+										<c:if test="${head.appStatus=='1'}">
 											<td class="center" style="width:70px;">待审批&nbsp;</td>
 										</c:if>
-										<c:if test="${head.appStatus==2}">
+										<c:if test="${head.appStatus=='2'}">
 											<td class="center" style="width:70px;">审批通过&nbsp;</td>
 										</c:if>
-										<c:if test="${head.appStatus==3}">
+										<c:if test="${head.appStatus=='3'}">
 											<td class="center" style="width:70px;">审批不通过&nbsp;</td>
 										</c:if>
 										<c:if test="${head.appStatus==null}">
@@ -109,7 +109,7 @@
 			</c:if>
 				<c:if test="${u.userFlag=='S'||u.userFlag=='L'}">
 					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="gotoVerifyPage()">审批</button>
-					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="">撤销审批</button>
+					<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="cancelVerify()">撤销审批</button>
 				</c:if>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
@@ -238,5 +238,35 @@ var win = true;
 		toMain(url);
 	}
 	
+	
+	//撤销审批
+	function cancelVerify(){
+		var ids = "";
+		$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框      
+    		ids+=$(this).val()+",";//将选中的值组装成一个以','分割的字符串
+    	});
+		if(ids==""){
+			alert("请勾选要撤销审批的内容");
+			return;
+		}
+		var url = "${pageContext.request.contextPath}/appbill_cancelVerify.action?ids="+ids;
+		//toMain(url);
+		$.ajax({
+		     type: "POST",
+		     url:url,
+		     async: false,
+		     cache: false,
+		     success:function(data){
+		     var result=jQuery.parseJSON(data);
+		     alert(result.msg);
+		     if(result.success){
+		     	url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
+		     	toMain(url);
+		     	}
+		     },error:function(){
+		        	alert("程序异常，请重新启动程序！");
+		      }
+	});
+	}
 	
 </script>

@@ -4,8 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.fms.commons.AppBillStatus;
 import com.fms.core.entity.AclUser;
@@ -230,9 +232,13 @@ public class AppBillLogicImpl implements AppBillLogic {
 	 */
 	public List<AppBillItem> verifyItem(String [] itemIds,String verifyFlag,AclUser user,String mess){
 		List<AppBillItem> data = new ArrayList<AppBillItem>();
+		Set<AppBillHead> hData = new HashSet<AppBillHead>();
 		if(null!=itemIds && itemIds.length>0 && !"".equals(verifyFlag)){
 			data = this.appBillDao.findItemByIds(itemIds);
 			for(AppBillItem item:data){
+				AppBillHead head = item.getHead();
+				head.setAppStatus(verifyFlag);
+				hData.add(head);
 				if("3".equals(verifyFlag)){
 					item.setNoPassReason(mess);
 				}
@@ -240,6 +246,8 @@ public class AppBillLogicImpl implements AppBillLogic {
 				item.setVerifyDate(new Date());
 				item.setVerifyUser(user.getLoginName());
 			}
+			List<AppBillHead> l = new ArrayList<AppBillHead>(hData);
+			this.appBillDao.batchSaveOrUpdate(l);
 			data = this.betchSaveAppBillItem(data);
 			//把审批通过的申请单转换成采购单
 			appBillConvertPurchaseBill(data);

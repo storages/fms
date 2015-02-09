@@ -57,7 +57,7 @@
 <body>
 <input type="hidden" value="${his}" id="head"/>
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
-	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单</span>
+	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单详细列表</span>
 </div>
 <div class="modal-footer" style="padding:0px;">
 				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" id="add">新增</button></c:if>
@@ -348,8 +348,9 @@
 			
 			function closeform(){
 				var url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
-				window.opener.parent.$("#tomain").load(url);
-				self.close();
+				toMain(url);
+				//window.opener.parent.$("#tomain").load(url);
+				//self.close();
 			}
 			
 			//修改

@@ -131,7 +131,7 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao{
 	
 	public List<AppBillItem> findItemByIds(String[] ids) {
 		List param = new ArrayList();
-		String hql="select item from AppBillItem item left join fetch item.scmcoc scm left join fetch item.material mat where 1=1 ";
+		String hql="select item from AppBillItem item left join fetch item.head left join fetch item.scmcoc scm left join fetch item.material mat where 1=1 ";
 		hql+=" and (item.id = ? ";
 		param.add(ids[0]);
 		if(ids.length>1){

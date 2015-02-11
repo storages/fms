@@ -18,6 +18,7 @@
 		<property name="userFlag" column="USERFLAG" />
 		<property name="isForbid" column="ISFORBID" />
 	    <!--  员工一对一单项关联配置-->
-		<many-to-one name="employee" column="EMPLOYEEID" cascade="none" class="Employee" unique="true" />
+		<!-- <many-to-one name="employee" column="EMPLOYEEID" cascade="none" class="Employee" unique="true" /> -->
+		<many-to-one name="employee" column="employeeid" class="Employee"/>
 	</class>
 </hibernate-mapping>

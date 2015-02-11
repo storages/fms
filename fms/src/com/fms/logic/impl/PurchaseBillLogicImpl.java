@@ -1,10 +1,12 @@
 package com.fms.logic.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.dao.PurchaseBillDao;
@@ -42,6 +44,23 @@ public class PurchaseBillLogicImpl implements PurchaseBillLogic {
 			List<PurchaseBill> list = new ArrayList<PurchaseBill>(headLs);
 			this.purchaseBillDao.deletePurchaseHead(list);
 		}
+	}
+
+	public int getDataCount(String appBillNo, Date startDate, Date endDate) {
+		return this.purchaseBillDao.getDataCount(appBillNo, startDate, endDate);
+	}
+
+	public List<PurchaseBill> findPurchaseHeads(String appNo, Date beginappDate,
+			Date endappDate, int index, int length) {
+		return this.purchaseBillDao.findPurchaseHeads(appNo, beginappDate, endappDate, index, length);
+	}
+
+	public PurchaseBill findPurchaseById(String id) {
+		return this.purchaseBillDao.findPurchaseById(id);
+	}
+
+	public void saveOrUpdate(List<PurchaseBill> heads) {
+		this.purchaseBillDao.batchSaveOrUpdate(heads);
 	}
 	
 	

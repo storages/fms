@@ -37,31 +37,164 @@
 					<tr align="center">
 						<th class="center" style="width:30px;">选择</th>
 						<th class="center" style="width:40px;">流水号</th>
-						<th class="center" style="width:71px;">申请单状态</th>
-						<th class="center" style="width:91px;">申请单号码</th>
-						<th class="center" style="width:91px;">项数</th>
+						<th class="center" style="width:91px;">采购单号</th>
+						<th class="center" style="width:50px;">采购单状态</th>
+						<th class="center" style="width:91px;">申请单号</th>
+						<th class="center" style="width:91px;">采购单项数</th>
+						<th class="center" style="width:50px;">供应商编码</th>
+						<th class="center" style="width:150px;">供应商名称</th>
+						<th class="center" style="width:70px;">采购单总金额</th>
+						<th class="center" style="width:50px;">打印次数</th>
+						<th class="center" style="width:90px;">采购时间</th>
+						<th class="center" style="width:50px;">是否完结</th>
+						<th class="center" style="width:160px;">特别说明</th>
+						<!-- 
+						
+						<th class="center" style="width:90px;">交货日期</th>
+						<th class="center" style="width:50px;">物料编码</th>
+						<th class="center" style="width:91px;">物料名称</th>
+						<th class="center" style="width:91px;">物料规格型号</th>
+						<th class="center" style="width:50px;">采购数量</th>
 						<th class="center" style="width:71px;">总数量</th>
-						<th class="center" style="width:71px;">总金额</th>
-						<th class="center" style="width:90px;">申请日期</th>
 						<th class="center" style="width:90px;">申请人</th>
 						<th class="center" style="width:60px;">已审批数</th>
-						<th class="center" style="width:60px;">未审批数</th>
-						<th class="center"  style="width: 164px;">操作</th>
+						<th class="center" style="width:60px;">未审批数</th> -->
+						<th class="center"  style="width: 90px;">操作</th>
 					</tr>
 				</thead>
-						<tbody id="headmodel"></tbody>
+						<tbody id="headmodel">
+							<c:forEach var="head" items="${headList}" varStatus="index" step="1">
+								<tr">
+									<td class="center" style="width:20px;" >
+										<input type="checkbox" value="${head.id}" name="sid" style="width:20px;"/>
+									</td>
+										<td class="center" style="width:31px;">${head.serialNo}&nbsp;</td>
+										<td class="center" style="width:91px;">${head.purchaseNo}&nbsp;</td>
+										<c:if test="${head.purchStatus=='0'}">
+											<td class="center" style="width:70px;">未生效&nbsp;</td>
+										</c:if>
+										<c:if test="${head.purchStatus=='1'}">
+											<td class="center" style="width:70px;">生效&nbsp;</td>
+										</c:if>
+										<td class="center" style="width:91px;">${head.appBillNo}&nbsp;</td>
+										<td class="center" style="width:71px;">${head.itemNo}&nbsp;</td>
+										<td class="center" style="width:65px;">${head.scmcoc.code}&nbsp;</td>
+										<td class="center" style="width:65px;">${head.scmcoc.name}&nbsp;</td>
+										<td class="center" style="width:65px;">${head.totalAmount}&nbsp;</td>
+										<td class="center" style="width:65px;">${head.printCount}&nbsp;</td>
+										<td class="center" style="width:92px;"><fmt:formatDate value="${head.purchDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
+										<c:if test="${head.isComplete}">
+											<td class="center" style="width:53px;">已完成&nbsp;</td>
+										</c:if>
+										<c:if test="${!head.isComplete}">
+											<td class="center" style="width:53px;">未完成&nbsp;</td>
+										</c:if>
+										<td class="center" style="width:65px;">${head.specialNote}&nbsp;</td>
+										<td class="center" style="width:164px;">
+											<a href="javascript:void(0);" onclick="adddetail('${head.id}');">详细</a>｜
+											<c:if test="${head.purchStatus=='0'}"><a href="javascript:void(0);"  onclick="edit(this,'13')"><span style="color: green;">修改</span></a></c:if>
+											<c:if test="${head.purchStatus=='1'}">
+												<span style="color:gray;" title="<c:if test='${head.appStatus==1}'>生效状态，不能修改</c:if>">修改</span>
+											</c:if>
+										</td>
+								</tr>
+							</c:forEach>
+						</tbody>
 							
 					</table>
 				</div>
 			</div>
 			</div>
 			</div>
-
+<div class="modal-footer" style="padding:0px;">
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="effect" onclick="sureBuy()">生效</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="back" onclick="cancelBuy()">回卷</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="print" onclick="printPus()">打印采购单</button>
+				<!-- 分页 -->
+				<div class="pagination pull-right no-margin" style="width: 500px;">
+					<ul>
+						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
+						</li>
+						<li class="next"><a href="javascript: gotoPage( 1, ${pageNums} )">首页</a>
+						</li>
+						<c:if test="${currIndex!=1}">
+							<li class="next"><a href="javascript: gotoPage( ${currIndex - 1}, ${pageNums} )">上一页</a>
+							</li>
+						</c:if>
+						<c:if test="${currIndex!=pageNums}">
+							<li class="next"><a href="javascript: gotoPage( ${currIndex + 1}, ${pageNums} )">下一页 </a>
+							</li>
+						</c:if>
+						
+						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
+						</li>
+					</ul>
+					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag('${pageNums}')">
+						<c:forEach begin="1" end="${pageNums}" var="pnum">
+							<c:if test="${pnum==currIndex}">
+								<option selected="selected" value="${pnum}">${pnum}页</option>
+							</c:if>
+							<c:if test="${pnum!=currIndex}">
+								<option  value="${pnum}">${pnum}页</option>
+							</c:if>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
 
 
 <script type="text/javascript">
 	$(function(){
 		$("#hbeginappDate").val($("#d1").val());
 		$("#hendappDate").val($("#d2").val());
+		
+		//保存（也只能做特别说明修改后的保存）
+		$('#save').click(function(){
+			var jsonstr = getModifyData();
+			if(jsonstr==""){
+				alert("没有数据保存!");
+				return;
+			}
+			var url = "${pageContext.request.contextPath}/purchase_editheadData.action?jsonstr="+jsonstr;
+			$.ajax({
+				 type: "POST",
+				 url:url,
+				 async: false,
+				 cache: false,
+				 success:function(data){
+				 var result=jQuery.parseJSON(data);
+				 if(!result.success){
+				 		alert(result.msg);
+				 	}else{
+				 		var id = $('#head').val();
+				 		var url = "${pageContext.request.contextPath}/purchase_findPurchaseHeads.action";
+				 		toMain(url);
+				 	}
+				 },error:function(){
+				    	alert("程序异常，请重新启动程序！");
+				  }
+				});
+		});
+		
+		//生效
+		$('#effect').click(function(){
+			alert('生效');
+		});
+		
+		//回卷
+		$('#back').click(function(){
+			alert('回卷');
+		});
+		
+		//打印采购单
+		$('#print').click(function(){
+			alert('打印采购单');
+		});
 	});
+	
+	//修改
+	function edit(obj,arr){
+		showTableEdit(obj,arr);
+	}
 </script>

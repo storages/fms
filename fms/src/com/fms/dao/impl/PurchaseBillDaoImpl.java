@@ -1,9 +1,11 @@
 package com.fms.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
+import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
@@ -84,5 +86,46 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao{
 		}
 		List<PurchaseBill> result = find(hql,param.toArray());
 		return result;
+	}
+
+	public int getDataCount(String appBillNo, Date startDate, Date endDate) {
+		List params = new ArrayList();
+		String hql = "select count(a.id) from PurchaseBill a where 1=1 ";
+		if(appBillNo!=null && !"".equals(appBillNo.trim())){
+			hql+=" and a.appBillNo like ? ";
+			params.add("%"+appBillNo+"%");
+		}
+		if(startDate!=null){
+			hql+=" and a.createDate >=? ";
+			params.add(startDate);
+		}
+		if(endDate!=null){
+			hql+=" and a.createDate <=? ";
+			params.add(startDate);
+		}
+		return this.count(hql, params.toArray());
+	}
+
+	public List<PurchaseBill> findPurchaseHeads(String purchaseNo, Date startDate, Date endDate, int index, int length) {
+		List params = new ArrayList();
+		String hql = "from PurchaseBill a left join fetch a.scmcoc b where 1=1 ";
+		if(purchaseNo!=null && !"".equals(purchaseNo.trim())){
+			hql+=" and a.purchaseNo like ? ";
+			params.add("%"+purchaseNo+"%");
+		}
+		if(startDate!=null){
+			hql+=" and a.createDate >=? ";
+			params.add(startDate);
+		}
+		if(endDate!=null){
+			hql+=" and a.createDate <=? ";
+			params.add(startDate);
+		}
+		hql+=" order by a.serialNo asc";
+		return this.findPageList(hql,params.toArray(), index, length);
+	}
+
+	public PurchaseBill findPurchaseById(String id) {
+		return (PurchaseBill) this.findUniqueResult("from PurchaseBill a where a.id =? ",new Object[]{id});
 	}
 }

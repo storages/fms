@@ -46,6 +46,10 @@ public class PurchaseBill extends BaseEntity{
 	 */
 	private Double totalAmount;
 	/**
+	 * 采购时间
+	 */
+	private Date purchDate;
+	/**
 	 * 打印次数(printCount)  点击打印后系统自动加1
 	 */
 	private Integer printCount = 0;
@@ -118,6 +122,12 @@ public class PurchaseBill extends BaseEntity{
 	}
 	public void setTotalAmount(Double totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+	public Date getPurchDate() {
+		return purchDate;
+	}
+	public void setPurchDate(Date purchDate) {
+		this.purchDate = purchDate;
 	}
 	
 	

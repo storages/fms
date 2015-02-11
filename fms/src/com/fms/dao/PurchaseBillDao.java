@@ -1,5 +1,6 @@
 package com.fms.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
@@ -75,4 +76,31 @@ public interface PurchaseBillDao extends BaseDao{
 	 * @return
 	 */
 	List<PurchaseBill> getHeadByPurchaseItem(List<PurchaseItem> list);
+	
+	/**
+	 * 获取采购单的总条数
+	 * @param appBillNo
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public int getDataCount(String appBillNo,Date startDate,Date endDate);
+	
+	/**
+	 * 获取采购单表头信息(分页)
+	 * @param appNo
+	 * @param beginappDate
+	 * @param endappDate
+	 * @param index
+	 * @param length
+	 * @return
+	 */
+	public List<PurchaseBill> findPurchaseHeads(String appBillNo, Date startDate, Date endDate, int index, int length);
+	
+	/**
+	 * 根据id查询采购单
+	 * @param id
+	 * @return
+	 */
+	public PurchaseBill findPurchaseById(String id);
 }

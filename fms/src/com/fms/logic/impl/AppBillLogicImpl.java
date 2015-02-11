@@ -331,6 +331,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 					amount+=i.getAmount();
 				}
 				head.setTotalAmount(amount);
+				head.setItemNo(items.size());
 				this.purchaseBillDao.saveOrUpdatePurchaseBill(head);
 			}
 		}

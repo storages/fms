@@ -18,6 +18,7 @@
 		<property name="appBillNo" column="APPBILLNO" />
 		<many-to-one name="scmcoc" class="Scmcoc" column="SCMCOC" />
 		<property name="totalAmount" column="TOTALAMOUNT" />
+		<property name="purchDate" column="PURCHDATE" />
 		<property name="printCount" column="PRINTCOUNT" />
 		<property name="isComplete" column="ISCOMPLETE" />
 		<property name="specialNote" column="SPECIALNOTE" />

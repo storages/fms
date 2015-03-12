@@ -528,7 +528,7 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 				System.out.println(filed.getName()+"\n");
 				if(filedName.equals(filed.getName())){
 					String hql = "select max(a.serialNo) from "+clazz+" a ";
-					serialNo = (Integer) this.uniqueResult(hql, new Object[]{});
+					serialNo = (Integer) this.uniqueResult(hql, null);
 					return serialNo;
 				}
 			}

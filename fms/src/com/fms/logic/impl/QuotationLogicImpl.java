@@ -120,27 +120,31 @@ public class QuotationLogicImpl implements QuotationLogic{
 	 */
 	@SuppressWarnings("unused")
 	private int updatePurchaseBill(Quotation q){
-		List<PurchaseBill> list = this.purchaseBillDao.findPurchaseBill(q);
-		if(null!=list && list.size()>0){
-			for(PurchaseBill bill:list){
-				//必须是未生效的采购单才能更新单价
-				if(bill.getPurchStatus().equals(PurchaseBillStatus.UNEFFECT)){
-					//根据采购单表头id来查询所有表体
-					List<PurchaseItem> items = this.purchaseBillDao.findItemById(bill.getId());
-					Double amount = 0d;
-					for(PurchaseItem temp:items){
-						if(!temp.getIsBuy()){
-							temp.setPrice(q.getPrice());
-							temp.setAmount(temp.getPrice()*temp.getQty());
+		try{
+			List<PurchaseBill> list = this.purchaseBillDao.findPurchaseBill(q);
+			if(null!=list && list.size()>0){
+				for(PurchaseBill bill:list){
+					//必须是未生效的采购单才能更新单价
+					if(bill.getPurchStatus().equals(PurchaseBillStatus.UNEFFECT)){
+						//根据采购单表头id来查询所有表体
+						List<PurchaseItem> items = this.purchaseBillDao.findItemById(bill.getId());
+						Double amount = 0d;
+						for(PurchaseItem temp:items){
+							if(!temp.getIsBuy()){
+								temp.setPrice(q.getPrice());
+								temp.setAmount(temp.getPrice()*temp.getQty());
+							}
+							amount+=temp.getAmount();
 						}
-						amount+=temp.getAmount();
+						bill.setTotalAmount(amount);
+						this.purchaseBillDao.batchSaveOrUpdate(list);
+						this.purchaseBillDao.batchSaveOrUpdate(items);
 					}
-					bill.setTotalAmount(amount);
-					this.purchaseBillDao.batchSaveOrUpdate(list);
-					this.purchaseBillDao.batchSaveOrUpdate(items);
 				}
+				return list.size();
 			}
-			return list.size();
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return 0;
 	}

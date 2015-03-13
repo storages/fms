@@ -347,10 +347,9 @@
 			});
 			
 			function closeform(){
+				window.close();
 				var url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
 				toMain(url);
-				//window.opener.parent.$("#tomain").load(url);
-				//self.close();
 			}
 			
 			//修改

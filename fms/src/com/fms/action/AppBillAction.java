@@ -234,24 +234,6 @@ public class AppBillAction extends BaseAction {
 	 */
 	public String findAppBillHeads() {
 		try {
-			beginappDate = "".equals(beginappDate) ? null : beginappDate;
-			endappDate = "".equals(endappDate) ? null : endappDate;
-			Date date = null;
-			if (null != beginappDate) {
-				date = new SimpleDateFormat("yyyy-MM-dd").parse(beginappDate);
-			}
-			Date date2 = null;
-			if (null != endappDate) {
-				date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endappDate);
-			}
-			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1
-					: Integer.parseInt(currIndex);// 当前第几页
-			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1
-					: Integer.parseInt(currIndex);// 每页最多显示条数
-			dataTotal = this.appBillLogic.findDataCount(appNo,
-					(beginappDate == null || "".equals(beginappDate)) ? null
-							: date, (endappDate == null || ""
-							.equals(endappDate)) ? null : date2, appStatus);
 			AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
 			if(user.getUserFlag().equals("P")){
 				if(null==appStatus){
@@ -262,11 +244,11 @@ public class AppBillAction extends BaseAction {
 					appStatus = AppBillStatus.APPROVALING;
 				}
 			}
-			List<AppBillHead> heads = this.appBillLogic.findAppBillHeads(appNo,
-					(beginappDate == null || "".equals(beginappDate)) ? null
-							: date, (endappDate == null || ""
-							.equals(endappDate)) ? null : date2, appStatus,
-					(curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
+			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1
+					: Integer.parseInt(currIndex);// 当前第几页
+			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1
+					: Integer.parseInt(currIndex);// 每页最多显示条数
+			List<AppBillHead> heads = findApplyBillHeads(curr);
 			List<Material> mlist = materLogic.findAllMaterialInfo(null, null,-1, -1);
 			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
 			this.request.put("u", user);
@@ -298,6 +280,39 @@ public class AppBillAction extends BaseAction {
 		return pageNums;
 	}
 
+	private List<AppBillHead> findApplyBillHeads(Integer curr){
+		try {
+			beginappDate = "".equals(beginappDate) ? null : beginappDate;
+			endappDate = "".equals(endappDate) ? null : endappDate;
+			Date date = null;
+			if (null != beginappDate) {
+				date = new SimpleDateFormat("yyyy-MM-dd").parse(beginappDate);
+			}
+			Date date2 = null;
+			if (null != endappDate) {
+				date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endappDate);
+			}
+			
+			dataTotal = this.appBillLogic.findDataCount(appNo,
+					(beginappDate == null || "".equals(beginappDate)) ? null
+							: date, (endappDate == null || ""
+							.equals(endappDate)) ? null : date2, appStatus);
+			
+			List<AppBillHead> heads = this.appBillLogic.findAppBillHeads(appNo,
+					(date == null || "".equals(date)) ? null
+							: date, (date2 == null || ""
+							.equals(date2)) ? null : date2, appStatus,
+					(curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
+			return heads;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * 新增申请单表头
 	 * 
@@ -309,8 +324,11 @@ public class AppBillAction extends BaseAction {
 			AppBillHead head = new AppBillHead();
 			AclUser user = (AclUser) this.session.get("u");
 			head.setSubmitUser(user);
+			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1
+					: Integer.parseInt(currIndex);// 当前第几页
 			List<AppBillHead> list = new ArrayList<AppBillHead>();
-			list.add(this.appBillLogic.saveAppBillHead(head));
+			this.appBillLogic.saveAppBillHead(head);
+			list = findApplyBillHeads(curr);
 			this.request.put("heads", list);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -50,6 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="modal-footer">
 		<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="保存" onclick="save()"/>
 		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="cancel()" title="恢复初始状态">取消</button>
+		<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="closefrom()" title="关闭此窗口">关闭</button>
 	</div> 
 	<div class="row-fluid" id="mybox">
 		<div class="span12">
@@ -233,6 +234,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids="+id+"&isCustom=true";
 			toMain(url);
 		}
+	}
+	
+	function closefrom(){
+		var url = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?isCustom=false";
+		toMain(url);
 	}
 	</script>
 </html>

@@ -62,6 +62,9 @@
 				</div>
 			</div>
 
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/public/public.js"></script>
+
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toedit('')">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
@@ -73,19 +76,19 @@
 					<ul>
 						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
 						</li>
+						<c:if test="${currIndex!=1}">
 						<li class="next"><a href="javascript: gotoPage( 1, ${pageNums} )">首页</a>
 						</li>
-						<c:if test="${currIndex!=1}">
 							<li class="next"><a href="javascript: gotoPage( ${currIndex - 1}, ${pageNums} )">上一页</a>
 							</li>
 						</c:if>
 						<c:if test="${currIndex!=pageNums}">
 							<li class="next"><a href="javascript: gotoPage( ${currIndex + 1}, ${pageNums} )">下一页 </a>
 							</li>
-						</c:if>
-						
 						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
 						</li>
+						</c:if>
+						
 					</ul>
 					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag('${pageNums}')">
 						<c:forEach begin="1" end="${pageNums}" var="pnum">

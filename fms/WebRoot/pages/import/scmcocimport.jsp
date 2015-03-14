@@ -21,7 +21,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script type="text/javascript" src="<%=path%>/js/utils/jquery.tmpl.min.js"> </script>
+	<script type="text/javascript" src="<%=path%>/js/utils/jquery.tmpl.min.js"> </script>
+  
   </head>
   <script type="text/javascript">
   var resultdata="";
@@ -71,24 +72,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</thead>
 
 						<tbody id="tbodyscmcoc">
-						<%-- 	<c:forEach var="stock" items="${tlist}">
-							<c:if test="${stock.errorInfo!=null}">
-								<tr style="color: red;">
-									<td style="text-align: left;">${stock.errorInfo}　</td>
-									<td class="center">${stock.code}　</td>
-									<td class="center">${stock.name}　</td>
-									<td class="hidden-480 center">${stock.note}　</td>
-								</tr>
-							</c:if>
-							<c:if test="${stock.errorInfo==null}">
-								<tr>
-									<td class="center">${stock.errorInfo}　</td>
-									<td class="center">${stock.code}　</td>
-									<td class="center">${stock.name}　</td>
-									<td class="hidden-480 center">${stock.note}　</td>
-								</tr>
-							</c:if>
-							</c:forEach> --%>
 					</table>
 				</div>
 			</div>
@@ -120,7 +103,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	//上传
 	$("#uploadbutton").click(function(){
 		var filePath = $("#importfile").val();
-		alert(filePath);
 			if(filePath==""){
 				alert("请选择文件!");
 				return;
@@ -223,12 +205,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$.post(url,paremt,function(data){
 				var result=jQuery.parseJSON(data);
 		    	if(result.success){
+		    	 resultdata=result.obj;
+		    	$("#tbodyscmcoc tr").remove();
 		    		//--------------
-		    		
+		    		var list = result.obj;
+		    		$("#SXrow").tmpl(list).appendTo("#tbodyscmcoc"); 
 		    		//--------------
 		    	}
 			});
-			toMain(url);
 		}
 		
 		function posigif(){

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="OperateLogs" table="OPERATELOGS">
+		<id name="id" column="ID">
+			<generator class="uuid"/>
+		</id>
+		<property name="createDate" column="CREATEDATE"/>
+		<property name="modifyDate" column="MODIFYDATE"/>
+		<property name="orgType" column="ORGTYPE"/>
+		<property name="msg" column="MSG"/>
+			<!--  员工一对一单项关联配置-->
+		<!-- <many-to-one name="employee" column="EMPLOYEEID" cascade="none" class="Employee" unique="true" /> -->
+		<many-to-one name="orgUser" column="ORGID" class="AclUser"/>
+	</class>
+</hibernate-mapping>

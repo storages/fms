@@ -12,3 +12,10 @@ public @interface CnFileName {
 	 public String name()default "";
 
 }
+
+
+/**
+ *@CnFileName(name="ID")
+	private int id;
+ *
+ */

@@ -72,5 +72,5 @@ public interface ScmcocLogic {
 	public List<TempScmcoc> doValidata(List<Scmcoc> data,Map<String ,Settlement> map);
 	
 	
-	public boolean doSaveExcelData(List list);
+	public boolean doSaveExcelData(List list,String isScmcoc);
 }

@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </script>
   
   <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
-  <body>
+  <input type="hidden" value="${isScmcoc}" id="scmFlag">
     <div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
 		<form id="uploadform" action="scmcoc_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
 		<input type="file" style="height:25px; width:160px;" class="" name="uploadFile" id="importfile"/></form>
@@ -119,8 +119,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	$(function(){
 	//上传
 	$("#uploadbutton").click(function(){
-	alert(1);
 		var filePath = $("#importfile").val();
+		alert(filePath);
 			if(filePath==""){
 				alert("请选择文件!");
 				return;
@@ -134,8 +134,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	posigif();
 		$("#waitdiv").show();
 		var paremt={};
+		var scmFlag = $("#scmFlag").val();
+		alert(scmFlag);
 		paremt["sendStr"]=JSON.stringify(resultdata);
-	      var url = Global+"/scmcoc_saveExcelData.action";
+	      var url = Global+"/scmcoc_saveExcelData.action?isScmcoc="+scmFlag;
 	      $.post(url,paremt,function(data){
 		    	var result=jQuery.parseJSON(data);
 		    	if(!result.success){

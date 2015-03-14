@@ -1,4 +1,5 @@
 select * from material
+select * from scmcoc
 delete from material
 update material set imgexgflag = 'I'
 select * from unit

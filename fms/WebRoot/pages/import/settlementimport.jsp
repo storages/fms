@@ -1,44 +1,32 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ page import="java.io.File" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ page import="java.io.File"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script type="text/javascript">
+	var resultdata = "";
+</script>
+<iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
+<div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
+	<form id="uploadform" action="settl_importData.action"
+		target="excelupload" method="post" enctype="multipart/form-data"
+		style="height:25px; width:160px; float: left;">
+		<input type="file" style="height:25px; width:160px;" class=""
+			name="uploadFile" id="importfile" />
+	</form>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'stockimport.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-<script type="text/javascript" src="<%=path%>/js/utils/jquery.tmpl.min.js"> </script>
-  </head>
-  <script type="text/javascript">
-  var resultdata="";
-  </script>
-  
-  <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
-  <body>
-    <div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
-		<form id="uploadform" action="settl_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
-		<input type="file" style="height:25px; width:160px;" class="" name="uploadFile" id="importfile"/></form>
-		
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" onclick="clearErrorData()"/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px; float: left;" />
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="download" value="下载样本" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
-	</div> 
-  <div class="row-fluid">
+	<input class="btn btn-small btn-danger" data-toggle="button"
+		type="button" id="uploadbutton" value="打开文件"
+		style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
+	<input class="btn btn-small btn-danger" data-toggle="button"
+		type="button" value="删除错误"
+		style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;"
+		onclick="clearErrorData()" /> <input class="btn btn-small btn-danger"
+		data-toggle="button" type="button" value="保存" id="mysaveData"
+		style="height:25px; border: 2px; width:55px; margin-top:0px; float: left;" />
+	<input class="btn btn-small btn-danger" data-toggle="button"
+		type="button" id="download" value="下载样本"
+		style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
+</div>
+<div class="row-fluid">
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
 
@@ -66,8 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<img src="${pageContext.request.contextPath}/imges/loading.gif" class="waitgif" id="waitgif"></img>
 		</div>
 	</div>
-  </body>
-  <script id="SXrow" type="text/x-jquery-tmpl">
+	<script id="SXrow" type="text/x-jquery-tmpl">
             <tr  {{if erroris}} style="color: red;" {{/if}}>
 				<td style="text-align: left;">{{= errorInfo}}　</td>
 				<td class="center">{{= code}}　</td>
@@ -80,6 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	//上传
 	$("#uploadbutton").click(function(){
 		var filePath = $("#importfile").val();
+	alert(filePath);
 			if(filePath==""){
 				alert("请选择文件!");
 				return;
@@ -209,4 +197,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 document.getElementById("waitgif").style.marginTop = t+"px";
 		}
 	</script>
-</html>
+  
+  

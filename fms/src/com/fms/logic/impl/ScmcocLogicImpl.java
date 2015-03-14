@@ -178,7 +178,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	}
 
 	
-	private Scmcoc decProperties(TempScmcoc src){
+	private Scmcoc decProperties(TempScmcoc src,Map<String,Settlement> map,String isScmcoc){
 		Scmcoc s = new Scmcoc();
 		if(null!=src){
 			s.setCode(src.getCode());
@@ -189,26 +189,38 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 			s.setLinkMan(src.getLinkMan());
 			s.setLinkPhone(src.getLinkPhone());
 			s.setNetworkLink(src.getNetworkLink());
-			s.setSettlement(src.getSettlement());
+			if("true".equals(isScmcoc)){
+				s.setIsCustom(false);
+			}else{
+				s.setIsCustom(true);
+			}
+			if(src.getSettlement()!=null &&src.getSettlement().getName()!=null && !"".equals(src.getSettlement().getName())){
+				s.setSettlement(map.get(src.getSettlement().getName()));
+			}
 			return s;
 		}
 		return null;
 	}
 	
-	public boolean doSaveExcelData(List list) {
-		List<Scmcoc> stockL = new ArrayList<Scmcoc>();
+	public boolean doSaveExcelData(List list,String isScmcoc) {
+		List<Scmcoc> scmcockL = new ArrayList<Scmcoc>();
+		List<Settlement> settList = this.settlementDao.findAllSettlement(null);
+		Map<String,Settlement> map = new HashMap<String,Settlement>();
+		for(Settlement sl:settList){
+			map.put(sl.getName(), sl);
+		}
 		//重新验证是否有错误的数据
 		for(Object obj:list){
 			TempScmcoc ts = (TempScmcoc)obj;
 			if(null!=ts.getErrorInfo() && !"".equals(ts.getErrorInfo().trim())){
 				return false;
 			}else{
-				stockL.add(decProperties(ts));
+				scmcockL.add(decProperties(ts,map,isScmcoc));
 				continue;
 			}
 		}
 		try{
-		scmcocDao.batchSaveOrUpdate(stockL);
+		scmcocDao.batchSaveOrUpdate(scmcockL);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

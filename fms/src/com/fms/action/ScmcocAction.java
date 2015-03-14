@@ -62,6 +62,7 @@ public class ScmcocAction extends BaseAction {
 	 private String   uploadFileFileName;    //文件的名称
 	 //
 	 private String sendStr; 
+	 private String isScmcoc;
 
 	private TempStock temp;
 
@@ -139,7 +140,7 @@ public class ScmcocAction extends BaseAction {
 	 * @return
 	 */
 	public String toExcels(){
-		
+		this.request.put("isScmcoc", isScmcoc);
 		return "inputExcels";
 	}
 	
@@ -259,7 +260,7 @@ public class ScmcocAction extends BaseAction {
 		AjaxResult result = new AjaxResult();
 		try {
 			net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(sendStr);
-			List list= net.sf.json.JSONArray.toList(jsonArray, new TempStock(), new JsonConfig());
+			List list= net.sf.json.JSONArray.toList(jsonArray, new TempScmcoc(), new JsonConfig());
 			if(null==list || list.size()<=0){
 				out = response.getWriter();
 				response.setContentType("application/text");
@@ -271,7 +272,7 @@ public class ScmcocAction extends BaseAction {
 				out.flush();
 				out.close();
 			}
-			if (!this.scmcocLogic.doSaveExcelData(list)) {
+			if (!this.scmcocLogic.doSaveExcelData(list,isScmcoc)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");
@@ -579,6 +580,14 @@ public class ScmcocAction extends BaseAction {
 
 	public void setTemp(TempStock temp) {
 		this.temp = temp;
+	}
+
+	public String getIsScmcoc() {
+		return isScmcoc;
+	}
+
+	public void setIsScmcoc(String isScmcoc) {
+		this.isScmcoc = isScmcoc;
 	}
 	
 }

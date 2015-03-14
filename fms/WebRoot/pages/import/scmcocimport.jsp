@@ -49,12 +49,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<tr align="center">
 								<th class="center">错误信息</th>
 								<th class="center">编号</th>
-								<th class="center">供应商名称</th>
-								<th class="hidden-480 center">供应商联系人</th>
-								<th class="hidden-480 center">结算方式</th>
-								<th class="hidden-480 center">供应商联系电话</th>
-								<th class="hidden-phone center">供应商网络联系方式</th>
-								<th class="hidden-480 center">供应商地址</th>
+								<c:if test="${isScmcoc=='true'}" >
+									<th class="center">供应商名称</th>
+									<th class="hidden-480 center">供应商联系人</th>
+									<th class="hidden-480 center">结算方式</th>
+									<th class="hidden-480 center">供应商联系电话</th>
+									<th class="hidden-phone center">供应商网络联系方式</th>
+									<th class="hidden-480 center">供应商地址</th>
+								</c:if>
+								<c:if test="${isScmcoc=='false'}" >
+									<th class="center">客户名称</th>
+									<th class="hidden-480 center">客户联系人</th>
+									<th class="hidden-480 center">结算方式</th>
+									<th class="hidden-480 center">客户联系电话</th>
+									<th class="hidden-phone center">客户网络联系方式</th>
+									<th class="hidden-480 center">客户地址</th>
+								</c:if>
 								<th class="hidden-480 center">约定结算日期</th>
 								<th class="hidden-480 center">备注</th>
 							</tr>
@@ -109,6 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	$(function(){
 	//上传
 	$("#uploadbutton").click(function(){
+	alert(1);
 		var filePath = $("#importfile").val();
 			if(filePath==""){
 				alert("请选择文件!");

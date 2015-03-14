@@ -1,37 +1,16 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'scmcoc.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
-  </head>
-  
-  <body>
-    <div class="page-header position-relative" style="margin-bottom: 0px;">
-		<h5>基础资料＞＞供应商管理</h5>
-	</div>
-	<div class="modal-footer" style="text-align: left;">
-		<span class="">供应商名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
-	</div> 
-	<div class="row-fluid" >
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="page-header position-relative" style="margin-bottom: 0px;">
+	<h5>基础资料＞＞供应商管理</h5>
+</div>
+<div class="modal-footer" style="text-align: left;">
+	<span class="">供应商名称</span><input type="text" id="search"
+		value="${searchStr}" style="height:25px;" class="" /> <input
+		class="btn btn-small btn-danger" data-toggle="button" type="button"
+		value="查询" onclick="gotoPage(1,1)"
+		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
+</div>
+<div class="row-fluid" >
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
 
@@ -123,8 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<!--PAGE CONTENT ENDS-->
 	</div>
-  </body>
-  	<script type="text/javascript">
+	<script type="text/javascript">
 		function gototag(pageSize){
 			var n = $("#gonum option:selected").val();
 			gotoPage(n, pageSize);
@@ -152,8 +130,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		toMain(url);
 	}
 	function showImport(){
-  	var url = Global+"/scmcoc_toExcels.action";
-  	toMain(url);
+	  	var url = Global+"/scmcoc_toExcels.action?isScmcoc=true";
+	  	toMain(url);
   	}
 </script>
-</html>

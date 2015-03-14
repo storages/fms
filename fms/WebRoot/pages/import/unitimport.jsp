@@ -6,23 +6,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'stockimport.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
 <script type="text/javascript" src="<%=path%>/js/utils/jquery.tmpl.min.js"> </script>
-  </head>
   <script type="text/javascript">
   var resultdata="";
   </script>
@@ -55,24 +39,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</thead>
 
 						<tbody id="tbodyunit">
-						<%-- 	<c:forEach var="stock" items="${tlist}">
-							<c:if test="${stock.errorInfo!=null}">
-								<tr style="color: red;">
-									<td style="text-align: left;">${stock.errorInfo}　</td>
-									<td class="center">${stock.code}　</td>
-									<td class="center">${stock.name}　</td>
-									<td class="hidden-480 center">${stock.note}　</td>
-								</tr>
-							</c:if>
-							<c:if test="${stock.errorInfo==null}">
-								<tr>
-									<td class="center">${stock.errorInfo}　</td>
-									<td class="center">${stock.code}　</td>
-									<td class="center">${stock.name}　</td>
-									<td class="hidden-480 center">${stock.note}　</td>
-								</tr>
-							</c:if>
-							</c:forEach> --%>
 					</table>
 				</div>
 			</div>
@@ -93,6 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	$(function(){
 	//上传
 	$("#uploadbutton").click(function(){
+		alert($("#importfile").val());
 		var filePath = $("#importfile").val();
 			if(filePath==""){
 				alert("请选择文件!");
@@ -218,4 +185,3 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 document.getElementById("waitgif").style.marginTop = t+"px";
 		}
 	</script>
-</html>

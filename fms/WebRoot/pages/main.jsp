@@ -88,7 +88,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/json2.js"></script>
 </head>
 
-<body oncontextmenu="return false">
+<!-- <body oncontextmenu="return false"> -->
 	<jsp:include page="/pages/content.jsp"></jsp:include>
 	<!-- WAIT FLASH ACTIVE -->
 		<div id="waitdiv" class="waitcss" style="display: none;">

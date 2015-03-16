@@ -24,10 +24,140 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="<%=path%>/js/utils/jquery.tmpl.min.js"> </script>
   
   </head>
-  <script type="text/javascript">
-  var resultdata="";
-  </script>
-  
+   <script type="text/javascript">
+   var resultdata="";
+	$(function(){
+	//上传
+	$("#uploadbutton").click(function(){
+		var filePath = $("#importfile").val();
+			if(filePath==""){
+				alert("请选择文件!");
+				return;
+			}
+			posigif();
+			$("#waitdiv").show();
+	 $("#uploadform").submit();
+	});
+	    
+	 $("#mysaveData").click(function(){
+	 	posigif();
+		$("#waitdiv").show();
+		var paremt={};
+		var scmFlag = $("#scmFlag").val();
+		alert(scmFlag);
+		paremt["sendStr"]=JSON.stringify(resultdata);
+	      var url = Global+"/scmcoc_saveExcelData.action?isScmcoc="+scmFlag;
+	      $.post(url,paremt,function(data){
+		    	var result=jQuery.parseJSON(data);
+		    	if(!result.success){
+		    		$("#waitdiv").hide();
+		    		alert(result.msg);
+		    		return;
+		    	}
+		    	$("#waitdiv").hide();
+		    	alert(result.msg);
+		     });
+			
+		});
+		//下载样本 
+	    $("#download").click(function(){
+	    	window.location.href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=scmcocTemp";
+	    });
+		
+		
+		
+	    var excelupload= document.getElementById("excelupload");
+		//图片上传回调函数  //判断IE 解决兼容问题
+		if(excelupload.attachEvent){ // IE  
+			excelupload.attachEvent('onload',function(){
+			var html= document.frames["excelupload"].document.body.innerHTML;
+			if(html&&html!=""){
+		         if(json.success){
+			          $("#waitdiv").hide();
+			          //SXrow
+			         var mylist= json.obj;
+			         resultdata=mylist;
+			         for(var x=0; x<mylist.length; x++){
+			         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
+			             mylist[x].erroris=true;
+			              }
+			         }
+			          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
+			          }else{
+			    	       $("#waitdiv").hide();
+			    	       alert("解析文件错误！原因："+json.msg);
+			          }
+			}else{
+			//不做任何处理
+			}
+		       
+			});  
+	    }else{
+	    	excelupload.onload=function(){
+	    		$("#tbodyscmcoc tr").remove();
+			      var thisDocument=this.contentDocument||this.contentWindow.document; 
+		          var html=  $(thisDocument.body).find("pre").html();
+		          var json= jQuery.parseJSON(html);
+		          if(json.success){
+		          $("#waitdiv").hide();
+		          //SXrow
+		         var mylist= json.obj;
+		         resultdata=mylist;
+		         for(var x=0; x<mylist.length; x++){
+		         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
+		             mylist[x].erroris=true;
+		              }
+		         }
+		          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
+		          }else{
+		    	       $("#waitdiv").hide();
+		    	       alert("解析文件错误！原因："+json.msg);
+		          }
+		};
+	    }
+	    
+	    
+			function sendfile(){
+				var filePath = $("#importfile").val();
+				if(filePath==""){
+					alert("请选择文件!");
+					return;
+				}
+				var url = "${pageContext.request.contextPath}/scmcoc_importData.action";
+				toMain(url);
+			}
+			
+			function clearErrorData(){
+				var url = "${pageContext.request.contextPath}/scmcoc_clearErrorData.action";
+				var paremt={};
+				paremt["sendStr"]=JSON.stringify(resultdata);
+				$.post(url,paremt,function(data){
+					var result=jQuery.parseJSON(data);
+			    	if(result.success){
+			    	 resultdata=result.obj;
+			    	$("#tbodyscmcoc tr").remove();
+			    		//--------------
+			    		var list = result.obj;
+			    		$("#SXrow").tmpl(list).appendTo("#tbodyscmcoc"); 
+			    		//--------------
+			    	}
+				});
+			}
+			
+			function posigif(){
+			 var w =  50;     //宽度offsetWidth
+			 var h = 50;   //高度
+			 var t = (screen.height-h)/2-80; //离顶部距离
+			 var l = (screen.width-w)/2; //离左边距离
+			 document.getElementById("waitgif").style.marginLeft = l+"px";
+			 document.getElementById("waitgif").style.marginTop = t+"px";
+			}
+		
+		
+		
+	});
+	
+	</script>
   <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
   <input type="hidden" value="${isScmcoc}" id="scmFlag">
     <div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
@@ -98,130 +228,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td class="hidden-480 center">{{= note}}　</td>
 	</tr>
 </script>
-  <script type="text/javascript">
-	$(function(){
-	//上传
-	$("#uploadbutton").click(function(){
-		var filePath = $("#importfile").val();
-			if(filePath==""){
-				alert("请选择文件!");
-				return;
-			}
-			posigif();
-			$("#waitdiv").show();
-	 $("#uploadform").submit();
-	});
-	    
-	 $("#mysaveData").click(function(){
-	 	posigif();
-		$("#waitdiv").show();
-		var paremt={};
-		var scmFlag = $("#scmFlag").val();
-		alert(scmFlag);
-		paremt["sendStr"]=JSON.stringify(resultdata);
-	      var url = Global+"/scmcoc_saveExcelData.action?isScmcoc="+scmFlag;
-	      $.post(url,paremt,function(data){
-		    	var result=jQuery.parseJSON(data);
-		    	if(!result.success){
-		    		$("#waitdiv").hide();
-		    		alert(result.msg);
-		    		return;
-		    	}
-		    	$("#waitdiv").hide();
-		    	alert(result.msg);
-		     });
-			
-		});
-		//下载样本 
-	    $("#download").click(function(){
-	    	window.location.href="${pageContext.request.contextPath}/fileDownload.action?fileFlag=scmcocTemp";
-	    });
-	});
-	var excelupload= document.getElementById("excelupload");
-	//图片上传回调函数  //判断IE 解决兼容问题
-	if(excelupload.attachEvent){ // IE  
-		excelupload.attachEvent('onload',function(){
-		var html= document.frames["excelupload"].document.body.innerHTML;
-		if(html&&html!=""){
-	         if(json.success){
-		          $("#waitdiv").hide();
-		          //SXrow
-		         var mylist= json.obj;
-		         resultdata=mylist;
-		         for(var x=0; x<mylist.length; x++){
-		         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
-		             mylist[x].erroris=true;
-		              }
-		         }
-		          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
-		          }else{
-		    	       $("#waitdiv").hide();
-		    	       alert("解析文件错误！原因："+json.msg);
-		          }
-		}else{
-		//不做任何处理
-		}
-	       
-		});  
-    }else{
-    	excelupload.onload=function(){
-    		$("#tbodyscmcoc tr").remove();
-		      var thisDocument=this.contentDocument||this.contentWindow.document; 
-	          var html=  $(thisDocument.body).find("pre").html();
-	          var json= jQuery.parseJSON(html);
-	          if(json.success){
-	          $("#waitdiv").hide();
-	          //SXrow
-	         var mylist= json.obj;
-	         resultdata=mylist;
-	         for(var x=0; x<mylist.length; x++){
-	         if(mylist[x].errorInfo||mylist[x].errorInfo==''){
-	             mylist[x].erroris=true;
-	              }
-	         }
-	          $("#SXrow").tmpl(json.obj).appendTo("#tbodyscmcoc");  
-	          }else{
-	    	       $("#waitdiv").hide();
-	    	       alert("解析文件错误！原因："+json.msg);
-	          }
-	};
-    }
-    
-    
-		function sendfile(){
-			var filePath = $("#importfile").val();
-			if(filePath==""){
-				alert("请选择文件!");
-				return;
-			}
-			var url = "${pageContext.request.contextPath}/scmcoc_importData.action";
-			toMain(url);
-		}
-		
-		function clearErrorData(){
-			var url = "${pageContext.request.contextPath}/scmcoc_clearErrorData.action";
-			var paremt={};
-			paremt["sendStr"]=JSON.stringify(resultdata);
-			$.post(url,paremt,function(data){
-				var result=jQuery.parseJSON(data);
-		    	if(result.success){
-		    	 resultdata=result.obj;
-		    	$("#tbodyscmcoc tr").remove();
-		    		//--------------
-		    		var list = result.obj;
-		    		$("#SXrow").tmpl(list).appendTo("#tbodyscmcoc"); 
-		    		//--------------
-		    	}
-			});
-		}
-		
-		function posigif(){
-		 var w =  50;     //宽度offsetWidth
-		 var h = 50;   //高度
-		 var t = (screen.height-h)/2-80; //离顶部距离
-		 var l = (screen.width-w)/2; //离左边距离
-		 document.getElementById("waitgif").style.marginLeft = l+"px";
-		 document.getElementById("waitgif").style.marginTop = t+"px";
-		}
-	</script>
+ 
 </html>

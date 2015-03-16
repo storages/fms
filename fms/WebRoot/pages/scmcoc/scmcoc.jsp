@@ -98,7 +98,7 @@ $("#inputExcelBut").click(function(){
 
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toedit('')">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc('false')">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="inputExcelBut">Excel导入</button>

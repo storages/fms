@@ -155,7 +155,7 @@ $(function(){
   
 	$("#addEmpl").click(function(){
 		 toMain(Global+"/empl_addEmployee.action");
-		 });
+	});
 	function initEditfun(){
 		$("a[edit-emp]").click(function(){
 			var id= $(this).attr("edit-emp");

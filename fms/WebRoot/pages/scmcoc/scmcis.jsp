@@ -63,7 +63,7 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toedit('');">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc('true')">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="inputExcelsBut">Excel导入</button>

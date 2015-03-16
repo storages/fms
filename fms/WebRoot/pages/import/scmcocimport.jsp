@@ -44,7 +44,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#waitdiv").show();
 		var paremt={};
 		var scmFlag = $("#scmFlag").val();
-		alert(scmFlag);
 		paremt["sendStr"]=JSON.stringify(resultdata);
 	      var url = Global+"/scmcoc_saveExcelData.action?isScmcoc="+scmFlag;
 	      $.post(url,paremt,function(data){
@@ -127,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				toMain(url);
 			}
 			
-			function clearErrorData(){
+			$("#clearData").click(function(){
 				var url = "${pageContext.request.contextPath}/scmcoc_clearErrorData.action";
 				var paremt={};
 				paremt["sendStr"]=JSON.stringify(resultdata);
@@ -142,7 +141,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		//--------------
 			    	}
 				});
-			}
+			}); 
 			
 			function posigif(){
 			 var w =  50;     //宽度offsetWidth
@@ -165,7 +164,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<input type="file" style="height:25px; width:160px;" class="" name="uploadFile" id="importfile"/></form>
 		
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" onclick="clearErrorData()"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" id="clearData"/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px; float: left;" />
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="download" value="下载样本" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
 	</div> 

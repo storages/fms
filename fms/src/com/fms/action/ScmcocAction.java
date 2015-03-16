@@ -350,7 +350,7 @@ public class ScmcocAction extends BaseAction {
 				}
 			}
 			if ("true".equals(isCustom)) {
-				return "cis";// 是客户页面请求
+				return "save";// 是客户页面请求
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

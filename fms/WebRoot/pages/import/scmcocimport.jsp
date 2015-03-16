@@ -55,7 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	}
 		    	$("#waitdiv").hide();
 		    	alert(result.msg);
-		    	alert(scmFlag);
 		    	var murl = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?isCustom="+("true"==scmFlag?"false":"true");
 		     	toMain(murl);
 		     });

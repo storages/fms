@@ -3,6 +3,12 @@
 <div class="page-header position-relative" style="margin-bottom: 0px;">
 	<h5>基础资料＞＞供应商管理</h5>
 </div>
+<script type="text/javascript">
+$("#inputExcelBut").click(function(){
+	var url = Global+"/scmcoc_toExcels.action?isScmcoc=true";
+  	toMain(url);
+});
+</script>
 <div class="modal-footer" style="text-align: left;">
 	<span class="">供应商名称</span><input type="text" id="search"
 		value="${searchStr}" style="height:25px;" class="" /> <input
@@ -70,7 +76,7 @@
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="showImport()">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="inputExcelBut">Excel导入</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
@@ -132,8 +138,4 @@
 	}
 		toMain(url);
 	}
-	function showImport(){
-	  	var url = Global+"/scmcoc_toExcels.action?isScmcoc=true";
-	  	toMain(url);
-  	}
 </script>

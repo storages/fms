@@ -66,7 +66,7 @@
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="showImport()">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="inputExcelsBut">Excel导入</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 700px;">
 					<ul>
@@ -132,8 +132,14 @@
 	}
 		toMain(url);
 	}
-	function showImport(){
-	  	var url = Global+"/scmcoc_toExcels.action?isScmcoc=false";
+	$("#inputExcelsBut").click(function(){
+		var url = Global+"/scmcoc_toExcels.action?isScmcoc=false";
 	  	toMain(url);
-  	}
+	});
+	
+	
+	
+	//function showImport(){
+	  
+ // 	}
 </script>

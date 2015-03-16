@@ -9,6 +9,34 @@ $("#inputExcelBut").click(function(){
   	toMain(url);
 });
 </script>
+<script type="text/javascript">
+		function gototag(pageSize){
+			var n = $("#gonum option:selected").val();
+			gotoPage(n, pageSize);
+		}
+		
+		/**
+	 * 转到指定页码
+	 * @param {Object} pageNum 要转到第几页        currIndex
+	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
+	 */
+	function gotoPage(pageNum, pageSize) {
+		var likeStr = $("#search").val(); 
+		// 拼接URL
+		var url = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+"&isCustom=false";
+		// 在本窗口中显示指定URL的页面
+		toMain(url);
+	}
+	
+	function toedit(id){
+	if(id==''){
+		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?isCustom=false";
+	}else{
+		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids="+id+"&isCustom=false";
+	}
+		toMain(url);
+	}
+</script>
 <div class="modal-footer" style="text-align: left;">
 	<span class="">供应商名称</span><input type="text" id="search"
 		value="${searchStr}" style="height:25px;" class="" /> <input
@@ -68,9 +96,6 @@ $("#inputExcelBut").click(function(){
 				</div>
 			</div>
 
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/public/public.js"></script>
-
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toedit('')">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc()">
@@ -111,31 +136,4 @@ $("#inputExcelBut").click(function(){
 		</div>
 		<!--PAGE CONTENT ENDS-->
 	</div>
-	<script type="text/javascript">
-		function gototag(pageSize){
-			var n = $("#gonum option:selected").val();
-			gotoPage(n, pageSize);
-		}
-		
-		/**
-	 * 转到指定页码
-	 * @param {Object} pageNum 要转到第几页        currIndex
-	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
-	 */
-	function gotoPage(pageNum, pageSize) {
-		var likeStr = $("#search").val(); 
-		// 拼接URL
-		var url = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+"&isCustom=false";
-		// 在本窗口中显示指定URL的页面
-		toMain(url);
-	}
 	
-	function toedit(id){
-	if(id==''){
-		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?isCustom=false";
-	}else{
-		var url = "${pageContext.request.contextPath}/scmcoc_findScmcocById.action?ids="+id+"&isCustom=false";
-	}
-		toMain(url);
-	}
-</script>

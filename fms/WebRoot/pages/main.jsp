@@ -23,7 +23,7 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
 <link
 	href="${pageContext.request.contextPath}/css/public/bootstrap.min.css"
 	rel="stylesheet"/>

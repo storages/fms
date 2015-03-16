@@ -1,7 +1,38 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
-  
+  <script type="text/javascript">
+		function gototag(pageSize){
+			var n = $("#gonum option:selected").val();
+			gotoPage(n, pageSize);
+		}
+		
+		/**
+	 * 转到指定页码
+	 * @param {Object} pageNum 要转到第几页        currIndex
+	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
+	 */
+	function gotoPage(pageNum, pageSize) {
+		var likeStr = $("#search").val(); 
+		// 拼接URL
+		var url = "${pageContext.request.contextPath}/unit_findAllUnit.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr);
+		// 在本窗口中显示指定URL的页面
+		toMain(url);
+	}
+	
+	function parse(str){
+		return encodeURI(encodeURI(str));  
+	}
+	
+	function toedit(id){
+		var url = "${pageContext.request.contextPath}/unit_findUnitById.action?ids="+id;
+		toMain(url);
+	}
+	$("#btnExcel").click(function(){
+		var url = "${pageContext.request.contextPath}/pages/import/unitimport.jsp";
+	  	toMain(url);
+	});
+</script>
     <div class="page-header position-relative" style="margin-bottom: 0px;">
 		<h5>基础资料＞＞计量单位管理</h5>
 	</div>
@@ -54,7 +85,7 @@
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','Unit')">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="showImport()">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btnExcel">Excel导入</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
@@ -89,35 +120,4 @@
 		</div>
 		<!--PAGE CONTENT ENDS-->
 	</div>
-  	<script type="text/javascript">
-		function gototag(pageSize){
-			var n = $("#gonum option:selected").val();
-			gotoPage(n, pageSize);
-		}
-		
-		/**
-	 * 转到指定页码
-	 * @param {Object} pageNum 要转到第几页        currIndex
-	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
-	 */
-	function gotoPage(pageNum, pageSize) {
-		var likeStr = $("#search").val(); 
-		// 拼接URL
-		var url = "${pageContext.request.contextPath}/unit_findAllUnit.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr);
-		// 在本窗口中显示指定URL的页面
-		toMain(url);
-	}
-	
-	function parse(str){
-		return encodeURI(encodeURI(str));  
-	}
-	
-	function toedit(id){
-		var url = "${pageContext.request.contextPath}/unit_findUnitById.action?ids="+id;
-		toMain(url);
-	}
-	function showImport(){
-	  	var url = "${pageContext.request.contextPath}/pages/import/unitimport.jsp";
-	  	toMain(url);
-  	}
-</script>
+  	

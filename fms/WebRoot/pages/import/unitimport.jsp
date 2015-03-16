@@ -7,55 +7,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <script type="text/javascript" src="<%=path%>/js/utils/jquery.tmpl.min.js"> </script>
-  <script type="text/javascript">
-  var resultdata="";
-  </script>
-  
-  <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
-  <body>
-    <div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
-		<form id="uploadform" action="unit_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
-		<input type="file" style="height:25px; width:160px;" class="" name="uploadFile" id="importfile"/></form>
-		
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" onclick="clearErrorData()"/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px; float: left;" />
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="download" value="下载样本" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
-	</div> 
-  <div class="row-fluid">
-		<div class="span12">
-			<!--PAGE CONTENT BEGINS-->
-
-			<div class="row-fluid">
-				<div class="span12" >
-					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px; ">
-						<thead>
-							<tr align="center">
-								<th class="center">错误信息</th>
-								<th class="center">编号</th>
-								<th class="center">计量单位名称</th>
-								<th class="hidden-480 center">备注</th>
-							</tr>
-						</thead>
-
-						<tbody id="tbodyunit">
-					</table>
-				</div>
-			</div>
-
-		</div>
-		<!--PAGE CONTENT ENDS-->
-	</div>
-  </body>
-  <script id="SXrow" type="text/x-jquery-tmpl">
-            <tr  {{if erroris}} style="color: red;" {{/if}}>
-				<td style="text-align: left;">{{= errorInfo}}　</td>
-				<td class="center">{{= code}}　</td>
-				<td class="center">{{= name}}　</td>
-				<td class="hidden-480 center">{{= note}}　</td>
-				</tr>
-       </script>
-  <script type="text/javascript">
+   <script type="text/javascript">
+   var resultdata="";
 	$(function(){
 	//上传
 	$("#uploadbutton").click(function(){
@@ -185,3 +138,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 document.getElementById("waitgif").style.marginTop = t+"px";
 		}
 	</script>
+  <iframe id="excelupload" name="excelupload" style="display: none;"></iframe>
+  <body>
+    <div class="modal-footer" style="text-align: left; padding-bottom: 0px;">
+		<form id="uploadform" action="unit_importData.action" target="excelupload" method="post" enctype="multipart/form-data" style="height:25px; width:160px; float: left;" >
+		<input type="file" style="height:25px; width:160px;" class="" name="uploadFile" id="importfile"/></form>
+		
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="uploadbutton" value="打开文件" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="删除错误" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" onclick="clearErrorData()"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="保存" id="mysaveData" style="height:25px; border: 2px; width:55px; margin-top:0px; float: left;" />
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" id="download" value="下载样本" style="height:25px; border: 2px; width:65px; margin-top:0px; float: left;" />
+	</div> 
+  <div class="row-fluid">
+		<div class="span12">
+			<!--PAGE CONTENT BEGINS-->
+
+			<div class="row-fluid">
+				<div class="span12" >
+					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px; ">
+						<thead>
+							<tr align="center">
+								<th class="center">错误信息</th>
+								<th class="center">编号</th>
+								<th class="center">计量单位名称</th>
+								<th class="hidden-480 center">备注</th>
+							</tr>
+						</thead>
+
+						<tbody id="tbodyunit">
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<!--PAGE CONTENT ENDS-->
+	</div>
+  </body>
+  <script id="SXrow" type="text/x-jquery-tmpl">
+            <tr  {{if erroris}} style="color: red;" {{/if}}>
+				<td style="text-align: left;">{{= errorInfo}}　</td>
+				<td class="center">{{= code}}　</td>
+				<td class="center">{{= name}}　</td>
+				<td class="hidden-480 center">{{= note}}　</td>
+				</tr>
+       </script>
+ 

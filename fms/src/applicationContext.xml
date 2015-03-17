@@ -151,6 +151,13 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	
+	<!-- Bom表 -->
+	<bean id="bomDao" class="com.fms.dao.impl.BomExgImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
 
 	<!-- 进出库 -->
 	<bean id="storageDao" class="com.fms.dao.impl.StorageDaoImpl">
@@ -277,6 +284,13 @@
 	<bean id="materLogic" class="com.fms.logic.impl.MaterialLogicImpl">
 		<property name="materialDao">
 			<ref bean="materialDao" />
+		</property>
+	</bean>
+	
+	<!-- Bom表 -->
+	<bean id="bomLogic" class="com.fms.logic.impl.BomLogicImpl">
+		<property name="bomDao">
+			<ref bean="bomDao" />
 		</property>
 	</bean>
 
@@ -424,6 +438,15 @@
 		</property>
 		<property name="logic">
 			<ref bean="logic" />
+		</property>
+	</bean>
+	
+	<bean id="bomAction" class="com.fms.action.BomAction" scope="prototype">
+		<property name="bomLogic">
+			<ref bean="bomLogic"/>
+		</property>
+		<property name="materLogic">
+			<ref bean="materLogic" />
 		</property>
 	</bean>
 	<!-- 进出库 -->

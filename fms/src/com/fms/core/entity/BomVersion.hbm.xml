@@ -11,9 +11,6 @@
 		<property name="createDate" column="CREATEDATE" />
 		<property name="modifyDate" column="MODIFYDATE" />
 
-
-		<many-to-one name="exgBom" class="Material" column="EXGBOM" lazy="false"/>
-		<many-to-one name="imgBom" class="Material" column="IMGBOM" lazy="false"/>
 		<property name="versionNo" column="VERSIONNO" />
 		<property name="note" column="NOTE" />
 	</class>

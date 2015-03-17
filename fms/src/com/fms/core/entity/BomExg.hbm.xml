@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="BomExg" table="BOMEXG">
+		<id name="id" column="ID">
+			<generator class="uuid"/>
+		</id>
+		<property name="createDate" column="CREATEDATE"/>
+		<property name="modifyDate" column="MODIFYDATE"/>
+		
+		
+	    <!-- 物料清单关联配置-->
+		<many-to-one name="material" class="Material" column="MATERIAL" />
+	</class>
+</hibernate-mapping>

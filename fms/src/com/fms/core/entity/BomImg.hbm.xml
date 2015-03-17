@@ -1,0 +1,27 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="BomImg" table="BOMIMG">
+		<id name="id" column="ID">
+			<generator class="uuid"/>
+		</id>
+		<property name="createDate" column="CREATEDATE"/>
+		<property name="modifyDate" column="MODIFYDATE"/>
+		
+		<!-- BOM版本号关联配置-->
+		<many-to-one name="bomVersion" class="BomVersion" column="BOMVERSION" />
+	    <!-- 物料清单关联配置-->
+		<many-to-one name="material" class="Material" column="MATERIAL" />
+		<!-- 单耗 -->
+		<property name="unitConsume" column="UNITCONSUME"/>
+		<!-- 损耗 -->
+		<property name="wastRate" column="WASTRATE"/>
+		<!-- 单项用量(单项用量 单项用量=单耗/(1-损耗)) -->
+		<property name="unitDosage" column="UNITDOSAGE"/>
+		<!-- 备注 -->
+		<property name="note" column="NOTE"/>
+	</class>
+</hibernate-mapping>

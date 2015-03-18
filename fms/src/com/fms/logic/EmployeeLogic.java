@@ -13,7 +13,7 @@ public interface EmployeeLogic {
 	public void deleteEmpl(String id);
 	public void deleteEmpl(String [] ids);
 	public Employee getEmplById(String id);
-	public void saveEmplAndUser(Employee empl,boolean isuser,AclUser user) throws Exception;
+	public void saveEmplAndUser(AclUser loginUser,Employee empl,boolean isuser,AclUser user) throws Exception;
 	/**
 	 * 获取员工分页
 	 * @param likeStr

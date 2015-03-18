@@ -8,13 +8,14 @@ import com.fms.core.entity.Employee;
 import com.fms.core.entity.Scmcoc;
 import com.fms.dao.AclUserDao;
 import com.fms.dao.EmployeeDao;
+import com.fms.dao.OperateLogsDao;
 import com.fms.logic.EmployeeLogic;
 import com.fms.utils.AjaxResult;
 
 public class EmployeeLogicImpl implements EmployeeLogic {
 	private EmployeeDao  employeeDao;
 	private AclUserDao  userDao;
-
+	private OperateLogsDao operaterLogsDao;
 
 
 	public void saveEmpl(Employee modal) {
@@ -65,7 +66,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	 * @param user
 	 * @throws Exception 
 	 */
-	public void saveEmplAndUser(Employee empl,boolean isuser,AclUser user) throws Exception{
+	public void saveEmplAndUser(AclUser loginUser,Employee empl,boolean isuser,AclUser user) throws Exception{
 		AjaxResult result=new AjaxResult();
 		AclUser aclUser =null;
 		//判断用户是否存在
@@ -80,6 +81,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		}
 		//保存员工
 		employeeDao.saveOrUpdate(empl);
+		operaterLogsDao.saveNewLogs(loginUser, empl);
 		if(isuser){
 			user.setUserFlag("P");//普通
 			user.setEmployee(empl);
@@ -134,7 +136,13 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	}
 
 
+	public OperateLogsDao getOperaterLogsDao() {
+		return operaterLogsDao;
+	}
 
+	public void setOperaterLogsDao(OperateLogsDao operaterLogsDao) {
+		this.operaterLogsDao = operaterLogsDao;
+	}
 
 
 

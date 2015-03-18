@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Settlement;
 import com.fms.core.entity.Stock;
+import com.fms.dao.OperateLogsDao;
 import com.fms.dao.ScmcocDao;
 import com.fms.dao.SettlementDao;
 import com.fms.logic.ScmcocLogic;
@@ -58,6 +59,8 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	public void setScmcocDao(ScmcocDao scmcocDao) {
 		this.scmcocDao = scmcocDao;
 	}
+
+	
 
 	public Scmcoc findScmcocByCode(String code) {
 		return this.scmcocDao.findScmcocByCode(code);

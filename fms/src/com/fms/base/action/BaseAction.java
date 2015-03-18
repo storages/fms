@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.fms.commons.CommonConstant;
+import com.fms.core.entity.AclUser;
 import com.fms.utils.AjaxResult;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -110,5 +114,10 @@ public static boolean isNumeric(String str){
 		this.jsonstr = jsonstr;
 	}
 	
+	
+	public AclUser getLoginUser(){
+		 AclUser user= (AclUser) session.get(CommonConstant.LOGINUSER);
+		return user;
+	}
 	
 }

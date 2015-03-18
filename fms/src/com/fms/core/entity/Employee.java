@@ -2,6 +2,7 @@
 
 import java.util.Date;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 import com.fms.commons.EmployeeGender;
 import com.fms.commons.JobStatus;
@@ -22,27 +23,32 @@ public class Employee extends BaseEntity {
 	/**
 	 * 员工号
 	 */
+	@CnFileName(name="员工编号")
 	private String code;
 
 	/**
 	 * 姓名
 	 */
+	@CnFileName(name="姓名")
 	private String name;
 	
 	/**
 	 * 是否拥有登陆账户
 	 */
+	@CnFileName(name="是否具有登陆权限")
 	private Boolean wfloginUser=false;
 	
 
 	/**
 	 * 别名
 	 */
+	@CnFileName(name="别名")
 	private String nickName;
 	
 	/**
 	 * 年龄
 	 */
+	@CnFileName(name="年龄")
 	private Integer age;
 	/**
 	 * 性别【常量类：EmployeeGender】
@@ -301,7 +307,7 @@ public class Employee extends BaseEntity {
 		this.code = code;
 	}
 
-	public boolean isWfloginUser() {
+	public boolean getWfloginUser() {
 		return wfloginUser;
 	}
 

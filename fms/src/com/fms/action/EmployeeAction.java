@@ -132,7 +132,7 @@ public class EmployeeAction extends BaseAction {
         		 //新增
         		 result.setMsg("add");
         	 }
-        	 emplLogic.saveEmplAndUser(empl, empl.isWfloginUser(), user);
+        	 emplLogic.saveEmplAndUser(getLoginUser(),empl, empl.getWfloginUser(), user);
         	 result.setSuccess(true);
          }catch(Exception e){
         	 result.setSuccess(false);

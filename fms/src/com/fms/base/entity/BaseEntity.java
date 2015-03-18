@@ -3,6 +3,8 @@
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fms.annotation.CnFileName;
+
 /**
  * 父类公共实体
  * @author Administrator
@@ -18,6 +20,7 @@ public class BaseEntity implements Serializable{
 	/**
 	 * 实体类ID
 	 */
+	@CnFileName(name="ID")
 	private String id;
 	
 	/**

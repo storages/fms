@@ -54,6 +54,7 @@
 	<mapping resource="com/fms/core/entity/BomVersion.hbm.xml" />
 	<mapping resource="com/fms/core/entity/MatrialBom.hbm.xml" />
 	<mapping resource="com/fms/core/entity/PurchaseItem.hbm.xml" />
+	<mapping  resource="com/fms/core/entity/OperateLogs.hbm.xml" />
 </session-factory>
 
 </hibernate-configuration>

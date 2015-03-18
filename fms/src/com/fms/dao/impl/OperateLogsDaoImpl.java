@@ -31,7 +31,7 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 				try {
 					strBuffer.append(meta.name()
 							+ ":"
-							+ clzz.getMethod("get" + change(f.getName()), null)
+							+ clzz.getMethod("get" + change(f.getName()))
 									.invoke(obj, null) + ",");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

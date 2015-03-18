@@ -12,9 +12,16 @@
 	http://www.springframework.org/schema/context 
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- 为了测试添加 的一个日期类 -->
-	<bean id="date" class="java.util.Date" />
+	<!--基于@AspectJ切面的驱动器，如果没有这句话 切面的代码是不会执行的，可以试下 -->
+	<!-- <aop:aspectj-autoproxy/> -->
 
+
+	<!-- 为了测试添加 的一个日期类 -->
+	<!-- <bean id="date" class="java.util.Date" /> -->
+
+
+	<!--这个bean是作为切面 -->
+	<!-- <bean id="logAspect" class="com.fms.log.LogAspect"/> -->
 
 
 	<!-- 加载外部的properties配置文件 -->
@@ -61,7 +68,14 @@
 	<aop:config>
 		<aop:pointcut expression="execution(* com.fms.logic.*.*(..))"
 			id="cutlocation" />
+
 		<aop:advisor advice-ref="advice" pointcut-ref="cutlocation" />
+		<!--日志切面 -->
+		<!-- <aop:aspect id="dd" ref="logAspect"> -->
+		<!-- <aop:after-returning method="logArgAndReturn" returning="returnObj" 
+			pointcut-ref="cutlocation"/> <aop:before method="logArgAndReturn2" pointcut-ref="cutlocation" 
+			/> <aop:before pointcut-ref="cutlocation" method="logArgAndReturn2"/> <aop:after 
+			pointcut-ref="cutlocation" method="logArgAndReturn" /> </aop:aspect> -->
 	</aop:config>
 
 	<!-- 设置具体的切入点 -->
@@ -151,7 +165,7 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<!-- Bom表 -->
 	<bean id="bomDao" class="com.fms.dao.impl.BomExgImpl">
 		<property name="sessionFactory">
@@ -168,39 +182,45 @@
 	<!-- 报价单 -->
 	<bean id="quotationDao" class="com.fms.dao.impl.QuotationDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<!-- 申请单表头表体 -->
 	<bean id="appBillDao" class="com.fms.dao.impl.AppBillDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<!-- 采购单 -->
 	<bean id="purchaseBillDao" class="com.fms.dao.impl.PurchaseBillDaoImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory"/>
+			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	
-	
-	
-	
-	
-	
+
+
+	<!-- 日志 -->
+	<bean id="operaterLogsDao" class="com.fms.dao.impl.OperateLogsDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+
+
+
 	<!-- 系统启动时，自动加载用户的监听 -->
 	<bean id="createUserListener" class="com.fms.listener.CreateUserListener">
 		<property name="userDao">
 			<ref bean="userDao" />
 		</property>
 	</bean>
-	
-	
-	
-	
+
+
+
+
 	<!-- ======================Logic类=========================== -->
 
 	<!-- AclUser -->
@@ -267,6 +287,9 @@
 		<property name="userDao">
 			<ref bean="userDao" />
 		</property>
+		<property name="operaterLogsDao">
+			<ref bean="operaterLogsDao" />
+		</property>
 	</bean>
 
 	<bean id="unitLogic" class="com.fms.logic.impl.UnitLogicImpl">
@@ -286,7 +309,7 @@
 			<ref bean="materialDao" />
 		</property>
 	</bean>
-	
+
 	<!-- Bom表 -->
 	<bean id="bomLogic" class="com.fms.logic.impl.BomLogicImpl">
 		<property name="bomDao">
@@ -300,17 +323,17 @@
 			<ref bean="storageDao" />
 		</property>
 	</bean>
-	
+
 	<!-- 报价单 -->
 	<bean id="quotationLogic" class="com.fms.logic.impl.QuotationLogicImpl">
 		<property name="quotationDao">
-			<ref bean="quotationDao"/>
+			<ref bean="quotationDao" />
 		</property>
 		<property name="appBillDao">
-			<ref bean="appBillDao"/>
+			<ref bean="appBillDao" />
 		</property>
 		<property name="purchaseBillDao">
-			<ref bean="purchaseBillDao"/>
+			<ref bean="purchaseBillDao" />
 		</property>
 		<property name="materLogic">
 			<ref bean="materLogic" />
@@ -319,30 +342,30 @@
 			<ref bean="scmcocLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- 申请单表头表体 -->
 	<bean id="appBillLogic" class="com.fms.logic.impl.AppBillLogicImpl">
 		<property name="appBillDao">
-			<ref bean="appBillDao"/>
+			<ref bean="appBillDao" />
 		</property>
 		<property name="purchaseBillDao">
-			<ref bean="purchaseBillDao"/>
+			<ref bean="purchaseBillDao" />
 		</property>
 	</bean>
-	
+
 	<!-- 采购单 -->
 	<bean id="purchaseBillLogic" class="com.fms.logic.impl.PurchaseBillLogicImpl">
 		<property name="purchaseBillDao">
-			<ref bean="purchaseBillDao"/>
+			<ref bean="purchaseBillDao" />
 		</property>
 	</bean>
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	<!-- ======================Action类=========================== -->
 
 	<!-- AclUser -->
@@ -440,22 +463,23 @@
 			<ref bean="logic" />
 		</property>
 	</bean>
-	
+
 	<bean id="bomAction" class="com.fms.action.BomAction" scope="prototype">
 		<property name="bomLogic">
-			<ref bean="bomLogic"/>
+			<ref bean="bomLogic" />
 		</property>
 		<property name="materLogic">
 			<ref bean="materLogic" />
 		</property>
 	</bean>
 	<!-- 进出库 -->
-	<bean id="storageAction" class="com.fms.action.StorageAction" scope="prototype">
+	<bean id="storageAction" class="com.fms.action.StorageAction"
+		scope="prototype">
 		<property name="storageLogic">
-			<ref bean="storageLogic"/>
+			<ref bean="storageLogic" />
 		</property>
 		<property name="logic">
-			<ref bean="logic"/>
+			<ref bean="logic" />
 		</property>
 		<property name="unitLogic">
 			<ref bean="unitLogic" />
@@ -464,11 +488,12 @@
 			<ref bean="scmcocLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- 报价单 -->
-	<bean id="quotationAction" class="com.fms.action.QuotationAction" scope="prototype">
+	<bean id="quotationAction" class="com.fms.action.QuotationAction"
+		scope="prototype">
 		<property name="quotationLogic">
-			<ref bean="quotationLogic"/>
+			<ref bean="quotationLogic" />
 		</property>
 		<property name="materLogic">
 			<ref bean="materLogic" />
@@ -477,39 +502,41 @@
 			<ref bean="scmcocLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- 申请单表头表体 -->
-	<bean id="appBillAction" class="com.fms.action.AppBillAction" scope="prototype">
+	<bean id="appBillAction" class="com.fms.action.AppBillAction"
+		scope="prototype">
 		<property name="appBillLogic">
-			<ref bean="appBillLogic"/>
+			<ref bean="appBillLogic" />
 		</property>
 		<property name="materLogic">
-			<ref bean="materLogic"/>
+			<ref bean="materLogic" />
 		</property>
 		<property name="scmLogic">
-			<ref bean="scmcocLogic"/>
+			<ref bean="scmcocLogic" />
 		</property>
 		<property name="quotationLogic">
-			<ref bean="quotationLogic"/>
+			<ref bean="quotationLogic" />
 		</property>
 		<property name="purchaseBillLogic">
-			<ref bean="purchaseBillLogic"/>
+			<ref bean="purchaseBillLogic" />
 		</property>
 	</bean>
-	
+
 	<!-- 采购单 -->
-	<bean id="purchaseAction" class="com.fms.action.PurchaseAction" scope="prototype">
+	<bean id="purchaseAction" class="com.fms.action.PurchaseAction"
+		scope="prototype">
 		<property name="purchaseBillLogic">
-			<ref bean="purchaseBillLogic"/>
+			<ref bean="purchaseBillLogic" />
 		</property>
 	</bean>
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	<!-- 上传 -->
 	<bean id="uploadUtils" class="com.fms.utils.MyUploadUtils"></bean>
 	<!-- 下载 -->

@@ -167,7 +167,7 @@
 	</bean>
 
 	<!-- Bom表 -->
-	<bean id="bomDao" class="com.fms.dao.impl.BomExgImpl">
+	<bean id="bomDao" class="com.fms.dao.impl.BomDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

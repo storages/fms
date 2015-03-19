@@ -7,10 +7,10 @@ import com.fms.core.entity.Unit;
 import com.fms.dao.MaterialDao;
 import com.fms.logic.MaterialLogic;
 
-public class MaterialLogicImpl implements MaterialLogic{
-private MaterialDao materialDao;
-	
-	public List<Material> findAllMaterialInfo(String likeStr,String imgExgFlag, Integer index, Integer length) {
+public class MaterialLogicImpl implements MaterialLogic {
+	private MaterialDao materialDao;
+
+	public List<Material> findAllMaterialInfo(String likeStr, String imgExgFlag, Integer index, Integer length) {
 		return materialDao.findAllMaterialInfo(likeStr, imgExgFlag, index, length);
 	}
 
@@ -44,18 +44,23 @@ private MaterialDao materialDao;
 
 	public void deleteMaterial(String[] ids) {
 		materialDao.deleteMaterial(ids);
-		
+
 	}
 
 	public List<Material> findMaterialById(String[] ids) {
 		return materialDao.findMaterialById(ids);
 	}
-	public String findHsCode(String hsCode){
+
+	public String findHsCode(String hsCode) {
 		return materialDao.findHsCode(hsCode);
 	}
 
 	public Material findMaterialByHsCode(String hsCode) {
 		return this.materialDao.findMaterialByHsCode(hsCode);
+	}
+
+	public List<Material> findMaterialExgs(String hsCode, String hsName, String hsModel, String imgExgFlag) {
+		return this.materialDao.findAllMaterialExgs(hsCode, hsName, hsModel, imgExgFlag);
 	}
 
 }

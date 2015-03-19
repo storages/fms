@@ -6,15 +6,25 @@ import com.fms.core.entity.Material;
 import com.fms.core.entity.Unit;
 
 public interface MaterialLogic {
-	public List<Material> findAllMaterialInfo(String likeStr,String imgExgFlag, Integer index, Integer length);
+	public List<Material> findAllMaterialInfo(String likeStr, String imgExgFlag, Integer index, Integer length);
 
 	public Integer findDataCount(String className, String name);
+
 	public List<Unit> findAllUnit();
+
 	public Material findMaterialById(String id);
+
 	public List<Material> findMaterialById(String[] ids);
-	public Material checkMaterial(String hsName,String model,String batchNO);
+
+	public Material checkMaterial(String hsName, String model, String batchNO);
+
 	public void saveOrUpdate(Material material);
+
 	void deleteMaterial(String[] ids);
+
 	public String findHsCode(String hsCode);
+
 	public Material findMaterialByHsCode(String hsCode);
+
+	List<Material> findMaterialExgs(String hsCode, String hsName, String hsModel, String imgExgFlag);
 }

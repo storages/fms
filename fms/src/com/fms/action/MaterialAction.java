@@ -2,10 +2,7 @@ package com.fms.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Material;
@@ -25,7 +22,7 @@ public class MaterialAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String ids;
-	/*********物料实体类属性*************/
+	/********* 物料实体类属性 *************/
 	// 物料名称
 	private String hsName;
 	// 颜色
@@ -36,7 +33,7 @@ public class MaterialAction extends BaseAction {
 	private String unit;
 	// 数量
 	private String qty;
-	//规格
+	// 规格
 	private String model;
 	// 成品或原料标记("I"原料，"E"成品)
 	private String imgExgFlag;
@@ -46,32 +43,33 @@ public class MaterialAction extends BaseAction {
 	private String lowerQty;
 	// 备注
 	private String note;
-	//物料编码
+	// 物料编码
 	private String hsCode;
-	//物料类型编码id
+	// 物料类型编码id
 	private String typeId;
-	
-	/*********分页用的属性***********/
-	private Integer dataTotal;//总记录数
-	private String currIndex;//当前页码
-	private String maxIndex;//每页显示最多条数
-	private Integer pageNums;//共有多少页
-	private String className="Material";//表名称
-	private String searchStr;//搜索条件
-	private static final Integer DEFAULT_PAGESIZE = 10; 
+	/********* 分页用的属性 ***********/
+	private Integer dataTotal;// 总记录数
+	private String currIndex;// 当前页码
+	private String maxIndex;// 每页显示最多条数
+	private Integer pageNums;// 共有多少页
+	private String className = "Material";// 表名称
+	private String searchStr;// 搜索条件
+	private static final Integer DEFAULT_PAGESIZE = 10;
 
 	/**
 	 * 查询所有的物料信息【分页】
+	 * 
 	 * @return
 	 */
 	public String findAllMaterial() {
 
 		try {
-			Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
-			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-			dataTotal = this.materLogic.findDataCount(className,parseValue(searchStr));
-			//imgExgFlag = (this.context.getSession().get("imgExgFlag")!=null)?this.context.getSession().get("imgExgFlag").toString():imgExgFlag;
-			List<Material> material = this.materLogic.findAllMaterialInfo(parseValue(searchStr),imgExgFlag,(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
+			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
+			dataTotal = this.materLogic.findDataCount(className, parseValue(searchStr));
+			// imgExgFlag =
+			// (this.context.getSession().get("imgExgFlag")!=null)?this.context.getSession().get("imgExgFlag").toString():imgExgFlag;
+			List<Material> material = this.materLogic.findAllMaterialInfo(parseValue(searchStr), imgExgFlag, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 			this.request.put("materials", material);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
@@ -86,21 +84,20 @@ public class MaterialAction extends BaseAction {
 
 	}
 
-	
-	private Integer pageCount(Integer maxIndex,Integer dataTotal){
+	private Integer pageCount(Integer maxIndex, Integer dataTotal) {
 		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // 总页数
-		if(pageNums==0){
-			pageNums+=1;
+		if (pageNums == 0) {
+			pageNums += 1;
 		}
 		return pageNums;
 	}
-	
-	public void findAllUnit(){
+
+	public void findAllUnit() {
 		List<Unit> units = this.materLogic.findAllUnit();
 		this.request.put("units", units);
 	}
-	
-	public String findMaterialById(){
+
+	public String findMaterialById() {
 		if (null != ids && !"".equals(ids)) {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
@@ -111,31 +108,32 @@ public class MaterialAction extends BaseAction {
 					List<MaterialType> types = this.logic.findAllType(null);
 					this.request.put("materialTypes", types);
 					this.request.put("materinfo", materinfo);
+					this.request.put("imgExgFlag", imgExgFlag);
 				}
 			}
 		}
 		return "editinfo";
 	}
-	
-	public String save(){
+
+	public String save() {
 		Material m = new Material();
-		if(null!=ids && !"".equals(ids)){
+		if (null != ids && !"".equals(ids)) {
 			m.setId(ids);
 		}
-		MaterialType types= this.logic.findTypeById(typeId);
+		MaterialType types = this.logic.findTypeById(typeId);
 		m.setMaterialType(types);
 		m.setHsCode(this.parseValue(hsCode));
 		m.setHsName(this.parseValue(hsName));
 		m.setColor(this.parseValue(color));
 		m.setImgExgFlag(imgExgFlag);
-		m.setQty((qty==null||"".equals(qty))?0.0:Double.parseDouble(qty));
+		m.setQty((qty == null || "".equals(qty)) ? 0.0 : Double.parseDouble(qty));
 		m.setModel(this.parseValue(model));
 		m.setBatchNO(batchNO);
-		m.setLowerQty((lowerQty==null||"".equals(lowerQty))?0.0:Double.parseDouble(lowerQty));
+		m.setLowerQty((lowerQty == null || "".equals(lowerQty)) ? 0.0 : Double.parseDouble(lowerQty));
 		m.setNote(this.parseValue(note));
 		List<Unit> list = this.materLogic.findAllUnit();
-		for(Unit u:list ){
-			if(u.getName().equals(this.parseValue(unit))){
+		for (Unit u : list) {
+			if (u.getName().equals(this.parseValue(unit))) {
 				m.setUnit(u);
 				break;
 			}
@@ -144,54 +142,54 @@ public class MaterialAction extends BaseAction {
 		this.session.put("imgExgFlag", m.getImgExgFlag());
 		return "save";
 	}
-	
-	public String add(){
+
+	public String add() {
 		findAllUnit();
 		List<MaterialType> types = this.logic.findAllType(null);
 		this.request.put("materialTypes", types);
+		this.request.put("imgExgFlag", imgExgFlag);
 		return "add";
 	}
-	
-	
+
 	public String deleteMaterial() throws Exception {
 		if (null != ids && !"".equals(ids)) {
 			String[] arrIds = ids.split(",");
-			if(null!=arrIds && arrIds.length>0){
+			if (null != arrIds && arrIds.length > 0) {
 				this.materLogic.deleteMaterial(arrIds);
 			}
 		}
 		return "save";
 	}
+
 	/**
 	 * 验证物料信息是否重复【名称+规格+批次号】
 	 */
-	public void checkMaterial(){
+	public void checkMaterial() {
 		PrintWriter out = null;
-		AjaxResult  result=new AjaxResult();
+		AjaxResult result = new AjaxResult();
 		try {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			Material material = this.materLogic.checkMaterial(hsName,model,batchNO);
-			if(null!=material){
+			Material material = this.materLogic.checkMaterial(hsName, model, batchNO);
+			if (null != material) {
 				result.setSuccess(false);
 				result.setMsg("该物料已存在！【名称+规格+批次号】都相同");
-			}else{
+			} else {
 				result.setSuccess(true);
-			}			
-			JSONObject json=new JSONObject(result);
+			}
+			JSONObject json = new JSONObject(result);
 			out.println(json.toString());
 			out.flush();
 		} catch (IOException e) {
-			result.setMsg("对不起出错了：/n"+e.getMessage());
-		}finally{
-			if(out!=null){
+			result.setMsg("对不起出错了：/n" + e.getMessage());
+		} finally {
+			if (out != null) {
 				out.close();
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * 验证物料编码是否重复
 	 */
@@ -220,8 +218,7 @@ public class MaterialAction extends BaseAction {
 			}
 		}
 	}
-	
-	
+
 	public String getHsName() {
 		return hsName;
 	}
@@ -334,54 +331,44 @@ public class MaterialAction extends BaseAction {
 		this.searchStr = searchStr;
 	}
 
-
 	public String getIds() {
 		return ids;
 	}
-
 
 	public void setIds(String ids) {
 		this.ids = ids;
 	}
 
-
 	public String getModel() {
 		return model;
 	}
-
 
 	public void setModel(String model) {
 		this.model = model;
 	}
 
-
 	public String getHsCode() {
 		return hsCode;
 	}
-
 
 	public void setHsCode(String hsCode) {
 		this.hsCode = hsCode;
 	}
 
-
 	public MaterialTypeLogic getLogic() {
 		return logic;
 	}
-
 
 	public void setLogic(MaterialTypeLogic logic) {
 		this.logic = logic;
 	}
 
-
 	public String getTypeId() {
 		return typeId;
 	}
 
-
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
 	}
-	
+
 }

@@ -1,0 +1,64 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<script type="text/javascript">
+	$("#checkAll").click(function(){
+		if($("#checkAll").attr("checked")){
+			$("input[name='sid']").attr("checked",'true');//全选 
+		}else{
+			$("input[name='sid']").removeAttr("checked");//取消全选
+		}
+	});
+</script>
+
+<div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
+	<span class="">成品编号</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
+	<span class="">成品名称</span><input type="text" id="hsName" value="${hsName}" style="height:25px;width:100px;" class="" /> 
+	<span class="">成品规格</span><input type="text" id="hsCode" value="${hsModel}" style="height:25px;width:100px;" class="" /> 
+	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
+		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
+</div>
+
+<div class="row-fluid">
+				<div class="span12">
+					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
+						<thead>
+							<tr>
+								<th class="center" style="width:10px;"><input type="checkbox" title="全选" id="checkAll"/></th>
+								<th class="center">行号</th>
+								<th class="center">物料标记</th>
+								<th class="center">物料编码</th>
+								<th class="center">物料名称</th>
+								<th class="center">物料规格</th>
+								<th class="center">颜色</th>
+								<th class="center">物料类别</th>
+								<th class="center">计量单位</th>
+								<th class="center">备注</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:forEach var="exg" varStatus="index" step="1" items="${exgList}">
+							<tr>
+								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
+									<input type="checkbox" value="${info.id}" name="sid" style="width:30px;"/>
+								</td>
+									<td class="center">${index.index+1}</td>
+									<c:if test="${exg.imgExgFlag=='I'}">
+										<td class="center">原料</td>
+									</c:if>
+									<c:if test="${exg.imgExgFlag=='E'}">
+										<td class="center">成品</td>
+									</c:if>
+									<td class="center">${exg.hsCode}　</td>
+									<td class="center">${exg.hsName}　</td>
+									<td class="center">${exg.model}　</td>
+									<td class="center">${exg.color}　</td>
+									<td class="center">${exg.materialType.typeName}　</td>
+									<td class="center">${exg.unit.name}　</td>
+									<td class="center">${exg.note}　</td>
+							</tr>
+						</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>

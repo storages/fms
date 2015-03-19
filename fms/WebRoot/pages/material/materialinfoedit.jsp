@@ -52,8 +52,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td class="captioncss" style="text-align: right; ">物料标记</td>
 					<td class="hidden-480 addcss" style="">
 					<select id="form-field-select-1">
-						<option value="I">原料</option>
-						<option value="E">成品</option>
+						<c:if test="${imgExgFlag=='I'}">
+							<option value="I">原料</option>
+						</c:if>
+						<c:if test="${imgExgFlag=='E'}">
+							<option value="E">成品</option>
+						</c:if>
 					</select>
 						<span style="color:red;">*</span>
 					</td>

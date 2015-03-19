@@ -3,17 +3,18 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
      <div class="page-header position-relative" style="margin-bottom: 0px;">
 		<h5>物料＞＞物料统计</h5>
+		<input type="hidden" id="impexpflag"/>
 	</div>
 	<div class="modal-footer" style="text-align: left;">
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 		 <c:if test="${imgexgflag=='I'}">
-		 	<input type="radio" name="materialType" value="I" style="margin-top: -5px;" onchange="changematerialtype('I')" checked="checked"/>&nbsp;原料　
-		 	<input type="radio" name="materialType" value="E" style="margin-top: -5px;" onchange="changematerialtype('E')"/>&nbsp;成品
+		 	<input type="radio" name="materialType" value="I" style="margin-top: -5px;" onchange="changematerialtype('I')" value="I" checked="checked"/>&nbsp;原料　
+		 	<input type="radio" name="materialType" value="E" style="margin-top: -5px;" onchange="changematerialtype('E')"  value="E"/>&nbsp;成品
 		 </c:if>
 		 <c:if test="${imgexgflag=='E'}">
-		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('I')" />&nbsp;原料　
-		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('E')" checked="checked"/>&nbsp;成品
+		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('I')" value="I"/>&nbsp;原料　
+		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('E')" value="E" checked="checked"/>&nbsp;成品
 		 </c:if>
 	</div>
 	<div class="row-fluid" >
@@ -27,10 +28,10 @@
 							<tr>
 								<th class="center" style="width:30px;">选择</th>
 								<th class="center">行号</th>
+								<th class="center">物料标记</th>
 								<th class="center">物料编码</th>
 								<th class="center">物料名称</th>
 								<th class="center">颜色</th>
-								<th class="center">物料标记</th>
 								<th class="center">物料类别</th>
 								<th class="center">计量单位</th>
 								<th class="center">数量</th>
@@ -47,16 +48,16 @@
 									<input type="checkbox" value="${info.id}" name="sid" style="width:30px;"/>
 								</td>
 									<td class="center">${index.index+1}</td>
-									<td class="center">${info.hsCode}　</td>
-									<td class="center">${info.hsName}　</td>
-									<td class="center">${info.color}　</td>
-									
 									<c:if test="${info.imgExgFlag=='I'}">
 										<td class="center">原料</td>
 									</c:if>
 									<c:if test="${info.imgExgFlag=='E'}">
 										<td class="center">成品</td>
 									</c:if>
+									<td class="center">${info.hsCode}　</td>
+									<td class="center">${info.hsName}　</td>
+									<td class="center">${info.color}　</td>
+									
 									<td class="center">${info.materialType.typeName}　</td>
 									<td class="center">${info.unit.name}　</td>
 									<td class="center">${info.qty}　</td>
@@ -64,7 +65,7 @@
 									<td class="center">${info.lowerQty}　</td>
 									<td class="center">${info.note}　</td>
 									<td class="center">
-										<a href="javascript:toMain('${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids=${info.id}')">修改</a>｜
+										<a href="javascript:toMain('${pageContext.request.contextPath}/materInfo_findMaterialById.action?imgExgFlag=${info.imgExgFlag}&ids=${info.id}')">修改</a>｜
 										<a href="javascript:void(0);" onclick="delSingleMaterial('${info.id}','${info.imgExgFlag}')">删除</a>
 									</td>
 							</tr>
@@ -74,7 +75,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/materInfo_add.action');">新增</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toadd()">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreMater('I')">
 					批量删除
 				</button>
@@ -134,9 +135,12 @@
 	function parse(str){
 		return encodeURI(encodeURI(str));  
 	}
-	
+	function toadd(){
+		var item = $('input[name=materialType][checked]').val();
+		var url = "${pageContext.request.contextPath}/materInfo_add.action?imgExgFlag="+item;
+		toMain(url);
+	}
 	function toedit(id){
-	alert(id);
 		var url = "${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids="+id;
 		toMain("${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids=");
 	}

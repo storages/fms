@@ -6,11 +6,8 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -32,27 +29,30 @@ public class BaseAction extends ActionSupport {
 	 * 父类获取上下文
 	 */
 	protected ActionContext context = ActionContext.getContext();
-	
+
 	/**
 	 * 父类获取Session
 	 */
+	@SuppressWarnings("rawtypes")
 	protected Map session = context.getSession();
-	
+
 	/**
 	 * 父类获取Request
 	 */
+	@SuppressWarnings("rawtypes")
 	protected Map request = (Map) this.context.get("request");
-	
+
 	/**
 	 * 父类获取HttpServletResponse
 	 */
 	protected HttpServletResponse response = ServletActionContext.getResponse();
-	
+
 	/**
 	 * 处理ajax
 	 */
 	protected PrintWriter out = null;
 	protected AjaxResult result = new AjaxResult();
+
 	/**
 	 * 翻译字符编码
 	 * 
@@ -60,7 +60,7 @@ public class BaseAction extends ActionSupport {
 	 * @return
 	 */
 	protected String parseValue(String value) {
-		if(null!=value && !"".equals(value)){
+		if (null != value && !"".equals(value)) {
 			try {
 				return URLDecoder.decode(value, "utf-8");
 			} catch (UnsupportedEncodingException e) {
@@ -69,38 +69,38 @@ public class BaseAction extends ActionSupport {
 		}
 		return null;
 	}
-	
-protected List<List<String>> parseJsonArr(String str) {
-	JSONArray jsonArr = JSONArray.fromObject(str);
-	String [] arr = jsonArr.toString().split("],");
-	List<List<String>> list = new ArrayList<List<String>>();
-	for(int i=0;i<arr.length;i++){
-		String newstr = arr[i].replace('[', ' ').replace(']', ' ').replace('"', ' ').replace('　', ' ').trim();
-		List<String> values = new ArrayList<String>();
-		String [] arrs = newstr.split(",");
-		for(int j=0;j<arrs.length;j++){
-			try {
-				values.add(URLDecoder.decode(arrs[j].toString().trim(),"utf-8"));
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+
+	protected List<List<String>> parseJsonArr(String str) {
+		JSONArray jsonArr = JSONArray.fromObject(str);
+		String[] arr = jsonArr.toString().split("],");
+		List<List<String>> list = new ArrayList<List<String>>();
+		for (int i = 0; i < arr.length; i++) {
+			String newstr = arr[i].replace('[', ' ').replace(']', ' ').replace('"', ' ').replace('　', ' ').trim();
+			List<String> values = new ArrayList<String>();
+			String[] arrs = newstr.split(",");
+			for (int j = 0; j < arrs.length; j++) {
+				try {
+					values.add(URLDecoder.decode(arrs[j].toString().trim(), "utf-8"));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 			}
+			list.add(values);
 		}
-		list.add(values);
+		return list;
 	}
-	return list;
-}	
 
-/**
- * 判断是否是数字
- * @param str
- * @return
- */
-public static boolean isNumeric(String str){ 
-	String reg = "\\d+(\\.\\d+)?"; 
-    return str.trim().matches(reg);  
- } 
+	/**
+	 * 判断是否是数字
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNumeric(String str) {
+		String reg = "\\d+(\\.\\d+)?";
+		return str.trim().matches(reg);
+	}
 
-	
 	/**
 	 * 前台传来的json格式字符串
 	 */
@@ -113,11 +113,10 @@ public static boolean isNumeric(String str){
 	public void setJsonstr(String jsonstr) {
 		this.jsonstr = jsonstr;
 	}
-	
-	
-	public AclUser getLoginUser(){
-		 AclUser user= (AclUser) session.get(CommonConstant.LOGINUSER);
+
+	public AclUser getLoginUser() {
+		AclUser user = (AclUser) session.get(CommonConstant.LOGINUSER);
 		return user;
 	}
-	
+
 }

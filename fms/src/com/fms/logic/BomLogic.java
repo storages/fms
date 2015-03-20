@@ -26,4 +26,12 @@ public interface BomLogic {
 	 * @return
 	 */
 	Integer findDataCount(String className, String hsName, String hsCode, String hsModel);
+
+	/**
+	 * 保存BOM成品表
+	 * 
+	 * @param data
+	 * @return
+	 */
+	List<BomExg> saveBomExg(List<BomExg> data);
 }

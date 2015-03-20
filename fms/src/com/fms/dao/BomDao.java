@@ -28,4 +28,5 @@ public interface BomDao extends BaseDao {
 	 * @return
 	 */
 	Integer findDataCount(String className, String hsName, String hsCode, String hsModel);
+
 }

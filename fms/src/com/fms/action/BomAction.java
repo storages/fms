@@ -1,5 +1,7 @@
 package com.fms.action;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fms.base.action.BaseAction;
@@ -8,6 +10,8 @@ import com.fms.core.entity.BomExg;
 import com.fms.core.entity.Material;
 import com.fms.logic.BomLogic;
 import com.fms.logic.MaterialLogic;
+import com.fms.utils.AjaxResult;
+import com.url.ajax.json.JSONObject;
 
 /**
  * Bom表
@@ -30,6 +34,7 @@ public class BomAction extends BaseAction {
 	private String hsCode;
 	private String hsModel;
 	private String hsName;
+	private String ids;
 	/**
 	 * 
 	 */
@@ -76,6 +81,39 @@ public class BomAction extends BaseAction {
 		this.request.put("hsCode", parseValue(hsCode));
 		this.request.put("hsModel", parseValue(hsModel));
 		return "add";
+	}
+
+	public void saveBomExg() {
+		String[] idArr = null;
+		PrintWriter out = null;
+		String err = "";
+		AjaxResult result = new AjaxResult();
+		try {
+			out = response.getWriter();
+			if (ids != null && !"".equals(ids)) {
+				List<BomExg> list = new ArrayList<BomExg>();
+				idArr = ids.split("/");
+				List<Material> exgMaterials = this.materLogic.findMaterialById(idArr);
+				for (Material mat : exgMaterials) {
+					BomExg bomExg = new BomExg();
+					bomExg.setMaterial(mat);
+					list.add(bomExg);
+				}
+				list = this.bomLogic.saveBomExg(list);
+				result.setSuccess(true);
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			err = "程序异常";
+			result.setMsg(err);
+			result.setSuccess(false);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		}
 	}
 
 	private Integer pageCount(Integer maxIndex, Integer dataTotal) {
@@ -134,12 +172,12 @@ public class BomAction extends BaseAction {
 		this.searchStr = searchStr;
 	}
 
-	public String getHaCode() {
+	public String getHsCode() {
 		return hsCode;
 	}
 
-	public void setHaCode(String haCode) {
-		this.hsCode = haCode;
+	public void setHsCode(String hsCode) {
+		this.hsCode = hsCode;
 	}
 
 	public String getHsModel() {
@@ -164,6 +202,14 @@ public class BomAction extends BaseAction {
 
 	public void setHsName(String hsName) {
 		this.hsName = hsName;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 }

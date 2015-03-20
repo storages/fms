@@ -25,6 +25,10 @@ public class BomLogicImpl implements BomLogic {
 		return bomDao.findDataCount(className, hsName, hsCode, hsModel);
 	}
 
+	public List<BomExg> saveBomExg(List<BomExg> data) {
+		return this.bomDao.batchSaveOrUpdate(data);
+	}
+
 	public BomDao getBomDao() {
 		return bomDao;
 	}

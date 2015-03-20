@@ -37,4 +37,7 @@ public class BomLogicImpl implements BomLogic {
 		this.bomDao = bomDao;
 	}
 
+	public void delBomExgByIds(String[] idArr) {
+		this.bomDao.delBomExgByIds(idArr);
+	}
 }

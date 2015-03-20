@@ -29,4 +29,10 @@ public interface BomDao extends BaseDao {
 	 */
 	Integer findDataCount(String className, String hsName, String hsCode, String hsModel);
 
+	/**
+	 * 删除BOM成品
+	 * 
+	 * @param idArr
+	 */
+	void delBomExgByIds(String[] idArr);
 }

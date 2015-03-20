@@ -34,4 +34,11 @@ public interface BomLogic {
 	 * @return
 	 */
 	List<BomExg> saveBomExg(List<BomExg> data);
+
+	/**
+	 * 删除BOM成品表
+	 * 
+	 * @param idArr
+	 */
+	void delBomExgByIds(String[] idArr);
 }

@@ -83,6 +83,9 @@ public class BomAction extends BaseAction {
 		return "add";
 	}
 
+	/**
+	 * 保存bom成品表
+	 */
 	public void saveBomExg() {
 		String[] idArr = null;
 		PrintWriter out = null;
@@ -90,6 +93,8 @@ public class BomAction extends BaseAction {
 		AjaxResult result = new AjaxResult();
 		try {
 			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
 			if (ids != null && !"".equals(ids)) {
 				List<BomExg> list = new ArrayList<BomExg>();
 				idArr = ids.split("/");
@@ -113,6 +118,38 @@ public class BomAction extends BaseAction {
 			JSONObject json = new JSONObject(result);
 			out.println(json.toString());
 			out.flush();
+		}
+	}
+
+	/**
+	 * 删除BOM成品表
+	 */
+	public void delBomExg() {
+		if (null != ids && !"".equals(ids)) {
+			String[] idArr = ids.split(",");
+			if (idArr != null && idArr.length > 0) {
+				PrintWriter out = null;
+				AjaxResult result = new AjaxResult();
+				try {
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					this.bomLogic.delBomExgByIds(idArr);
+					result.setSuccess(true);
+					result.setMsg("删除成功！");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					result.setSuccess(false);
+					result.setMsg("数据被其它地方引用，不能删除！");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
+			}
 		}
 	}
 

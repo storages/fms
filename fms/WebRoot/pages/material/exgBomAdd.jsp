@@ -1,6 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<style type="text/css">
+	
+</style>
+
 <script type="text/javascript">
 	$("#checkAll").click(function(){
 		if($("#checkAll").attr("checked")){
@@ -9,8 +13,42 @@
 			$("input[name='sid']").removeAttr("checked");//取消全选
 		}
 	});
+	$("#btnSure").click(function(){
+		var str = "";
+		$('input[name="sid"]:checked').each(function(){ 
+    		str+=$(this).val()+"/";
+  		});
+  		if(str==""){
+  			alert('请勾选成品信息');
+  		}else{
+  			var url = "${pageContext.request.contextPath}/bom_saveBomExg.action?ids="+str;
+		     $.ajax({
+				     type: "POST",
+				     url:url,
+				     async: false,
+				     cache: false,
+				     success:function(data){
+						 var result=jQuery.parseJSON(data);
+						 if(result.success){
+						 	var url = "${pageContext.request.contextPath}/bom_findBomExg.action";
+							toMain(url);
+						 }else{
+						 	alert(result.msg);
+						 }
+					 },error:function(){
+					    alert("程序异常，请重新启动程序！");
+					 }
+			});
+  		}
+	});
+	$("#btnClose").click(function(){
+		var url = "${pageContext.request.contextPath}/bom_findBomExg.action";
+		toMain(url);
+	});
 </script>
-
+<div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
+	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">物料清单-成品</span>
+</div>
 <div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
 	<span class="">成品编号</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
 	<span class="">成品名称</span><input type="text" id="hsName" value="${hsName}" style="height:25px;width:100px;" class="" /> 
@@ -40,7 +78,7 @@
 						<c:forEach var="exg" varStatus="index" step="1" items="${exgList}">
 							<tr>
 								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="checkbox" value="${info.id}" name="sid" style="width:30px;"/>
+									<input type="checkbox" value="${exg.id}" name="sid" style="width:30px;"/>
 								</td>
 									<td class="center">${index.index+1}</td>
 									<c:if test="${exg.imgExgFlag=='I'}">
@@ -62,3 +100,8 @@
 					</table>
 				</div>
 			</div>
+			
+	<div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="确定" id="btnSure" style="height:25px; border: 2px; width:45px;" />
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="关闭" id="btnClose" style="height:25px; border: 2px; width:45px;" />
+	</div>

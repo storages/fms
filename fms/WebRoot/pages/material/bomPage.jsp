@@ -13,9 +13,11 @@
 	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
 	 */
 	function gotoPage(pageNum, pageSize) {
-		var likeStr = $("#search").val(); 
+		var hsCode = $("#hsCode").val(); 
+		var hsName = $("#hsName").val(); 
+		var hsModel = $("#hsModel").val(); 
 		// 拼接URL
-		var url = "${pageContext.request.contextPath}/scmcoc_findAllScmcoc.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+"&isCustom=true";
+		var url = "${pageContext.request.contextPath}/bom_findBomExg.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&hsCode="+parse(hsCode)+"&hsName="+parse(hsName)+"&hsModel="+parse(hsModel);
 		// 在本窗口中显示指定URL的页面
 		toMain(url);
 	}
@@ -24,9 +26,18 @@
 		return encodeURI(encodeURI(str));  
 	}
 	
-	
+	//新增BOM成品
 	$('#add').click(function(){
 		var url="${pageContext.request.contextPath}/bom_addExgData.action";
+		toMain(url);
+	});
+	
+	//查询按钮
+	$("#btnQuery").click(function(){
+		var hsCode = $("#hsCode").val(); 
+		var hsName = $("#hsName").val(); 
+		var hsModel = $("#hsModel").val();
+		var url = "${pageContext.request.contextPath}/bom_findBomExg.action?&hsCode="+parse(hsCode)+"&hsName="+parse(hsName)+"&hsModel="+parse(hsModel);
 		toMain(url);
 	});
 </script>
@@ -38,9 +49,8 @@
 <div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
 	<span class="">成品编号</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
 	<span class="">成品名称</span><input type="text" id="hsName" value="${hsName}" style="height:25px;width:100px;" class="" /> 
-	<span class="">成品规格</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
-	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
-		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
+	<span class="">成品规格</span><input type="text" id="hsModel" value="${hsModel}" style="height:25px;width:100px;" class="" /> 
+	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" id="btnQuery" style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 </div>
 <div class="row-fluid" >
 		<div class="span12">

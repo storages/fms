@@ -23,15 +23,6 @@ function getBrowserType(){
 	 }
 }
 
-/*$(function(){
-	$(".datebox").datepicker({
-			changeYear: true,
-		changeMonth: true,
-		yearRange: '1900:', 
-		dateFormat: 'yy-mm-dd'
-		});
-});*/
-
 
 /*****************************这个独特，另外写的删除*******************/
 

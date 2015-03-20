@@ -6,6 +6,7 @@
 </style>
 
 <script type="text/javascript">
+	//列表全选功能
 	$("#checkAll").click(function(){
 		if($("#checkAll").attr("checked")){
 			$("input[name='sid']").attr("checked",'true');//全选 
@@ -13,6 +14,8 @@
 			$("input[name='sid']").removeAttr("checked");//取消全选
 		}
 	});
+	
+	//确定按钮
 	$("#btnSure").click(function(){
 		var str = "";
 		$('input[name="sid"]:checked').each(function(){ 

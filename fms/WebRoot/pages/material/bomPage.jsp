@@ -1,7 +1,16 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
 <script type="text/javascript">
+	//列表全选功能
+	$("#checkAll").click(function(){
+		if($("#checkAll").attr("checked")){
+			$("input[name='sid']").attr("checked",'true');//全选 
+		}else{
+			$("input[name='sid']").removeAttr("checked");//取消全选
+		}
+	});
+
 		function gototag(pageSize){
 			var n = $("#gonum option:selected").val();
 			gotoPage(n, pageSize);
@@ -60,7 +69,7 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 						<thead>
 							<tr align="center">
-								<th class="center" style="width:30px;">选择</th>
+								<th class="center" style="width:30px;"><input type="checkbox" title="全选" id="checkAll"/></th>
 								<th class="center">序号</th>
 								<th class="center">成品料号</th>
 								<th class="center">成品名称</th>
@@ -85,7 +94,7 @@
 									<td class="hidden-480 center">${bom.material.unit.name}　</td>
 									<td class="center">
 										<a href="javascript:void(0);" onclick="toedit('${bom.id}')">详细</a>｜
-										<a href="javascript:void(0);" onclick="">删除</a>
+										<a href="javascript:void(0);" onclick="delData('${bom.id}','BomExg')">删除</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -94,7 +103,7 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button"id="add">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreScmcoc('true')">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','BomExg')">
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="inputExcelsBut">Excel导入</button>

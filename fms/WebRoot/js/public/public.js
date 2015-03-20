@@ -206,6 +206,10 @@ function getUrl(flag){
 			var id = $('#head').val();
 			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillItem.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
+		case "BomExg":
+			url[0] = "${pageContext.request.contextPath}/bom_delBomExg.action?ids=";
+			url[1] = "${pageContext.request.contextPath}/bom_findBomExg.action";
+			break;
 	}
 	return url;
 }

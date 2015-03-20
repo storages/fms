@@ -16,17 +16,17 @@ public class BomDaoImpl extends BaseDaoImpl implements BomDao {
 		builder.append(" left join fetch exg.material mat ");
 		builder.append(" left join fetch mat.materialType tp ");
 		builder.append(" left join fetch mat.unit un where 1=1 ");
-		if (hsName != null && !"".equals(hsName)) {
+		if (hsName != null && !"".equals(hsName) && !"undefined".equals(hsName)) {
 			builder.append(" and mat.hsName like ? ");
-			params.add(hsName);
+			params.add("%" + hsName + "%");
 		}
-		if (hsCode != null && !"".equals(hsCode)) {
+		if (hsCode != null && !"".equals(hsCode) && !"undefined".equals(hsName)) {
 			builder.append(" and mat.hsCode like ? ");
-			params.add(hsCode);
+			params.add("%" + hsCode + "%");
 		}
-		if (hsModel != null && !"".equals(hsModel)) {
-			builder.append(" and mat.hsModel like ? ");
-			params.add(hsModel);
+		if (hsModel != null && !"".equals(hsModel) && !"undefined".equals(hsModel)) {
+			builder.append(" and mat.model like ? ");
+			params.add("%" + hsModel + "%");
 		}
 		return this.findPageList(builder.toString(), params.toArray(), index, length);
 	}
@@ -35,20 +35,19 @@ public class BomDaoImpl extends BaseDaoImpl implements BomDao {
 		try {
 			List params = new ArrayList();
 			StringBuilder builder = new StringBuilder();
-			builder.append("select count(id) from ? exg ");
-			builder.append(" left join fetch exg.material mat where 1=1 ");
-			params.add(className.trim());
-			if (hsName != null && !"".equals(hsName)) {
+			builder.append("select count(exg.id) from BomExg exg ");
+			builder.append(" left join exg.material mat where 1=1 ");
+			if (hsName != null && !"".equals(hsName) && !"undefined".equals(hsName)) {
 				builder.append(" and mat.hsName like ? ");
-				params.add(hsName);
+				params.add("%" + hsName + "%");
 			}
-			if (hsCode != null && !"".equals(hsCode)) {
+			if (hsCode != null && !"".equals(hsCode) && !"undefined".equals(hsName)) {
 				builder.append(" and mat.hsCode like ? ");
-				params.add(hsCode);
+				params.add("%" + hsCode + "%");
 			}
-			if (hsModel != null && !"".equals(hsModel)) {
-				builder.append(" and mat.hsModel like ? ");
-				params.add(hsModel);
+			if (hsModel != null && !"".equals(hsModel) && !"undefined".equals(hsModel)) {
+				builder.append(" and mat.model like ? ");
+				params.add("%" + hsModel + "%");
 			}
 			return this.count(builder.toString(), params.toArray());
 		} catch (Exception e) {

@@ -56,4 +56,17 @@ public class BomDaoImpl extends BaseDaoImpl implements BomDao {
 		}
 	}
 
+	public void delBomExgByIds(String[] idArr) {
+		if (idArr != null && idArr.length > 0) {
+			List param = new ArrayList();
+			String hql = "DELETE FROM BomExg a where a.id = ? ";
+			param.add(idArr[0]);
+			for (int i = 1; i < idArr.length; i++) {
+				hql += " or a.id = ? ";
+				param.add(idArr[i]);
+			}
+			this.batchUpdateOrDelete(hql, param.toArray());
+		}
+	}
+
 }

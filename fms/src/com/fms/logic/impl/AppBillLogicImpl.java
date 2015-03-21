@@ -27,7 +27,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 	private AppBillDao appBillDao;
 	private PurchaseBillDao purchaseBillDao;
 
-	public List<AppBillItem> findAppBillItem(Quotation q) {
+	public List<AppBillItem> findAppBillItem(AclUser loginUser,Quotation q) {
 		return appBillDao.findAppBillItem(q);
 	}
 
@@ -47,7 +47,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 		this.purchaseBillDao = purchaseBillDao;
 	}
 
-	public AppBillHead saveAppBillHead(AppBillHead head) {
+	public AppBillHead saveAppBillHead(AclUser loginUser,AppBillHead head) {
 		Integer serialNo = this.appBillDao.getSerialNo("AppBillHead");
 		//head = this.appBillDao.findHeadById(head.getId());
 		if(serialNo==null || serialNo==0){
@@ -66,40 +66,40 @@ public class AppBillLogicImpl implements AppBillLogic {
 		return head;
 	}
 
-	public AppBillItem saveAppBillItem(AppBillItem item) {
+	public AppBillItem saveAppBillItem(AclUser loginUser,AppBillItem item) {
 		return this.appBillDao.saveAppBillItem(item);
 	}
 
-	public Integer findDataCount(String appNo, Date beginappDate,Date endappDate,String appStatus) {
+	public Integer findDataCount(AclUser loginUser,String appNo, Date beginappDate,Date endappDate,String appStatus) {
 		return this.appBillDao.findDataCount(appNo, beginappDate, endappDate,appStatus);
 	}
 
-	public List<AppBillHead> findAppBillHeads(String appNo, Date beginappDate,Date endappDate,String appStatus, int index, int length) {
+	public List<AppBillHead> findAppBillHeads(AclUser loginUser,String appNo, Date beginappDate,Date endappDate,String appStatus, int index, int length) {
 		return this.appBillDao.findAppBillHeads(appNo, beginappDate, endappDate,appStatus, index, length);
 	}
 
-	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus,AclUser user) {
+	public List<AppBillItem> findItemByHid(AclUser loginUser,String hid,Date beginappDate,Date endappDate,String appStatus,AclUser user) {
 		return this.appBillDao.findItemByHid(hid,beginappDate,endappDate,appStatus,user);
 	}
 
-	public AppBillHead findHeadById(String hid) {
+	public AppBillHead findHeadById(AclUser loginUser,String hid) {
 		return this.appBillDao.findHeadById(hid);
 	}
 
-	public AppBillItem findItemById(String id) {
+	public AppBillItem findItemById(AclUser loginUser,String id) {
 		return this.appBillDao.findItemById(id);
 	}
 	
-	public List<AppBillItem> findItemByHeadIds(String[] ids) {
+	public List<AppBillItem> findItemByHeadIds(AclUser loginUser,String[] ids) {
 		return this.appBillDao.findAppBillItemByHeadIds(ids);
 	}
 
-	public List<AppBillHead> betchSaveAppBillHead(List<AppBillHead> datas) {
+	public List<AppBillHead> betchSaveAppBillHead(AclUser loginUser,List<AppBillHead> datas) {
 		return this.appBillDao.betchSaveAppBillHead(datas);
 	}
 
 	
-	public List<AppBillItem> betchSaveAppBillItem(List<AppBillItem> datas) {
+	public List<AppBillItem> betchSaveAppBillItem(AclUser loginUser,List<AppBillItem> datas) {
 		List<AppBillItem> newList = new ArrayList<AppBillItem>();
 		if(datas!=null&&datas.size()>0){
 			AppBillHead head = this.appBillDao.findHeadById(datas.get(0).getHead().getId());
@@ -118,7 +118,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 			head.setItemQty(newList.size());
 			head.setTotalAmount(amount);
 			head.setTotalQty(num);
-			head.setApprovaledQty(this.countVerifyQty(newList));
+			head.setApprovaledQty(this.countVerifyQty(loginUser,newList));
 			head.setUnApprovalQty(this.countUnVerifyQty(newList));
 			if(isVerify){
 				head.setAppStatus(AppBillStatus.APPROVED);//设置表头状态审批通过
@@ -139,7 +139,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 	 * @param list
 	 * @return
 	 */
-	private Double countVerifyQty(List<AppBillItem> list){
+	private Double countVerifyQty(AclUser loginUser,List<AppBillItem> list){
 		Double num = 0d;
 		for(AppBillItem item:list){
 			if(AppBillStatus.APPROVED.equals(item.getAppStatus())){
@@ -168,7 +168,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 		return this.findQuotationByCondention(m, scm, date);
 	}
 
-	public void delAppBillItem(String[] ids) {
+	public void delAppBillItem(AclUser loginUser,String[] ids) {
 		if(null!=ids && ids.length>0){
 			Double num = 0d;
 			Double amount = 0d;
@@ -183,14 +183,14 @@ public class AppBillLogicImpl implements AppBillLogic {
 			head.setItemQty(list.size());
 			head.setTotalAmount(amount);
 			head.setTotalQty(num);
-			head.setApprovaledQty(this.countVerifyQty(list));
+			head.setApprovaledQty(this.countVerifyQty(loginUser,list));
 			head.setUnApprovalQty(this.countUnVerifyQty(list));
-			head = this.saveAppBillHead(head);
+			head = this.saveAppBillHead(loginUser,head);
 		}
 	}
 	
 	
-	public void delAppBillHead(String[] ids) {
+	public void delAppBillHead(AclUser loginUser,String[] ids) {
 		if(null!=ids && ids.length>0){
 			try{
 				this.appBillDao.deleteItemsByHeadId(ids);
@@ -201,7 +201,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 		}
 	}
 
-	public void submitApp(String [] ids){
+	public void submitApp(AclUser loginUser,String [] ids){
 		List<AppBillItem> items = this.appBillDao.findAppBillItemByHeadIds(ids);
 		if(items!=null&&items.size()>0){
 			for(AppBillItem item:items){
@@ -223,14 +223,14 @@ public class AppBillLogicImpl implements AppBillLogic {
 	 * @param itemId
 	 * @return
 	 */
-	public AppBillHead findHeadByItemId(String itemId){
+	public AppBillHead findHeadByItemId(AclUser loginUser,String itemId){
 		return this.appBillDao.findHeadByItemId(itemId);
 	}
 	
 	/**
 	 * 审批申请单
 	 */
-	public List<AppBillItem> verifyItem(String [] itemIds,String verifyFlag,AclUser user,String mess){
+	public List<AppBillItem> verifyItem(AclUser loginUser,String [] itemIds,String verifyFlag,AclUser user,String mess){
 		List<AppBillItem> data = new ArrayList<AppBillItem>();
 		Set<AppBillHead> hData = new HashSet<AppBillHead>();
 		if(null!=itemIds && itemIds.length>0 && !"".equals(verifyFlag)){
@@ -248,9 +248,9 @@ public class AppBillLogicImpl implements AppBillLogic {
 			}
 			List<AppBillHead> l = new ArrayList<AppBillHead>(hData);
 			this.appBillDao.batchSaveOrUpdate(l);
-			data = this.betchSaveAppBillItem(data);
+			data = this.betchSaveAppBillItem(loginUser,data);
 			//把审批通过的申请单转换成采购单
-			appBillConvertPurchaseBill(data);
+			appBillConvertPurchaseBill(loginUser,data);
 		}
 		return data;
 	}
@@ -259,7 +259,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 	 * 把审批通过的申请单转换成采购单
 	 * @param data
 	 */
-	private void appBillConvertPurchaseBill(List<AppBillItem> data){
+	private void appBillConvertPurchaseBill(AclUser loginUser,List<AppBillItem> data){
 		List<PurchaseBill> purchaseBills = new ArrayList<PurchaseBill>();
 		List<PurchaseItem> PurchaseItems = new ArrayList<PurchaseItem>();
 		Map<String,PurchaseBill> PurchaseMap = new HashMap<String,PurchaseBill>();
@@ -311,7 +311,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 			}
 			//purchaseBills = this.purchaseBillDao.betchSavePurchaseBill(purchaseBills);
 			//更新采购单表头信息
-			updatePurchaseBillInfo(purchaseBills);
+			updatePurchaseBillInfo(loginUser,purchaseBills);
 		}
 	}
 	
@@ -319,7 +319,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 	 * 根据采购单表体来更新采购单表头信息
 	 * @param purchaseBills
 	 */
-	private void updatePurchaseBillInfo(List<PurchaseBill> purchaseBills){
+	private void updatePurchaseBillInfo(AclUser loginUser,List<PurchaseBill> purchaseBills){
 		try{
 		for(PurchaseBill head:purchaseBills){
 			head = this.purchaseBillDao.findPurchaseBillById(head.getId());
@@ -340,15 +340,15 @@ public class AppBillLogicImpl implements AppBillLogic {
 		}
 	}
 
-	public List<AppBillItem> findItemByIds(String[] ids) {
+	public List<AppBillItem> findItemByIds(AclUser loginUser,String[] ids) {
 		return this.appBillDao.findItemByIds(ids);
 	}
 
-	public List<AppBillHead> findHeadsByHeadIds(String[] headIds) {
+	public List<AppBillHead> findHeadsByHeadIds(AclUser loginUser,String[] headIds) {
 		return this.appBillDao.findHeadsByHeadIds(headIds);
 	}
 
-	public void cancelAppBill(String[] appBillItemIds) {
+	public void cancelAppBill(AclUser loginUser,String[] appBillItemIds) {
 		if(null!=appBillItemIds && !"".equals(appBillItemIds)){
 			List<PurchaseItem> list = this.purchaseBillDao.findBillItemByAppBillItemIds(appBillItemIds);
 			for(PurchaseItem item:list){
@@ -356,7 +356,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 					return;
 				}
 			}
-			List<PurchaseBill> heads = getHeadsByPurchaseItem(list);
+			List<PurchaseBill> heads = getHeadsByPurchaseItem(loginUser,list);
 			//删除表体
 			this.purchaseBillDao.deletePurchaseItem(list);
 			//删除表头
@@ -365,7 +365,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 		
 	}
 
-	private List<PurchaseBill> getHeadsByPurchaseItem(List<PurchaseItem> list){
+	private List<PurchaseBill> getHeadsByPurchaseItem(AclUser loginUser,List<PurchaseItem> list){
 		return this.purchaseBillDao.getHeadByPurchaseItem(list);
 	}
 	

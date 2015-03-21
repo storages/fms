@@ -2,6 +2,7 @@ package com.fms.logic;
 
 import java.util.List;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Currencies;
 import com.fms.temp.TempCurrencies;
 
@@ -16,42 +17,42 @@ public interface CurrenciesLogic {
 	 * 获取所有的交易货币[分页]
 	 * @return
 	 */
-	public List<Currencies> findAllCurrencies(String likeStr,Integer index,Integer length);
+	public List<Currencies> findAllCurrencies(AclUser loginUser,String likeStr,Integer index,Integer length);
 	/**
 	 * 根据id查询交易货币
 	 * @param id
 	 * @return
 	 */
-	public Currencies findCurrenciesById(String id);
+	public Currencies findCurrenciesById(AclUser loginUser,String id);
 	/**
 	 * 保存单个交易货币
 	 * @param scmcoc
 	 */
-	public void saveCurrencies(Currencies currencies);
+	public void saveCurrencies(AclUser loginUser,Currencies currencies);
 	
 	/**
 	 * 批量保存交易货币
 	 * @param data
 	 */
-	public void betchSaveCurrencies(List<Currencies> data);
+	public void betchSaveCurrencies(AclUser loginUser,List<Currencies> data);
 	/**
 	 * 根据id删除交易货币
 	 * @param id
 	 */
-	public void deleteCurrenciesById(String [] id);
+	public void deleteCurrenciesById(AclUser loginUser,String [] id);
 	
 	/**
 	 * 根据编码查询交易货币
 	 * @param code
 	 * @return
 	 */
-	public String findCurrenciesByCode(String code);
+	public String findCurrenciesByCode(AclUser loginUser,String code);
 	
 	/**
 	 * 批量删除交易货币
 	 * @param data
 	 */
-	public void delete(List<String> ids);
+	public void delete(AclUser loginUser,List<String> ids);
 	
 	/**
 	 * 查找数据总条数
@@ -60,17 +61,17 @@ public interface CurrenciesLogic {
 	 * @param name
 	 * @return
 	 */
-	public Integer findDataCount(String className,String name);
+	public Integer findDataCount(AclUser loginUser,String className,String name);
 
 	
 	/**
 	 * 验证导入Excel数据
 	 */
-	public List<?> doValidata(List<?> dataList);
+	public List<?> doValidata(AclUser loginUser,List<?> dataList);
 	
 	/**
 	 * 保存Excel数据到数据库
 	 */
-	public Boolean doSaveExcelData(List<?> dataList); 
+	public Boolean doSaveExcelData(AclUser loginUser,List<?> dataList); 
 
 }

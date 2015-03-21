@@ -25,35 +25,35 @@ public interface AclUserLogic {
 	 * 保存用户
 	 * @param aclUser
 	 */
-	public void saveAclUser(AclUser aclUser);
+	public void saveAclUser(AclUser loginUser,AclUser aclUser);
 	
 	/**
 	 * 获取所有用户
 	 * @return
 	 */
-	public List<AclUser> findAllUser(String userflag);
+	public List<AclUser> findAllUser(AclUser loginUser,String userflag);
 	
 	/**
 	 * 删除用户
 	 * @param ids
 	 */
-	public void deleteAclUser(String [] ids);
+	public void deleteAclUser(AclUser loginUser,String [] ids);
 	
 	/**
 	 * 根据员工ID 删除用户
 	 * @param ids
 	 */
-	public void deleteUserByEmpl(String [] ids);
+	public void deleteUserByEmpl(AclUser loginUser,String [] ids);
 	
 	/**
 	 * 根据用户id来查询用户
 	 * @param id
 	 * @return
 	 */
-	public AclUser findUserById(String id);
+	public AclUser findUserById(AclUser loginUser,String id);
 	
 	
-	public AjaxResult saveUserByNoName(AclUser user);
+	public AjaxResult saveUserByNoName(AclUser loginUser,AclUser user);
 	
-	public boolean findUserByName(String name);
+	public boolean findUserByName(AclUser loginUser,String name);
 }

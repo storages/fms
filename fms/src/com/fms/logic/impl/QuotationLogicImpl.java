@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.fms.commons.ImgExgFlag;
 import com.fms.commons.PurchaseBillStatus;
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
@@ -36,11 +37,11 @@ public class QuotationLogicImpl implements QuotationLogic{
 	protected ScmcocLogic scmcocLogic;
 	
 	
-	public List<Quotation> findQuotations(String scmCocName, String hsCode,Date begineffectDate,Date endeffectDate, int index, int length) {
+	public List<Quotation> findQuotations(AclUser loginUser,String scmCocName, String hsCode,Date begineffectDate,Date endeffectDate, int index, int length) {
 		return quotationDao.findQuotations(scmCocName, hsCode, begineffectDate,endeffectDate, index, length);
 	}
 	
-	public Integer findDataCount(String scmCocName, String hsCode,Date begineffectDate,Date endeffectDate) {
+	public Integer findDataCount(AclUser loginUser,String scmCocName, String hsCode,Date begineffectDate,Date endeffectDate) {
 		return quotationDao.findDataCount(scmCocName, hsCode, begineffectDate,endeffectDate);
 	}
 	
@@ -50,7 +51,7 @@ public class QuotationLogicImpl implements QuotationLogic{
 	public void setQuotationDao(QuotationDao quotationDao) {
 		this.quotationDao = quotationDao;
 	}
-	public List<Quotation> saveQuotations(List<Quotation> list){
+	public List<Quotation> saveQuotations(AclUser loginUser,List<Quotation> list){
 		Integer serialNo = quotationDao.getSerialNo("Quotation");
 		for(Quotation q:list){
 			if(q.getSerialNo()==null){
@@ -66,28 +67,28 @@ public class QuotationLogicImpl implements QuotationLogic{
 		}
 		return this.quotationDao.batchSaveOrUpdate(list);
 	}
-	public List<Scmcoc> findAll(){
+	public List<Scmcoc> findAll(AclUser loginUser){
 		return quotationDao.findAll();
 	}
-	public Scmcoc findById(String id){
+	public Scmcoc findById(AclUser loginUser,String id){
 		return quotationDao.findById(id);
 	}
 	
-	public List<Quotation> findQuotationByIds(String [] ids){
+	public List<Quotation> findQuotationByIds(AclUser loginUser,String [] ids){
 		return this.quotationDao.findQuotationByIds(ids);
 	}
 
-	public Quotation findQuotationById(String entityName,String id) {
+	public Quotation findQuotationById(AclUser loginUser,String entityName,String id) {
 		return (Quotation) this.quotationDao.findEntityById(entityName, id);
 	}
-	public void delQuotationById(String[] ids){
+	public void delQuotationById(AclUser loginUser,String[] ids){
 		this.quotationDao.delQuotationById(ids);
 	}
 
-	public int updatePrice(String[] ids) {
+	public int updatePrice(AclUser loginUser,String[] ids) {
 		int count = 0;
 		if(ids!=null && ids.length>0){
-			List<Quotation> quoList = this.findQuotationByIds(ids);
+			List<Quotation> quoList = this.findQuotationByIds(loginUser,ids);
 			for(Quotation q:quoList){
 				if(q.getPrice()==null || q.getPrice()==0d || q.getEffectDate()==null){
 					return -1;
@@ -95,9 +96,9 @@ public class QuotationLogicImpl implements QuotationLogic{
 			}
 			for(Quotation q:quoList){
 				//更新申请单
-				count+=updateAppBillItem(q);
+				count+=updateAppBillItem(loginUser,q);
 				//更新采购单
-				count+=updatePurchaseBill(q);
+				count+=updatePurchaseBill(loginUser,q);
 			}
 		}
 		return count;
@@ -109,7 +110,7 @@ public class QuotationLogicImpl implements QuotationLogic{
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private List<AppBillItem> findAppBillItem(Quotation q){
+	private List<AppBillItem> findAppBillItem(AclUser loginUser,Quotation q){
 		return this.appBillDao.findAppBillItem(q);
 	}
 	
@@ -119,7 +120,7 @@ public class QuotationLogicImpl implements QuotationLogic{
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private int updatePurchaseBill(Quotation q){
+	private int updatePurchaseBill(AclUser loginUser,Quotation q){
 		try{
 			List<PurchaseBill> list = this.purchaseBillDao.findPurchaseBill(q);
 			if(null!=list && list.size()>0){
@@ -154,8 +155,8 @@ public class QuotationLogicImpl implements QuotationLogic{
 	 * @param q
 	 * @return
 	 */
-	private int updateAppBillItem(Quotation q){
-		List<AppBillItem> itemList = this.findAppBillItem(q);
+	private int updateAppBillItem(AclUser loginUser,Quotation q){
+		List<AppBillItem> itemList = this.findAppBillItem(loginUser,q);
 		List<AppBillItem> newItemList = new ArrayList<AppBillItem>();
 		List<AppBillHead> headList = new ArrayList<AppBillHead>();
 		if(null!=itemList && itemList.size()>0){
@@ -217,11 +218,11 @@ public class QuotationLogicImpl implements QuotationLogic{
 		this.scmcocLogic = scmcocLogic;
 	}
 
-	public List<?> doValidata(List<?> dataList) {
+	public List<?> doValidata(AclUser loginUser,List<?> dataList) {
 		List<TempQuotation> tempList = new ArrayList<TempQuotation>();
 		List<Quotation> quoList = this.quotationDao.findQuotations(null, null, null, null, -1, -1);
-		List<Scmcoc> scmcocList = this.scmcocLogic.findAllScmcoc(false, null, -1, -1);
-		List<Material> materList = this.materLogic.findAllMaterialInfo(null, ImgExgFlag.IMG, -1, -1);
+		List<Scmcoc> scmcocList = this.scmcocLogic.findAllScmcoc(loginUser,false, null, -1, -1);
+		List<Material> materList = this.materLogic.findAllMaterialInfo(loginUser,null, ImgExgFlag.IMG, -1, -1);
 		Map<String,Scmcoc> scmCache = new HashMap<String,Scmcoc>();
 		Map<String,Quotation> mapCache = new HashMap<String,Quotation>();
 		Map<String,Material> marCache = new HashMap<String,Material>();
@@ -294,7 +295,7 @@ public class QuotationLogicImpl implements QuotationLogic{
 	}
 
 	
-	public Boolean doSaveExcelData(List<?> dataList) {
+	public Boolean doSaveExcelData(AclUser loginUser,List<?> dataList) {
 		List<Quotation> quoL = new ArrayList<Quotation>();
 		//重新验证是否有错误的数据
 		for(Object obj:dataList){
@@ -303,7 +304,7 @@ public class QuotationLogicImpl implements QuotationLogic{
 				return false;
 			}else{
 				Quotation q = new Quotation();
-				quoL.add(decProperties(tq,q));
+				quoL.add(decProperties(loginUser,tq,q));
 				continue;
 			}
 		}
@@ -321,11 +322,11 @@ public class QuotationLogicImpl implements QuotationLogic{
 	 * @param tag
 	 * @return
 	 */
-	private Quotation decProperties(TempQuotation src,Quotation tag){
+	private Quotation decProperties(AclUser loginUser,TempQuotation src,Quotation tag){
 		if(null!=src && null!=tag){
-			Material m = this.materLogic.findMaterialByHsCode(src.getHsCode());
+			Material m = this.materLogic.findMaterialByHsCode(loginUser,src.getHsCode());
 			tag.setMaterial(m);
-			Scmcoc scm = this.scmcocLogic.findScmcocByCode(src.getScmcocCode());
+			Scmcoc scm = this.scmcocLogic.findScmcocByCode(loginUser,src.getScmcocCode());
 			tag.setScmcoc(scm);
 			tag.setPrice(src.getPrice()==null?0d:Double.parseDouble(src.getPrice()));
 			tag.setEffectDate(FmsDateUtils.getCurrentFormatDate());
@@ -342,7 +343,7 @@ public class QuotationLogicImpl implements QuotationLogic{
 	 * @param date
 	 * @return
 	 */
-	public Quotation findQuotationByCondention(Material m,Scmcoc scm){
+	public Quotation findQuotationByCondention(AclUser loginUser,Material m,Scmcoc scm){
 		return this.quotationDao.findQuotationByCondention(m, scm);
 		
 	}

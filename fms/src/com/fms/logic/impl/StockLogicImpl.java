@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Stock;
 import com.fms.dao.StockDao;
 import com.fms.logic.StockLogic;
@@ -28,31 +29,31 @@ public class StockLogicImpl implements StockLogic {
 		this.stockDao = stockDao;
 	}
 
-	public List<Stock> findAllStock(String likeStr, Integer index,Integer length) {
+	public List<Stock> findAllStock(AclUser loginUser,String likeStr, Integer index,Integer length) {
 		return this.stockDao.findAllStock(likeStr, index, length);
 	}
 
-	public Integer findDataCount(String className, String name) {
+	public Integer findDataCount(AclUser loginUser,String className, String name) {
 		return this.stockDao.findDataCount(className, name);
 	}
 
-	public Stock findStockById(String id) {
+	public Stock findStockById(AclUser loginUser,String id) {
 		return this.stockDao.findStockById(id);
 	}
 
-	public void saveStock(Stock stock) {
+	public void saveStock(AclUser loginUser,Stock stock) {
 		this.stockDao.saveStock(stock);
 	}
 
-	public String findStockByCode(String code) {
+	public String findStockByCode(AclUser loginUser,String code) {
 		return this.stockDao.findStockByCode(code);
 	}
 
-	public void delStockById(String[] ids) {
+	public void delStockById(AclUser loginUser,String[] ids) {
 		this.stockDao.delStockById(ids);
 	}
 
-	public List<?> doValidata(final List<?> dataList) {
+	public List<?> doValidata(AclUser loginUser,final List<?> dataList) {
 			List<TempStock> tempList = new ArrayList<TempStock>();
 			List<Stock> stocks = stockDao.findAllStock(null, -1, -1);
 			Map<String,Stock> mapSelf = new HashMap<String,Stock>();
@@ -139,7 +140,7 @@ public class StockLogicImpl implements StockLogic {
 	/**
 	 * 保存Excel导入的数据
 	 */
-	public Boolean doSaveExcelData(List<?> dataList) {
+	public Boolean doSaveExcelData(AclUser loginUser,List<?> dataList) {
 		List<Stock> stockL = new ArrayList<Stock>();
 		//重新验证是否有错误的数据
 		for(Object obj:dataList){

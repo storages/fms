@@ -11,26 +11,26 @@ import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 
 public interface AppBillLogic {
-	List<AppBillItem> findAppBillItem(Quotation q);
+	List<AppBillItem> findAppBillItem(AclUser loginUser,Quotation q);
 	/**
 	 * 保存单条申请单表头
 	 */
-	AppBillHead saveAppBillHead(AppBillHead head);
+	AppBillHead saveAppBillHead(AclUser loginUser,AppBillHead head);
 	
 	/**
 	 * 保存单条申请单表体
 	 */
-	AppBillItem saveAppBillItem(AppBillItem item);
+	AppBillItem saveAppBillItem(AclUser loginUser,AppBillItem item);
 	
 	/**
 	 * 批量保存申请单表头
 	 */
-	List<AppBillHead> betchSaveAppBillHead(List<AppBillHead> datas);
+	List<AppBillHead> betchSaveAppBillHead(AclUser loginUser,List<AppBillHead> datas);
 	
 	/**
 	 * 批量保存申请单表体
 	 */
-	List<AppBillItem> betchSaveAppBillItem(List<AppBillItem> datas);
+	List<AppBillItem> betchSaveAppBillItem(AclUser loginUser,List<AppBillItem> datas);
 	
 	/**
 	 * 符合条件的记录数
@@ -39,7 +39,7 @@ public interface AppBillLogic {
 	 * @param endappDate
 	 * @return
 	 */
-	Integer findDataCount(String appNo, Date beginappDate,Date endappDate,String appStatus);
+	Integer findDataCount(AclUser loginUser,String appNo, Date beginappDate,Date endappDate,String appStatus);
 	
 	/**
 	 * 分页查询申请单列表数据
@@ -50,84 +50,84 @@ public interface AppBillLogic {
 	 * @param length
 	 * @return
 	 */
-	public List<AppBillHead> findAppBillHeads(String appNo, Date beginappDate,Date endappDate,String appStatus, int index, int length);
+	public List<AppBillHead> findAppBillHeads(AclUser loginUser,String appNo, Date beginappDate,Date endappDate,String appStatus, int index, int length);
 	
 	/**
 	 * 根据表头id查询所有的表体
 	 * @param hid
 	 * @return
 	 */
-	public List<AppBillItem> findItemByHid(String hid,Date beginappDate,Date endappDate,String appStatus,AclUser user);
+	public List<AppBillItem> findItemByHid(AclUser loginUser,String hid,Date beginappDate,Date endappDate,String appStatus,AclUser user);
 	
 	/**
 	 * 根据表头id查询表头对象
 	 * @param hid
 	 * @return
 	 */
-	AppBillHead findHeadById(String hid);
+	AppBillHead findHeadById(AclUser loginUser,String hid);
 	
 	/**
 	 * 根据表体id查询表体对象
 	 * @param hid
 	 * @return
 	 */
-	AppBillItem findItemById(String id);
+	AppBillItem findItemById(AclUser loginUser,String id);
 	
 	/**
 	 * 根据表体id数组批量查询表体对象
 	 * @param ids
 	 * @return
 	 */
-	List<AppBillItem> findItemByIds(String[] ids);
+	List<AppBillItem> findItemByIds(AclUser loginUser,String[] ids);
 	
 	/**
 	 * 根据表头id数组批量查询表体对象
 	 * @param ids
 	 * @return
 	 */
-	public List<AppBillItem> findItemByHeadIds(String[] ids);
+	public List<AppBillItem> findItemByHeadIds(AclUser loginUser,String[] ids);
 	
 	/**
 	 * 删除申请单表体
 	 * @param ids
 	 */
-	public void delAppBillItem(String[] ids);
+	public void delAppBillItem(AclUser loginUser,String[] ids);
 	
 	/**
 	 * 删除申请单表头
 	 * @param ids
 	 */
-	public void delAppBillHead(String[] ids);
+	public void delAppBillHead(AclUser loginUser,String[] ids);
 	
 	/**
 	 * 提交申请
 	 * @param ids
 	 */
-	public void submitApp(String [] ids);
+	public void submitApp(AclUser loginUser,String [] ids);
 	
 	/**
 	 * 根据表体id来查询表头
 	 * @param itemId
 	 * @return
 	 */
-	public AppBillHead findHeadByItemId(String itemId);
+	public AppBillHead findHeadByItemId(AclUser loginUser,String itemId);
 	
 	/**
 	 * 批量审批申请单
 	 * @param data
 	 */
-	List<AppBillItem> verifyItem(String[] itemIds,String verifyFlag,AclUser user,String mess);
+	List<AppBillItem> verifyItem(AclUser loginUser,String[] itemIds,String verifyFlag,AclUser user,String mess);
 	
 	/**
 	 * 根据表头id查询所有表头信息
 	 * @param headIds
 	 * @return
 	 */
-	List<AppBillHead> findHeadsByHeadIds(String [] headIds);
+	List<AppBillHead> findHeadsByHeadIds(AclUser loginUser,String [] headIds);
 	
 	/**
 	 * 撤销审批
 	 * @param biilIds
 	 */
-	void cancelAppBill(String [] appBillItemIds);
+	void cancelAppBill(AclUser loginUser,String [] appBillItemIds);
 }

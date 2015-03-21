@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Currencies;
 import com.fms.core.entity.Settlement;
 import com.fms.dao.CurrenciesDao;
@@ -24,42 +25,42 @@ public class CurrenciesLogicImpl implements CurrenciesLogic {
 		this.currenciesDao = currenciesDao;
 	}
 
-	public List<Currencies> findAllCurrencies(String likeStr, Integer index,
+	public List<Currencies> findAllCurrencies(AclUser loginUser,String likeStr, Integer index,
 			Integer length) {
 		List<Currencies> list = currenciesDao.findAllCurrencies(likeStr, index,
 				length);
 		return list;
 	}
 
-	public Currencies findCurrenciesById(String id) {
+	public Currencies findCurrenciesById(AclUser loginUser,String id) {
 		return currenciesDao.findCurrenciesById(id);
 	}
 
-	public void saveCurrencies(Currencies currencies) {
+	public void saveCurrencies(AclUser loginUser,Currencies currencies) {
 		currenciesDao.saveCurrencies(currencies);
 	}
 
-	public void betchSaveCurrencies(List<Currencies> data) {
+	public void betchSaveCurrencies(AclUser loginUser,List<Currencies> data) {
 		currenciesDao.betchSaveCurrencies(data);
 	}
 
-	public void deleteCurrenciesById(String[] ids) {
+	public void deleteCurrenciesById(AclUser loginUser,String[] ids) {
 		currenciesDao.deleteCurrenciesById(ids);
 	}
 
-	public String findCurrenciesByCode(String code) {
+	public String findCurrenciesByCode(AclUser loginUser,String code) {
 		return currenciesDao.findCurrenciesByCode(code);
 	}
 
-	public Integer findDataCount(String className, String name) {
+	public Integer findDataCount(AclUser loginUser,String className, String name) {
 		return this.currenciesDao.findDataCount(className, name);
 	}
 
-	public void delete(List<String> ids) {
+	public void delete(AclUser loginUser,List<String> ids) {
 		this.currenciesDao.delete(ids);
 	}
 
-	public List<?> doValidata(List<?> dataList) {
+	public List<?> doValidata(AclUser loginUser,List<?> dataList) {
 		List<TempCurr> tempList = new ArrayList<TempCurr>();
 		List<Currencies> currList = currenciesDao.findAllCurrencies(null, -1,-1);
 		Map<String, Currencies> mapSelf = new HashMap<String, Currencies>();
@@ -124,7 +125,7 @@ public class CurrenciesLogicImpl implements CurrenciesLogic {
 		return null;
 	}
 	
-	public Boolean doSaveExcelData(List<?> dataList) {
+	public Boolean doSaveExcelData(AclUser loginUser,List<?> dataList) {
 		List<Currencies> currL = new ArrayList<Currencies>();
 		//重新验证是否有错误的数据
 		for(Object obj:dataList){

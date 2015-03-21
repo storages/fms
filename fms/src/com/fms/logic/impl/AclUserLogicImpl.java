@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fms.core.entity.AclUser;
 import com.fms.dao.AclUserDao;
+import com.fms.dao.OperateLogsDao;
 import com.fms.logic.AclUserLogic;
 import com.fms.utils.AjaxResult;
 import com.fms.utils.MD5Util;
@@ -13,8 +14,8 @@ public class AclUserLogicImpl implements AclUserLogic {
 	/**
 	 * 数据访问对象
 	 */
-	private AclUserDao userDao = null;
-	
+	private AclUserDao userDao;
+	private OperateLogsDao operaterLogsDao;
 	
 	public AclUserDao getUserDao() {
 		return userDao;
@@ -30,7 +31,7 @@ public class AclUserLogicImpl implements AclUserLogic {
 		return user;
 	}
 
-	public void saveAclUser(AclUser aclUser) {
+	public void saveAclUser(AclUser loginUser,AclUser aclUser) {
 		/*if(null!=aclUser.getPassword() && !"".equals(aclUser.getPassword())){
 			String descPassword = MD5Util.encryptData(aclUser.getPassword());
 			aclUser.setPassword(descPassword);
@@ -38,19 +39,19 @@ public class AclUserLogicImpl implements AclUserLogic {
 		this.userDao.saveAclUser(aclUser);
 	}
 
-	public List<AclUser> findAllUser(String userflag) {
+	public List<AclUser> findAllUser(AclUser loginUser,String userflag) {
 		return this.userDao.findAllUser(userflag);
 	}
 
-	public void deleteAclUser(String[] ids) {
+	public void deleteAclUser(AclUser loginUser,String[] ids) {
 		this.userDao.deleteAclUser(ids);		
 	}
 
-	public AclUser findUserById(String id) {
+	public AclUser findUserById(AclUser loginUser,String id) {
 		return this.userDao.findUserById(id);
 	}
 
-	public AjaxResult saveUserByNoName(AclUser user) {
+	public AjaxResult saveUserByNoName(AclUser loginUser,AclUser user) {
 		AjaxResult result=new AjaxResult();
 		result.setSuccess(false);
         boolean isue= userDao.findUserByName(user.getLoginName());	
@@ -64,11 +65,11 @@ public class AclUserLogicImpl implements AclUserLogic {
 		return result;
 	}
 
-	public void deleteUserByEmpl(String[] ids) {
+	public void deleteUserByEmpl(AclUser loginUser,String[] ids) {
 		// TODO Auto-generated method stub
 		userDao.deleteAclUserByEmpId(ids);
 	}
-	public boolean findUserByName(String name){
+	public boolean findUserByName(AclUser loginUser,String name){
 		return userDao.findUserByName(name);
 	}
 }

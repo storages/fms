@@ -18,29 +18,29 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	private OperateLogsDao operaterLogsDao;
 
 
-	public void saveEmpl(Employee modal) {
+	public void saveEmpl(AclUser loginUser,Employee modal) {
 		// TODO Auto-generated method stub
 		employeeDao.saveOrUpdate(modal);
 		
 	}
 	
-	public List<Employee> loadEmployee() {
+	public List<Employee> loadEmployee(AclUser loginUser) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
-	public List<Employee> findAllEmpl(String likeStr,Integer index,Integer length) {
+	public List<Employee> findAllEmpl(AclUser loginUser,String likeStr,Integer index,Integer length) {
 		return employeeDao.findAllEmpl(likeStr,(index*length-length),length);
 	}
 
 
-	public void updateEmpl(Employee modal) {
+	public void updateEmpl(AclUser loginUser,Employee modal) {
 		// TODO Auto-generated method stub
 	}
 
 
-	public void deleteEmpl(String [] ids) {
+	public void deleteEmpl(AclUser loginUser,String [] ids) {
 		// TODO Auto-generated method stub
 		userDao.deleteAclUserByEmpId(ids);
 		String hql = "delete Employee a where 1=1 and ";
@@ -52,7 +52,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		
 	}
 
-	public Employee getEmplById(String id) {
+	public Employee getEmplById(AclUser loginUser,String id) {
 		// TODO Auto-generated method stub
 		return (Employee) employeeDao.get(Employee.class, id);
 	}
@@ -79,9 +79,14 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 				throw new Exception("登录用户名已存在");
 			}
 		}
+		if(null!=empl.getId()){
+			operaterLogsDao.saveEditLogs(loginUser, empl, empl.getId(),Employee.class);
+		}else{
+			operaterLogsDao.saveNewLogs(loginUser, empl);
+		}
 		//保存员工
 		employeeDao.saveOrUpdate(empl);
-		operaterLogsDao.saveNewLogs(loginUser, empl);
+	
 		if(isuser){
 			user.setUserFlag("P");//普通
 			user.setEmployee(empl);
@@ -112,7 +117,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		this.userDao = userDao;
 	}
 
-	public int countListEmpl(String str) {
+	public int countListEmpl(AclUser loginUser,String str) {
 		// TODO Auto-generated method stub
 		String hql = "select count(id) from Employee a where 1=1";
 		List param = new ArrayList();
@@ -123,15 +128,16 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		return userDao.count(hql, param.toArray());
 	}
 
-	public void deleteEmpl(String id) {
+	public void deleteEmpl(AclUser loginUser,String id) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void updateEmplUseByparam(String key,boolean param) {
+	public void updateEmplUseByparam(AclUser logUser,String key,boolean param) {
 		// TODO Auto-generated method stub
 	    Employee employee= (Employee) employeeDao.get(Employee.class, key);
 	    employee.setWfloginUser(param);
+	    operaterLogsDao.saveEditLogs(logUser, employee, key,Employee.class);
 	    employeeDao.saveOrUpdate(employee);
 	}
 

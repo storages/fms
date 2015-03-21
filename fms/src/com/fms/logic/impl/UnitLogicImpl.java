@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Stock;
 import com.fms.core.entity.Unit;
 import com.fms.dao.UnitDao;
@@ -16,38 +17,38 @@ public class UnitLogicImpl implements UnitLogic {
 	
 	private UnitDao unitDao ;
 
-	public List<Unit> findAllUnit(String likeStr, Integer index, Integer length) {
+	public List<Unit> findAllUnit(AclUser loginUser,String likeStr, Integer index, Integer length) {
 		return this.unitDao.findAllUnit(likeStr, index, length);
 	}
 
-	public Integer findDataCount(String className, String name) {
+	public Integer findDataCount(AclUser loginUser,String className, String name) {
 		return this.unitDao.findDataCount(className, name);
 	}
 
-	public Unit findUnitById(String id) {
+	public Unit findUnitById(AclUser loginUser,String id) {
 		return this.unitDao.findUnitById(id);
 	}
 
-	public void saveUnit(Unit unit) {
+	public void saveUnit(AclUser loginUser,Unit unit) {
 		this.unitDao.saveUnit(unit);
 	}
 
-	public String findUnitByCode(String code) {
+	public String findUnitByCode(AclUser loginUser,String code) {
 		return this.unitDao.findUnitByCode(code);
 	}
 
-	public void delUnitById(String[] ids) {
+	public void delUnitById(AclUser loginUser,String[] ids) {
 		this.unitDao.delUnitById(ids);
 	}
 
-	public UnitDao getUnitDao() {
+	public UnitDao getUnitDao(AclUser loginUser) {
 		return unitDao;
 	}
 
 	public void setUnitDao(UnitDao unitDao) {
 		this.unitDao = unitDao;
 	}
-	public List<?> doValidata(final List<?> dataList) {
+	public List<?> doValidata(AclUser loginUser,final List<?> dataList) {
 		List<TempUnit> tempList = new ArrayList<TempUnit>();
 		List<Unit> units = unitDao.findAllUnit(null, -1, -1);
 		Map<String,Unit> mapSelf = new HashMap<String,Unit>();
@@ -80,7 +81,7 @@ public class UnitLogicImpl implements UnitLogic {
 				String key2 = impUnit.getCode()+"/"+impUnit.getName();
 				//验证导入数据在系统中是否重复
 				if(unitCache.get(key2)!=null && null!=impUnit.getCode() && !"".equals(impUnit.getCode().trim()) && null!=impUnit.getName() && !"".equals(impUnit.getName().trim())){
-					setProperties(impUnit, temp);
+					setProperties(loginUser,impUnit, temp);
 					String mess = "对应编码【"+impUnit.getCode()+"】、名称【 "+impUnit.getName()+"】在系统中已存在; ";
 					temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 				}
@@ -91,7 +92,7 @@ public class UnitLogicImpl implements UnitLogic {
 					temp.setErrorInfo(temp.getErrorInfo()==null?""+mess:temp.getErrorInfo()+mess);
 				}
 				mapSelf.put(key2, temp);
-				tempList.add(setProperties(impUnit, temp));
+				tempList.add(setProperties(loginUser,impUnit, temp));
 			}
 			return tempList;
 		}
@@ -102,7 +103,7 @@ public class UnitLogicImpl implements UnitLogic {
 	 * @param tag
 	 * @return
 	 */
-	private TempUnit setProperties(Unit src,TempUnit tag){
+	private TempUnit setProperties(AclUser loginUser,Unit src,TempUnit tag){
 		if(null!=src && null!=tag){
 			tag.setCode(src.getCode());
 			tag.setName(src.getName());
@@ -112,7 +113,7 @@ public class UnitLogicImpl implements UnitLogic {
 		return null;
 	}
 	
-	private Unit decProperties(TempUnit src,Unit tag){
+	private Unit decProperties(AclUser loginUser,TempUnit src,Unit tag){
 		if(null!=src && null!=tag){
 			tag.setCode(src.getCode());
 			tag.setName(src.getName());
@@ -122,7 +123,7 @@ public class UnitLogicImpl implements UnitLogic {
 		return null;
 	}
 
-	public Boolean doSaveExcelData(List<?> dataList) {
+	public Boolean doSaveExcelData(AclUser loginUser,List<?> dataList) {
 		List<Unit> unitL = new ArrayList<Unit>();
 		//重新验证是否有错误的数据
 		for(Object obj:dataList){
@@ -131,7 +132,7 @@ public class UnitLogicImpl implements UnitLogic {
 				return false;
 			}else{
 				Unit u = new Unit();
-				unitL.add(decProperties(tu,u));
+				unitL.add(decProperties(loginUser,tu,u));
 				continue;
 			}
 		}

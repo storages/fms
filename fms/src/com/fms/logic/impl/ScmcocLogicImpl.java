@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Settlement;
 import com.fms.core.entity.Stock;
@@ -23,15 +24,15 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	private SettlementDao settlementDao;
 	 
 
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom,String likeStr,Integer index,Integer length) {
+	public List<Scmcoc> findAllScmcoc(AclUser loginUser,Boolean isCustom,String likeStr,Integer index,Integer length) {
 		return scmcocDao.findAllScmcoc(isCustom,likeStr,index,length);
 	}
 
-	public Scmcoc findScmcocById(String id) {
+	public Scmcoc findScmcocById(AclUser loginUser,String id) {
 		return scmcocDao.findScmcocById(id);
 	}
 
-	public void saveScmcoc(Scmcoc scmcoc) {
+	public void saveScmcoc(AclUser loginUser,Scmcoc scmcoc) {
 		scmcocDao.saveScmcoc(scmcoc);
 	}
 
@@ -44,11 +45,11 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		this.settlementDao = settlementDao;
 	}
 
-	public void betchSaveScmcoc(List<Scmcoc> data) {
+	public void betchSaveScmcoc(AclUser loginUser,List<Scmcoc> data) {
 		scmcocDao.betchSaveScmcoc(data);
 	}
 
-	public void deleteScmcocById(String id) {
+	public void deleteScmcocById(AclUser loginUser,String id) {
 		scmcocDao.deleteScmcocById(id);
 	}
 
@@ -62,15 +63,15 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 
 	
 
-	public Scmcoc findScmcocByCode(String code) {
+	public Scmcoc findScmcocByCode(AclUser loginUser,String code) {
 		return this.scmcocDao.findScmcocByCode(code);
 	}
 
-	public void delete(List<String> ids) {
+	public void delete(AclUser loginUser,List<String> ids) {
 		this.scmcocDao.delete(ids);
 	}
 
-	public Integer findDataCount(String className,Boolean isCustom,String name){
+	public Integer findDataCount(AclUser loginUser,String className,Boolean isCustom,String name){
 		return this.scmcocDao.findDataCount(className,isCustom,name);
 	}
 	private TempScmcoc setProperties(Scmcoc src,TempScmcoc tag){
@@ -90,7 +91,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		return null;
 	}
 
-	public List<TempScmcoc> doValidata(List<Scmcoc> data,
+	public List<TempScmcoc> doValidata(AclUser loginUser,List<Scmcoc> data,
 			Map<String, Settlement> map) {
 		List<TempScmcoc> valiList= new ArrayList<TempScmcoc>();
 		List<Scmcoc> scmList = this.scmcocDao.findAllScmcoc(false, null, -1, -1);
@@ -181,7 +182,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	}
 
 	
-	private Scmcoc decProperties(TempScmcoc src,Map<String,Settlement> map,String isScmcoc){
+	private Scmcoc decProperties(AclUser loginUser,TempScmcoc src,Map<String,Settlement> map,String isScmcoc){
 		Scmcoc s = new Scmcoc();
 		if(null!=src){
 			s.setCode(src.getCode());
@@ -205,7 +206,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 		return null;
 	}
 	
-	public boolean doSaveExcelData(List list,String isScmcoc) {
+	public boolean doSaveExcelData(AclUser loginUser,List list,String isScmcoc) {
 		List<Scmcoc> scmcockL = new ArrayList<Scmcoc>();
 		List<Settlement> settList = this.settlementDao.findAllSettlement(null);
 		Map<String,Settlement> map = new HashMap<String,Settlement>();
@@ -218,7 +219,7 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 			if(null!=ts.getErrorInfo() && !"".equals(ts.getErrorInfo().trim())){
 				return false;
 			}else{
-				scmcockL.add(decProperties(ts,map,isScmcoc));
+				scmcockL.add(decProperties(loginUser,ts,map,isScmcoc));
 				continue;
 			}
 		}
@@ -233,5 +234,6 @@ public class ScmcocLogicImpl implements ScmcocLogic {
 	private boolean isNumeric(String str){ 
 	    Pattern pattern = Pattern.compile("[0-9]*"); 
 	    return pattern.matcher(str).matches();    
-	 } 
+	 }
+
 }

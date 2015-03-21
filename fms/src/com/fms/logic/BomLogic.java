@@ -2,6 +2,7 @@ package com.fms.logic;
 
 import java.util.List;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.BomExg;
 
 /**
@@ -16,7 +17,7 @@ public interface BomLogic {
 	 * 
 	 * @return
 	 */
-	List<BomExg> findBomExg(String hsName, String hsCode, String hsModel, Integer index, Integer length);
+	List<BomExg> findBomExg(AclUser loginUser,String hsName, String hsCode, String hsModel, Integer index, Integer length);
 
 	/**
 	 * 按条件查找记录数
@@ -25,7 +26,7 @@ public interface BomLogic {
 	 * @param searchStr
 	 * @return
 	 */
-	Integer findDataCount(String className, String hsName, String hsCode, String hsModel);
+	Integer findDataCount(AclUser loginUser,String className, String hsName, String hsCode, String hsModel);
 
 	/**
 	 * 保存BOM成品表
@@ -33,12 +34,12 @@ public interface BomLogic {
 	 * @param data
 	 * @return
 	 */
-	List<BomExg> saveBomExg(List<BomExg> data);
+	List<BomExg> saveBomExg(AclUser loginUser,List<BomExg> data);
 
 	/**
 	 * 删除BOM成品表
 	 * 
 	 * @param idArr
 	 */
-	void delBomExgByIds(String[] idArr);
+	void delBomExgByIds(AclUser loginUser,String[] idArr);
 }

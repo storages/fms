@@ -2,6 +2,7 @@ package com.fms.logic;
 
 import java.util.List;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Stock;
 
 public interface StockLogic  {
@@ -14,7 +15,7 @@ public interface StockLogic  {
 	 * @param length
 	 * @return
 	 */
-	public List<Stock> findAllStock(String likeStr, Integer index,
+	public List<Stock> findAllStock(AclUser loginUser,String likeStr, Integer index,
 			Integer length);
 
 	/**
@@ -24,7 +25,7 @@ public interface StockLogic  {
 	 * @param name
 	 * @return
 	 */
-	public Integer findDataCount(String className, String name);
+	public Integer findDataCount(AclUser loginUser,String className, String name);
 
 	/**
 	 * 根据id查询仓库
@@ -32,14 +33,14 @@ public interface StockLogic  {
 	 * @param id
 	 * @return
 	 */
-	public Stock findStockById(String id);
+	public Stock findStockById(AclUser loginUser,String id);
 
 	/**
 	 * 保存单个实体
 	 * 
 	 * @param stock
 	 */
-	public void saveStock(Stock stock);
+	public void saveStock(AclUser loginUser,Stock stock);
 
 	/**
 	 * 查找仓库编码是否重复
@@ -47,21 +48,21 @@ public interface StockLogic  {
 	 * @param code
 	 * @return
 	 */
-	public String findStockByCode(String code);
+	public String findStockByCode(AclUser loginUser,String code);
 
 	/**
 	 * 根据Id来删除仓库信息
 	 */
-	public void delStockById(String[] ids);
+	public void delStockById(AclUser loginUser,String[] ids);
 	
 	/**
 	 * 验证导入Excel数据
 	 */
-	public List<?> doValidata(List<?> dataList);
+	public List<?> doValidata(AclUser loginUser,List<?> dataList);
 	
 	/**
 	 * 保存Excel数据到数据库
 	 */
-	public Boolean doSaveExcelData(List<?> dataList);
+	public Boolean doSaveExcelData(AclUser loginUser,List<?> dataList);
 	
 }

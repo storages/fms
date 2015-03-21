@@ -71,8 +71,8 @@ public class CurrenciesAction extends BaseAction {
 	public String findAllCurrencies() {
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-		dataTotal = this.currenciesLogic.findDataCount(className,parseValue(searchStr));
-		List<Currencies> currencies = this.currenciesLogic.findAllCurrencies(parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+		dataTotal = this.currenciesLogic.findDataCount(getLoginUser(),className,parseValue(searchStr));
+		List<Currencies> currencies = this.currenciesLogic.findAllCurrencies(getLoginUser(),parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		this.request.put("currencies", currencies);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
@@ -89,7 +89,7 @@ public class CurrenciesAction extends BaseAction {
 	 */
 	public String saveCurrencies(){
 		try{
-			this.currenciesLogic.saveCurrencies(this.setProperty(new Currencies()));
+			this.currenciesLogic.saveCurrencies(getLoginUser(),this.setProperty(new Currencies()));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -109,7 +109,7 @@ public class CurrenciesAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			String findCode = this.currenciesLogic.findCurrenciesByCode(code);
+			String findCode = this.currenciesLogic.findCurrenciesByCode(getLoginUser(),code);
 			if(null!=findCode){
 				result.setSuccess(false);
 				result.setMsg("编码已使用过了！");
@@ -174,7 +174,7 @@ public class CurrenciesAction extends BaseAction {
 					cu.setNote(content[i][2]);
 					currList.add(cu);
 				}
-				List tlist = currenciesLogic.doValidata(currList);
+				List tlist = currenciesLogic.doValidata(getLoginUser(),currList);
 				result.setSuccess(true);
 				result.setObj(tlist);
 			}
@@ -255,7 +255,7 @@ public class CurrenciesAction extends BaseAction {
 				out.flush();
 				out.close();
 			}
-			if (!this.currenciesLogic.doSaveExcelData(list)) {
+			if (!this.currenciesLogic.doSaveExcelData(getLoginUser(),list)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");
@@ -300,7 +300,7 @@ public class CurrenciesAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.currenciesLogic.deleteCurrenciesById(idArr);
+					this.currenciesLogic.deleteCurrenciesById(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json=new JSONObject(result);
@@ -329,7 +329,7 @@ public class CurrenciesAction extends BaseAction {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Currencies curr = this.currenciesLogic.findCurrenciesById(id);
+				Currencies curr = this.currenciesLogic.findCurrenciesById(getLoginUser(),id);
 				if (null != curr) {
 					this.request.put("curr", curr);
 				}

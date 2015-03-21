@@ -32,7 +32,7 @@ public class MaterialTypeAction extends BaseAction {
 	
 	public String findAllMaterialType(){
 		try{
-			List<MaterialType> typeList = this.logic.findAllType(searhStr);
+			List<MaterialType> typeList = this.logic.findAllType(getLoginUser(),searhStr);
 			this.request.put("typeList", typeList);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class MaterialTypeAction extends BaseAction {
 		try{
 			List<MaterialType> list = new ArrayList<MaterialType>();
 			list.add(setProperty(new MaterialType()));
-		this.logic.saveMaterialType(list);
+		this.logic.saveMaterialType(getLoginUser(),list);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -82,7 +82,7 @@ public class MaterialTypeAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			String findName = this.logic.findTypeByName(name);
+			String findName = this.logic.findTypeByName(getLoginUser(),name);
 			if (null != findName) {
 				result.setSuccess(false);
 				result.setMsg("名称已使用过了！");
@@ -106,7 +106,7 @@ public class MaterialTypeAction extends BaseAction {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				MaterialType mater = this.logic.findTypeById(id);
+				MaterialType mater = this.logic.findTypeById(getLoginUser(),id);
 				if (null != mater) {
 					this.request.put("mater", mater);
 				}
@@ -128,7 +128,7 @@ public class MaterialTypeAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.logic.delMaterialTypeById(idArr);
+					this.logic.delMaterialTypeById(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json = new JSONObject(result);

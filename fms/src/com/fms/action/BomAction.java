@@ -52,8 +52,8 @@ public class BomAction extends BaseAction {
 		try {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
-			dataTotal = this.bomLogic.findDataCount(className, parseValue(hsName), parseValue(hsCode), parseValue(hsModel));
-			List<BomExg> bomExgs = bomLogic.findBomExg(parseValue(hsName), parseValue(hsCode), parseValue(hsModel), (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
+			dataTotal = this.bomLogic.findDataCount(getLoginUser(),className, parseValue(hsName), parseValue(hsCode), parseValue(hsModel));
+			List<BomExg> bomExgs = bomLogic.findBomExg(getLoginUser(),parseValue(hsName), parseValue(hsCode), parseValue(hsModel), (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 			this.request.put("bomExgs", bomExgs);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
@@ -75,7 +75,7 @@ public class BomAction extends BaseAction {
 	 */
 	@SuppressWarnings("unchecked")
 	public String addExgData() throws Exception {
-		List<Material> exgList = materLogic.findMaterialExgs(hsCode, hsName, hsModel, ImgExgFlag.EXG);
+		List<Material> exgList = materLogic.findMaterialExgs(getLoginUser(),hsCode, hsName, hsModel, ImgExgFlag.EXG);
 		this.request.put("exgList", exgList);
 		this.request.put("hsName", parseValue(hsName));
 		this.request.put("hsCode", parseValue(hsCode));
@@ -98,13 +98,13 @@ public class BomAction extends BaseAction {
 			if (ids != null && !"".equals(ids)) {
 				List<BomExg> list = new ArrayList<BomExg>();
 				idArr = ids.split("/");
-				List<Material> exgMaterials = this.materLogic.findMaterialById(idArr);
+				List<Material> exgMaterials = this.materLogic.findMaterialById(getLoginUser(),idArr);
 				for (Material mat : exgMaterials) {
 					BomExg bomExg = new BomExg();
 					bomExg.setMaterial(mat);
 					list.add(bomExg);
 				}
-				list = this.bomLogic.saveBomExg(list);
+				list = this.bomLogic.saveBomExg(getLoginUser(),list);
 				result.setSuccess(true);
 				JSONObject json = new JSONObject(result);
 				out.println(json.toString());
@@ -134,7 +134,7 @@ public class BomAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.bomLogic.delBomExgByIds(idArr);
+					this.bomLogic.delBomExgByIds(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json = new JSONObject(result);

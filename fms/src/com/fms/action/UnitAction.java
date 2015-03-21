@@ -66,8 +66,8 @@ private String ids;
 	public String findAllUnit(){
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-		dataTotal = this.unitLogic.findDataCount(className,parseValue(searchStr));
-		List<Unit> units = this.unitLogic.findAllUnit(parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+		dataTotal = this.unitLogic.findDataCount(getLoginUser(),className,parseValue(searchStr));
+		List<Unit> units = this.unitLogic.findAllUnit(getLoginUser(),parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		request.put("units", units);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
@@ -91,7 +91,7 @@ private String ids;
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Unit unit = this.unitLogic.findUnitById(id);
+				Unit unit = this.unitLogic.findUnitById(getLoginUser(),id);
 				if (null != unit) {
 					this.request.put("unit", unit);
 				}
@@ -107,7 +107,7 @@ private String ids;
 	 * @throws Exception
 	 */
 	public String saveUnit(){
-		this.unitLogic.saveUnit(this.setProperty(new Unit()));
+		this.unitLogic.saveUnit(getLoginUser(),this.setProperty(new Unit()));
 		return "save";
 	}
 	
@@ -138,7 +138,7 @@ private String ids;
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			String findCode = this.unitLogic.findUnitByCode(code);
+			String findCode = this.unitLogic.findUnitByCode(getLoginUser(),code);
 			if(null!=findCode){
 				result.setSuccess(false);
 				result.setMsg("编码已使用过了！");
@@ -173,7 +173,7 @@ private String ids;
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.unitLogic.delUnitById(idArr);
+					this.unitLogic.delUnitById(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json=new JSONObject(result);
@@ -219,7 +219,7 @@ private String ids;
 					s.setNote(content[i][2]);
 					units.add(s);
 				}
-				List tlist = unitLogic.doValidata(units);
+				List tlist = unitLogic.doValidata(getLoginUser(),units);
 				result.setSuccess(true);
 				result.setObj(tlist);
 			}
@@ -301,7 +301,7 @@ private String ids;
 				out.flush();
 				out.close();
 			}
-			if (!this.unitLogic.doSaveExcelData(list)) {
+			if (!this.unitLogic.doSaveExcelData(getLoginUser(),list)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");

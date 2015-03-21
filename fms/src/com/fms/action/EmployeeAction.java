@@ -51,8 +51,8 @@ public class EmployeeAction extends BaseAction {
 	 * @return
 	 */
 	public String employees(){
-		 List list =emplLogic.findAllEmpl(names, 1, pageReows);
-		 int count= emplLogic.countListEmpl(names);
+		 List list =emplLogic.findAllEmpl(getLoginUser(),names, 1, pageReows);
+		 int count= emplLogic.countListEmpl(getLoginUser(),names);
 		 request.put("pagecount",count);
 		 request.put("empls", list);
 		 request.put("names", names);
@@ -68,7 +68,7 @@ public class EmployeeAction extends BaseAction {
 		try{
 			writer=response.getWriter();
 		result.setSuccess(false);
-		 List list =emplLogic.findAllEmpl(names, pageindex,pageReows);
+		 List list =emplLogic.findAllEmpl(getLoginUser(),names, pageindex,pageReows);
 		 result.setSuccess(true);
 		 result.setObj(list);
 
@@ -91,7 +91,7 @@ public class EmployeeAction extends BaseAction {
 	 * @return
 	 */
     public String addEmployee(){
-    	 List<Department>  depts=deptLogic.findDept();
+    	 List<Department>  depts=deptLogic.findDept(getLoginUser());
     	 request.put("depts", depts);
     	 HttpServletRequest req = ServletActionContext.getRequest();
     	 String scheme = req.getScheme();
@@ -104,11 +104,11 @@ public class EmployeeAction extends BaseAction {
 	 * @return
 	 */
     public String editEmployee(){
-    	 List<Department>  depts=deptLogic.findDept();
+    	 List<Department>  depts=deptLogic.findDept(getLoginUser());
     	 request.put("depts", depts);
     	 HttpServletRequest req = ServletActionContext.getRequest();
     	 if(emid!=null){
-    		Employee empl= emplLogic.getEmplById(emid);
+    		Employee empl= emplLogic.getEmplById(getLoginUser(),emid);
     		 request.put("empl", empl);
     	 }
     	 String scheme = req.getScheme();
@@ -177,7 +177,7 @@ public class EmployeeAction extends BaseAction {
     	AjaxResult  result=new AjaxResult();
     	result.setSuccess(false);
     	try{
-    		result=   acluserLogic.saveUserByNoName(user);
+    		result=   acluserLogic.saveUserByNoName(getLoginUser(),user);
     		if(result.isSuccess()){
     		    emplLogic.updateEmplUseByparam(getLoginUser(),user.getEmployee().getId(), true);
     		     result.setSuccess(true);
@@ -208,7 +208,7 @@ public class EmployeeAction extends BaseAction {
     	try{
         String[] arr=new String[1];
         arr[0]=ids;
-        acluserLogic.deleteUserByEmpl(arr);
+        acluserLogic.deleteUserByEmpl(getLoginUser(),arr);
         emplLogic.updateEmplUseByparam(getLoginUser(),ids, false);
         result.setSuccess(true);
     	}catch(Exception e){

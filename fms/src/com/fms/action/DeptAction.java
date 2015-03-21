@@ -43,8 +43,8 @@ public class DeptAction extends BaseAction {
 	public String findAllDept() throws Exception{
 		Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 		Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-		dataTotal = this.deptLogic.findDataCount(className,parseValue(searchStr));
-		List<Department> depts = this.deptLogic.findAllDept(parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+		dataTotal = this.deptLogic.findDataCount(getLoginUser(),className,parseValue(searchStr));
+		List<Department> depts = this.deptLogic.findAllDept(getLoginUser(),parseValue(searchStr),(curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
 		request.put("depts", depts);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
@@ -68,7 +68,7 @@ public class DeptAction extends BaseAction {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Department dep = this.deptLogic.findDeptById(id);
+				Department dep = this.deptLogic.findDeptById(getLoginUser(),id);
 				if (null != dep) {
 					this.request.put("dept", dep);
 				}
@@ -83,7 +83,7 @@ public class DeptAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public String saveDept() throws Exception{
-		this.deptLogic.saveDept(this.setProperty(new Department()));
+		this.deptLogic.saveDept(getLoginUser(),this.setProperty(new Department()));
 		return "save";
 	}
 	
@@ -116,7 +116,7 @@ public class DeptAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			String findCode = this.deptLogic.findDeptByCode(code);
+			String findCode = this.deptLogic.findDeptByCode(getLoginUser(),code);
 			if(null!=findCode){
 				result.setSuccess(false);
 				result.setMsg("编码已使用过了！");
@@ -150,7 +150,7 @@ public class DeptAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.deptLogic.delDeptById(idArr);
+					this.deptLogic.delDeptById(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json=new JSONObject(result);

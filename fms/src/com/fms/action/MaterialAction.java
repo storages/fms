@@ -66,10 +66,10 @@ public class MaterialAction extends BaseAction {
 		try {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
-			dataTotal = this.materLogic.findDataCount(className, parseValue(searchStr));
+			dataTotal = this.materLogic.findDataCount(getLoginUser(),className, parseValue(searchStr));
 			// imgExgFlag =
 			// (this.context.getSession().get("imgExgFlag")!=null)?this.context.getSession().get("imgExgFlag").toString():imgExgFlag;
-			List<Material> material = this.materLogic.findAllMaterialInfo(parseValue(searchStr), imgExgFlag, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
+			List<Material> material = this.materLogic.findAllMaterialInfo(getLoginUser(),parseValue(searchStr), imgExgFlag, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 			this.request.put("materials", material);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
@@ -93,7 +93,7 @@ public class MaterialAction extends BaseAction {
 	}
 
 	public void findAllUnit() {
-		List<Unit> units = this.materLogic.findAllUnit();
+		List<Unit> units = this.materLogic.findAllUnit(getLoginUser());
 		this.request.put("units", units);
 	}
 
@@ -102,10 +102,10 @@ public class MaterialAction extends BaseAction {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Material materinfo = this.materLogic.findMaterialById(id);
+				Material materinfo = this.materLogic.findMaterialById(getLoginUser(),id);
 				if (null != materinfo) {
 					findAllUnit();
-					List<MaterialType> types = this.logic.findAllType(null);
+					List<MaterialType> types = this.logic.findAllType(getLoginUser(),null);
 					this.request.put("materialTypes", types);
 					this.request.put("materinfo", materinfo);
 					this.request.put("imgExgFlag", imgExgFlag);
@@ -120,7 +120,7 @@ public class MaterialAction extends BaseAction {
 		if (null != ids && !"".equals(ids)) {
 			m.setId(ids);
 		}
-		MaterialType types = this.logic.findTypeById(typeId);
+		MaterialType types = this.logic.findTypeById(getLoginUser(),typeId);
 		m.setMaterialType(types);
 		m.setHsCode(this.parseValue(hsCode));
 		m.setHsName(this.parseValue(hsName));
@@ -131,21 +131,21 @@ public class MaterialAction extends BaseAction {
 		m.setBatchNO(batchNO);
 		m.setLowerQty((lowerQty == null || "".equals(lowerQty)) ? 0.0 : Double.parseDouble(lowerQty));
 		m.setNote(this.parseValue(note));
-		List<Unit> list = this.materLogic.findAllUnit();
+		List<Unit> list = this.materLogic.findAllUnit(getLoginUser());
 		for (Unit u : list) {
 			if (u.getName().equals(this.parseValue(unit))) {
 				m.setUnit(u);
 				break;
 			}
 		}
-		this.materLogic.saveOrUpdate(m);
+		this.materLogic.saveOrUpdate(getLoginUser(),m);
 		this.session.put("imgExgFlag", m.getImgExgFlag());
 		return "save";
 	}
 
 	public String add() {
 		findAllUnit();
-		List<MaterialType> types = this.logic.findAllType(null);
+		List<MaterialType> types = this.logic.findAllType(getLoginUser(),null);
 		this.request.put("materialTypes", types);
 		this.request.put("imgExgFlag", imgExgFlag);
 		return "add";
@@ -155,7 +155,7 @@ public class MaterialAction extends BaseAction {
 		if (null != ids && !"".equals(ids)) {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
-				this.materLogic.deleteMaterial(arrIds);
+				this.materLogic.deleteMaterial(getLoginUser(),arrIds);
 			}
 		}
 		return "save";
@@ -171,7 +171,7 @@ public class MaterialAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			Material material = this.materLogic.checkMaterial(hsName, model, batchNO);
+			Material material = this.materLogic.checkMaterial(getLoginUser(),hsName, model, batchNO);
 			if (null != material) {
 				result.setSuccess(false);
 				result.setMsg("该物料已存在！【名称+规格+批次号】都相同");
@@ -200,7 +200,7 @@ public class MaterialAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			String findCode = this.materLogic.findHsCode(hsCode);
+			String findCode = this.materLogic.findHsCode(getLoginUser(),hsCode);
 			if (null != findCode) {
 				result.setSuccess(false);
 				result.setMsg("编码已使用过了！");

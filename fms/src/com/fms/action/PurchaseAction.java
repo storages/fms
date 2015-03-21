@@ -67,12 +67,12 @@ public class PurchaseAction extends BaseAction {
 				: Integer.parseInt(currIndex);// 当前第几页
 		Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1
 				: Integer.parseInt(currIndex);// 每页最多显示条数
-		dataTotal = this.purchaseBillLogic.getDataCount(appBillNo,
+		dataTotal = this.purchaseBillLogic.getDataCount(getLoginUser(),appBillNo,
 				(purBeginDate == null || "".equals(purBeginDate)) ? null
 						: date, (purEndDate == null || ""
 						.equals(purEndDate)) ? null : date2);
 		
-		List<PurchaseBill> headList = this.purchaseBillLogic.findPurchaseHeads(appBillNo,
+		List<PurchaseBill> headList = this.purchaseBillLogic.findPurchaseHeads(getLoginUser(),appBillNo,
 				(purBeginDate == null || "".equals(purBeginDate)) ? null
 						: date, (purEndDate == null || ""
 						.equals(purEndDate)) ? null : date2,
@@ -109,7 +109,7 @@ public class PurchaseAction extends BaseAction {
 				List<String> contents = ldata;
 				if (null != contents && contents.size() > 0) {
 					try {
-						PurchaseBill head = this.purchaseBillLogic.findPurchaseById(contents.get(0));
+						PurchaseBill head = this.purchaseBillLogic.findPurchaseById(getLoginUser(),contents.get(0));
 						if (contents.size() < 2) {
 							contents.add(null);
 						}
@@ -126,7 +126,7 @@ public class PurchaseAction extends BaseAction {
 				response.setCharacterEncoding("UTF-8");
 				if ("".equals(msg)) {
 					result.setSuccess(true);
-					this.purchaseBillLogic.saveOrUpdate(editData);
+					this.purchaseBillLogic.saveOrUpdate(getLoginUser(),editData);
 				} else {
 					result.setSuccess(false);
 					result.setMsg(msg);

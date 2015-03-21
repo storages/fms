@@ -53,7 +53,7 @@ public class SettlementAction extends BaseAction {
 	
 	
 	public String findAllSett(){
-		List<Settlement> settlements = this.settlementLogic.findAllSettlement(this.parseValue(searhStr));
+		List<Settlement> settlements = this.settlementLogic.findAllSettlement(getLoginUser(),this.parseValue(searhStr));
 		this.request.put("settlements", settlements);
 		return this.SUCCESS;
 	}
@@ -63,7 +63,7 @@ public class SettlementAction extends BaseAction {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Settlement settl = this.settlementLogic.findSettById(id);
+				Settlement settl = this.settlementLogic.findSettById(getLoginUser(),id);
 				if (null != settl) {
 					this.request.put("settl", settl);
 				}
@@ -82,7 +82,7 @@ public class SettlementAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			String findCode = this.settlementLogic.findSettByCode(code);
+			String findCode = this.settlementLogic.findSettByCode(getLoginUser(),code);
 			if(null!=findCode){
 				result.setSuccess(false);
 				result.setMsg("编码已使用过了！");
@@ -106,7 +106,7 @@ public class SettlementAction extends BaseAction {
 	 * @return
 	 */
 	public String saveSettl(){
-		this.settlementLogic.saveSettlement(setProperty(new Settlement()));
+		this.settlementLogic.saveSettlement(getLoginUser(),setProperty(new Settlement()));
 		return "save";
 	}
 	
@@ -124,7 +124,7 @@ public class SettlementAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.settlementLogic.delSettltById(idArr);
+					this.settlementLogic.delSettltById(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json=new JSONObject(result);
@@ -187,7 +187,7 @@ public class SettlementAction extends BaseAction {
 					s.setNote(content[i][2]);
 					settl.add(s);
 				}
-				List tlist = settlementLogic.doValidata(settl);
+				List tlist = settlementLogic.doValidata(getLoginUser(),settl);
 				result.setSuccess(true);
 				result.setObj(tlist);
 			}
@@ -267,7 +267,7 @@ public class SettlementAction extends BaseAction {
 				out.flush();
 				out.close();
 			}
-			if (!this.settlementLogic.doSaveExcelData(list)) {
+			if (!this.settlementLogic.doSaveExcelData(getLoginUser(),list)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");

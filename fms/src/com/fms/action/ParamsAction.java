@@ -34,7 +34,7 @@ public class ParamsAction extends BaseAction {
 	 */
 	public String getParameterValue() {
 		try{
-			ParameterSet params = paramsLogic.getParameterValue();
+			ParameterSet params = paramsLogic.getParameterValue(getLoginUser());
 			request.put("params", params);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class ParamsAction extends BaseAction {
 		if(id!=null && !"".equals(id)){
 			ps.setId(id);
 		}
-		this.paramsLogic.saveParameterValue(ps);
+		this.paramsLogic.saveParameterValue(getLoginUser(),ps);
 		return "save";
 	}
 

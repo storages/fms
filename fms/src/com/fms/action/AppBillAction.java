@@ -249,8 +249,8 @@ public class AppBillAction extends BaseAction {
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1
 					: Integer.parseInt(currIndex);// 每页最多显示条数
 			List<AppBillHead> heads = findApplyBillHeads(curr);
-			List<Material> mlist = materLogic.findAllMaterialInfo(null, null,-1, -1);
-			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1, -1);
+			List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(),null, null,-1, -1);
+			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(getLoginUser(),false, null, -1, -1);
 			this.request.put("u", user);
 			this.request.put("scmcocs", scmcocs);
 			this.request.put("heads", heads);
@@ -293,12 +293,12 @@ public class AppBillAction extends BaseAction {
 				date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endappDate);
 			}
 			
-			dataTotal = this.appBillLogic.findDataCount(appNo,
+			dataTotal = this.appBillLogic.findDataCount(getLoginUser(),appNo,
 					(beginappDate == null || "".equals(beginappDate)) ? null
 							: date, (endappDate == null || ""
 							.equals(endappDate)) ? null : date2, appStatus);
 			
-			List<AppBillHead> heads = this.appBillLogic.findAppBillHeads(appNo,
+			List<AppBillHead> heads = this.appBillLogic.findAppBillHeads(getLoginUser(),appNo,
 					(date == null || "".equals(date)) ? null
 							: date, (date2 == null || ""
 							.equals(date2)) ? null : date2, appStatus,
@@ -327,7 +327,7 @@ public class AppBillAction extends BaseAction {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1
 					: Integer.parseInt(currIndex);// 当前第几页
 			List<AppBillHead> list = new ArrayList<AppBillHead>();
-			this.appBillLogic.saveAppBillHead(head);
+			this.appBillLogic.saveAppBillHead(getLoginUser(),head);
 			list = findApplyBillHeads(curr);
 			this.request.put("heads", list);
 		} catch (Exception e) {
@@ -352,10 +352,10 @@ public class AppBillAction extends BaseAction {
 					date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endappDate);
 				}
 				AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
-				List<AppBillItem> items = this.appBillLogic.findItemByHid(ids,(beginappDate == null || "".equals(beginappDate)) ? null : date,
+				List<AppBillItem> items = this.appBillLogic.findItemByHid(getLoginUser(),ids,(beginappDate == null || "".equals(beginappDate)) ? null : date,
 								(endappDate == null || "".equals(endappDate)) ? null: date2, appStatus,user);
-				List<Material> mlist = materLogic.findAllMaterialInfo(null,null, -1, -1);
-				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1,-1);
+				List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(),null,null, -1, -1);
+				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(getLoginUser(),false, null, -1,-1);
 				this.request.put("scmcocs", scmcocs);
 				this.request.put("items", items);
 				this.request.put("mlist", mlist);
@@ -386,9 +386,9 @@ public class AppBillAction extends BaseAction {
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");
 				
-				AppBillHead head = this.appBillLogic.findHeadById(ids);
+				AppBillHead head = this.appBillLogic.findHeadById(getLoginUser(),ids);
 				String idsArr[] = ids.split("/");
-				List<AppBillItem> items = this.appBillLogic.findItemByIds(idsArr);
+				List<AppBillItem> items = this.appBillLogic.findItemByIds(getLoginUser(),idsArr);
 				for(AppBillItem item:items){
 					if(item.getAppStatus().equals(AppBillStatus.APPROVED)){
 						err+="选择的申请单中包含已经审批通过，不能再次审批!";
@@ -428,12 +428,12 @@ public class AppBillAction extends BaseAction {
 			if (null != matrIds && matrIds.length > 0) {
 				AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
 				List<AppBillItem> itemList = new ArrayList<AppBillItem>();
-				List<Material> list = this.materLogic.findMaterialById(matrIds);
-				Scmcoc scm = this.scmLogic.findScmcocById(scmid);
-				AppBillHead head = this.appBillLogic.findHeadById(hid);
+				List<Material> list = this.materLogic.findMaterialById(getLoginUser(),matrIds);
+				Scmcoc scm = this.scmLogic.findScmcocById(getLoginUser(),scmid);
+				AppBillHead head = this.appBillLogic.findHeadById(getLoginUser(),hid);
 				for (Material m : list) {
 					try {
-						Quotation q = this.quotationLogic.findQuotationByCondention(m, scm);
+						Quotation q = this.quotationLogic.findQuotationByCondention(getLoginUser(),m, scm);
 						AppBillItem item = new AppBillItem();
 						item.setAppDate(new Date());
 						item.setHead(head);
@@ -445,12 +445,12 @@ public class AppBillAction extends BaseAction {
 						e.printStackTrace();
 					}
 				}
-				itemList = this.appBillLogic.betchSaveAppBillItem(itemList);
-				List<AppBillItem> items = this.appBillLogic.findItemByHid(hid,
+				itemList = this.appBillLogic.betchSaveAppBillItem(getLoginUser(),itemList);
+				List<AppBillItem> items = this.appBillLogic.findItemByHid(getLoginUser(),hid,
 						null, null, null,user);
-				List<Material> mlist = materLogic.findAllMaterialInfo(null,
+				List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(),null,
 						null, -1, -1);
-				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(false, null, -1,
+				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(getLoginUser(),false, null, -1,
 						-1);
 				this.request.put("scmcocs", scmcocs);
 				this.request.put("items", items);
@@ -478,7 +478,7 @@ public class AppBillAction extends BaseAction {
 					try {
 						String msg = "";
 						AppBillItem item = this.appBillLogic
-								.findItemById(contents.get(0));
+								.findItemById(getLoginUser(),contents.get(0));
 						if (contents.get(1) == null
 								|| "".equals(contents.get(1))
 								|| "".equals(contents.get(1).trim())
@@ -509,7 +509,7 @@ public class AppBillAction extends BaseAction {
 											.getTotalQty()));
 							editData.add(item);
 							result.setSuccess(true);
-							this.appBillLogic.betchSaveAppBillItem(editData);
+							this.appBillLogic.betchSaveAppBillItem(getLoginUser(),editData);
 						} else {
 							result.setSuccess(false);
 							result.setMsg(msg);
@@ -545,7 +545,7 @@ public class AppBillAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.appBillLogic.delAppBillItem(idArr);
+					this.appBillLogic.delAppBillItem(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json = new JSONObject(result);
@@ -579,7 +579,7 @@ public class AppBillAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.appBillLogic.delAppBillHead(idArr);
+					this.appBillLogic.delAppBillHead(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json = new JSONObject(result);
@@ -615,10 +615,10 @@ public class AppBillAction extends BaseAction {
 					response.setCharacterEncoding("UTF-8");
 					for (int i = 0; i < idArr.length; i++) {
 						List<AppBillItem> list = this.appBillLogic
-								.findItemByHid(idArr[i], null, null, null,null);
+								.findItemByHid(getLoginUser(),idArr[i], null, null, null,null);
 						if (null == list || list.size() <= 0) {
 							AppBillHead head = this.appBillLogic
-									.findHeadById(idArr[i]);
+									.findHeadById(getLoginUser(),idArr[i]);
 							msg += "    申请单【" + head.getAppNo()
 									+ "】不能包含空的申请明细\n";
 							result.setMsg(msg);
@@ -638,7 +638,7 @@ public class AppBillAction extends BaseAction {
 
 					}
 					if (flag) {
-						this.appBillLogic.submitApp(idArr);
+						this.appBillLogic.submitApp(getLoginUser(),idArr);
 						result.setSuccess(true);
 					}
 					JSONObject json = new JSONObject(result);
@@ -661,7 +661,7 @@ public class AppBillAction extends BaseAction {
 	private String checkData(List<AppBillItem> list) {
 		String msg = "";
 		if (null != list && list.size() > 0) {
-			AppBillHead head = this.appBillLogic.findHeadByItemId(list.get(0)
+			AppBillHead head = this.appBillLogic.findHeadByItemId(getLoginUser(),list.get(0)
 					.getId());
 			if (!AppBillStatus.UNAPPLY.equals(head.getAppStatus())) {
 				msg += "    申请单【" + head.getAppNo() + "】已申请过了;\n";
@@ -688,7 +688,7 @@ public class AppBillAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					List<AppBillItem> list = this.appBillLogic.findItemByHeadIds(idArr);
+					List<AppBillItem> list = this.appBillLogic.findItemByHeadIds(getLoginUser(),idArr);
 					if (null != list && list.size() > 0) {
 						// 批量审批
 					}
@@ -710,7 +710,7 @@ public class AppBillAction extends BaseAction {
 		if (ids != null && !"".equals(ids)) {
 			String[] idArr = ids.split(",");
 			if (idArr != null && idArr.length > 0) {
-				List<AppBillItem> list = this.appBillLogic.findItemByHeadIds(idArr);
+				List<AppBillItem> list = this.appBillLogic.findItemByHeadIds(getLoginUser(),idArr);
 				AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
 				this.request.put("u", user);
 				this.request.put("items", list);
@@ -730,7 +730,7 @@ public class AppBillAction extends BaseAction {
 				AjaxResult result = new AjaxResult();
 				try {
 					AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
-					List<AppBillItem> data = this.appBillLogic.verifyItem(idArr,verify,user,(noPassReason==null||"".equals(noPassReason.trim())?"":this.parseValue(noPassReason)));
+					List<AppBillItem> data = this.appBillLogic.verifyItem(getLoginUser(),idArr,verify,user,(noPassReason==null||"".equals(noPassReason.trim())?"":this.parseValue(noPassReason)));
 					PrintWriter out = null;
 					out = response.getWriter();
 					response.setContentType("application/text");
@@ -768,7 +768,7 @@ public class AppBillAction extends BaseAction {
 				String err="";
 				try{
 					AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
-					List<AppBillHead> data = this.appBillLogic.findHeadsByHeadIds(idArr);
+					List<AppBillHead> data = this.appBillLogic.findHeadsByHeadIds(getLoginUser(),idArr);
 					PrintWriter out = null;
 					out = response.getWriter();
 					response.setContentType("application/text");
@@ -777,7 +777,7 @@ public class AppBillAction extends BaseAction {
 					for(int i=0;i<data.size();i++){
 						appBillNos[i] = data.get(i).getAppNo();
 					}
-					List<PurchaseItem> purchaseItems = this.purchaseBillLogic.findBillItemByAppNo(appBillNos);
+					List<PurchaseItem> purchaseItems = this.purchaseBillLogic.findBillItemByAppNo(getLoginUser(),appBillNos);
 					for(PurchaseItem item:purchaseItems){
 						if(item.getIsBuy()){
 							err+="选择的撤销申请单中包含已经向供应商下单购买，不能撤销!";
@@ -793,7 +793,7 @@ public class AppBillAction extends BaseAction {
 					}else{
 						//撤销审批
 						//1、删除采购单数据
-						this.purchaseBillLogic.betchDelPurchase(purchaseItems);
+						this.purchaseBillLogic.betchDelPurchase(getLoginUser(),purchaseItems);
 						//2、把申请单的状态修改成未审批状态
 						boolean isBack = rollBackAppBillStateToInit(idArr);
 						
@@ -830,14 +830,14 @@ public class AppBillAction extends BaseAction {
 		boolean isBack = true;
 		List<AppBillHead> heads = new ArrayList<AppBillHead>();
 		try{
-			List<AppBillItem> appItems = this.appBillLogic.findItemByHeadIds(idArr);
+			List<AppBillItem> appItems = this.appBillLogic.findItemByHeadIds(getLoginUser(),idArr);
 			for(AppBillItem item:appItems){
 				item.setAppStatus(AppBillStatus.UNAPPLY);//申请单表体申请状态还原成未申请状态
 				item.getHead().setAppStatus(AppBillStatus.UNAPPLY);//申请单表头申请状态还原成未申请状态
 				heads.add(item.getHead());
 			}
-			this.appBillLogic.betchSaveAppBillHead(heads);
-			this.appBillLogic.betchSaveAppBillItem(appItems);
+			this.appBillLogic.betchSaveAppBillHead(getLoginUser(),heads);
+			this.appBillLogic.betchSaveAppBillItem(getLoginUser(),appItems);
 		}catch(Exception e){
 			isBack = false;
 		}

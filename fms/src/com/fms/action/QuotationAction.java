@@ -94,10 +94,10 @@ public class QuotationAction extends BaseAction {
 	        }
 			Integer curr = (null==currIndex || "".equals(currIndex))?1:Integer.parseInt(currIndex);//当前第几页
 			Integer max = (null==maxIndex || "".equals(maxIndex))?1:Integer.parseInt(currIndex);//每页最多显示条数
-			dataTotal = this.quotationLogic.findDataCount(parseValue(scmCocName),parseValue(hsCode),(begineffectDate==null||"".equals(begineffectDate))?null:date,(endeffectDate==null||"".equals(endeffectDate))?null:date2);
-			List<Quotation> quotations = this.quotationLogic.findQuotations(parseValue(scmCocName),parseValue(hsCode),begineffectDate==null?null:date,endeffectDate==null?null:date2, (curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
-			List<Material> mlist = materLogic.findAllMaterialInfo(hsCode, null, -1, -1);
-			List<Scmcoc> scmcocs = quotationLogic.findAll();
+			dataTotal = this.quotationLogic.findDataCount(getLoginUser(),parseValue(scmCocName),parseValue(hsCode),(begineffectDate==null||"".equals(begineffectDate))?null:date,(endeffectDate==null||"".equals(endeffectDate))?null:date2);
+			List<Quotation> quotations = this.quotationLogic.findQuotations(getLoginUser(),parseValue(scmCocName),parseValue(hsCode),begineffectDate==null?null:date,endeffectDate==null?null:date2, (curr-1)*DEFAULT_PAGESIZE,DEFAULT_PAGESIZE);
+			List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(),hsCode, null, -1, -1);
+			List<Scmcoc> scmcocs = quotationLogic.findAll(getLoginUser());
 			this.request.put("scmcocs", scmcocs);
 			this.request.put("quotations", quotations);
 			this.request.put("mlist", mlist);
@@ -123,10 +123,10 @@ public class QuotationAction extends BaseAction {
 	public String findMaterialByIds(){
 		if(ids!=null && !"".equals(ids)){
 			String [] idarr = ids.split("/");
-			List<Material> materData = this.materLogic.findMaterialById(idarr);
+			List<Material> materData = this.materLogic.findMaterialById(getLoginUser(),idarr);
 			List<Quotation> list = new ArrayList<Quotation>();
 			try{
-			Scmcoc coc = quotationLogic.findById(scmid);
+			Scmcoc coc = quotationLogic.findById(getLoginUser(),scmid);
 			for(Material m:materData){
 				Quotation q = new Quotation();
 				q.setMaterial(m);
@@ -146,7 +146,7 @@ public class QuotationAction extends BaseAction {
 	 */
 	private void saveQuotation(List<Quotation> list){
 		if(null!=list && list.size()>0){
-			this.quotationLogic.saveQuotations(list);
+			this.quotationLogic.saveQuotations(getLoginUser(),list);
 		}
 	}
 	
@@ -164,7 +164,7 @@ public class QuotationAction extends BaseAction {
 				if(null!=contents && contents.size()>0){
 					try {
 						String msg = "";
-						Quotation quotation = this.quotationLogic.findQuotationById(className, contents.get(0));
+						Quotation quotation = this.quotationLogic.findQuotationById(getLoginUser(),className, contents.get(0));
 						if(contents.get(1)==null||"".equals(contents.get(1))||"".equals(contents.get(1).trim())||"null".equals(contents.get(1).trim())){
 							msg= "单价不能为空";
 						}else if(!isNumeric(contents.get(1).trim())){
@@ -230,7 +230,7 @@ public class QuotationAction extends BaseAction {
 				out.flush();
 				out.close();
 			}
-			if (!this.quotationLogic.doSaveExcelData(list)) {
+			if (!this.quotationLogic.doSaveExcelData(getLoginUser(),list)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");
@@ -268,7 +268,7 @@ public class QuotationAction extends BaseAction {
 			response.setCharacterEncoding("UTF-8");
 			if(!"".equals(ids)&&null!=ids){
 				String[] idarr = ids.split(",");
-				int count = this.quotationLogic.updatePrice(idarr);
+				int count = this.quotationLogic.updatePrice(getLoginUser(),idarr);
 				if(count==-1){
 					this.result.setMsg("报价单中的单价、生效日期不能为空，请检查!");
 					this.result.setSuccess(false);
@@ -333,7 +333,7 @@ public class QuotationAction extends BaseAction {
 					temp.setPrice(content[i][4]);
 					tempList.add(temp);
 				}
-				List tlist = this.quotationLogic.doValidata(tempList);
+				List tlist = this.quotationLogic.doValidata(getLoginUser(),tempList);
 				result.setSuccess(true);
 				result.setObj(tlist);
 			}
@@ -417,7 +417,7 @@ public class QuotationAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.quotationLogic.delQuotationById(idArr);
+					this.quotationLogic.delQuotationById(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json = new JSONObject(result);

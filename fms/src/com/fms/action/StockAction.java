@@ -69,8 +69,8 @@ public class StockAction extends BaseAction {
 				: Integer.parseInt(currIndex);// 当前第几页
 		Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer
 				.parseInt(currIndex);// 每页最多显示条数
-		dataTotal = this.stockLogic.findDataCount(className, parseValue(searchStr));
-		List<Stock> stocks = this.stockLogic.findAllStock(parseValue(searchStr),
+		dataTotal = this.stockLogic.findDataCount(getLoginUser(),className, parseValue(searchStr));
+		List<Stock> stocks = this.stockLogic.findAllStock(getLoginUser(),parseValue(searchStr),
 				(curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 		request.put("stocks", stocks);
 		this.request.put("currIndex", curr);
@@ -94,7 +94,7 @@ public class StockAction extends BaseAction {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Stock stock = this.stockLogic.findStockById(id);
+				Stock stock = this.stockLogic.findStockById(getLoginUser(),id);
 				if (null != stock) {
 					this.request.put("stock", stock);
 				}
@@ -110,7 +110,7 @@ public class StockAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public String saveStock() throws Exception {
-		this.stockLogic.saveStock(this.setProperty(new Stock()));
+		this.stockLogic.saveStock(getLoginUser(),this.setProperty(new Stock()));
 		return "save";
 	}
 
@@ -140,7 +140,7 @@ public class StockAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			String findCode = this.stockLogic.findStockByCode(code);
+			String findCode = this.stockLogic.findStockByCode(getLoginUser(),code);
 			if (null != findCode) {
 				result.setSuccess(false);
 				result.setMsg("编码已使用过了！");
@@ -175,7 +175,7 @@ public class StockAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.stockLogic.delStockById(idArr);
+					this.stockLogic.delStockById(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json = new JSONObject(result);
@@ -224,7 +224,7 @@ public class StockAction extends BaseAction {
 						s.setNote(content[i][2]);
 						stocks.add(s);
 					}
-					List tlist = stockLogic.doValidata(stocks);
+					List tlist = stockLogic.doValidata(getLoginUser(),stocks);
 					result.setSuccess(true);
 					result.setObj(tlist);
 				}
@@ -306,7 +306,7 @@ public class StockAction extends BaseAction {
 				out.flush();
 				out.close();
 			}
-			if (!this.stockLogic.doSaveExcelData(list)) {
+			if (!this.stockLogic.doSaveExcelData(getLoginUser(),list)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");

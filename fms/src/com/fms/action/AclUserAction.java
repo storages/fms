@@ -48,7 +48,7 @@ public class AclUserAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			isExits = this.userLogic.findUserByName("admin");
+			isExits = this.userLogic.findUserByName(getLoginUser(),"admin");
 			if(isExits!=null){
 				result.setMsg("Action跳转成功!");
 				result.setSuccess(true);
@@ -105,7 +105,7 @@ public class AclUserAction extends BaseAction {
 				if(null!=aclUser){
 					aclUser.setLastlogin(new Date());
 					aclUser.setPassword(MD5Util.encryptData(password));
-					this.userLogic.saveAclUser(aclUser);
+					this.userLogic.saveAclUser(aclUser,aclUser);
 				}
 			}
 		} catch (Exception e) {
@@ -126,7 +126,7 @@ public class AclUserAction extends BaseAction {
 	 */
 	public String saveUser() throws Exception {
 		user.setPassword(MD5Util.encryptData(user.getPassword().trim()));
-		userLogic.saveAclUser(user);
+		userLogic.saveAclUser(getLoginUser(),user);
 		return "edit";
 	}
 
@@ -137,7 +137,7 @@ public class AclUserAction extends BaseAction {
 	 */
 	public String findAllUser() {
 		String userflag =((AclUser)ServletActionContext.getRequest().getSession().getAttribute("u")).getUserFlag();
-		List<AclUser> users = this.userLogic.findAllUser(userflag);
+		List<AclUser> users = this.userLogic.findAllUser(getLoginUser(),userflag);
 		request.put("users", users);
 		return "authority";
 	}
@@ -156,7 +156,7 @@ public class AclUserAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.userLogic.deleteAclUser(idArr);
+					this.userLogic.deleteAclUser(getLoginUser(),idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json=new JSONObject(result);
@@ -188,7 +188,7 @@ public class AclUserAction extends BaseAction {
 			user.setUserName(userName);
 			user.setUserFlag(userFlag);
 			user.setPassword(MD5Util.encryptData(password.trim()));
-			this.userLogic.saveAclUser(user);
+			this.userLogic.saveAclUser(getLoginUser(),user);
 			result.setSuccess(true);
 			result.setMsg("注册成功");
 			JSONObject json = new JSONObject(result);
@@ -209,14 +209,14 @@ public class AclUserAction extends BaseAction {
 	public String stopOrOpenUser() throws Exception{
 		if (null != ids && !"".equals(ids)) {
 			String[] arr = ids.split(",");
-			AclUser editUser = this.userLogic.findUserById(arr[0]);
+			AclUser editUser = this.userLogic.findUserById(getLoginUser(),arr[0]);
 			if(null!=editUser){
 				if("false".equals(userForbid)){
 					editUser.setIsForbid(Boolean.FALSE);
 				}else if("true".equals(userForbid)){
 					editUser.setIsForbid(Boolean.TRUE);
 				}
-				this.userLogic.saveAclUser(editUser);
+				this.userLogic.saveAclUser(getLoginUser(),editUser);
 			}
 		}
 		return "del";

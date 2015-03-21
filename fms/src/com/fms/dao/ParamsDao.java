@@ -1,5 +1,6 @@
 package com.fms.dao;
 
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.ParameterSet;
 
 public interface ParamsDao {

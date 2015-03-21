@@ -198,7 +198,7 @@ public class OptionExcel {
 	
 	private void validata(Object[][] data){
 		
-		List<Stock> stocks = logic.findAllStock(null, -1, -1);
+	/*	List<Stock> stocks = logic.findAllStock(null, -1, -1);*/
 		for(int i =0;i<data.length;i++){
 			Object obj = data[i][0];//编码
 			

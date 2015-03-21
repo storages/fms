@@ -44,9 +44,9 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 		this.saveOrUpdate(logs);
 	}
 
-	public void saveEditLogs(AclUser logUser, Object newObj, int id) {
+	public void saveEditLogs(AclUser logUser, Object newObj, String id,Class modalClass) {
 
-		Object obj = this.load(newObj.getClass(), id);
+		Object obj = this.load(modalClass, id);
 
 		OperateLogs logs = new OperateLogs();
 		logs.setCreateDate(new Date());
@@ -58,18 +58,18 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 		Class newclazz = newObj.getClass();
 		Field[] fields = clzz.getDeclaredFields();
 		Field[] newFields = newclazz.getDeclaredFields();
-		for (int x = 0; x < fields.length; x++) {
+		for (int x = 0; x < newFields.length; x++) {
 			// 获取字段中包含fieldMeta的注解
-			CnFileName meta = fields[x].getAnnotation(CnFileName.class);
+			CnFileName meta = newFields[x].getAnnotation(CnFileName.class);
 			// CnFileName newMeta = fields[x].getAnnotation(CnFileName.class);
 			if (meta != null) {
 				try {
 					String strVal = clzz
-							.getMethod("get" + change(fields[x].getName()),
+							.getMethod("get" + change(newFields[x].getName()),
 									null).invoke(obj, null).toString();
 					String newStrVal = newclazz
-							.getMethod("get" + change(fields[x].getName()),
-									null).invoke(obj, null).toString();
+							.getMethod("get" + change(newFields[x].getName()),
+									null).invoke(newObj, null).toString();
 					if(!strVal.equals(newStrVal)){
 						strBuffer.append(meta.name() + ":" + "{" + strVal + "}改成{"
 								+ newStrVal + "}" + ",");

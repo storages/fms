@@ -153,7 +153,7 @@ public class EmployeeAction extends BaseAction {
     	result.setSuccess(false);
     	try{
     		String[] idarr=ids.split(",");
-           emplLogic.deleteEmpl(idarr);
+           emplLogic.deleteEmpl(getLoginUser(),idarr);
            result.setSuccess(true);
     	}catch(Exception e){
     	result.setSuccess(false);
@@ -179,7 +179,7 @@ public class EmployeeAction extends BaseAction {
     	try{
     		result=   acluserLogic.saveUserByNoName(user);
     		if(result.isSuccess()){
-    		    emplLogic.updateEmplUseByparam(user.getEmployee().getId(), true);
+    		    emplLogic.updateEmplUseByparam(getLoginUser(),user.getEmployee().getId(), true);
     		     result.setSuccess(true);
     		}
    
@@ -209,7 +209,7 @@ public class EmployeeAction extends BaseAction {
         String[] arr=new String[1];
         arr[0]=ids;
         acluserLogic.deleteUserByEmpl(arr);
-        emplLogic.updateEmplUseByparam(ids, false);
+        emplLogic.updateEmplUseByparam(getLoginUser(),ids, false);
         result.setSuccess(true);
     	}catch(Exception e){
     		result.setSuccess(false);

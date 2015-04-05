@@ -11,10 +11,10 @@
 		}
 	});
 
-		function gototag(pageSize){
-			var n = $("#gonum option:selected").val();
-			gotoPage(n, pageSize);
-		}
+	function gototag(pageSize){
+		var n = $("#gonum option:selected").val();
+		gotoPage(n, pageSize);
+	}
 		
 		/**
 	 * 转到指定页码
@@ -49,6 +49,19 @@
 		var url = "${pageContext.request.contextPath}/bom_findBomExg.action?&hsCode="+parse(hsCode)+"&hsName="+parse(hsName)+"&hsModel="+parse(hsModel);
 		toMain(url);
 	});
+	
+	//excel导入按钮
+	$("#btnImport").click(function(){
+		var url = "${pageContext.request.contextPath}/pages/import/bomimport.jsp";
+	  	toMain(url);
+	});
+	
+	//对应BOM列表
+	function showbomlist(id){
+		var verNo = 1;
+		var url = "${pageContext.request.contextPath}/bom_detailList.action?ids="+id+"&verNo="+verNo;
+		toMain(url);
+	}
 </script>
 
 
@@ -74,6 +87,7 @@
 								<th class="center">成品料号</th>
 								<th class="center">成品名称</th>
 								<th class="center">成品规格</th>
+								<th class="center">批次号</th>
 								<th class="hidden-480 center">计量单位</th>
 								<th class="hidden-480 center" style="width:250px;">操作</th>
 							</tr>
@@ -91,9 +105,10 @@
 									<td class="center">${bom.material.hsCode}</td>
 									<td class="center">${bom.material.hsName}</td>
 									<td class="center">${bom.material.model}</td>
+									<td class="center">${bom.material.batchNO}</td>
 									<td class="hidden-480 center">${bom.material.unit.name}　</td>
 									<td class="center">
-										<a href="javascript:void(0);" onclick="toedit('${bom.id}')">详细</a>｜
+										<a href="javascript:void(0);" onclick="showbomlist('${bom.id}')">对应BOM</a>｜
 										<a href="javascript:void(0);" onclick="delData('${bom.id}','BomExg')">删除</a>
 									</td>
 								</tr>
@@ -106,7 +121,7 @@
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','BomExg')">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="inputExcelsBut">Excel导入</button>
+				<!-- <button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btnImport">Excel导入</button> -->
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 700px;">
 					<ul>

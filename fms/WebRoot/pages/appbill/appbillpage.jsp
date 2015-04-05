@@ -41,7 +41,7 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover" style=" font-size: 12px;">
 						<thead>
 					<tr align="center">
-						<th class="center" style="width:30px;">选择</th>
+						<th class="center" style="width:30px;"><input id="checkAll" type="checkbox"/></th>
 						<th class="center" style="width:40px;">流水号</th>
 						<th class="center" style="width:71px;">申请单状态</th>
 						<th class="center" style="width:91px;">申请单号码</th>
@@ -144,6 +144,23 @@
 			</div>
 			
 <script type="text/javascript">
+
+$("#hbeginappDate").datepicker({
+	changeYear: true,
+	changeMonth: true,
+	yearRange: '1900:', 
+	dateFormat: 'yy-mm-dd'
+});
+
+$("#hendappDate").datepicker({
+	changeYear: true,
+	changeMonth: true,
+	yearRange: '1900:', 
+	dateFormat: 'yy-mm-dd'
+});
+
+
+
 //dialog窗口对象
 var win = true;
 	$(function(){

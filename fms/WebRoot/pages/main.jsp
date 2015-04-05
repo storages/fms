@@ -62,6 +62,7 @@
 	
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/jquery.pager.js"></script>
 <script type="text/javascript">
+
     var   Global='${pageContext.request.contextPath}';
 	$(function() {
 		$("#browser").treeview();
@@ -78,8 +79,12 @@
 						return false;
 					}
 				});
+				
+			
 	});
+	
 </script>
+
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/menujump/menuBindUrl.js"></script>
 

@@ -53,10 +53,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td class="hidden-480 addcss" style="">
 					<select id="form-field-select-1">
 						<c:if test="${imgExgFlag=='I'}">
-							<option value="I">原料</option>
+							<option value="I" selected="selected">原料</option>
+							<option value="E">成品</option>
 						</c:if>
 						<c:if test="${imgExgFlag=='E'}">
-							<option value="E">成品</option>
+							<option value="I">原料</option>
+							<option value="E" selected="selected">成品</option>
 						</c:if>
 					</select>
 						<span style="color:red;">*</span>
@@ -185,6 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  	});
 			}
 			if(isPass){
+			alert(unit);
 				var param = "hsCode="+code+"&hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit+"&typeId="+types;
 				var submitUrl = "${pageContext.request.contextPath}/materInfo_save.action?"+param;
 				toMain(submitUrl);
@@ -198,7 +201,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$(":input[name='materialType.name']").val("");
 				$("#note").val("");
 			}else{
-				var url = "${pageContext.request.contextPath}/mater_findTypeById.action?ids="+id;
+				var url = "${pageContext.request.contextPath}/mater_findMaterialById.action?ids="+id;
 				toMain(url);
 			}
 		}

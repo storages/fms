@@ -1,19 +1,12 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
 <style type="text/css">
 	
 </style>
 
 <script type="text/javascript">
-	//列表全选功能
-	$("#checkAll").click(function(){
-		if($("#checkAll").attr("checked")){
-			$("input[name='sid']").attr("checked",'true');//全选 
-		}else{
-			$("input[name='sid']").removeAttr("checked");//取消全选
-		}
-	});
 	
 	//确定按钮
 	$("#btnSure").click(function(){
@@ -71,6 +64,7 @@
 								<th class="center">物料编码</th>
 								<th class="center">物料名称</th>
 								<th class="center">物料规格</th>
+								<th class="center">批次号</th>
 								<th class="center">颜色</th>
 								<th class="center">物料类别</th>
 								<th class="center">计量单位</th>
@@ -93,6 +87,7 @@
 									<td class="center">${exg.hsCode}　</td>
 									<td class="center">${exg.hsName}　</td>
 									<td class="center">${exg.model}　</td>
+									<td class="center">${exg.batchNO}　</td>
 									<td class="center">${exg.color}　</td>
 									<td class="center">${exg.materialType.typeName}　</td>
 									<td class="center">${exg.unit.name}　</td>

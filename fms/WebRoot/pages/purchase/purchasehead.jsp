@@ -21,8 +21,8 @@
 
 <div class="modal-footer" style="text-align: left;padding:5px;height: 25px;">
 	<span class="">采购单号码</span><input type="text" id="happNo" value="${appNo}" style="height:25px;width:100px;" class="" /> 
-	<span class="">采购日期</span><input type="text" id="hbeginappDate" value="${appDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
-	<input type="text" id="hendappDate" class="datebox" value="${appDate}" style="height:25px;width:100px;"/>
+	<span class="">采购日期</span><input type="text" id="hbeginDate" value="${appDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
+	<input type="text" id="hendDate" class="datebox" value="${appDate}" style="height:25px;width:100px;"/>
 	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 </div>
@@ -145,6 +145,20 @@
 
 
 <script type="text/javascript">
+
+$("#hbeginDate").datepicker({
+	changeYear: true,
+	changeMonth: true,
+	yearRange: '1900:', 
+	dateFormat: 'yy-mm-dd'
+});
+
+$("#hendDate").datepicker({
+	changeYear: true,
+	changeMonth: true,
+	yearRange: '1900:', 
+	dateFormat: 'yy-mm-dd'
+});
 	$(function(){
 		$("#hbeginappDate").val($("#d1").val());
 		$("#hendappDate").val($("#d2").val());

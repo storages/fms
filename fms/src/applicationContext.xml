@@ -315,6 +315,9 @@
 		<property name="bomDao">
 			<ref bean="bomDao" />
 		</property>
+		<property name="materialDao">
+			<ref bean="materialDao" />
+		</property>
 	</bean>
 
 	<!-- 进出库 -->

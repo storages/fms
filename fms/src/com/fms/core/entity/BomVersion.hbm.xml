@@ -12,6 +12,7 @@
 		<property name="modifyDate" column="MODIFYDATE" />
 
 		<property name="versionNo" column="VERSIONNO" />
+		<many-to-one name="bomExg" class="BomExg" column="BOMEXG"/>
 		<property name="note" column="NOTE" />
 	</class>
 </hibernate-mapping>

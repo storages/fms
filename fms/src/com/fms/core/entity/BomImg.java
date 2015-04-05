@@ -21,6 +21,8 @@ public class BomImg extends BaseEntity {
 	private Material material;
 	// 单耗
 	private Double unitConsume = 0.0;
+	// 原料批次号
+	private String imgBetchNo;
 	// 损耗
 	private Double wastRate = 0.0;
 	// 单项用量(单项用量 单项用量=单耗/(1-损耗))
@@ -74,6 +76,14 @@ public class BomImg extends BaseEntity {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public String getImgBetchNo() {
+		return imgBetchNo;
+	}
+
+	public void setImgBetchNo(String imgBetchNo) {
+		this.imgBetchNo = imgBetchNo;
 	}
 
 }

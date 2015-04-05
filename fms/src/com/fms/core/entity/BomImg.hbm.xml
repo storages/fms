@@ -17,6 +17,8 @@
 		<many-to-one name="material" class="Material" column="MATERIAL" />
 		<!-- 单耗 -->
 		<property name="unitConsume" column="UNITCONSUME"/>
+		<!-- 批次号 -->
+		<property name="imgBetchNo" column="IMGBETCHNO"/>
 		<!-- 损耗 -->
 		<property name="wastRate" column="WASTRATE"/>
 		<!-- 单项用量(单项用量 单项用量=单耗/(1-损耗)) -->

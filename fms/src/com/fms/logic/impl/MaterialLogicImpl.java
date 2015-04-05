@@ -11,8 +11,12 @@ import com.fms.logic.MaterialLogic;
 public class MaterialLogicImpl implements MaterialLogic {
 	private MaterialDao materialDao;
 
-	public List<Material> findAllMaterialInfo(AclUser loginUser,String likeStr, String imgExgFlag, Integer index, Integer length) {
+	public List<Material> findAllMaterialInfo(AclUser loginUser, String likeStr, String imgExgFlag, Integer index, Integer length) {
 		return materialDao.findAllMaterialInfo(likeStr, imgExgFlag, index, length);
+	}
+
+	public List<Material> findAllMaterialInfoByHsCode(String likeStr, String imgExgFlag, Integer index, Integer length) {
+		return materialDao.findAllMaterialInfoByHsCode(likeStr, imgExgFlag, index, length);
 	}
 
 	public MaterialDao getMaterialDao() {
@@ -23,7 +27,7 @@ public class MaterialLogicImpl implements MaterialLogic {
 		this.materialDao = materialDao;
 	}
 
-	public Integer findDataCount(AclUser loginUser,String className, String name) {
+	public Integer findDataCount(AclUser loginUser, String className, String name) {
 		return materialDao.findDataCount(className, name);
 	}
 
@@ -31,37 +35,41 @@ public class MaterialLogicImpl implements MaterialLogic {
 		return materialDao.findAllUnit();
 	}
 
-	public Material findMaterialById(AclUser loginUser,String id) {
+	public Material findMaterialById(AclUser loginUser, String id) {
 		return materialDao.findMaterialById(id);
 	}
 
-	public Material checkMaterial(AclUser loginUser,String hsName, String model, String batchNO) {
+	public Material checkMaterial(AclUser loginUser, String hsName, String model, String batchNO) {
 		return materialDao.checkMaterial(hsName, model, batchNO);
 	}
 
-	public void saveOrUpdate(AclUser loginUser,Material material) {
+	public void saveOrUpdate(AclUser loginUser, Material material) {
 		materialDao.saveOrUpdate(material);
 	}
 
-	public void deleteMaterial(AclUser loginUser,String[] ids) {
+	public void deleteMaterial(AclUser loginUser, String[] ids) {
 		materialDao.deleteMaterial(ids);
 
 	}
 
-	public List<Material> findMaterialById(AclUser loginUser,String[] ids) {
+	public List<Material> findMaterialById(AclUser loginUser, String[] ids) {
 		return materialDao.findMaterialById(ids);
 	}
 
-	public String findHsCode(AclUser loginUser,String hsCode) {
+	public String findHsCode(AclUser loginUser, String hsCode) {
 		return materialDao.findHsCode(hsCode);
 	}
 
-	public Material findMaterialByHsCode(AclUser loginUser,String hsCode) {
+	public Material findMaterialByHsCode(AclUser loginUser, String hsCode) {
 		return this.materialDao.findMaterialByHsCode(hsCode);
 	}
 
-	public List<Material> findMaterialExgs(AclUser loginUser,String hsCode, String hsName, String hsModel, String imgExgFlag) {
+	public List<Material> findMaterialExgs(AclUser loginUser, String hsCode, String hsName, String hsModel, String imgExgFlag) {
 		return this.materialDao.findAllMaterialExgs(hsCode, hsName, hsModel, imgExgFlag);
 	}
 
+	public Integer findDataCount(String className, String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

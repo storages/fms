@@ -131,7 +131,7 @@
 
 <div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
 	<strong style="font-size: 14px;">BOM版本</strong>
-	<select id="form-field-select-1" style="width:120px;">
+	<select id="form-field-select-1" style="width:120px; background-color: #ff7575;">
 		<option value="-1" >BOM版本号</option>
 		<c:forEach var="no" items="${verList}">
 			<c:if test="${no.versionNo==verNo}">

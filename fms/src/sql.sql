@@ -17,3 +17,13 @@ select * from appbillHead
 
 select * from PurchaseBill
 delete from acluser where id='402881f24b685286014b685df8140000'
+
+select * from bomversion
+select * from bomexg
+select * from bomimg a 
+	inner join bomversion b on a.bomversion = b.id
+	inner join bomexg c on b.bomexg = c.id
+	where b.versionNo = 1
+	
+	delete bomimg
+	delete bomversion

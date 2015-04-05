@@ -135,6 +135,11 @@
 		<action name="bom_*" class="bomAction" method="{1}">
 			<result name="success">/pages/material/bomPage.jsp</result>
 			<result name="add">/pages/material/exgBomAdd.jsp</result>
+			<result name="imglist">/pages/material/bomimglist.jsp</result>
+			<result name="dialog">/pages/dialoghtml/dgAddBomImg.jsp</result>
+			<result name="import">/pages/import/bomimport.jsp</result>
+			<result name="tlist">/pages/material/bomPage.jsp</result>
+			<param name="path">/upload</param>
 		</action>
 		<!-- 进出库 -->
 		<action name="storage_*" class="storageAction" method="{1}">

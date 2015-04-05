@@ -210,6 +210,11 @@ function getUrl(flag){
 			url[0] = "${pageContext.request.contextPath}/bom_delBomExg.action?ids=";
 			url[1] = "${pageContext.request.contextPath}/bom_findBomExg.action";
 			break;
+		case "BomImg":
+			var verNo = $("#form-field-select-1").find("option:selected").text();
+			url[0] = "${pageContext.request.contextPath}/bom_delBomImg.action?verNo="+verNo+"&ids=";
+			url[1] = "${pageContext.request.contextPath}/bom_detailList.action?ids="+$("#hid").val()+"&verNo="+verNo;
+			break;
 	}
 	return url;
 }
@@ -236,3 +241,12 @@ function getTotalWidth (){
 function loadgif(){
 	
 }
+
+//列表全选功能
+$("#checkAll").click(function(){
+	if($("#checkAll").attr("checked")){
+		$("input[name='sid']").attr("checked",'true');//全选 
+	}else{
+		$("input[name='sid']").removeAttr("checked");//取消全选
+	}
+});

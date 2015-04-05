@@ -9,11 +9,11 @@ function getModifyData(){
 				$(this).find("input").each(function() {
 					var objectValue = $(this).val();
 					if(undefined!=objectValue && ""!=objectValue){
-						var objectValue = objectValue.replace(/　/g,"").replace(/\s/g,"").replace("　","");//去除中文全角空格
+						var objectValue =objectValue=="　"?null:objectValue.replace(/　/g,"").replace(/\s/g,"").replace("　","");//去除中文全角空格
 						arr.push(encodeURI(encodeURI(objectValue)));//把中文字符转换成特定编码，如：%45%56...类型,以防乱码！
 						//alert(encodeURI(encodeURI(objectValue)));
 					}else{
-						arr.push(" ");
+						arr.push("empty");
 					}
 				});
 				dataArr.push(arr);
@@ -54,12 +54,12 @@ function showTableEdit(obj, array) {
 					tdarr[i].style.padding = "0px";
 					tdarr[i].style.paddingTop = "4px";
 					tdarr[i].innerHTML = "<input type='text' value='"
-							+ value
+							+ value.trim()
 							+ "' id='"
 							+ i
 							+ "_"
 							+ j
-							+ "' style='height:25px;width:"
+							+ "' style='height:36px;width:"
 							+ (currWidth+35)
 							+ "px;margin:0px;padding:0px;background-color: #FFFFCC;font-size:12px;color:black;'/>";
 					var ele = $("#" + i + "_" + j);

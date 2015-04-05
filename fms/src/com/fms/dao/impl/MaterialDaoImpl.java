@@ -31,6 +31,33 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 		return null;
 	}
 
+	/**
+	 * 按物料编码查找
+	 * 
+	 * @param likeStr
+	 * @param imgExgFlag
+	 * @param index
+	 * @param length
+	 * @return
+	 */
+	public List<Material> findAllMaterialInfoByHsCode(String likeStr, String imgExgFlag, Integer index, Integer length) {
+		try {
+			String hql = "select a from Material a left join fetch a.unit left join fetch a.materialType where 1=1 ";
+			List param = new ArrayList();
+			if (null != imgExgFlag && !"".equals(imgExgFlag)) {
+				hql += " and a.imgExgFlag = ? ";
+				param.add(imgExgFlag);
+			}
+			if (null != likeStr && !"".equals(likeStr)) {
+				hql += " and a.hsCode like '%" + likeStr + "%'";
+			}
+			return this.findPageList(hql, param.toArray(), index, length);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public Integer findDataCount(String className, String name) {
 		Integer num = 0;
 		try {

@@ -187,7 +187,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  	});
 			}
 			if(isPass){
-			alert(unit);
 				var param = "hsCode="+code+"&hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit+"&typeId="+types;
 				var submitUrl = "${pageContext.request.contextPath}/materInfo_save.action?"+param;
 				toMain(submitUrl);

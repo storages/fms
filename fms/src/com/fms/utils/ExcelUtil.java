@@ -1,6 +1,5 @@
 package com.fms.utils;
 
-import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,8 +13,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.GroupLayout.Alignment;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -23,36 +20,31 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
-import com.itextpdf.text.Anchor;
-import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Section;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * 读取Excel
  * 
  * @author guodacai 2014-8-13 下午5:41:43
  */
-public class ExcelUtil  {
+public class ExcelUtil {
 
 	/**
-	 * @param 居然不支持office2007?蛋疼
+	 * @param 居然不支持office2007
+	 *            ?蛋疼
 	 * 
-	 * @param 读取Excel的内容，第一维数组存储的是一行中列的值，二维数组存储的是多少个行
+	 * @param 读取Excel的内容
+	 *            ，第一维数组存储的是一行中列的值，二维数组存储的是多少个行
 	 * 
 	 * @param file
 	 *            读取数据的源Excel
@@ -75,8 +67,7 @@ public class ExcelUtil  {
 
 		int rowSize = 0;
 
-		BufferedInputStream in = new BufferedInputStream(new FileInputStream(
-				file));
+		BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
 
 		// 打开HSSFWorkbook
 
@@ -155,10 +146,12 @@ public class ExcelUtil  {
 								}
 
 							} else {
-
-								value = new DecimalFormat("0").format(cell
-
-								.getNumericCellValue());
+								value = cell.getNumericCellValue() + "";
+								if (value != null && !"".equals(value)) {
+									if (value.length() > 6) {
+										value = new DecimalFormat("0").format(cell.getNumericCellValue());
+									}
+								}
 
 							}
 
@@ -192,8 +185,7 @@ public class ExcelUtil  {
 
 						case HSSFCell.CELL_TYPE_BOOLEAN:
 
-							value = (cell.getBooleanCellValue() == true ? "Y"
-									: "N");
+							value = (cell.getBooleanCellValue() == true ? "Y" : "N");
 
 							break;
 
@@ -204,8 +196,9 @@ public class ExcelUtil  {
 						}
 
 					}
-
-					if (columnIndex == 0 && value.trim().equals("")) {
+					HSSFCell cell1 = row.getCell(0);
+					HSSFCell cell2 = row.getCell(1);
+					if (columnIndex == 0 && value.trim().equals("") && null == cell1 && null == cell2) {
 
 						break;
 
@@ -285,11 +278,12 @@ public class ExcelUtil  {
 		try {
 			PdfWriter.getInstance(document, new FileOutputStream("c://123.pdf"));
 			document.open();
-			//BaseFont bfChinese = BaseFont.createFont("STSong-Light","UniGB-UCS2-H",BaseFont.NOT_EMBEDDED);//设置中文字体
-			Paragraph title1 = new Paragraph("asc", FontFactory.getFont(FontFactory.HELVETICA,18, Font.BOLDITALIC, new CMYKColor(0, 0, 0,255)));
+			// BaseFont bfChinese =
+			// BaseFont.createFont("STSong-Light","UniGB-UCS2-H",BaseFont.NOT_EMBEDDED);//设置中文字体
+			Paragraph title1 = new Paragraph("asc", FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC, new CMYKColor(0, 0, 0, 255)));
 			title1.setAlignment(Element.ALIGN_CENTER);
 			document.add(title1);
-			
+
 			PdfPTable t = new PdfPTable(3);
 			t.setSpacingBefore(25);
 

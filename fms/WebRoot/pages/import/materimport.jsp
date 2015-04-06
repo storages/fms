@@ -97,6 +97,8 @@
 		
 		function clearErrorData(){
 			//alert(resultdata);
+			posigif();
+			$("#waitdiv").show();
 			var url =Global+"/materInfo_clearErrorData.action";//
 			var paremt={};
 			paremt["sendStr"]=JSON.stringify(resultdata);
@@ -108,6 +110,7 @@
 		    		//--------------
 		    		var list = result.obj;
 		    		$("#SXrow").tmpl(list).appendTo("#tbodymater"); 
+					$("#waitdiv").hide();
 		    		//--------------
 		    	}
 			});

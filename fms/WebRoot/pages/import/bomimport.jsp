@@ -25,7 +25,7 @@
 		var paremt={};
 		//alert(JSON.stringify(resultdata));
 		paremt["sendStr"]=JSON.stringify(resultdata);
-	      var url = Global+"/bom_saveExcelData.action??hid="+$("#hid").val()+"&verNo="+$("#verNo").val();
+	      var url = Global+"/bom_saveExcelData.action?hid="+$("#hid").val()+"&verNo="+$("#verNo").val();
 	      $.post(url,paremt,function(data){
 		    	var result=jQuery.parseJSON(data);
 		    	if(!result.success){

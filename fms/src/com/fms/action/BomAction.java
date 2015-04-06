@@ -191,7 +191,10 @@ public class BomAction extends BaseAction {
 				if (!isNumeric(verNo)) {
 					verNo = "-1";
 				}
-				List<BomImg> imgList = this.bomLogic.findBomImg(hsName, hsCode, hsModel, ids, verNo == null ? 1 : Integer.parseInt(verNo), -1, -1);
+				Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
+				Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
+				dataTotal = this.bomLogic.findImgCount(getLoginUser(), "BomImg", Integer.parseInt(verNo), ids);
+				List<BomImg> imgList = this.bomLogic.findBomImg(hsName, hsCode, hsModel, ids, verNo == null ? 1 : Integer.parseInt(verNo), (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 				List<BomVersion> verList = this.bomLogic.findBomVersion(ids);
 				this.request.put("verList", verList);
 				this.request.put("imgList", imgList);
@@ -199,6 +202,9 @@ public class BomAction extends BaseAction {
 				this.request.put("hsCode", parseValue(hsCode));
 				this.request.put("hsModel", parseValue(hsModel));
 				this.request.put("verNo", Integer.parseInt(verNo));
+				this.request.put("currIndex", curr);
+				this.request.put("maxIndex", max);
+				this.request.put("pageNums", pageCount(max, dataTotal));
 				this.request.put("hid", ids);
 			}
 		} catch (Exception e) {

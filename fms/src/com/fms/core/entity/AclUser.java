@@ -2,6 +2,7 @@
 
 import java.util.Date;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -20,14 +21,17 @@ public class AclUser extends BaseEntity {
 	/**
 	 * 登陆名称
 	 */
+	@CnFileName(name="登陆名")
 	private String loginName = null;
 	/**
 	 * 密码
 	 */
+	@CnFileName(name="密码")
 	private String password = null;
 	/**
 	 * 用户名称
 	 */
+	@CnFileName(name="用户名称")
 	private String userName = null;
 	/**
 	 * 员工
@@ -40,6 +44,7 @@ public class AclUser extends BaseEntity {
 	/**
 	 * "L"为超级用户;"S"时为管理员;"P"为普通用户
 	 */
+	@CnFileName(name="权限")
 	private String userFlag = null;
 	/**
 	 * 是否禁用;true为禁用； false为正常使用；　默认是false

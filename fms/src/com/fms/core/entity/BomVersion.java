@@ -1,5 +1,6 @@
 package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -8,11 +9,13 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  * 
  */
+@CnFileName(name="BOM版本")
 public class BomVersion extends BaseEntity {
 
 	/**
 	 * 版本编号
 	 */
+	@CnFileName(name="版本编号")
 	private Integer versionNo;
 
 	/**
@@ -22,6 +25,7 @@ public class BomVersion extends BaseEntity {
 	/**
 	 * 备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 
 	public Integer getVersionNo() {

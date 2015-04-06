@@ -1,5 +1,6 @@
 package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -7,6 +8,7 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+@CnFileName(name="系统参数")
 public class ParameterSet extends BaseEntity{
 
 	/**

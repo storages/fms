@@ -1,5 +1,6 @@
 package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -7,6 +8,7 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+@CnFileName(name="物料")
 public class Material extends BaseEntity{
 
 	/**
@@ -14,26 +16,37 @@ public class Material extends BaseEntity{
 	 */
 	private static final long serialVersionUID = 1L;
 	//物料编码
+	@CnFileName(name="物料编码")
 	private String hsCode;
 	//物料名称
+	@CnFileName(name="物料名称")
 	private String hsName;
 	//颜色
+	@CnFileName(name="颜色")
 	private String color;
 	//物料类别
+	@CnFileName(name="物料类别")
 	private MaterialType materialType;
 	//计量单位
+	@CnFileName(name="计量单位")
 	private Unit unit;
 	//数量
+	@CnFileName(name="数量")
 	private Double qty;
 	//规格
+	@CnFileName(name="规格")
 	private String model;
 	//成品或原料标记("I"原料，"E"成品)
+	@CnFileName(name="成品或原料")
 	private String imgExgFlag;
 	//批次号
+	@CnFileName(name="批次号")
 	private String batchNO;
 	//最低库存
+	@CnFileName(name="最低库存")
 	private Double lowerQty;
 	//备注
+	@CnFileName(name="备注")
 	private String note;
 	
 	

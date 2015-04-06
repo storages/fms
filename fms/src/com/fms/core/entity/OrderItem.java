@@ -1,5 +1,6 @@
 package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -7,6 +8,7 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+@CnFileName(name="订单详细")
 public class OrderItem extends BaseEntity{
 
 	/**
@@ -17,38 +19,47 @@ public class OrderItem extends BaseEntity{
 	/**
 	 * 流水号(serialNo)   系统自动生成累加1
 	 */ 
+	@CnFileName(name="流水号")
 	private Integer serialNo;
 	/**
 	 * 商品编码(hsCode)
 	 */
+	@CnFileName(name="商品编码")
 	private String hsCode;
 	/**
 	 * 商品名称(hsName)
 	 */
+	@CnFileName(name="商品名称")
 	private String hsName;
 	/**
 	 * 规格型号(hsModel)
 	 */
+	@CnFileName(name="规格型号")
 	private String hsModel;
 	/**
 	 * 订单数量(qty)
 	 */
+	@CnFileName(name="订单数量")
 	private String qty;
 	/**
 	 * 计量单位实体(Unit)
 	 */
+	@CnFileName(name="计量单位")
 	private Unit unit;
 	/**
 	 * 单价(price)
 	 */
+	@CnFileName(name="单价")
 	private Double price;
 	/**
 	 * 总价(amount)
 	 */
+	@CnFileName(name="总价")
 	private Double amount;
 	/**
 	 * 备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 	
 	public Integer getSerialNo() {

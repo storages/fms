@@ -1,5 +1,6 @@
 ﻿package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -7,6 +8,7 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+@CnFileName(name="部门")
 public class Department extends BaseEntity {
 
 	/**
@@ -17,15 +19,18 @@ public class Department extends BaseEntity {
 	/**
 	 * 部门编码
 	 */
+	@CnFileName(name="部门编码")
 	private String code;
 	/**
 	 *  部门名称
 	 */
+	@CnFileName(name="部门名称")
 	private String name;
 	
 	/**
 	 * 备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 
 	public String getName() {

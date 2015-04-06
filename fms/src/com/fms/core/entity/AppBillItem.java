@@ -2,6 +2,7 @@ package com.fms.core.entity;
 
 import java.util.Date;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 import com.fms.commons.AppBillStatus;
 
@@ -10,6 +11,7 @@ import com.fms.commons.AppBillStatus;
  * @author Administrator
  *
  */
+@CnFileName(name="请购单详细 ")
 public class AppBillItem extends BaseEntity{
 
 	/**
@@ -21,6 +23,7 @@ public class AppBillItem extends BaseEntity{
 	 * 申请单状态(appStatus)   0、未申请  1、待审批  2、审批通过   3、审批不通过 【默认未申请】
 	 * 常量类【AppBillStatus】
 	 */
+	@CnFileName(name="申请单状态 ")
 	private String appStatus = AppBillStatus.UNAPPLY;
 	/**
 	 * 供应商(实体ScmCoc)
@@ -33,32 +36,39 @@ public class AppBillItem extends BaseEntity{
 	/**
 	 * 单价(来源报价单)
 	 */
+	@CnFileName(name="单价 ")
 	private Double price;
 	/**
 	 * 申请数量(totalQty)
 	 */
+	@CnFileName(name="申请数量 ")
 	private Double totalQty;
 	/**
 	 * 金额(amount)
 	 */
+	@CnFileName(name="金额 ")
 	private Double amount;
 	/**
 	 * 申请日期(appDate)
 	 */
+	@CnFileName(name="申请日期 ")
 	private Date appDate;
 	
 	/**
 	 * 审批日期
 	 */
+	@CnFileName(name="审批日期 ")
 	private Date verifyDate;
 	/**
 	 * 审批人
 	 */
+	@CnFileName(name="审批人")
 	private String verifyUser;
 	
 	/**
 	 * 不通过原因
 	 */
+	@CnFileName(name="不通过原因")
 	private String noPassReason;
 	/**
 	 * 申请单表头(实体AppBillHead)
@@ -67,6 +77,7 @@ public class AppBillItem extends BaseEntity{
 	/**
 	 * 备注(note) 
 	 */
+	@CnFileName(name="备注")
 	private String note;
 	public String getAppStatus() {
 		return appStatus;

@@ -1,7 +1,9 @@
 ﻿package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
+@CnFileName(name="仓库")
 public class Stock extends BaseEntity {
 
 	/**
@@ -12,14 +14,17 @@ public class Stock extends BaseEntity {
 	/**
 	 * 仓库编码
 	 */
+	@CnFileName(name="仓库编码")
 	private String code;
 	/**
 	 * 仓库名称
 	 */
+	@CnFileName(name="名称")
 	private String name;
 	/**
 	 * 备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 	
 	

@@ -2,6 +2,7 @@
 
 import java.util.Date;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -9,6 +10,7 @@ import com.fms.base.entity.BaseEntity;
  * @author GDC
  *
  */
+@CnFileName(name="供应商")
 public class Scmcoc extends BaseEntity{
 
 	/**
@@ -19,30 +21,37 @@ public class Scmcoc extends BaseEntity{
 	/**
 	 * 编码
 	 */
+	@CnFileName(name="编码")
 	private String code;
 	/**
 	 * 名称
 	 */
+	@CnFileName(name="名称")
 	private String name;
 	/**
 	 * 供应商联系电话
 	 */
+	@CnFileName(name="联系电话")
 	private String linkPhone;
 	/**
 	 * 供应商网络联系方式
 	 */
+	@CnFileName(name="网络联系方式")
 	private String networkLink;
 	/**
 	 * 供应商地址
 	 */
+	@CnFileName(name="地址")
 	private String address;
 	/**
 	 * 供应商联系人
 	 */
+	@CnFileName(name="联系人")
 	private String linkMan;
 	/**
 	 * 约定结算日期
 	 */
+	@CnFileName(name="约定结算日期")
 	private String endDate;
 	/**
 	 *	是否是客户 
@@ -50,15 +59,18 @@ public class Scmcoc extends BaseEntity{
 	 *	false 表示是供应商
 	 *
 	 */
+	@CnFileName(name="是否是客户 ")
 	public Boolean isCustom;
 	
 	/**
 	 * 结算方式
 	 */
+	@CnFileName(name="isCustom ")
 	public Settlement settlement;
 	/**
 	 * 备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 	public String getCode() {
 		return code;

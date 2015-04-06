@@ -2,6 +2,7 @@ package com.fms.core.entity;
 
 import java.util.Date;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -9,35 +10,43 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+@CnFileName(name="采购单详细")
 public class PurchaseItem extends BaseEntity {
 	
 	/**
 	 * 物料(实体Material)   由申请单【审核】后系统抓取申请单
 	 */
+	@CnFileName(name="物料")
 	private Material material;
 	/**
 	 * 采购数量(qty)   由申请单【审核】后系统抓取申请单
 	 */
+	@CnFileName(name="采购数量")
 	private Double qty;
 	/**
 	 * 单价(price)  由申请单【审核】后系统抓取申请单
 	 */
+	@CnFileName(name="单价")
 	private Double price;
 	/**
 	 * 金额(amount)  由申请单【审核】后系统抓取申请单
 	 */
+	@CnFileName(name="金额")
 	private Double amount;
 	/**
 	 * 采购时间(purchaseDate)
 	 */
+	@CnFileName(name="采购时间")
 	private Date purchaseDate;
 	/**
 	 * 交货日期(deliveryDate)
 	 */
+	@CnFileName(name="交货日期")
 	private Date deliveryDate;
 	/**
 	 * 是否已下单
 	 */
+	@CnFileName(name="是否已下单")
 	private Boolean isBuy = Boolean.FALSE;
 	/**
 	 * 关联申请单表体id

@@ -2,6 +2,7 @@ package com.fms.core.entity;
 
 import java.util.Date;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -14,59 +15,73 @@ public class OutStorage extends BaseEntity {
 	/**
 	 * 流水号(serialNo)
 	 */
+	@CnFileName(name="流水号")
 	private Integer serialNo;
 	/**
 	 * 订单号(orderNo)   从订单表头中抓取订单号(下拉框)
 	 */
+	@CnFileName(name="订单号")
 	private String orderNo;
 	/**
 	 * 货物编码(hsCode)  根据订单号从入库表中获取
 	 */
+	@CnFileName(name="货物编码")
 	private String hsCode;
 	/**
 	 * 货物名称(hsName) 根据订单号从入库表中获取
 	 */
+	@CnFileName(name="货物名称")
 	private String hsName;
 	/**
 	 * 货物规格型号(hsModel)  根据订单号从入库表中获取
 	 */
+	@CnFileName(name="货物规格型号")
 	private String hsModel;
 	/**
 	 * 货物数量(expQty)  根据订单号从入库表中获取，然后检查出库数量不能大于入库数量
 	 */
+	@CnFileName(name="货物数量")
 	private Double expQty;
 	/**
 	 * 批次号(betchNo)  根据订单号从入库表中获取
 	 */
+	@CnFileName(name="批次号")
 	private String betchNo;
 	/**
 	 * 出库人(handling)  统自动生成(当前登录用户)
 	 */
+	@CnFileName(name=" 出库人")
 	private String handling;
 	/**
 	 * 出库日期(expDate)  系统自动生成(当前系统时间)
 	 */
+	@CnFileName(name="出库日期")
 	private Date expDate;
 	/**
 	 *  出库类型(0:出货出库 1:退货出库 2:外发出库 3:其它出库)
 	 */
+	@CnFileName(name="出库类型")
 	private String expFlag;
 	
 	/**
 	 *  每件包装数量(根据订单号从入库表中获取)
 	 */
+	@CnFileName(name="每件包装数量")
 	private Double specQty;
 	/**
 	 *  件数(根据订单号从入库表中获取)
 	 */
+	@CnFileName(name="件数")
 	private Double pkgs;
 	/**
 	 *  物料类型(根据订单号从入库表中获取)
 	 */
+	@CnFileName(name="物料类型")
 	private String materialTypeName;
 	/**
 	 *  备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 	public Integer getSerialNo() {
 		return serialNo;

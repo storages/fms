@@ -1,11 +1,13 @@
 package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 /**
  * 行为记录类
  * @author lc
  *
  */
+@CnFileName(name="BOM版本")
 public class Currencies extends BaseEntity{
 	/**
 	 * 

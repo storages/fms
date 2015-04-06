@@ -1,5 +1,6 @@
 package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -7,6 +8,7 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+@CnFileName(name="工厂物料BOM")
 public class MaterialBom extends BaseEntity {
 	/**
 	 * 
@@ -16,16 +18,19 @@ public class MaterialBom extends BaseEntity {
 	/**
 	 * 单项用量
 	 */
+	@CnFileName(name="单项用量")
 	private Double unitDosage = 0.0; 
 	
 	/**
 	 * BOM版本号
 	 */
+	@CnFileName(name="BOM版本号")
 	private BomVersion bomVersion;
 	
 	/**
 	 * 备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 
 

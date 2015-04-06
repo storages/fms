@@ -2,6 +2,7 @@ package com.fms.core.entity;
 
 import java.util.Date;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -9,6 +10,7 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+@CnFileName(name="报价单")
 public class Quotation extends BaseEntity{
 
 	/**
@@ -17,16 +19,22 @@ public class Quotation extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 	
 	//流水号
+	@CnFileName(name="流水号")
 	private Integer serialNo;
 	//供应商实体
+	@CnFileName(name="供应商")
 	private Scmcoc scmcoc;
 	//物料实体
+	@CnFileName(name="物料")
 	private Material material;
 	//单价
+	@CnFileName(name="单价")
 	private Double price;
 	//生效日期
+	@CnFileName(name="生效日期")
 	private Date effectDate;
 	//备注
+	@CnFileName(name="备注")
 	private String note;
 	public Integer getSerialNo() {
 		return serialNo;

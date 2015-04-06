@@ -13,6 +13,7 @@ import com.fms.commons.JobStatus;
  * @author Administrator
  * 
  */
+@CnFileName(name="员工")
 public class Employee extends BaseEntity {
 
 	/**
@@ -53,55 +54,68 @@ public class Employee extends BaseEntity {
 	/**
 	 * 性别【常量类：EmployeeGender】
 	 */
+	@CnFileName(name="性别")
 	private String gender = EmployeeGender.FEMALE;
 	/**
 	 * 出生日期【缩写】
 	 */
+	@CnFileName(name="出生日期")
 	private Date birthday;  
 	/**
 	 * 身份证
 	 */
+	@CnFileName(name="身份证")
 	private String identityCard;
 	/**
 	 * 民族
 	 */
+	@CnFileName(name="名族")
 	private String nation;
 
 	/**
 	 * 籍贯
 	 */
+	@CnFileName(name="籍贯")
 	private String origo;
 	/**
 	 * 学历
 	 */
+	@CnFileName(name="学历")
 	private String diploma;
 	/**
 	 * 家庭住址
 	 */
+	@CnFileName(name="家庭住址")
 	private String address;
 	/**
 	 * 现住地
 	 */
+	@CnFileName(name="现住址")
 	private String currentResidence;
 	/**
 	 * 联系手机
 	 */
+	@CnFileName(name="手机联系号码")
 	private String linkPhone;
 	/**
 	 * 网络联系方式
 	 */
+	@CnFileName(name="网络联系方式")
 	private String networkLink;
 	/**
 	 * 照片、头像【存储照片路径】
 	 */
+	@CnFileName(name=" 照片")
 	private String photo;
 	/**
 	 * 入职日期
 	 */
+	@CnFileName(name="入职日期")
 	private Date entryDate;
 	/**
 	 * 工作状态【常量类：JobStatus】
 	 */
+	@CnFileName(name="工作状态")
 	private String jobStatus = JobStatus.PROBATION;
 	/**
 	 * 所属部门【对象】
@@ -110,6 +124,7 @@ public class Employee extends BaseEntity {
 	/**
 	 * 职位名称
 	 */
+	@CnFileName(name="职位")
 	private String positionName;
 
 	/**
@@ -119,6 +134,7 @@ public class Employee extends BaseEntity {
 	/**
 	 * 备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 
 	public String getName() {

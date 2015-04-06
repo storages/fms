@@ -1,5 +1,6 @@
 package com.fms.core.entity;
 
+import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
 
 /**
@@ -7,6 +8,7 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+@CnFileName(name="结算方式")
 public class Settlement extends BaseEntity {
 
 	/**
@@ -16,14 +18,17 @@ public class Settlement extends BaseEntity {
 	/**
 	 * 编码
 	 */
+	@CnFileName(name="编码")
 	private String code;
 	/**
 	 * 结算方式名称
 	 */
+	@CnFileName(name="名称")
 	private String name;
 	/**
 	 * 备注
 	 */
+	@CnFileName(name="备注")
 	private String note;
 	public String getCode() {
 		return code;

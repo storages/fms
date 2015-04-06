@@ -129,6 +129,7 @@
 			<result name="add">/pages/material/materialinfoedit.jsp</result>
 			<result name="editinfo">/pages/material/materialinfoedit.jsp</result>
 			<result name="save" type="chain">materInfo_findAllMaterial</result>
+			<result name="import">/pages/import/materimport.jsp</result>
 		</action>
 		
 		<!-- BOM表 -->

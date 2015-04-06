@@ -1,6 +1,5 @@
 package com.fms.utils;
 
-
 public class ServerUtils {
 	/**
 	 * 判断是否是数字
@@ -19,6 +18,7 @@ public class ServerUtils {
 
 	public static void main(String[] args) {
 		System.out.println(isNumeric(null));
+		System.out.println(-1.0 < 0.0);
 	}
 
 }

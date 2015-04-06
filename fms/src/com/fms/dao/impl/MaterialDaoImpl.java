@@ -58,14 +58,14 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 		return null;
 	}
 
-	public Integer findDataCount(String className, String name) {
+	public Integer findDataCount(String className, String name, String imgExgFlag) {
 		Integer num = 0;
 		try {
-			String hql = "select count(id) from " + className.trim() + " a where 1=1 ";
+			String hql = "select count(id) from " + className.trim() + " a where a.imgExgFlag =? ";
 			if (null != name && !"".equals(name)) {
 				hql += " and a.hsName like '%" + name + "%'";
 			}
-			num = this.count(hql, new Object[] {});
+			num = this.count(hql, new Object[] { imgExgFlag });
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

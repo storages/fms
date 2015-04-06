@@ -11,7 +11,7 @@ public interface MaterialDao extends BaseDao {
 
 	public List<Material> findAllMaterialInfoByHsCode(String likeStr, String imgExgFlag, Integer index, Integer length);
 
-	public Integer findDataCount(String className, String name);
+	public Integer findDataCount(String className, String name, String imgExgFlag);
 
 	public List<Unit> findAllUnit();
 

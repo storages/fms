@@ -308,6 +308,9 @@
 		<property name="materialDao">
 			<ref bean="materialDao" />
 		</property>
+		<property name="dao">
+			<ref bean="dao" />
+		</property>
 	</bean>
 
 	<!-- Bom表 -->

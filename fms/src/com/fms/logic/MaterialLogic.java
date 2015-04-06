@@ -5,6 +5,7 @@ import java.util.List;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.Unit;
+import com.fms.temp.TempMater;
 
 public interface MaterialLogic {
 	public List<Material> findAllMaterialInfo(AclUser loginUser, String likeStr, String imgExgFlag, Integer index, Integer length);
@@ -13,7 +14,7 @@ public interface MaterialLogic {
 
 	public Integer findDataCount(String className, String name);
 
-	public Integer findDataCount(AclUser loginUser, String className, String name);
+	public Integer findDataCount(AclUser loginUser, String className, String name, String imgExgFlag);
 
 	public List<Unit> findAllUnit(AclUser loginUser);
 
@@ -32,4 +33,21 @@ public interface MaterialLogic {
 	public Material findMaterialByHsCode(AclUser loginUser, String hsCode);
 
 	List<Material> findMaterialExgs(AclUser loginUser, String hsCode, String hsName, String hsModel, String imgExgFlag);
+
+	/**
+	 * 验证数据有效性
+	 * 
+	 * @param tdata
+	 * @return
+	 */
+	List<TempMater> doValidata(List<TempMater> tdata, AclUser loginUser);
+
+	/**
+	 * 保存Excel导入数据
+	 * 
+	 * @param data
+	 * @param loginUser
+	 * @return
+	 */
+	public Boolean doSaveExcelData(List<TempMater> data, AclUser loginUser);
 }

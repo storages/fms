@@ -201,4 +201,12 @@ public class BomDaoImpl extends BaseDaoImpl implements BomDao {
 		}
 		this.batchUpdateOrDelete(hql, param.toArray());
 	}
+
+	public Integer findImgCount(String entityName, Integer verNo, String bomExgId) {
+		String hql = "select count(img.id) from " + entityName.trim() + " img " + " left join img.bomVersion ver " + " left join ver.bomExg exg " + " where ver.versionNo =? and exg.id =? ";
+		List list = new ArrayList();
+		list.add(verNo);
+		list.add(bomExgId);
+		return this.count(hql, list.toArray());
+	}
 }

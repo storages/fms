@@ -102,4 +102,14 @@ public interface BomDao extends BaseDao {
 	 * @param imgIds
 	 */
 	public void delBomImgByIds(String[] imgIds);
+
+	/**
+	 * 查询BomImg的记录数
+	 * 
+	 * @param entityName
+	 * @param verNo
+	 * @param bomExgId
+	 * @return
+	 */
+	public Integer findImgCount(String entityName, Integer verNo, String bomExgId);
 }

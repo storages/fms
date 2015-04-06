@@ -1,8 +1,14 @@
 package com.fms.action;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
+
+import net.sf.json.JsonConfig;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.Material;
@@ -10,7 +16,11 @@ import com.fms.core.entity.MaterialType;
 import com.fms.core.entity.Unit;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.MaterialTypeLogic;
+import com.fms.temp.TempMater;
 import com.fms.utils.AjaxResult;
+import com.fms.utils.ExcelUtil;
+import com.google.gson.Gson;
+import com.url.ajax.json.JSONException;
 import com.url.ajax.json.JSONObject;
 
 public class MaterialAction extends BaseAction {
@@ -56,6 +66,12 @@ public class MaterialAction extends BaseAction {
 	private String searchStr;// 搜索条件
 	private static final Integer DEFAULT_PAGESIZE = 10;
 
+	/********* 获取前台选择的文件 ***********/
+	private File uploadFile; // 上传的文件 名称是Form 对应的name
+	private String uploadFileContentType; // 文件的类型
+	private String uploadFileFileName; // 文件的名称
+	private String sendStr;
+
 	/**
 	 * 查询所有的物料信息【分页】
 	 * 
@@ -66,7 +82,7 @@ public class MaterialAction extends BaseAction {
 		try {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
-			dataTotal = this.materLogic.findDataCount(getLoginUser(), className, parseValue(searchStr));
+			dataTotal = this.materLogic.findDataCount(getLoginUser(), className, parseValue(searchStr), imgExgFlag);
 			// imgExgFlag =
 			// (this.context.getSession().get("imgExgFlag")!=null)?this.context.getSession().get("imgExgFlag").toString():imgExgFlag;
 			List<Material> material = this.materLogic.findAllMaterialInfo(getLoginUser(), parseValue(searchStr), imgExgFlag, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
@@ -223,6 +239,166 @@ public class MaterialAction extends BaseAction {
 		}
 	}
 
+	public String showImport() {
+		this.request.put("imgExgFlag", imgExgFlag);
+		return "import";
+	}
+
+	/**
+	 * 解析excel数据，并验证数据有效性
+	 * 
+	 * @return
+	 */
+	public void importData() {
+		AjaxResult result = new AjaxResult();
+		result.setSuccess(false);
+		try {
+			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
+			String[] title = new String[9];
+			title[0] = content[0][0];
+			title[1] = content[0][1];
+			title[2] = content[0][2];
+			title[3] = content[0][3];
+			title[4] = content[0][4];
+			title[5] = content[0][5];
+			title[6] = content[0][6];
+			title[7] = content[0][7];
+			title[8] = content[0][8];
+			if (!"物料标记".equals(title[0]) || !"物料编码".equals(title[1]) || !"物料名称".equals(title[2]) || !"物料规格".equals(title[3]) || !"颜色".equals(title[4]) || !"物料类别".equals(title[5])
+					|| !"计量单位".equals(title[6]) || !"批次号".equals(title[7]) || !"最低库存".equals(title[8])) {
+				result.setSuccess(false);
+				result.setMsg("导入的excel文件内容不正确!");
+			} else {
+				List<TempMater> tempMaters = new ArrayList<TempMater>();
+				for (int i = 1; i < content.length; i++) {
+					TempMater mater = new TempMater();
+					mater.setImgExgFlag(content[i][0]);
+					mater.setHsCode(content[i][1]);
+					mater.setHsName(content[i][2]);
+					mater.setModel(content[i][3]);
+					mater.setColor(content[i][4]);
+					mater.setMaterialType(content[i][5]);
+					mater.setUnit(content[i][6]);
+					mater.setBatchNO(content[i][7]);
+					if (!isNumeric(content[i][8])) {
+						mater.setLowerQty(-1.0);
+					} else {
+						mater.setLowerQty(Double.parseDouble(content[i][8]));
+					}
+					tempMaters.add(mater);
+				}
+				List tlist = this.materLogic.doValidata(tempMaters, this.getLoginUser());
+				result.setSuccess(true);
+				result.setObj(tlist);
+			}
+		} catch (FileNotFoundException e) {
+			result.setSuccess(false);
+			result.setMsg("操作错误" + e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		String str = gson.toJson(result);
+		try {
+			Writer writer = response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 清除错误的数据
+	 * 
+	 * @return
+	 */
+	public void clearErrorData() {
+		List errorList = new ArrayList();
+		AjaxResult result = new AjaxResult();
+		result.setSuccess(false);
+		net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(sendStr);
+		List list = net.sf.json.JSONArray.toList(jsonArray, new TempMater(), new JsonConfig());
+		if (null != list && list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+				TempMater mater = (TempMater) list.get(i);
+				if (null != mater.getErrorInfo() && !"".equals(mater.getErrorInfo().trim())) {
+					errorList.add(mater);
+				}
+			}
+			list.removeAll(errorList);
+		}
+		Gson gson = new Gson();
+		result.setObj(list);
+		result.setSuccess(true);
+		String str = gson.toJson(result);
+		Writer writer;
+		try {
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			writer = response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * 保存正确的excel数据
+	 * 
+	 * @throws JSONException
+	 */
+	@SuppressWarnings("unchecked")
+	public String saveExcelData() {
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		try {
+			net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(sendStr);
+			List<TempMater> list = net.sf.json.JSONArray.toList(jsonArray, new TempMater(), new JsonConfig());
+			if (null == list || list.size() <= 0) {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("没有数据可保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+			if (!this.materLogic.doSaveExcelData(list, getLoginUser())) {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("保存的数据中有错误，请点击【删除错误】按钮后再保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			} else {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(true);
+				result.setMsg("成功保存" + list.size() + "条数据！");
+				session.put("tlist", null);
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return this.SUCCESS;
+	}
+
 	public String getHsName() {
 		return hsName;
 	}
@@ -373,6 +549,46 @@ public class MaterialAction extends BaseAction {
 
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
+	}
+
+	public Integer getDataTotal() {
+		return dataTotal;
+	}
+
+	public void setDataTotal(Integer dataTotal) {
+		this.dataTotal = dataTotal;
+	}
+
+	public File getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(File uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public String getUploadFileContentType() {
+		return uploadFileContentType;
+	}
+
+	public void setUploadFileContentType(String uploadFileContentType) {
+		this.uploadFileContentType = uploadFileContentType;
+	}
+
+	public String getUploadFileFileName() {
+		return uploadFileFileName;
+	}
+
+	public void setUploadFileFileName(String uploadFileFileName) {
+		this.uploadFileFileName = uploadFileFileName;
+	}
+
+	public String getSendStr() {
+		return sendStr;
+	}
+
+	public void setSendStr(String sendStr) {
+		this.sendStr = sendStr;
 	}
 
 }

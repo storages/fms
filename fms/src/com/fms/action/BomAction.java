@@ -271,7 +271,7 @@ public class BomAction extends BaseAction {
 			title[3] = content[0][3];
 			title[4] = content[0][4];
 
-			if (!"原料编码".equals(title[0]) && !"原料批次号".equals(title[1]) || !"单耗".equals(title[2]) || !"损耗".equals(title[3]) || !"备注".equals(title[4])) {
+			if (!"原料编码".equals(title[0]) || !"原料批次号".equals(title[1]) || !"单耗".equals(title[2]) || !"损耗".equals(title[3]) || !"备注".equals(title[4])) {
 				result.setSuccess(false);
 				result.setMsg("导入的excel文件内容不正确!");
 			} else {

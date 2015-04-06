@@ -116,7 +116,11 @@ public class BomLogicImpl implements BomLogic {
 	}
 
 	public void delBomExgByIds(AclUser loginUser, String[] idArr) {
-		this.bomDao.delBomExgByIds(idArr);
+		try {
+			this.bomDao.delBomExgByIds(idArr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public MaterialDao getMaterialDao() {
@@ -219,6 +223,14 @@ public class BomLogicImpl implements BomLogic {
 	}
 
 	public void delBomImgByIds(String[] imgIds) {
-		this.bomDao.delBomImgByIds(imgIds);
+		try {
+			this.bomDao.delBomImgByIds(imgIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Integer findImgCount(AclUser loginUser, String entityName, Integer verNo, String bomExgId) {
+		return this.bomDao.findImgCount(entityName, verNo, bomExgId);
 	}
 }

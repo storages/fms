@@ -20,7 +20,7 @@ public interface BomLogic {
 	 * 
 	 * @return
 	 */
-	List<BomExg> findBomExg(AclUser loginUser,String hsName, String hsCode, String hsModel, Integer index, Integer length);
+	List<BomExg> findBomExg(AclUser loginUser, String hsName, String hsCode, String hsModel, Integer index, Integer length);
 
 	/**
 	 * 按条件查找记录数
@@ -29,7 +29,7 @@ public interface BomLogic {
 	 * @param searchStr
 	 * @return
 	 */
-	Integer findDataCount(AclUser loginUser,String className, String hsName, String hsCode, String hsModel);
+	Integer findDataCount(AclUser loginUser, String className, String hsName, String hsCode, String hsModel);
 
 	/**
 	 * 保存BOM成品表
@@ -37,14 +37,14 @@ public interface BomLogic {
 	 * @param data
 	 * @return
 	 */
-	List<BomExg> saveBomExg(AclUser loginUser,List<BomExg> data);
+	List<BomExg> saveBomExg(AclUser loginUser, List<BomExg> data);
 
 	/**
 	 * 删除BOM成品表
 	 * 
 	 * @param idArr
 	 */
-	void delBomExgByIds(AclUser loginUser,String[] idArr);
+	void delBomExgByIds(AclUser loginUser, String[] idArr);
 
 	/**
 	 * 分页查找成品对应原料BOM
@@ -148,4 +148,15 @@ public interface BomLogic {
 	 * 根据ID删除BomImg
 	 */
 	public void delBomImgByIds(String[] imgIds);
+
+	/**
+	 * 查找BomImg记录数
+	 * 
+	 * @param loginUser
+	 * @param entityName
+	 * @param verNo
+	 * @param bomExgId
+	 * @return
+	 */
+	public Integer findImgCount(AclUser loginUser, String entityName, Integer verNo, String bomExgId);
 }

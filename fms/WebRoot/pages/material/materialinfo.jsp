@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
      <div class="page-header position-relative" style="margin-bottom: 0px;">
-		<h5>物料＞＞物料统计</h5>
+		<h5 style="margin: 0px;">物料＞＞物料清单</h5>
 		<input type="hidden" id="impexpflag"/>
 	</div>
-	<div class="modal-footer" style="text-align: left;">
+	<div class="modal-footer"  style="text-align: left; padding-top: 5px; padding-bottom: 0px;">
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 		 <c:if test="${imgexgflag=='I'}">
@@ -126,8 +126,9 @@
 	 */
 	function gotoPage(pageNum, pageSize) {
 		var likeStr = $("#search").val(); 
+		var flag = $('input[name="materialType"]:checked').val();
 		// 拼接URL
-		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr);
+		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+"&imgExgFlag="+flag;
 		// 在本窗口中显示指定URL的页面
 		toMain(url);
 	}
@@ -145,7 +146,8 @@
 		toMain("${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids=");
 	}
 	function showImport(){
-	  	var url = "${pageContext.request.contextPath}/pages/import/materialimport.jsp";
+		var flag = $('input[name="materialType"]:checked').val();
+	  	var url = "${pageContext.request.contextPath}/materInfo_showImport.action?imgExgFlag="+flag;
 	  	toMain(url);
   	}
   	function changematerialtype(flag){

@@ -115,8 +115,8 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 	 */
 	public String findHsCode(String hsCode) {
 		try {
-			String hql = "select a.hsCode from Material a where a.hsCode = " + hsCode;
-			return (String) this.uniqueResult(hql, new Object[] {});
+			String hql = "select a.hsCode from Material a where a.hsCode =? ";
+			return (String) this.uniqueResult(hql, new Object[] { hsCode });
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

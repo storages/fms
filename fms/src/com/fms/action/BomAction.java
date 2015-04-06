@@ -192,7 +192,8 @@ public class BomAction extends BaseAction {
 					verNo = "-1";
 				}
 				List<BomImg> imgList = this.bomLogic.findBomImg(hsName, hsCode, hsModel, ids, verNo == null ? 1 : Integer.parseInt(verNo), -1, -1);
-				this.request.put("verList", this.bomLogic.findBomVersion(ids));
+				List<BomVersion> verList = this.bomLogic.findBomVersion(ids);
+				this.request.put("verList", verList);
 				this.request.put("imgList", imgList);
 				this.request.put("hsName", parseValue(hsName));
 				this.request.put("hsCode", parseValue(hsCode));

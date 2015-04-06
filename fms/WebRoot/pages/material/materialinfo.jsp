@@ -34,7 +34,7 @@
 								<th class="center">颜色</th>
 								<th class="center">物料类别</th>
 								<th class="center">计量单位</th>
-								<th class="center">数量</th>
+								<!-- <th class="center">数量</th> -->
 								<th class="center">批次号</th>
 								<th class="center">最低库存</th>
 								<th class="center">备注</th>
@@ -60,7 +60,7 @@
 									
 									<td class="center">${info.materialType.typeName}　</td>
 									<td class="center">${info.unit.name}　</td>
-									<td class="center">${info.qty}　</td>
+									<%-- <td class="center">${info.qty}　</td> --%>
 									<td class="center">${info.batchNO}　</td>
 									<td class="center">${info.lowerQty}　</td>
 									<td class="center">${info.note}　</td>
@@ -145,7 +145,7 @@
 		toMain("${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids=");
 	}
 	function showImport(){
-	  	var url = "${pageContext.request.contextPath}/pages/import/unitimport.jsp";
+	  	var url = "${pageContext.request.contextPath}/pages/import/materialimport.jsp";
 	  	toMain(url);
   	}
   	function changematerialtype(flag){

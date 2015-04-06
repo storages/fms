@@ -25,6 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <input type="hidden" id="flag" value="${materinfo.id}"/><!-- 为了判断是新增还是修改 -->
+    <input type="hidden" id="mtype" value="${imgExgFlag}"/><!-- 为了判断是新增还是修改 -->
   <div class="page-header position-relative" style="margin-bottom: 0px;">
     	<c:if test="${materinfo.id==null}">
 			<h5>物料＞＞物料信息＞＞新增</h5>
@@ -42,13 +43,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover tablecss"  style=" font-size: 12px;">
 				<tr>
 					<td class="captioncss" style="text-align: right; ">物料编码</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.hsCode}" name="material.hsCode" style="height:25px;" onblur="check()" id="codes"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.hsCode}" name="material.hsCode" style="height:25px;" onblur="check()" id="codes" <c:if test="${materinfo.id!=null}">readonly="readonly"</c:if>/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; ">物料名称</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.hsName}" name="material.hsName" style="height:25px;" onblur="check()"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.hsName}" name="material.hsName" style="height:25px;" onblur="check()" /><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
 					<td class="captioncss" style="text-align: right; ">颜色</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.color}" name="material.color" style="height:25px;"/><span style="color:red;">*</span></td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.color}" name="material.color" style="height:25px;"/></td>
 					<td class="captioncss" style="text-align: right; ">物料标记</td>
 					<td class="hidden-480 addcss" style="">
 					<select id="form-field-select-1">
@@ -97,21 +98,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<span style="color:red;">*</span></td>
 				</tr>
 				<tr>
-					<td class="captioncss" style="text-align: right; " onblur="check()">规格</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.model}" name="material.model" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; ">数量</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.qty}" name="material.qty" style="height:25px;"/><span style="color:red;">*</span></td>
-				</tr>
-				<tr>
+					<td class="captioncss" style="text-align: right; " onblur="check()">规格型号</td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.model}" name="material.model" style="height:25px;"/></td>
+					<%-- <td class="captioncss" style="text-align: right; ">数量</td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.qty}" name="material.qty" style="height:25px;"/><span style="color:red;">*</span></td> --%>
 					<td class="captioncss" style="text-align: right; " onblur="check()">批次号</td>
 					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.batchNO}" name="material.batchNO" style="height:25px;"/><span style="color:red;">*</span></td>
-					<td class="captioncss" style="text-align: right; ">最低库存</td>
-					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.lowerQty}" name="material.lowerQty" style="height:25px;"/><span style="color:red;">*</span></td>
 				</tr>
 				<tr>
+					<td class="captioncss" style="text-align: right; ">最低库存</td>
+					<td class="hidden-480 addcss" style=""><input type="text" value="${materinfo.lowerQty}" name="material.lowerQty" style="height:25px;"/><span style="color:red;">*</span></td>
 					<td class="captioncss" style="text-align: right; ">备注</td>
 					<td class="hidden-480 addcss" style=""><textarea cols="120" rows="3" name="material.note" id="note">${materinfo.note}</textarea></td>
 				</tr>
+				<!-- <tr>
+				</tr> -->
 			</table>
 		</div>
 	</div>
@@ -128,7 +129,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var imgExgFlag= $("#form-field-select-1").val() ;
 			var model= $(":input[name='material.model']").val(); 
 			var unit= $(":input[name='material.unit']").val(); 
-			var qty= $(":input[name='material.qty']").val(); 
+			/* var qty= $(":input[name='material.qty']").val();  */
 			var batchNO= $(":input[name='material.batchNO']").val(); 
 			var lowerQty= $(":input[name='material.lowerQty']").val(); 
 			//备注
@@ -142,20 +143,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				alert("名称不能为空！");
 				isPass = false;
 				return;
-			}else if(color=="" || color==null){
-				alert("颜色不能为空！");
-				isPass = false;
-				return;
 			}else if(unit=="" || unit==null){
 				alert("计量单位不能为空！");
-				isPass = false;
-				return;
-			}else if(model=="" || model==null){
-				alert("规格不能为空！");
-				isPass = false;
-				return;
-			}else if(qty=="" || qty==null){
-				alert("数量不能为空！");
 				isPass = false;
 				return;
 			}else if(batchNO=="" || batchNO==null){
@@ -164,6 +153,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				return;
 			}else if(lowerQty=="" || lowerQty==null){
 				alert("最低库存不能为空！");
+				isPass = false;
+				return;
+			}else if(isNaN(lowerQty)){
+				alert("最低库存只能填数字！");
 				isPass = false;
 				return;
 			}
@@ -187,10 +180,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  	});
 			}
 			if(isPass){
-				var param = "hsCode="+code+"&hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&qty="+qty+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit+"&typeId="+types;
+				var param = "hsCode="+code+"&hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&batchNO="+parse(batchNO)+"&unit="+parse(unit)+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit+"&typeId="+types;
 				var submitUrl = "${pageContext.request.contextPath}/materInfo_save.action?"+param;
 				toMain(submitUrl);
 			}
+			
 		}
 		
 		//取消按钮
@@ -200,13 +194,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$(":input[name='materialType.name']").val("");
 				$("#note").val("");
 			}else{
-				var url = "${pageContext.request.contextPath}/mater_findMaterialById.action?ids="+id;
+				var mtype = $("#mtype").val();
+				alert(mtype);
+				/* var url = "${pageContext.request.contextPath}/mater_findMaterialById.action?ids="+id;
+				toMain(url); */
+				var url = "${pageContext.request.contextPath}/materInfo_findMaterialById.action?imgExgFlag="+mtype+"&ids="+id;
 				toMain(url);
 			}
 		}
 		
 		function check(){
-			var code = $("#codes").val();
+			var id= $('#flag').val();
+			alert(id);
+			if(id=="" || id==null || id==undefined){
+				var code = $("#codes").val();
 				var url = "${pageContext.request.contextPath}/materInfo_findHsCode.action?hsCode="+code;
 				$.ajax({
 			     type: "POST",
@@ -224,6 +225,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        alert("程序异常，请重新启动程序！");
 			      }
 			  	});
+			}
 		}
 	</script>
 </html>

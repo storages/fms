@@ -173,15 +173,21 @@ public class MaterialLogicImpl implements MaterialLogic {
 	 * 保存excel导入的数据
 	 */
 	public Boolean doSaveExcelData(List<TempMater> data, AclUser loginUser) {
-		for (TempMater tm : data) {
-			if (tm.getErrorInfo() != null && !"".equals(tm.getErrorInfo())) {
-				return false;
+		if(data!=null && data.size()>0){
+			for (TempMater tm : data) {
+				if (tm.getErrorInfo() != null && !"".equals(tm.getErrorInfo())) {
+					return false;
+				}
 			}
 		}
+		try{
 		List<Material> resultL = null;
 		if (null != data && data.size() > 0) {
 			resultL = convertMaterial(data, loginUser);
 			this.materialDao.batchSaveOrUpdate(resultL);
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return true;
 	}
@@ -202,8 +208,8 @@ public class MaterialLogicImpl implements MaterialLogic {
 			for (TempMater tmp : data) {
 				Material material = new Material();
 				material.setHsCode(tmp.getHsCode());
-				material.setHsName(tmp.getHsCode());
-				material.setModel(tmp.getHsCode());
+				material.setHsName(tmp.getHsName());
+				material.setModel(tmp.getModel());
 				material.setImgExgFlag(ImgExgFlag.parseValue(tmp.getImgExgFlag()));
 				material.setColor(tmp.getColor());
 				material.setUnit(uMap.get(tmp.getUnit()));

@@ -171,14 +171,34 @@ public class MaterialAction extends BaseAction {
 		return "add";
 	}
 
-	public String deleteMaterial() throws Exception {
-		if (null != ids && !"".equals(ids)) {
-			String[] arrIds = ids.split(",");
-			if (null != arrIds && arrIds.length > 0) {
-				this.materLogic.deleteMaterial(getLoginUser(), arrIds);
+	public void deleteMaterial() throws Exception {
+		try {
+			PrintWriter out = null;
+			AjaxResult result = new AjaxResult();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			if (null != ids && !"".equals(ids)) {
+				String[] arrIds = ids.split(",");
+				if (null != arrIds && arrIds.length > 0) {
+					this.materLogic.deleteMaterial(getLoginUser(), arrIds);
+				}
 			}
+			out = response.getWriter();
+			result.setMsg("删除成功!");
+			result.setSuccess(true);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+			out = response.getWriter();
+			result.setMsg("删除失败!原因：您要删除的信息可能被其它地方引用!");
+			result.setSuccess(false);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
 		}
-		return "save";
+
 	}
 
 	/**

@@ -68,8 +68,24 @@ function delMoreScmcoc(flag){
  */
 function delSingleMaterial(ids,flag){
 	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/materInfo_deleteMaterial.action?ids="+ids+"&imgExgFlag="+flag;
-		toMain(url);
+		var url = "${pageContext.request.contextPath}/materInfo_deleteMaterial.action?";
+		$.ajax({
+			  type: 'POST',
+			  url: url,
+			  data: {ids:ids,imgExgFlag:flag},
+			  success: function(args){
+				  var result=jQuery.parseJSON(args);
+			    	if(!result.success){
+			    		alert(result.msg);
+			    		return;
+			    	}
+			    	alert(result.msg);
+			    	toMain("${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag=I");
+			     },error:function(){
+			        	$("#mess").html("程序异常，请重新启动程序！");
+			        	return false;
+			      } 
+			});
 	}
 }
 
@@ -91,8 +107,25 @@ function delMoreMater(flag){
 	}
 	splitStr = splitStr.substring(0, splitStr.length-1);
 	if(confirm("你确认要删除吗？")){
-		var url = "${pageContext.request.contextPath}/materInfo_deleteMaterial.action?ids="+splitStr+"&imgExgFlag="+flag;
-		toMain(url);
+		var url = "${pageContext.request.contextPath}/materInfo_deleteMaterial.action";
+		$.ajax({
+			  type: 'POST',
+			  url: url,
+			  data: {ids:splitStr,imgExgFlag:flag},
+			  success: function(args){
+				  var result=jQuery.parseJSON(args);
+			    	if(!result.success){
+			    		alert(result.msg);
+			    		return;
+			    	}
+			    	alert(result.msg);
+			    	toMain("${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag=I");
+			     },error:function(){
+			        	$("#mess").html("程序异常，请重新启动程序！");
+			        	return false;
+			      } 
+			});
+		//toMain(url);
 	}
 }
 /********************************************************************************************************/
@@ -114,20 +147,28 @@ function delData(ids,flag){
 	if(splitStr=="" && ids==""){
 		alert("请选择要删除的内容!");
 		return;
-	}else if(ids!=""){
-		splitStr = ids+",";
 	}
+	/*else if(ids!=""){
+		splitStr = ids+",";
+	}*/
 	splitStr = splitStr.substring(0, splitStr.length-1);
 	var resultUrl = getUrl(flag);
-	var url = resultUrl[0]+splitStr;
-	if(confirm("你确认要删除吗？")){
+	var url = resultUrl[0];
+	var mess = "";
+	if(flag=="BomExg"){
+		mess = "你确认要删除吗？,这样会将该BOM下的所有物料Bom以及版本号全部删除!";
+	}else{
+		mess = "你确认要删除吗？";
+	}
+	if(confirm(mess)){
 		$.ajax({
 		     type: "POST",
 		     url:url,
+		     data:{ids:splitStr},
 		     async: false,
 		     cache: false,
-		     success:function(data){
-		    	var result=jQuery.parseJSON(data);
+		     success:function(args){
+		    	var result=jQuery.parseJSON(args);
 		    	if(!result.success){
 		    		alert(result.msg);
 		    		return;
@@ -158,61 +199,61 @@ function getUrl(flag){
 	switch(flag){
 		//删除结算方式
 		case "Settlement":
-			url[0] = "${pageContext.request.contextPath}/settl_delSettlById.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/settl_delSettlById.action";
 			url[1] = "${pageContext.request.contextPath}/settl_findAllSett.action";
 			break;
 			//删除用户
 		case "AclUser":
-			url[0] = "${pageContext.request.contextPath}/users_deleteUser.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/users_deleteUser.action";
 			url[1] = "${pageContext.request.contextPath}/users_findAllUser.action";
 			break;
 			//删除部门
 		case "Department":
-			url[0] = "${pageContext.request.contextPath}/dept_deleteDept.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/dept_deleteDept.action";
 			url[1] = "${pageContext.request.contextPath}/dept_findAllDept.action";
 			break;
 			//删除仓库
 		case "Stock":
-			url[0] = "${pageContext.request.contextPath}/stock_deleteStock.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/stock_deleteStock.action";
 			url[1] = "${pageContext.request.contextPath}/stock_findAllStock.action";
 			break;
 			//删除交易货币
 		case "Curr":
-			url[0] = "${pageContext.request.contextPath}/currencies_del.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/currencies_del.action";
 			url[1] = "${pageContext.request.contextPath}/currencies_findAllCurrencies.action";
 			break;
 			//删除计量单位
 		case "Unit":
-			url[0] = "${pageContext.request.contextPath}/unit_deleteUnit.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/unit_deleteUnit.action";
 			url[1] = "${pageContext.request.contextPath}/unit_findAllUnit.action";
 			break;
 			//删除物料类型
 		case "MaterialType":
-			url[0] = "${pageContext.request.contextPath}/mater_deleteMaterialType.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/mater_deleteMaterialType.action";
 			url[1] = "${pageContext.request.contextPath}/mater_findAllMaterialType.action";
 			break;
 			//删除报价单
 		case "Quotation":
-			url[0] = "${pageContext.request.contextPath}/quotation_deleteQuotation.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/quotation_deleteQuotation.action";
 			url[1] = "${pageContext.request.contextPath}/quotation_findQuotations.action";
 			break;
 			//删除申请单表头
 		case "AppBillHead":
-			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillHead.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillHead.action";
 			url[1] = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
 			break;
 			//删除申请单表体
 		case "AppBillItem":
 			var id = $('#head').val();
-			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillItem.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillItem.action";
 			url[1] = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
 		case "BomExg":
-			url[0] = "${pageContext.request.contextPath}/bom_delBomExg.action?ids=";
+			url[0] = "${pageContext.request.contextPath}/bom_delBomExg.action";
 			url[1] = "${pageContext.request.contextPath}/bom_findBomExg.action";
 			break;
 		case "BomImg":
 			var verNo = $("#form-field-select-1").find("option:selected").text();
-			url[0] = "${pageContext.request.contextPath}/bom_delBomImg.action?verNo="+verNo+"&ids=";
+			url[0] = "${pageContext.request.contextPath}/bom_delBomImg.action?verNo="+verNo;
 			url[1] = "${pageContext.request.contextPath}/bom_detailList.action?ids="+$("#hid").val()+"&verNo="+verNo;
 			break;
 	}

@@ -323,14 +323,15 @@
 		            	$('input[name="sid"]:checked').each(function(){//遍历每一个名字为sid的复选框，其中选中的执行函数      
 		            		paramstr+=$(this).val()+",";//将选中的值组装成一个以'/'分割的字符串
 		            	});
-		            	var url = "${pageContext.request.contextPath}/appbill_verifyInfo.action?ids="+paramstr+"&verify="+verify+"&noPassReason="+parse(reason);
+		            	var url = "${pageContext.request.contextPath}/appbill_verifyInfo.action";
 		            	$.ajax({
 						     type: "POST",
 						     url:url,
+						     data:{ids:paramstr,verify:verify,noPassReason:parse(reason)},
 						     async: false,
 						     cache: false,
-						     success:function(data){
-								 var result=jQuery.parseJSON(data);
+						     success:function(args){
+								 var result=jQuery.parseJSON(args);
 								 if(result.success){
 								 	alert(result.msg);
 								 	var ids = $('#head').val();
@@ -348,8 +349,6 @@
 			
 			function closeform(){
 				window.close();
-				var url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
-				toMain(url);
 			}
 			
 			//修改

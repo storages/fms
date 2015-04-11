@@ -15,7 +15,10 @@ update quotation set effectDate = '2014-11-13' where id='402881e949b3bad70149b3b
 select * from appbillitem
 select * from appbillHead
 
-select * from PurchaseBill
+select itemNo from PurchaseBill
+select * from Purchaseitem
+delete PurchaseBill
+delete Purchaseitem
 delete from acluser where id='402881f24b685286014b685df8140000'
 
 select * from bomversion

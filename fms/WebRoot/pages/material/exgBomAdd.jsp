@@ -7,7 +7,29 @@
 </style>
 
 <script type="text/javascript">
+	function gototag(pageSize){
+		var n = $("#gonum option:selected").val();
+		gotoPage(n, pageSize);
+	}
+		
+		/**
+	 * 转到指定页码
+	 * @param {Object} pageNum 要转到第几页        currIndex
+	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
+	 */
+	function gotoPage(pageNum, pageSize) {
+		var hsCode = $("#hsCode").val(); 
+		var hsName = $("#hsName").val(); 
+		var hsModel = $("#hsModel").val(); 
+		// 拼接URL
+		var url = "${pageContext.request.contextPath}/bom_addExgData.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&hsCode="+parse(hsCode)+"&hsName="+parse(hsName)+"&hsModel="+parse(hsModel);
+		// 在本窗口中显示指定URL的页面
+		toMain(url);
+	}
 	
+	function parse(str){
+		return encodeURI(encodeURI(str));  
+	}
 	//确定按钮
 	$("#btnSure").click(function(){
 		var str = "";
@@ -46,9 +68,9 @@
 	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">物料清单-成品</span>
 </div>
 <div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
-	<span class="">成品编号</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
+	<span class="">成品编码</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 
 	<span class="">成品名称</span><input type="text" id="hsName" value="${hsName}" style="height:25px;width:100px;" class="" /> 
-	<span class="">成品规格</span><input type="text" id="hsCode" value="${hsModel}" style="height:25px;width:100px;" class="" /> 
+	<span class="">成品规格</span><input type="text" id="hsModel" value="${hsModel}" style="height:25px;width:100px;" class="" /> 
 	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 </div>
@@ -61,9 +83,9 @@
 								<th class="center" style="width:10px;"><input type="checkbox" title="全选" id="checkAll"/></th>
 								<th class="center">行号</th>
 								<th class="center">物料标记</th>
-								<th class="center">物料编码</th>
-								<th class="center">物料名称</th>
-								<th class="center">物料规格</th>
+								<th class="center">成品编码</th>
+								<th class="center">成品名称</th>
+								<th class="center">成品规格</th>
 								<th class="center">批次号</th>
 								<th class="center">颜色</th>
 								<th class="center">物料类别</th>
@@ -99,7 +121,38 @@
 				</div>
 			</div>
 			
-	<div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
+	<!-- <div class="modal-footer" style="text-align: left;padding:2px; height:29px;" > -->
+	<div class="modal-footer">
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="确定" id="btnSure" style="height:25px; border: 2px; width:45px;" />
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="关闭" id="btnClose" style="height:25px; border: 2px; width:45px;" />
+		<!-- 分页 -->
+				<div class="pagination pull-right no-margin" style="width: 700px;">
+					<ul>
+						<li class="next"><a>当前页【${currIndex}/${pageNums}】</a>
+						</li>
+						<li class="next"><a href="javascript: gotoPage( 1, ${pageNums} )">首页</a>
+						</li>
+						<c:if test="${currIndex!=1}">
+							<li class="next"><a href="javascript: gotoPage( ${currIndex - 1}, ${pageNums} )">上一页</a>
+							</li>
+						</c:if>
+						<c:if test="${currIndex!=pageNums}">
+							<li class="next"><a href="javascript: gotoPage( ${currIndex + 1}, ${pageNums} )">下一页 </a>
+							</li>
+						</c:if>
+						
+						<li class="next"><a href="javascript: gotoPage( ${pageNums}, ${pageNums}) ">尾页 </a><label  class="pull-right no-margin" style="line-height: 30px;">直接到第</label>
+						</li>
+					</ul>
+					<select class="pagination pull-right no-margin" style="width:60px;" id="gonum" onchange="gototag('${pageNums}')">
+						<c:forEach begin="1" end="${pageNums}" var="pnum">
+							<c:if test="${pnum==currIndex}">
+								<option selected="selected" value="${pnum}">${pnum}页</option>
+							</c:if>
+							<c:if test="${pnum!=currIndex}">
+								<option  value="${pnum}">${pnum}页</option>
+							</c:if>
+						</c:forEach>
+					</select>
+				</div>
 	</div>

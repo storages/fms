@@ -87,7 +87,7 @@
 					批量删除
 				</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/quotation_toImportPage.action')">Excel导入</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btn_update" title="根据当前所选的报价单信息，找到相对应的申请单、采购单，并把选中的生效日期以后的单价全部更新">更新单价</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btn_update" title="根据当前所选的报价单信息，找到相对应的申请单、采购单，并把选中的生效日期以后的单价全部更新.----注(只能选择一条数据)">更新单价</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
@@ -213,10 +213,16 @@
                alert("请选择单价!");
                return;
             }
+            var count = 0;
 			$("#sample-table-1 input[type='checkbox']:checked").each(function(){
 				var prices=$(this).val();
 				params+=prices+","
+				count+=1;
 			});
+			if(count>1){
+			alert("更新单价请选择单条数据!");
+			return;
+			}
 			var url = "${pageContext.request.contextPath}/quotation_updatePrice.action?ids="+params;
 			$.ajax({
 		     type: "POST",

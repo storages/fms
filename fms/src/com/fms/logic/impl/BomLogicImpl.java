@@ -117,7 +117,13 @@ public class BomLogicImpl implements BomLogic {
 
 	public void delBomExgByIds(AclUser loginUser, String[] idArr) {
 		try {
-			this.bomDao.delBomExgByIds(idArr);
+			// 首先要删除成品对应的物料Bom
+			List<BomImg> imgs = this.bomDao.findBomImgByExgIds(idArr);
+			this.bomDao.deleteAll(imgs);
+			// 删除版本号
+			this.bomDao.deleteAll(this.bomDao.findBomVerSionByExgBomIds(idArr));
+			// 再删除成品Bom
+			this.bomDao.deleteAll(this.bomDao.findBomExgByIds(idArr));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

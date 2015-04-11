@@ -277,14 +277,15 @@ function edit(obj,arr){
 
 function saveData(){
 	var jsonstr = getModifyData();
-	var url = "${pageContext.request.contextPath}/quotation_editQuotation.action?jsonstr="+jsonstr;
+	var url = "${pageContext.request.contextPath}/quotation_editQuotation.action?";
 	$.ajax({
 		     type: "POST",
 		     url:url,
+		     data:{jsonstr:jsonstr},
 		     async: false,
 		     cache: false,
-		     success:function(data){
-		     var result=jQuery.parseJSON(data);
+		     success:function(args){
+		     var result=jQuery.parseJSON(args);
 		     if(!result.success){
 		     		alert(result.msg);
 		     	}else{

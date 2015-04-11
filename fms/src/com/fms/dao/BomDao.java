@@ -91,10 +91,20 @@ public interface BomDao extends BaseDao {
 	/**
 	 * 根据id查找
 	 * 
-	 * @param idBomImg
+	 * @param id
+	 *            BomImg
 	 * @return
 	 */
 	public BomImg findBomImgById(String id);
+
+	/**
+	 * 根据多个BomExg的id查找
+	 * 
+	 * @param id
+	 *            BomImg
+	 * @return
+	 */
+	public List<BomImg> findBomImgByExgIds(String[] ids);
 
 	/**
 	 * 根据多个ids来删除BomImg
@@ -112,4 +122,20 @@ public interface BomDao extends BaseDao {
 	 * @return
 	 */
 	public Integer findImgCount(String entityName, Integer verNo, String bomExgId);
+
+	/**
+	 * 根据多个BomExg的id来查找BomImg
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public List<BomExg> findBomExgByIds(String[] ids);
+
+	/**
+	 * 根据多个BomExg的id来查找BomVersion
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public List<BomVersion> findBomVerSionByExgBomIds(String[] ids);
 }

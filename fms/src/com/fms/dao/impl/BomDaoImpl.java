@@ -209,4 +209,46 @@ public class BomDaoImpl extends BaseDaoImpl implements BomDao {
 		list.add(bomExgId);
 		return this.count(hql, list.toArray());
 	}
+
+	public List<BomExg> findBomExgByIds(String[] ids) {
+		List list = new ArrayList();
+		if (null != ids && ids.length > 0) {
+			String hql = "select a from BomExg a where a.id =? ";
+			list.add(ids[0]);
+			for (int i = 1; i < ids.length; i++) {
+				hql += " or a.id =?";
+				list.add(ids[i]);
+			}
+			return this.find(hql, list.toArray());
+		}
+		return null;
+	}
+
+	public List<BomImg> findBomImgByExgIds(String[] ids) {
+		List list = new ArrayList();
+		if (null != ids && ids.length > 0) {
+			String hql = "select a from BomImg a left join fetch a.bomVersion b " + " left join fetch b.bomExg c where c.id =? ";
+			list.add(ids[0]);
+			for (int i = 1; i < ids.length; i++) {
+				hql += " or c.id =?";
+				list.add(ids[i]);
+			}
+			return this.find(hql, list.toArray());
+		}
+		return null;
+	}
+
+	public List<BomVersion> findBomVerSionByExgBomIds(String[] ids) {
+		List list = new ArrayList();
+		if (null != ids && ids.length > 0) {
+			String hql = "select a from BomVersion a left join fetch a.bomExg b where b.id =? ";
+			list.add(ids[0]);
+			for (int i = 1; i < ids.length; i++) {
+				hql += " or b.id =?";
+				list.add(ids[i]);
+			}
+			return this.find(hql, list.toArray());
+		}
+		return null;
+	}
 }

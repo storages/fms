@@ -86,14 +86,13 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 	}
 
 	public void deleteMaterial(String[] ids) {
-		String hql = "DELETE FROM Material a where a.id = ? ";
-		List param = new ArrayList();
-		param.add(ids[0]);
-		for (int i = 1; i < ids.length; i++) {
-			hql += " or a.id = ? ";
-			param.add(ids[i]);
-		}
-		this.batchUpdateOrDelete(hql, param.toArray());
+		List<Material> mats = this.findMaterialById(ids);
+		/*
+		 * String hql = "DELETE FROM Material a where a.id = ? "; List param =
+		 * new ArrayList(); param.add(ids[0]); for (int i = 1; i < ids.length;
+		 * i++) { hql += " or a.id = ? "; param.add(ids[i]); }
+		 */
+		this.deleteAll(mats);
 	}
 
 	public List<Material> findMaterialById(String[] ids) {

@@ -5,19 +5,17 @@ import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.Currencies;
-import com.fms.core.entity.Scmcoc;
-import com.fms.core.entity.Settlement;
 import com.fms.dao.CurrenciesDao;
 
 public class CurrenciesDaoImpl extends BaseDaoImpl implements CurrenciesDao {
 
-	public List<Currencies> findAllCurrencies(String likeStr, Integer index,Integer length) {
+	public List<Currencies> findAllCurrencies(String likeStr, Integer index, Integer length) {
 		String hql = "from Currencies a where 1=1 ";
 		List param = new ArrayList();
-		if(null!=likeStr && !"".equals(likeStr)){
-			hql+=" and a.name like '%"+likeStr+"%'";
+		if (null != likeStr && !"".equals(likeStr)) {
+			hql += " and a.name like '%" + likeStr + "%'";
 		}
-		List<Currencies> list = this.findPageList(hql, param.toArray(),index,length);
+		List<Currencies> list = this.findPageList(hql, param.toArray(), index, length);
 		return list;
 	}
 
@@ -30,24 +28,25 @@ public class CurrenciesDaoImpl extends BaseDaoImpl implements CurrenciesDao {
 
 	public void saveCurrencies(Currencies currencies) {
 		this.saveOrUpdate(currencies);
-		
+
 	}
 
 	public void betchSaveCurrencies(List<Currencies> data) {
 		this.batchSaveOrUpdate(data);
-		
+
 	}
 
-	public void deleteCurrenciesById(String [] ids) {
+	public void deleteCurrenciesById(String[] ids) {
+
 		String hql = "delete from Currencies a where a.id = ? ";
 		List param = new ArrayList();
 		param.add(ids[0]);
-		for(int i = 1 ; i < ids.length ; i++){
-			hql+=" or a.id = ? ";
+		for (int i = 1; i < ids.length; i++) {
+			hql += " or a.id = ? ";
 			param.add(ids[i]);
 		}
 		this.batchUpdateOrDelete(hql, param.toArray());
-		
+
 	}
 
 	public String findCurrenciesByCode(String code) {
@@ -58,22 +57,22 @@ public class CurrenciesDaoImpl extends BaseDaoImpl implements CurrenciesDao {
 	}
 
 	public Integer findDataCount(String className, String name) {
-		String hql = "select count(id) from "+className.trim() +" a where 1=1 ";
+		String hql = "select count(id) from " + className.trim() + " a where 1=1 ";
 		List param = new ArrayList();
-		if(null!=name && !"".equals(name)){
-			hql+=" and a.name like '%"+name+"%'";
-			//param.add("'%"+name+"%'");
+		if (null != name && !"".equals(name)) {
+			hql += " and a.name like '%" + name + "%'";
+			// param.add("'%"+name+"%'");
 		}
 		return this.count(hql, param.toArray());
 	}
 
 	public void delete(List<String> ids) {
 		String hql = "delete Currencies a where 1=1 and ";
-		for(int i=0 ; i<ids.size(); i++){
-			hql+=" a.id = ? or ";
+		for (int i = 0; i < ids.size(); i++) {
+			hql += " a.id = ? or ";
 		}
-		hql = hql.substring(0,hql.trim().length()-2);
-		Object [] objs = ids.toArray();
+		hql = hql.substring(0, hql.trim().length() - 2);
+		Object[] objs = ids.toArray();
 		this.batchUpdateOrDelete(hql, objs);
 	}
 

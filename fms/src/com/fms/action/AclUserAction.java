@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
-
 import org.apache.struts2.ServletActionContext;
 
 import com.fms.base.action.BaseAction;
@@ -25,11 +24,11 @@ public class AclUserAction extends BaseAction {
 	private String loginName;
 	private String userFlag;
 	protected String ids;
-	protected String forget;//记住密码
+	protected String forget;// 记住密码
 	/**
-	 *是否禁用或启用用户账户：【"false"表示启用;"true"表示禁用】 
+	 * 是否禁用或启用用户账户：【"false"表示启用;"true"表示禁用】
 	 */
-	private String userForbid;//是否禁用或启用用户账户：【"false"表示启用;"true"表示禁用】
+	private String userForbid;// 是否禁用或启用用户账户：【"false"表示启用;"true"表示禁用】
 
 	/**
 	 * 
@@ -38,21 +37,22 @@ public class AclUserAction extends BaseAction {
 
 	/**
 	 * 测试Action
+	 * 
 	 * @return
 	 */
-	public void test(){
+	public void test() {
 		PrintWriter out = null;
-		AjaxResult result=new AjaxResult();
+		AjaxResult result = new AjaxResult();
 		Boolean isExits = null;
 		try {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			isExits = this.userLogic.findUserByName(getLoginUser(),"admin");
-			if(isExits!=null){
+			isExits = this.userLogic.findUserByName(getLoginUser(), "admin");
+			if (isExits != null) {
 				result.setMsg("Action跳转成功!");
 				result.setSuccess(true);
-				JSONObject json=new JSONObject(result);
+				JSONObject json = new JSONObject(result);
 				out.println(json.toString());
 				out.flush();
 				out.close();
@@ -60,13 +60,13 @@ public class AclUserAction extends BaseAction {
 		} catch (Exception e) {
 			result.setMsg("Action跳转异常!");
 			result.setSuccess(false);
-			JSONObject json=new JSONObject(result);
+			JSONObject json = new JSONObject(result);
 			out.println(json.toString());
 			out.flush();
 			out.close();
 		}
 	}
-	
+
 	/**
 	 * 启动跳转
 	 * 
@@ -83,39 +83,39 @@ public class AclUserAction extends BaseAction {
 	 */
 	@SuppressWarnings("unchecked")
 	public void loginUser() throws Exception {
-		
+
 		PrintWriter out = null;
-		AjaxResult  result=new AjaxResult();
-		
+		AjaxResult result = new AjaxResult();
+
 		try {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
 			AclUser aclUser = userLogic.loginAclUser(userName, password);
-			if(aclUser==null){
+			if (aclUser == null) {
 				result.setSuccess(false);
 				result.setMsg("用户名或密码不正确");
-			}else if(aclUser.getIsForbid()){
+			} else if (aclUser.getIsForbid()) {
 				result.setSuccess(false);
-				result.setMsg("对不起，该账户已被禁用，请联系管理员！");
-			}else{
+				result.setMsg("该账户已被禁用");
+			} else {
 				result.setSuccess(true);
-				session.put(CommonConstant.LOGINUSER,aclUser);
-				//登录成功后，要记录最后的登录时间
-				if(null!=aclUser){
+				session.put(CommonConstant.LOGINUSER, aclUser);
+				// 登录成功后，要记录最后的登录时间
+				if (null != aclUser) {
 					aclUser.setLastlogin(new Date());
 					aclUser.setPassword(MD5Util.encryptData(password));
-					this.userLogic.saveAclUser(aclUser,aclUser);
+					this.userLogic.saveAclUser(aclUser, aclUser);
 				}
 			}
 		} catch (Exception e) {
-			result.setMsg("对不起出错了："+e.getMessage());
+			result.setMsg("对不起出错了：" + e.getMessage());
 		}
-		JSONObject json=new JSONObject(result);
-		 out.println(json.toString());
-		 out.flush();
-		 out.close();
-		
+		JSONObject json = new JSONObject(result);
+		out.println(json.toString());
+		out.flush();
+		out.close();
+
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class AclUserAction extends BaseAction {
 	 */
 	public String saveUser() throws Exception {
 		user.setPassword(MD5Util.encryptData(user.getPassword().trim()));
-		userLogic.saveAclUser(getLoginUser(),user);
+		userLogic.saveAclUser(getLoginUser(), user);
 		return "edit";
 	}
 
@@ -136,8 +136,8 @@ public class AclUserAction extends BaseAction {
 	 * @return
 	 */
 	public String findAllUser() {
-		String userflag =((AclUser)ServletActionContext.getRequest().getSession().getAttribute("u")).getUserFlag();
-		List<AclUser> users = this.userLogic.findAllUser(getLoginUser(),userflag);
+		String userflag = ((AclUser) ServletActionContext.getRequest().getSession().getAttribute("u")).getUserFlag();
+		List<AclUser> users = this.userLogic.findAllUser(getLoginUser(), userflag);
 		request.put("users", users);
 		return "authority";
 	}
@@ -146,27 +146,27 @@ public class AclUserAction extends BaseAction {
 	 * 删除用户
 	 */
 	public void deleteUser() {
-		
+
 		if (null != ids && !"".equals(ids)) {
-			String [] idArr = ids.split(",");
-			if(idArr!=null && idArr.length>0){
+			String[] idArr = ids.split(",");
+			if (idArr != null && idArr.length > 0) {
 				PrintWriter out = null;
-				AjaxResult  result=new AjaxResult();
+				AjaxResult result = new AjaxResult();
 				try {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.userLogic.deleteAclUser(getLoginUser(),idArr);
+					this.userLogic.deleteAclUser(getLoginUser(), idArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
-					JSONObject json=new JSONObject(result);
+					JSONObject json = new JSONObject(result);
 					out.println(json.toString());
 					out.flush();
 					out.close();
 				} catch (Exception e) {
 					result.setSuccess(false);
 					result.setMsg("数据被其它地方引用，不能删除！");
-					JSONObject json=new JSONObject(result);
+					JSONObject json = new JSONObject(result);
 					out.println(json.toString());
 					out.flush();
 					out.close();
@@ -175,7 +175,7 @@ public class AclUserAction extends BaseAction {
 		}
 	}
 
-	public void registerUser(){
+	public void registerUser() {
 		System.out.println("注册");
 		PrintWriter out = null;
 		AjaxResult result = new AjaxResult();
@@ -188,7 +188,7 @@ public class AclUserAction extends BaseAction {
 			user.setUserName(userName);
 			user.setUserFlag(userFlag);
 			user.setPassword(MD5Util.encryptData(password.trim()));
-			this.userLogic.saveAclUser(getLoginUser(),user);
+			this.userLogic.saveAclUser(getLoginUser(), user);
 			result.setSuccess(true);
 			result.setMsg("注册成功");
 			JSONObject json = new JSONObject(result);
@@ -200,28 +200,29 @@ public class AclUserAction extends BaseAction {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 禁用或启用用户账号
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public String stopOrOpenUser() throws Exception{
+	public String stopOrOpenUser() throws Exception {
 		if (null != ids && !"".equals(ids)) {
 			String[] arr = ids.split(",");
-			AclUser editUser = this.userLogic.findUserById(getLoginUser(),arr[0]);
-			if(null!=editUser){
-				if("false".equals(userForbid)){
+			AclUser editUser = this.userLogic.findUserById(getLoginUser(), arr[0]);
+			if (null != editUser) {
+				if ("false".equals(userForbid)) {
 					editUser.setIsForbid(Boolean.FALSE);
-				}else if("true".equals(userForbid)){
+				} else if ("true".equals(userForbid)) {
 					editUser.setIsForbid(Boolean.TRUE);
 				}
-				this.userLogic.saveAclUser(getLoginUser(),editUser);
+				this.userLogic.saveAclUser(getLoginUser(), editUser);
 			}
 		}
 		return "del";
 	}
-	
+
 	public AclUser getUser() {
 		return user;
 	}
@@ -237,7 +238,7 @@ public class AclUserAction extends BaseAction {
 	public static void main(String[] args) {
 		System.out.println(MD5Util.encryptData("admin"));
 	}
-	
+
 	public void setUserLogic(AclUserLogic userLogic) {
 		this.userLogic = userLogic;
 	}

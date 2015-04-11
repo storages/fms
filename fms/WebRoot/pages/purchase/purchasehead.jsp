@@ -21,8 +21,8 @@
 
 <div class="modal-footer" style="text-align: left;padding:5px;height: 25px;">
 	<span class="">采购单号码</span><input type="text" id="happNo" value="${appNo}" style="height:25px;width:100px;" class="" /> 
-	<span class="">采购日期</span><input type="text" id="hbeginDate" value="${appDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
-	<input type="text" id="hendDate" class="datebox" value="${appDate}" style="height:25px;width:100px;"/>
+	<span class="">采购日期</span><input type="text" id="hbeginDate" value="${purBeginDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
+	<input type="text" id="hendDate" class="datebox" value="${purEndDate}" style="height:25px;width:100px;"/>
 	<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="gotoPage(1,1)"
 		style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
 </div>
@@ -145,6 +145,21 @@
 
 
 <script type="text/javascript">
+	/**
+	 * 转到指定页码
+	 * @param {Object} pageNum 要转到第几页        currIndex
+	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
+	 */
+	function gotoPage(pageNum, pageSize) {
+		var happNo = $("#happNo").val(); 
+		var hbeginappDate = $("#hbeginDate").val();
+		var hendappDate = $("#hendDate").val();
+		var likeStr = "appBillNo="+happNo+"&purBeginDate="+hbeginappDate+"&purEndDate="+hendappDate+"&currIndex=" + pageNum + "&maxIndex="+ pageSize;
+		// 拼接URL
+		var url = "${pageContext.request.contextPath}/purchase_findPurchaseHeads.action?"+likeStr;
+		// 在本窗口中显示指定URL的页面
+		toMain(url);
+	}
 
 $("#hbeginDate").datepicker({
 	changeYear: true,

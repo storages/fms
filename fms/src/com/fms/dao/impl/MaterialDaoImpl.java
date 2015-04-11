@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.Unit;
 import com.fms.dao.MaterialDao;
@@ -64,6 +65,26 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 			String hql = "select count(id) from " + className.trim() + " a where a.imgExgFlag =? ";
 			if (null != name && !"".equals(name)) {
 				hql += " and a.hsName like '%" + name + "%'";
+			}
+			num = this.count(hql, new Object[] { imgExgFlag });
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return num;
+	}
+
+	public Integer findDataCountExgs(AclUser loginUser, String className, String hsName, String hsCode, String hsModel, String imgExgFlag) {
+		Integer num = 0;
+		try {
+			String hql = "select count(a.id) from " + className.trim() + " a where a.imgExgFlag =? ";
+			if (null != hsName && !"".equals(hsName)) {
+				hql += " and a.hsName like '%" + hsName + "%'";
+			}
+			if (null != hsCode && !"".equals(hsCode)) {
+				hql += " and a.hsCode like '%" + hsCode + "%'";
+			}
+			if (null != hsModel && !"".equals(hsModel)) {
+				hql += " and a.model like '%" + hsModel + "%'";
 			}
 			num = this.count(hql, new Object[] { imgExgFlag });
 		} catch (Exception e) {
@@ -135,7 +156,7 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 	 * @param imgExgFlag
 	 * @return
 	 */
-	public List<Material> findAllMaterialExgs(String hsCode, String hsName, String hsModel, String imgExgFlag) {
+	public List<Material> findAllMaterialExgs(String hsCode, String hsName, String hsModel, String imgExgFlag, Integer index, Integer length) {
 		try {
 			String hql = "select a from Material a left join fetch a.unit left join fetch a.materialType where 1=1 ";
 			List param = new ArrayList();
@@ -152,7 +173,7 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 			if (null != hsModel && !"".equals(hsModel)) {
 				hql += " and a.model like '%" + hsModel + "%'";
 			}
-			return this.find(hql, param.toArray());
+			return this.findPageList(hql, param.toArray(), index, length);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

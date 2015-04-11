@@ -26,7 +26,7 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 						<thead>
 							<tr>
-								<th class="center" style="width:30px;">选择</th>
+								<th class="center" style="width:30px;"><input type="checkbox" title="全选" id="checkAll"/></th>
 								<th class="center">行号</th>
 								<th class="center">物料标记</th>
 								<th class="center">物料编码</th>

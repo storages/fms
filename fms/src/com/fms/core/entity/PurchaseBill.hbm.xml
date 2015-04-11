@@ -16,6 +16,7 @@
 		<property name="purchaseNo" column="PURCHASENO" />
 		<property name="purchStatus" column="PURCHSTATUS" />
 		<property name="appBillNo" column="APPBILLNO" />
+		<property name="itemNo" column="ITEMNO" />
 		<many-to-one name="scmcoc" class="Scmcoc" column="SCMCOC" />
 		<property name="totalAmount" column="TOTALAMOUNT" />
 		<property name="purchDate" column="PURCHDATE" />

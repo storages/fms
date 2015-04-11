@@ -47,6 +47,10 @@ public class MaterialLogicImpl implements MaterialLogic {
 		return materialDao.findDataCount(className, name, imgExgFlag);
 	}
 
+	public Integer findDataCountExgs(AclUser loginUser, String className, String hsName, String hsCode, String hsModel, String imgExgFlag) {
+		return materialDao.findDataCountExgs(loginUser, className, hsName, hsCode, hsModel, imgExgFlag);
+	}
+
 	public List<Unit> findAllUnit(AclUser loginUser) {
 		return materialDao.findAllUnit();
 	}
@@ -80,8 +84,8 @@ public class MaterialLogicImpl implements MaterialLogic {
 		return this.materialDao.findMaterialByHsCode(hsCode);
 	}
 
-	public List<Material> findMaterialExgs(AclUser loginUser, String hsCode, String hsName, String hsModel, String imgExgFlag) {
-		return this.materialDao.findAllMaterialExgs(hsCode, hsName, hsModel, imgExgFlag);
+	public List<Material> findMaterialExgs(AclUser loginUser, String hsCode, String hsName, String hsModel, String imgExgFlag, Integer index, Integer length) {
+		return this.materialDao.findAllMaterialExgs(hsCode, hsName, hsModel, imgExgFlag, index, length);
 	}
 
 	public Integer findDataCount(String className, String name) {

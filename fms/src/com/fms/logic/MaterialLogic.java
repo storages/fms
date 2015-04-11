@@ -14,6 +14,8 @@ public interface MaterialLogic {
 
 	public Integer findDataCount(String className, String name);
 
+	public Integer findDataCountExgs(AclUser loginUser, String className, String hsName, String hsCode, String hsModel, String imgExgFlag);
+
 	public Integer findDataCount(AclUser loginUser, String className, String name, String imgExgFlag);
 
 	public List<Unit> findAllUnit(AclUser loginUser);
@@ -32,7 +34,7 @@ public interface MaterialLogic {
 
 	public Material findMaterialByHsCode(AclUser loginUser, String hsCode);
 
-	List<Material> findMaterialExgs(AclUser loginUser, String hsCode, String hsName, String hsModel, String imgExgFlag);
+	List<Material> findMaterialExgs(AclUser loginUser, String hsCode, String hsName, String hsModel, String imgExgFlag, Integer index, Integer length);
 
 	/**
 	 * 验证数据有效性

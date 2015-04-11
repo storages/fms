@@ -36,14 +36,14 @@ public class PurchaseBill extends BaseEntity {
 	@CnFileName(name = "采购单状态")
 	private String purchStatus = "0";
 	/**
-	 * 采购单号(appBillNo) 由申请单【审核】后系统抓取申请单
+	 * 申请单号(appBillNo) 由申请单【审核】后系统抓取申请单
 	 */
-	@CnFileName(name = "采购单号")
+	@CnFileName(name = "申请单号")
 	private String appBillNo;
 	/**
-	 * 申请单项数
+	 * 采购单项数
 	 */
-	@CnFileName(name = "申请单项数")
+	@CnFileName(name = "采购单项数")
 	private Integer itemNo;
 	/**
 	 * 供应商(实体ScmCoc) 由申请单【审核】后系统抓取申请单

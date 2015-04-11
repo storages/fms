@@ -102,11 +102,17 @@ public class BomAction extends BaseAction {
 	 */
 	@SuppressWarnings("unchecked")
 	public String addExgData() throws Exception {
-		List<Material> exgList = materLogic.findMaterialExgs(getLoginUser(), hsCode, hsName, hsModel, ImgExgFlag.EXG);
+		Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
+		Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
+		dataTotal = this.materLogic.findDataCountExgs(getLoginUser(), "Material", hsCode, hsName, hsModel, ImgExgFlag.EXG);
+		List<Material> exgList = materLogic.findMaterialExgs(getLoginUser(), hsCode, hsName, hsModel, ImgExgFlag.EXG, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 		this.request.put("exgList", exgList);
 		this.request.put("hsName", parseValue(hsName));
 		this.request.put("hsCode", parseValue(hsCode));
 		this.request.put("hsModel", parseValue(hsModel));
+		this.request.put("currIndex", curr);
+		this.request.put("maxIndex", max);
+		this.request.put("pageNums", pageCount(max, dataTotal));
 		return "add";
 	}
 

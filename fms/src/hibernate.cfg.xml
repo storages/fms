@@ -7,30 +7,11 @@
 <hibernate-configuration>
 
 <session-factory>
-	<property name="dialect">
-		org.hibernate.dialect.SQLServerDialect
-	</property>
+	<property name="dialect">org.hibernate.dialect.SybaseDialect</property>
 	<property name="hbm2ddl.auto">update</property>
 	<property name="show_sql">true</property>
 	<property name="format_sql">true</property>
 
-	<!-- 实体类映射开始 -->
-	<!-- 	<property name="myeclipse.connection.profile">
-		MyEclipse Derby
-		</property>
-		<property name="connection.url">
-		jdbc:derby://localhost:1527/myeclipse
-		</property>
-		<property name="connection.username">classiccars</property>
-		<property name="connection.password">myeclipse</property> -->
-	<!-- 	<property name="connection.driver_class">
-		org.apache.derby.jdbc.ClientDriver
-		</property> -->
-	<!-- <property name="myeclipse.connection.profile">sqlserver</property>
-		<property name="connection.url">jdbc:sqlserver://127.0.0.1:1433;DatabaseName=fms</property>
-		<property name="connection.username">sa</property>
-		<property name="connection.password">guodacai</property>
-		<property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property> -->
 	<mapping resource="com/fms/core/entity/Currencies.hbm.xml" />
 	<mapping resource="com/fms/core/entity/AclUser.hbm.xml" />
 	<mapping resource="com/fms/core/entity/BehaviorRecord.hbm.xml" />

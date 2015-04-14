@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
-import com.fms.core.entity.AclUser;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
@@ -33,9 +32,31 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 		return (PurchaseBill) this.saveOrUpdateNoCache(head);
 	}
 
-	public List<PurchaseItem> findItemById(String id) {
-		String hql = "select a from PurchaseItem a left join fetch a.purchaseBill head left join fetch a.material mat left join fetch unit u where head.id =? order by a.purchaseDate ";
-		return this.find(hql, id);
+	public List<PurchaseItem> findItemById(String id, String hsCode) {
+		List list = new ArrayList();
+		String hql = "select a from PurchaseItem a left join fetch a.purchaseBill head left join fetch a.material mat left join fetch mat.unit u where head.id =? ";
+		list.add(id);
+		if (hsCode != null && !"".equals(hsCode)) {
+			hql += "and mat.hsCode like ?   ";
+			list.add("%" + hsCode + "%");
+		}
+		hql += " order by a.purchaseDate";
+		return this.find(hql, list.toArray());
+	}
+
+	public List<PurchaseItem> findItemByHids(String[] ids) {
+		if (null != ids && ids.length > 0) {
+			List list = new ArrayList();
+			StringBuilder builder = new StringBuilder();
+			builder.append("select a from PurchaseItem a left join fetch a.purchaseBill head  where head.id =? ");
+			list.add(ids[0]);
+			for (int i = 1; i < ids.length; i++) {
+				builder.append("or head.id =? ");
+				list.add(ids[i]);
+			}
+			return this.find(builder.toString(), list.toArray());
+		}
+		return null;
 	}
 
 	public PurchaseBill findPurchaseBillById(String id) {
@@ -123,5 +144,20 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 
 	public PurchaseBill findPurchaseById(String id) {
 		return (PurchaseBill) this.findUniqueResult("from PurchaseBill a where a.id =? ", new Object[] { id });
+	}
+
+	public List<PurchaseBill> findPurchaseBillByIds(String[] hid) {
+		if (null != hid && hid.length > 0) {
+			List list = new ArrayList();
+			StringBuilder builder = new StringBuilder();
+			builder.append("select a from PurchaseBill a  where a.id =? ");
+			list.add(hid[0]);
+			for (int i = 1; i < hid.length; i++) {
+				builder.append("or a.id =? ");
+				list.add(hid[i]);
+			}
+			return this.find(builder.toString(), list.toArray());
+		}
+		return null;
 	}
 }

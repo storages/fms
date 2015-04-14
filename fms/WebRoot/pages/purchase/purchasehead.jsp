@@ -83,7 +83,7 @@
 											<a href="javascript:void(0);" onclick="adddetail('${head.id}');">详细</a>｜
 											<c:if test="${head.purchStatus=='0'}"><a href="javascript:void(0);"  onclick="edit(this,'13')"><span style="color: green;">修改</span></a></c:if>
 											<c:if test="${head.purchStatus=='1'}">
-												<span style="color:gray;" title="<c:if test='${head.appStatus==1}'>生效状态，不能修改</c:if>">修改</span>
+												<span style="color:gray;" title="<c:if test='${head.purchStatus==1}'>生效状态，不能修改</c:if>">修改</span>
 											</c:if>
 										</td>
 								</tr>
@@ -97,9 +97,9 @@
 			</div>
 <div class="modal-footer" style="padding:0px;">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="effect" onclick="sureBuy()">生效</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="back" onclick="cancelBuy()">回卷</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="print" onclick="printPus()">打印采购单</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="effect" >生效</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="back" >回卷</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="print" onclick="printPus()">导出采购单</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
@@ -203,15 +203,69 @@ $("#hendDate").datepicker({
 		
 		//生效
 		$('#effect').click(function(){
-			alert('生效');
+			var url = "${pageContext.request.contextPath}/purchase_purchEffect.action";
+			var splitStr = "";
+			$('input[name="sid"]:checked').each(function(){
+				splitStr+=$(this).val()+',';
+			  }); 
+			if(splitStr==""){
+				alert("请选择要生效的内容!");
+				return;
+			}
+			splitStr = splitStr.substring(0, splitStr.length-1);
+			$.ajax({
+			 	type: "POST",
+				url:url,
+				data:{ids:splitStr,flag:"true"},
+				async: false,
+				cache: false,
+				success:function(args){
+					var result=jQuery.parseJSON(args);
+					if(result.success){
+						url = "${pageContext.request.contextPath}/purchase_findPurchaseHeads.action";
+						toMain(url);
+					}else{
+						alert(result.msg);
+					}
+				},error:function(){
+				    	alert("程序异常，请重新启动程序！");
+				  }
+			});
 		});
 		
 		//回卷
 		$('#back').click(function(){
-			alert('回卷');
+			var url = "${pageContext.request.contextPath}/purchase_purchEffect.action";
+			var splitStr = "";
+			$('input[name="sid"]:checked').each(function(){
+				splitStr+=$(this).val()+',';
+			  }); 
+			if(splitStr==""){
+				alert("请选择要回卷的内容!");
+				return;
+			}
+			splitStr = splitStr.substring(0, splitStr.length-1);
+			$.ajax({
+			 	type: "POST",
+				url:url,
+				data:{ids:splitStr,flag:"false"},
+				async: false,
+				cache: false,
+				success:function(args){
+					var result=jQuery.parseJSON(args);
+					if(result.success){
+						url = "${pageContext.request.contextPath}/purchase_findPurchaseHeads.action";
+						toMain(url);
+					}else{
+						alert(result.msg);
+					}
+				},error:function(){
+				    	alert("程序异常，请重新启动程序！");
+				  }
+			});
 		});
 		
-		//打印采购单
+		//导出采购单
 		$('#print').click(function(){
 			alert('打印采购单');
 		});

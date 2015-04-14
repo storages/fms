@@ -133,7 +133,7 @@ public class QuotationLogicImpl implements QuotationLogic {
 					// 必须是未生效的采购单才能更新单价
 					if (bill.getPurchStatus().equals(PurchaseBillStatus.UNEFFECT)) {
 						// 根据采购单表头id来查询所有表体
-						List<PurchaseItem> items = this.purchaseBillDao.findItemById(bill.getId());
+						List<PurchaseItem> items = this.purchaseBillDao.findItemById(bill.getId(), null);
 						Double amount = 0d;
 						for (PurchaseItem temp : items) {
 							if (!temp.getIsBuy()) {

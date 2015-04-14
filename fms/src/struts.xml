@@ -165,6 +165,7 @@
 		<!-- 采购单 -->
 		<action name="purchase_*" class="purchaseAction" method="{1}">
 			<result name="success">/pages/purchase/purchasehead.jsp</result>
+			<result name="detail">/pages/purchase/purchaseItem.jsp</result>
 		</action>
 		
 		

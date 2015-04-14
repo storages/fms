@@ -67,4 +67,12 @@ public interface PurchaseBillLogic {
 	 * @param heads
 	 */
 	public void saveOrUpdate(AclUser loginUser,List<PurchaseBill> heads);
+	
+	/**
+	 * 查找采购单表头对应的详细列表
+	 * @param loginUser
+	 * @param hid
+	 * @return
+	 */
+	public List<PurchaseItem> findItemByHid(AclUser loginUser,String hid);
 }

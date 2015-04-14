@@ -10,6 +10,7 @@ import java.util.List;
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.PurchaseBill;
+import com.fms.core.entity.PurchaseItem;
 import com.fms.logic.PurchaseBillLogic;
 import com.fms.utils.AjaxResult;
 import com.url.ajax.json.JSONObject;
@@ -46,6 +47,7 @@ public class PurchaseAction extends BaseAction {
 	protected String purBeginDate;//采购单开始日期
 	protected String purEndDate;//采购单结束日期
 	
+	protected String hid;//采购单表头id
 	protected String jsonstr;//修改数据的json字符串(数组：id,修改的值)
 	/**
 	 * 获取采购单表头
@@ -150,6 +152,16 @@ public class PurchaseAction extends BaseAction {
 		return pageNums;
 	}
 	
+	/**
+	 * 跳转到详细清单
+	 * @return
+	 */
+	public String detail(){
+		List<PurchaseItem> itemList = this.purchaseBillLogic.findItemByHid(getLoginUser(),hid);
+		this.request.put("itemList", itemList);
+		this.request.put("hid", hid);
+		return "detail";
+	}
 	
 	public Integer getDataTotal() {
 		return dataTotal;
@@ -198,6 +210,12 @@ public class PurchaseAction extends BaseAction {
 	}
 	public void setJsonstr(String jsonstr) {
 		this.jsonstr = jsonstr;
+	}
+	public String getHid() {
+		return hid;
+	}
+	public void setHid(String hid) {
+		this.hid = hid;
 	}
 
 	

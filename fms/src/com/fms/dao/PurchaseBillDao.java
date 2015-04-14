@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
@@ -103,4 +104,12 @@ public interface PurchaseBillDao extends BaseDao{
 	 * @return
 	 */
 	public PurchaseBill findPurchaseById(String id);
+	
+	/**
+	 * 查找采购单表头对应的详细列表
+	 * @param loginUser
+	 * @param hid
+	 * @return
+	 *//*
+	public List<PurchaseItem> findItemByHid(String hid);*/
 }

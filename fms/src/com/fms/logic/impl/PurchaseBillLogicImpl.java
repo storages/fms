@@ -63,6 +63,10 @@ public class PurchaseBillLogicImpl implements PurchaseBillLogic {
 	public void saveOrUpdate(AclUser loginUser,List<PurchaseBill> heads) {
 		this.purchaseBillDao.batchSaveOrUpdate(heads);
 	}
+
+	public List<PurchaseItem> findItemByHid(AclUser loginUser, String hid) {
+		return this.purchaseBillDao.findItemById(hid);
+	}
 	
 	
 }

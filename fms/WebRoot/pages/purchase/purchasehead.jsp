@@ -48,23 +48,12 @@
 						<th class="center" style="width:90px;">采购时间</th>
 						<th class="center" style="width:50px;">是否完结</th>
 						<th class="center" style="width:160px;">特别说明</th>
-						<!-- 
-						
-						<th class="center" style="width:90px;">交货日期</th>
-						<th class="center" style="width:50px;">物料编码</th>
-						<th class="center" style="width:91px;">物料名称</th>
-						<th class="center" style="width:91px;">物料规格型号</th>
-						<th class="center" style="width:50px;">采购数量</th>
-						<th class="center" style="width:71px;">总数量</th>
-						<th class="center" style="width:90px;">申请人</th>
-						<th class="center" style="width:60px;">已审批数</th>
-						<th class="center" style="width:60px;">未审批数</th> -->
 						<th class="center"  style="width: 90px;">操作</th>
 					</tr>
 				</thead>
 						<tbody id="headmodel">
 							<c:forEach var="head" items="${headList}" varStatus="index" step="1">
-								<tr">
+								<tr>
 									<td class="center" style="width:20px;" >
 										<input type="checkbox" value="${head.id}" name="sid" style="width:20px;"/>
 									</td>
@@ -160,6 +149,12 @@
 		// 在本窗口中显示指定URL的页面
 		toMain(url);
 	}
+
+//去采购单表体
+function adddetail(hid){
+	var url = "${pageContext.request.contextPath}/purchase_detail.action?hid="+hid;
+	toMain(url);
+}
 
 $("#hbeginDate").datepicker({
 	changeYear: true,

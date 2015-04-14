@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDaoImpl;
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
@@ -33,7 +34,7 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 	}
 
 	public List<PurchaseItem> findItemById(String id) {
-		String hql = "select item from PurchaseItem item left join fetch item.material mater left join fetch item.purchaseBill head where head.id = ? ";
+		String hql = "select a from PurchaseItem a left join fetch a.purchaseBill head left join fetch a.material mat left join fetch unit u where head.id =? order by a.purchaseDate ";
 		return this.find(hql, id);
 	}
 

@@ -324,7 +324,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 		try {
 			for (PurchaseBill head : purchaseBills) {
 				head = this.purchaseBillDao.findPurchaseBillById(head.getId());
-				List<PurchaseItem> items = this.purchaseBillDao.findItemById(head.getId());
+				List<PurchaseItem> items = this.purchaseBillDao.findItemById(head.getId(), null);
 				if (items != null && items.size() > 0) {
 					Double amount = 0d;
 					for (PurchaseItem i : items) {
@@ -372,7 +372,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 	private void deleteHeadNotItem(List<PurchaseBill> list) {
 		List<PurchaseBill> heads = new ArrayList<PurchaseBill>();
 		for (PurchaseBill bill : list) {
-			List<PurchaseItem> items = this.purchaseBillDao.findItemById(bill.getId());
+			List<PurchaseItem> items = this.purchaseBillDao.findItemById(bill.getId(), null);
 			if (null == items || items.size() <= 0) {
 				heads.add(bill);
 			}

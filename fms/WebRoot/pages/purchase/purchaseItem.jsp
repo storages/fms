@@ -20,7 +20,7 @@
 </script>
 
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
-	<input type="text" value="${hid}"  id="hid"/>
+	<input type="hidden" value="${hid}"  id="hid"/>
 	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">采购单详细列表</span>
 </div>
 
@@ -67,7 +67,7 @@
 									<td class="center" style="width:20px;" >${item.qty}&nbsp;</td>
 									<td class="center" style="width:20px;" >${item.price}&nbsp;</td>
 									<td class="center" style="width:20px;" >${item.amount}&nbsp;</td>
-									<td class="center" style="width:20px;" >${item.purchaseDate}&nbsp;</td>
+									<td class="center" style="width:60px;" ><fmt:formatDate value="${item.purchaseDate}" type="date"/>&nbsp;</td>
 									<td class="center" style="width:20px;" >${item.deliveryDate}&nbsp;</td>
 									<td class="center" style="width:20px;" ><input type="checkbox" DISABLED value="${item.isBuy }" <c:if test="${item.isBuy }">checked="checked"</c:if>/></td>
 									<td class="center" style="width:20px;" >

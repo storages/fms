@@ -20,7 +20,7 @@
 </div>
 <input type="hidden" id="d1" value="${beginappDate}"/><input type="hidden" id="d2" value="${endappDate}"/>
 <div class="modal-footer" style="text-align: left;padding:5px;height: 25px;">
-	<span class="">申请单号码</span><input type="text" id="happNo" value="${appNo}" style="height:25px;width:100px;" class="" /> 
+	<span class="">申请单号</span><input type="text" id="happNo" value="${appNo}" style="height:25px;width:100px;" class="" /> 
 	<span class="">申请日期</span><input type="text" id="hbeginappDate" value="${appDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
 	<input type="text" id="hendappDate" class="datebox" value="${appDate}" style="height:25px;width:100px;"/>
 	申请单状态<select name="appHeadStatus" class="select_css" id="appHeadStatus">
@@ -44,7 +44,7 @@
 						<th class="center" style="width:30px;"><input id="checkAll" type="checkbox"/></th>
 						<th class="center" style="width:40px;">流水号</th>
 						<th class="center" style="width:71px;">申请单状态</th>
-						<th class="center" style="width:91px;">申请单号码</th>
+						<th class="center" style="width:91px;">申请单号</th>
 						<th class="center" style="width:91px;">项数</th>
 						<th class="center" style="width:71px;">总数量</th>
 						<th class="center" style="width:71px;">总金额</th>

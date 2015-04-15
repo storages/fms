@@ -14,6 +14,7 @@
 
 		<property name="serialNo" column="SERIALNO" />
 		<property name="purchaseNo" column="PURCHASENO" />
+		<property name="inStorageNo" column="INSTORAGENO" />
 		<property name="hsCode" column="HSCODE" />
 		<property name="orderNo" column="ORDERNO" />
 		<property name="ptCode" column="PTCODE" />

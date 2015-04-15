@@ -13,6 +13,7 @@
 
 
 		<property name="serialNo" column="SERIALNO" />
+		<property name="outStorageNo" column="OUTSTORAGENO" />
 		<property name="orderNo" column="ORDERNO" />
 		<property name="hsCode" column="HSCODE" />
 		<property name="hsName" column="HSNAME" />

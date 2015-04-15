@@ -22,6 +22,7 @@
 		<property name="purchDate" column="PURCHDATE" />
 		<property name="printCount" column="PRINTCOUNT" />
 		<property name="isComplete" column="ISCOMPLETE" />
+		<property name="orderNo" column="ORDERNO" />
 		<property name="specialNote" column="SPECIALNOTE" />
 	</class>
 </hibernate-mapping>

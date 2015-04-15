@@ -76,6 +76,12 @@ public class PurchaseBill extends BaseEntity {
 	@CnFileName(name = "特别说明")
 	private String specialNote;
 
+	/**
+	 * 订单号
+	 */
+	@CnFileName(name = "订单号")
+	private String orderNo;
+
 	public Integer getSerialNo() {
 		return serialNo;
 	}
@@ -162,6 +168,14 @@ public class PurchaseBill extends BaseEntity {
 
 	public void setPurchDate(Date purchDate) {
 		this.purchDate = purchDate;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 
 }

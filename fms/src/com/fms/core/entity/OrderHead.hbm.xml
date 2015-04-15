@@ -21,6 +21,7 @@
 		<property name="placeOrderDate" column="PLACEORDERDATE" />
 		<property name="deliveryDate" column="DELIVERYDATE" />
 		<property name="salesman" column="SALESMAN" />
+		<property name="isFinish"  column="ISFINISH"/>
 		<property name="note" column="NOTE" />
 	</class>
 </hibernate-mapping>

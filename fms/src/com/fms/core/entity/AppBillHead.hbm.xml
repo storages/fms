@@ -22,6 +22,7 @@
 		<many-to-one name="submitUser" class="AclUser" column="SUBMITUSER" lazy="false"/>
 		<property name="approvaledQty" column="APPROVALEDQTY" />
 		<property name="unApprovalQty" column="UNAPPROVALQTY" />
+		<property name="orderNo" column="ORDERNO" />
 		<property name="note" column="NOTE" />
 	</class>
 </hibernate-mapping>

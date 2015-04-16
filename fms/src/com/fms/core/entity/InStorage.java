@@ -37,7 +37,7 @@ public class InStorage extends BaseEntity {
 	 */
 	@CnFileName(name = "订单号")
 	private String orderNo;
-	
+
 	/**
 	 * 物料清单对象
 	 */
@@ -58,7 +58,12 @@ public class InStorage extends BaseEntity {
 	 */
 	@CnFileName(name = "入库日期")
 	private Date impDate;
-	
+
+	/**
+	 * 客户供应商对象
+	 */
+	@CnFileName(name = "客户供应商")
+	private Scmcoc scmcoc;
 	/**
 	 * 仓库对象
 	 */
@@ -117,7 +122,6 @@ public class InStorage extends BaseEntity {
 		this.purchaseNo = purchaseNo;
 	}
 
-
 	public String getOrderNo() {
 		return orderNo;
 	}
@@ -125,7 +129,6 @@ public class InStorage extends BaseEntity {
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
-
 
 	public Double getInQty() {
 		return inQty;
@@ -207,7 +210,6 @@ public class InStorage extends BaseEntity {
 		this.note = note;
 	}
 
-
 	public Material getMaterial() {
 		return material;
 	}
@@ -230,6 +232,14 @@ public class InStorage extends BaseEntity {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
+	}
+
+	public Scmcoc getScmcoc() {
+		return scmcoc;
+	}
+
+	public void setScmcoc(Scmcoc scmcoc) {
+		this.scmcoc = scmcoc;
 	}
 
 }

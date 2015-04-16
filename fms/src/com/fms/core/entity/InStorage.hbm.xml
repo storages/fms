@@ -27,6 +27,7 @@
 		<property name="impFlag" column="IMPFLAG" />
 		<property name="materialTypeName" column="MATERIALTYPENAME" />
 		<many-to-one name="stock" column="STOCK" class="Stock"/>
+		<many-to-one name="scmcoc" column="SCMCOC" class="Scmcoc"/>
 		<property name="note" column="NOTE" />
 	</class>
 </hibernate-mapping>

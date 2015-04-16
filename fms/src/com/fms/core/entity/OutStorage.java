@@ -74,6 +74,12 @@ public class OutStorage extends BaseEntity {
 	 */
 	@CnFileName(name = "物料类型")
 	private String materialTypeName;
+
+	/**
+	 * 客户供应商对象
+	 */
+	@CnFileName(name = "客户供应商")
+	private Scmcoc scmcoc;
 	/**
 	 * 备注
 	 */
@@ -95,7 +101,6 @@ public class OutStorage extends BaseEntity {
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
-
 
 	public Material getMaterial() {
 		return material;
@@ -183,6 +188,14 @@ public class OutStorage extends BaseEntity {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
+	}
+
+	public Scmcoc getScmcoc() {
+		return scmcoc;
+	}
+
+	public void setScmcoc(Scmcoc scmcoc) {
+		this.scmcoc = scmcoc;
 	}
 
 }

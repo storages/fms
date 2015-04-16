@@ -1,6 +1,8 @@
 package com.fms.test;
 
 import java.awt.HeadlessException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,6 +13,8 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -18,7 +22,12 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
+
+import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Stock;
 import com.fms.logic.StockLogic;
 import com.fms.utils.ExcelUtil;
@@ -30,13 +39,72 @@ import com.fms.utils.ExcelUtil;
  * 
  */
 public class OptionExcel {
-
 	StockLogic logic;
 	public static void main(String[] args) {
 		//readExcel();// 读取excel
-		 new ExcelUtil().createPDF();//生成PDF文档
+		 //new ExcelUtil().createPDF();//生成PDF文档
+		
+		//准备模拟数据
+		List list = new ArrayList();
+		AclUser user = new AclUser();
+		user.setUserName("张三");
+		user.setPassword("123456");
+		user.setUserFlag("正常");
+		list.add(user);
+		AclUser user2 = new AclUser();
+		user2.setUserName("李四");
+		user2.setPassword("abcdef");
+		user2.setUserFlag("正常2");
+		list.add(user2);
+		
+		//导出到excel模板(这个模板是我们提前做好后放在一个指定的目录)
+		//这个路径是我在没有启动tomcat时临时测试用的，如果项目中要用到，那我们就要在WEB-INF下建一个专用文件夹
+		String path = OptionExcel.class.getResource("/").getPath();
+		String mess = exportDataToTemplate(new File(path+"test.xls"),list);
+		if(StringUtils.isNotBlank(mess)){
+			System.out.println(mess);
+		}
 	}
 
+	
+	/**
+	 * 导出数据到系统模板
+	 */
+	public static String exportDataToTemplate(File excelTemplate,List exportData){
+		String mess = "";
+		byte[] templateData = ExcelUtil.downloadTemplate(excelTemplate);
+		if(templateData==null || templateData.length<=0){
+			//System.out.println("模板不存在!");
+			mess =  "模板不存在!";
+		}
+		try {
+			ByteArrayOutputStream outBuffer = new ByteArrayOutputStream();
+			Workbook wb = new HSSFWorkbook(new ByteArrayInputStream(templateData));
+			Sheet sheet = wb.getSheet("For Check");
+			if (sheet == null) {
+				//System.out.println("模板不正确!");
+				mess = "模板不正确!";
+			}else{
+				Row row = null;
+				for(int i=0;i<exportData.size();i++){
+					 row = sheet.createRow(i + 1);
+			        AclUser user = (AclUser) exportData.get(i);
+			         ExcelUtil.writeCell(row, user.getUserName(), 0);
+			         ExcelUtil.writeCell(row, user.getPassword(), 1);
+			         ExcelUtil.writeCell(row, user.getUserFlag(), 2);
+				}
+				wb.setForceFormulaRecalculation(true);
+				 wb.write(outBuffer);
+				 FileUtils.writeByteArrayToFile(excelTemplate, outBuffer.toByteArray());
+				 Runtime.getRuntime().exec("cmd  /c start " + excelTemplate.getAbsolutePath() + "");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return mess;
+	}
+	
+	
 	/**
 	 * 读取excel内容
 	 * 
@@ -212,6 +280,4 @@ public class OptionExcel {
 	public void setLogic(StockLogic logic) {
 		this.logic = logic;
 	}
-	
-	
 }

@@ -32,44 +32,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-     <div class="page-header position-relative" style="margin-bottom: 0px;">
+     <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
 		<h5>物料＞＞入库</h5>
 	</div>
-	<div class="modal-footer" style="text-align: left;">
+	<div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
 		<span class="">入库日期</span><input type="text" id="beginDate" value="" style="height:25px; width:100px;" readonly="readonly"/><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
 		<span class="">供应商名称</span><input type="text" id="scmcocName" value="" style="height:25px; width:100px;" class=""/>
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px; width:100px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 	</div>
-	<div class="row-fluid" >
+	<div >
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
 
 			<div class="row-fluid">
-				<div class="span12">
+				<div style="overflow-x: auto;">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 						<thead>
 							<tr>
-								<th class="center" style="width:30px;">选择</th>
-								<th class="center">流水号</th>
-								<th class="center">启用状态</th>
-								<th class="center">采购单号</th>
-								<th class="center">物料编码</th>
-								<th class="center">订单号</th>
-								<th class="center">商品编码</th>
-								<th class="center">货物名称</th>
-								<th class="center">货物规格型号</th>
-								<th class="center">入库数量</th>
-								<th class="center">批次号</th>
-								<th class="center">入库人</th>
-								<th class="center">入库日期</th>
-								<th class="center">每包装数量</th>
-								<th class="center">件数</th>
-								<th class="center">货物标志</th>
-								<th class="center">入库类型</th>
-								<th class="center">物料类型</th>
-								<th class="center">备注</th>
-								<th class="center">操作</th>
+								<th style="width:30px;"><input type="checkbox" title="全选" id="checkAll"/></th>
+								<th>流水号</th>
+								<th>状态</th>
+								<th>入库单号</th>
+								<th>订单号</th>
+								<th>采购单号</th>
+								<th>物料编码</th>
+								<th>商品编码</th>
+								<th>货物名称</th>
+								<th>货物规格型号</th>
+								<th>数量</th>
+								<th>单位</th>
+								<th>批次号</th>
+								<th>每包装数量</th>
+								<th>件数</th>
+								<th>仓库名称</th>
+								<th>货物标志</th>
+								<th>入库类型</th>
+								<th>物料类型</th>
+								<th>入库人</th>
+								<th>入库日期</th>
+								<th>备注</th>
+								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>

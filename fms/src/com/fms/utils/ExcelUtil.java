@@ -1,24 +1,36 @@
 package com.fms.utils;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -315,4 +327,66 @@ public class ExcelUtil {
 
 	}
 
+	
+	/**
+     * 写单元格
+     *
+     * @param row
+     * @param value
+     * @param index
+     */
+    public static void writeCell(Row row, Object value, int index) {
+        Workbook workbook = row.getSheet().getWorkbook();
+        Cell cell = row.createCell(index);
+        CellStyle style = workbook.createCellStyle();
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+        if (value != null) {
+            if (value instanceof Date) {
+                DataFormat format = workbook.createDataFormat();
+                style.setDataFormat(format.getFormat("yyyy-MM-dd"));
+                cell.setCellValue((Date) value);
+            } else if (value instanceof Calendar) {
+                cell.setCellValue((Calendar) value);
+                DataFormat format = workbook.createDataFormat();
+                style.setDataFormat(format.getFormat("yyyy-MM-dd"));
+            } else if (value instanceof Double) {
+                cell.setCellValue((Double) value);
+            } else if (value instanceof Short) {
+                cell.setCellValue((Short) value);
+            } else if (value instanceof Integer) {
+                cell.setCellValue((Integer) value);
+            } else if (value instanceof Float) {
+                cell.setCellValue((Float) value);
+            } else if (value instanceof String) {
+                cell.setCellValue((String) value);
+            } else if (value instanceof StringBuilder) {
+                cell.setCellValue(value.toString());
+            } else if (value instanceof BigDecimal) {
+                cell.setCellValue(((BigDecimal) value).doubleValue());
+            }
+        }
+        cell.setCellStyle(style);
+    }
+	
+	
+	/**
+	 * 下载文件模板
+	 * @param file
+	 * @return
+	 */
+	public static byte[] downloadTemplate(File file){
+		try{
+			if(null!=file && !file.exists()){
+				return null;
+			}
+			return FileUtils.readFileToByteArray(file);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }

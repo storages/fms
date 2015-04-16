@@ -55,17 +55,17 @@ public class OutStorage extends BaseEntity {
 	private String expFlag;
 
 	/**
-	 * 每件包装数量(根据订单号从入库表中获取)
+	 * 每件包装数量
 	 */
 	@CnFileName(name = "每件包装数量")
 	private Double specQty;
 	/**
-	 * 件数(根据订单号从入库表中获取)
+	 * 件数
 	 */
 	@CnFileName(name = "件数")
 	private Double pkgs;
 	/**
-	 * 物料类型(根据订单号从入库表中获取)
+	 * 物料类型
 	 */
 	@CnFileName(name = "物料类型")
 	private String materialTypeName;

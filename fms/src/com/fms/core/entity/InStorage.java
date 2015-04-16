@@ -58,6 +58,12 @@ public class InStorage extends BaseEntity {
 	 */
 	@CnFileName(name = "入库日期")
 	private Date impDate;
+	
+	/**
+	 * 仓库对象
+	 */
+	@CnFileName(name = "仓库对象")
+	private Stock stock;
 	/**
 	 * 启用状态(useFlag) 0、启用 1、作废 系统默认启用
 	 */
@@ -216,6 +222,14 @@ public class InStorage extends BaseEntity {
 
 	public void setInStorageNo(String inStorageNo) {
 		this.inStorageNo = inStorageNo;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 
 }

@@ -55,6 +55,11 @@ public class OutStorage extends BaseEntity {
 	private String expFlag;
 
 	/**
+	 * 仓库对象
+	 */
+	@CnFileName(name = "仓库对象")
+	private Stock stock;
+	/**
 	 * 每件包装数量
 	 */
 	@CnFileName(name = "每件包装数量")
@@ -170,6 +175,14 @@ public class OutStorage extends BaseEntity {
 
 	public void setOutStorageNo(String outStorageNo) {
 		this.outStorageNo = outStorageNo;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 
 }

@@ -26,6 +26,7 @@
 		<property name="imgExgFlag" column="IMGEXGFLAG" />
 		<property name="impFlag" column="IMPFLAG" />
 		<property name="materialTypeName" column="MATERIALTYPENAME" />
+		<many-to-one name="stock" column="STOCK" class="Stock"/>
 		<property name="note" column="NOTE" />
 	</class>
 </hibernate-mapping>

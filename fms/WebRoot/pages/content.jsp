@@ -50,48 +50,29 @@
 				<li><span class="file"><a href="javascript:void(0);" data-url="/settl_findAllSett.action" >结算方式</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/currencies_findAllCurrencies.action" >交易货币管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/unit_findAllUnit.action">计量单位管理</a></span></li>
-				<!-- <li  class="closed"><span class="folder directer">仓库设置</span>
-					<ul> -->
-						<li><span class="file"><a href="javascript:void(0);" data-url="/stock_findAllStock.action" >仓库管理</a></span></li>
-					<!-- </ul>
-				</li> -->
+				<li><span class="file"><a href="javascript:void(0);" data-url="/stock_findAllStock.action">仓库管理</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/quotation_findQuotations.action">报价单</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/empl_employees.action">员工管理</a></span></li>
 			</ul>
 		</li>
-		<li  class="closed"><span class="folder directer">职员管理</span>
+		<li  class="closed"><span class="folder directer">物料管理</span>
 			<ul>
-				<li><span class="file"><a href="javascript:void(0);" data-url="/empl_employees.action">职员信息</a></span></li>
-			</ul>
-		</li>
-		<li><span class="file"><a href="javascript:void(0);" data-url="/quotation_findQuotations.action" >报价单</a></span></li>
-		<li><span class="file"><a href="javascript:void(0);" data-url="/appbill_findAppBillHeads.action" >申请单</a></span></li>
-		<li><span class="file"><a href="javascript:void(0);" data-url="/purchase_findPurchaseHeads.action" >采购单</a></span></li>
-		<li  class="closed"><span class="folder directer">物料</span>
-			<ul>
-				<li><span class="file"><a href="javascript:void(0);" data-url="/bom_findBomExg.action">物料BOM表管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/mater_findAllMaterialType.action">物料分类</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料清单</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/bom_findBomExg.action">物料BOM表管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/storage_findAllInStorage.action">入库</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" >出库</a></span></li>
 			</ul>
 		</li>
 		<li><span class="file"><a href="javascript:void(0);" data-url="#" >订单管理</a></span></li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="/appbill_findAppBillHeads.action" >申请单</a></span></li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="/purchase_findPurchaseHeads.action" >采购单</a></span></li>
+		
 		
 		<li class="closed"><span class="folder directer">报表查询</span>
 			<ul>
 				<li><span class="file"><a href="#">采购统计</a></span></li>
 				<li><span class="file"><a href="#">订单统计</a></span></li>
-			</ul>
-		</li>
-		<li class="closed"><span class="folder directer">外发加工</span>
-			<ul>
-				<li><span class="file"><a href="#">外发记录</a></span></li>
-			</ul>
-		</li>
-		
-		<li class="closed"><span class="folder directer">财务管理</span>
-			<ul>
-				<li><span class="file"><a href="">收款</a></span></li>
-				<li><span class="file"><a href="">付款</a></span></li>
 			</ul>
 		</li>
 		<li class="closed"><span class="folder directer">账单管理</span>

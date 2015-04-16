@@ -33,45 +33,21 @@ public class InStorage extends BaseEntity {
 	@CnFileName(name = "采购单号")
 	private String purchaseNo;
 	/**
-	 * 物料编码(hsCode)
-	 */
-	@CnFileName(name = "物料编码")
-	private String hsCode;
-	/**
 	 * 订单号(orderNo)
 	 */
 	@CnFileName(name = "订单号")
 	private String orderNo;
+	
 	/**
-	 * 商品编码(ptCode)
+	 * 物料清单对象
 	 */
-	@CnFileName(name = "商品编码")
-	private String ptCode;
-	/**
-	 * 货物名称(hsName)
-	 */
-	@CnFileName(name = "货物名称")
-	private String hsName;
-	/**
-	 * 货物规格型号(hsModel)
-	 */
-	@CnFileName(name = "货物规格型号")
-	private String hsModel;
-	/**
-	 * 颜色
-	 */
-	@CnFileName(name = "颜色")
-	private String colors;
+	@CnFileName(name = "物料清单对象")
+	private Material material;
 	/**
 	 * 入库数量(impQty)
 	 */
 	@CnFileName(name = "数量")
 	private Double inQty;
-	/**
-	 * 批次号(betchNo)
-	 */
-	@CnFileName(name = "批次号")
-	private String betchNo;
 	/**
 	 * 入库人(handling) 统自动生成(当前登录用户)
 	 */
@@ -135,13 +111,6 @@ public class InStorage extends BaseEntity {
 		this.purchaseNo = purchaseNo;
 	}
 
-	public String getHsCode() {
-		return hsCode;
-	}
-
-	public void setHsCode(String hsCode) {
-		this.hsCode = hsCode;
-	}
 
 	public String getOrderNo() {
 		return orderNo;
@@ -151,29 +120,6 @@ public class InStorage extends BaseEntity {
 		this.orderNo = orderNo;
 	}
 
-	public String getPtCode() {
-		return ptCode;
-	}
-
-	public void setPtCode(String ptCode) {
-		this.ptCode = ptCode;
-	}
-
-	public String getHsName() {
-		return hsName;
-	}
-
-	public void setHsName(String hsName) {
-		this.hsName = hsName;
-	}
-
-	public String getHsModel() {
-		return hsModel;
-	}
-
-	public void setHsModel(String hsModel) {
-		this.hsModel = hsModel;
-	}
 
 	public Double getInQty() {
 		return inQty;
@@ -181,14 +127,6 @@ public class InStorage extends BaseEntity {
 
 	public void setInQty(Double inQty) {
 		this.inQty = inQty;
-	}
-
-	public String getBetchNo() {
-		return betchNo;
-	}
-
-	public void setBetchNo(String betchNo) {
-		this.betchNo = betchNo;
 	}
 
 	public String getHandling() {
@@ -263,12 +201,13 @@ public class InStorage extends BaseEntity {
 		this.note = note;
 	}
 
-	public String getColors() {
-		return colors;
+
+	public Material getMaterial() {
+		return material;
 	}
 
-	public void setColors(String colors) {
-		this.colors = colors;
+	public void setMaterial(Material material) {
+		this.material = material;
 	}
 
 	public String getInStorageNo() {

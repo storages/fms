@@ -15,14 +15,11 @@
 		<property name="serialNo" column="SERIALNO" />
 		<property name="outStorageNo" column="OUTSTORAGENO" />
 		<property name="orderNo" column="ORDERNO" />
-		<property name="hsCode" column="HSCODE" />
-		<property name="hsName" column="HSNAME" />
-		<property name="hsModel" column="HSMODEL" />
 		<property name="expQty" column="EXPQTY" />
-		<property name="betchNo" column="BETCHNO" />
 		<property name="handling" column="HANDLING" />
 		<property name="expDate" column="EXPDATE" />
 		<property name="expFlag" column="EXPFLAG" />
+		<many-to-one name="material" column="MATERIAL"  class="Material" />
 		<property name="specQty" column="SPECQTY" />
 		<property name="pkgs" column="PKGS" />
 		<property name="materialTypeName" column="MATERIALTYPENAME" />

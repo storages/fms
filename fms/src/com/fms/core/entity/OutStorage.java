@@ -29,30 +29,15 @@ public class OutStorage extends BaseEntity {
 	@CnFileName(name = "订单号")
 	private String orderNo;
 	/**
-	 * 货物编码(hsCode) 根据订单号从入库表中获取
+	 * 物料清单对象
 	 */
-	@CnFileName(name = "货物编码")
-	private String hsCode;
-	/**
-	 * 货物名称(hsName) 根据订单号从入库表中获取
-	 */
-	@CnFileName(name = "货物名称")
-	private String hsName;
-	/**
-	 * 货物规格型号(hsModel) 根据订单号从入库表中获取
-	 */
-	@CnFileName(name = "货物规格型号")
-	private String hsModel;
+	@CnFileName(name = "物料清单对象")
+	private Material material;
 	/**
 	 * 货物数量(expQty) 根据订单号从入库表中获取，然后检查出库数量不能大于入库数量
 	 */
 	@CnFileName(name = "货物数量")
 	private Double expQty;
-	/**
-	 * 批次号(betchNo) 根据订单号从入库表中获取
-	 */
-	@CnFileName(name = "批次号")
-	private String betchNo;
 	/**
 	 * 出库人(handling) 统自动生成(当前登录用户)
 	 */
@@ -106,28 +91,13 @@ public class OutStorage extends BaseEntity {
 		this.orderNo = orderNo;
 	}
 
-	public String getHsCode() {
-		return hsCode;
+
+	public Material getMaterial() {
+		return material;
 	}
 
-	public void setHsCode(String hsCode) {
-		this.hsCode = hsCode;
-	}
-
-	public String getHsName() {
-		return hsName;
-	}
-
-	public void setHsName(String hsName) {
-		this.hsName = hsName;
-	}
-
-	public String getHsModel() {
-		return hsModel;
-	}
-
-	public void setHsModel(String hsModel) {
-		this.hsModel = hsModel;
+	public void setMaterial(Material material) {
+		this.material = material;
 	}
 
 	public Double getExpQty() {
@@ -136,14 +106,6 @@ public class OutStorage extends BaseEntity {
 
 	public void setExpQty(Double expQty) {
 		this.expQty = expQty;
-	}
-
-	public String getBetchNo() {
-		return betchNo;
-	}
-
-	public void setBetchNo(String betchNo) {
-		this.betchNo = betchNo;
 	}
 
 	public String getHandling() {

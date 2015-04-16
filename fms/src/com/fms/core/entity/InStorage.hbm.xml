@@ -15,13 +15,9 @@
 		<property name="serialNo" column="SERIALNO" />
 		<property name="purchaseNo" column="PURCHASENO" />
 		<property name="inStorageNo" column="INSTORAGENO" />
-		<property name="hsCode" column="HSCODE" />
 		<property name="orderNo" column="ORDERNO" />
-		<property name="ptCode" column="PTCODE" />
-		<property name="hsName" column="HSNAME" />
-		<property name="hsModel" column="HSMODEL" />
 		<property name="inQty" column="INQTY" />
-		<property name="betchNo" column="BETCHNO" />
+		<many-to-one name="material" class="Material" column="MATERIAL"/>
 		<property name="handling" column="HANDLING" />
 		<property name="impDate" column="IMPDATE" />
 		<property name="useFlag" column="USEFLAG" />

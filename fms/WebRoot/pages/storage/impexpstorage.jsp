@@ -1,25 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'impexpstorage.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
 	type="text/css"></link>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
@@ -29,58 +10,104 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
-  </head>
-  
-  <body>
+
      <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
 		<h5>物料＞＞入库</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
-		<span class="">入库日期</span><input type="text" id="beginDate" value="" style="height:25px; width:100px;" readonly="readonly"/><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
-		<span class="">供应商名称</span><input type="text" id="scmcocName" value="" style="height:25px; width:100px;" class=""/>
-		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px; width:100px;" class=""/>
+		<span class="">入库日期</span><input type="text" id="beginDate" value="${startDate}" style="height:25px; width:100px;" readonly="readonly" /><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
+		<span class="">供应商名称</span><input type="text" id="scmcocName" value="${endDate}"  style="height:25px; width:100px;" class=""/>
+		<span class="">物料名称</span><input type="text" id="search" value="${hsName}" style="height:25px; width:100px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
+		<c:if test="${imgexgflag=='I'}">
+		 	<input type="radio" name="materialType" value="I" style="margin-top: -5px;" onchange="changematerialtype('I')" value="I" checked="checked"/>&nbsp;原料　
+		 	<input type="radio" name="materialType" value="E" style="margin-top: -5px;" onchange="changematerialtype('E')"  value="E"/>&nbsp;成品
+		 </c:if>
+		 <c:if test="${imgexgflag=='E'}">
+		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('I')" value="I"/>&nbsp;原料　
+		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('E')" value="E" checked="checked"/>&nbsp;成品
+		 </c:if>
 	</div>
 	<div >
-		<div class="span12">
+		<div class="span12" style=" margin-left: 2px; padding-right:10px;" id="parant_div" >
 			<!--PAGE CONTENT BEGINS-->
 
-			<div class="row-fluid">
+			<div class="row-fluid" >
 				<div style="overflow-x: auto;">
-					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
+					 <div id="div_scorll">
+					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;overflow: scroll;">
 						<thead>
 							<tr>
-								<th style="width:30px;"><input type="checkbox" title="全选" id="checkAll"/></th>
-								<th>流水号</th>
-								<th>状态</th>
-								<th>入库单号</th>
-								<th>订单号</th>
-								<th>采购单号</th>
-								<th>物料编码</th>
-								<th>商品编码</th>
-								<th>货物名称</th>
-								<th>货物规格型号</th>
-								<th>数量</th>
-								<th>单位</th>
-								<th>批次号</th>
-								<th>每包装数量</th>
-								<th>件数</th>
-								<th>仓库名称</th>
-								<th>货物标志</th>
-								<th>入库类型</th>
-								<th>物料类型</th>
-								<th>入库人</th>
-								<th>入库日期</th>
-								<th>备注</th>
-								<th>操作</th>
+								<th class="center" style="width:30px;"><input type="checkbox" title="全选" id="checkAll"/></th>
+								<th class="center" width="50px;">流水号</th>
+								<th class="center" width="40px;" >状态</th>
+								<th class="center" width="60px;">入库单号</th>
+								<th class="center" width="80px;">订单号</th>
+								<th class="center" width="80px;">采购单号</th>
+								<th class="center" width="80px;">物料编码</th>
+								<th class="center" width="150px;">物料名称</th>
+								<th class="center" width="120px;">规格型号</th>
+								<th class="center" width="60px;">颜色</th>
+								<th class="center" width="90px;">数量</th>
+								<th class="center" width="40px;">单位</th>
+								<th class="center" width="80px;">批次号</th>
+								<th class="center" width="60px;">数量/(包)</th>
+								<th class="center" width="40px;">件数</th>
+								<th class="center" width="90px;">供应商名称</th>
+								<th class="center" width="60px;">仓库名称</th>
+								<th class="center" width="60px;">物料标志</th>
+								<th class="center" width="60px;">入库类型</th>
+								<th class="center" width="60px;">物料类型</th>
+								<th class="center" width="60px;">入库人</th>
+								<th class="center" width="80px;">入库日期</th>
+								<th class="center" width="80px;">备注</th>
+								<th class="center" width="60px;">操作</th>
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach var="info" varStatus="index" step="1" items="${materials}">
-							
+						<c:forEach var="storage" varStatus="index" step="1" items="${storageList}">
+							<tr>
+									<td class="center" style="width:30px;" ><input type="checkbox" value="${bom.id}" name="sid" style="width:30px;"/></td>
+									<td class="center"><a href="#">${index.index+1}</a></td>
+									<c:if  test="${ storage.useFlag==0}">
+										<td class="center">启用</td>
+									</c:if>
+									<c:if  test="${ storage.useFlag==1}">
+										<td class="center">停用</td>
+									</c:if>
+									<td class="center">${storage.inStorageNo}&nbsp;</td>
+									<td class="center">${storage.orderNo}&nbsp;</td>
+									<td class="center">${storage.purchaseNo}&nbsp;</td>
+									<td class="center">${storage.material.hsCode}&nbsp;</td>
+									<td class="center">${storage.material.hsName}&nbsp;</td>
+									<td class="center">${storage.material.model}&nbsp;</td>
+									<td class="center">${storage.material.color}&nbsp;</td>
+									<td class="center">${storage.inQty}&nbsp;</td>
+									<td class="center">${storage.material.unit.name}&nbsp;</td>
+									<td class="center">${storage.material.batchNO}&nbsp;</td>
+									<td class="center">${storage.specQty}&nbsp;</td>
+									<td class="center">${storage.pkgs}&nbsp;</td>
+									<td class="center">${storage.scmcoc.name}&nbsp;</td>
+									<td class="center">${storage.stock.name}&nbsp;</td>
+									<c:if test="${storage.imgExgFlag=='I' }">
+										<td class="hidden-480 center">原料&nbsp;</td>
+									</c:if>
+									<c:if test="${storage.imgExgFlag=='I' }">
+										<td class="hidden-480 center">成品&nbsp;</td>
+									</c:if>
+										<td class="hidden-480 center">${storage.impFlag}&nbsp;</td>
+										<td class="hidden-480 center">${storage.handling}&nbsp;</td>
+										<td class="hidden-480 center">${storage.impDate}&nbsp;</td>
+										<td class="hidden-480 center">${storage.note}&nbsp;</td>
+									<td class="center">
+										<a href="javascript:void(0);" >修改</a>
+										<a href="javascript:void(0);" >删除</a>
+									</td>
+								</tr>
 						</c:forEach>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -137,6 +164,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			yearRange: '1900:', 
 			dateFormat: 'yy-mm-dd'
   		});
+  		$("#div_scorll").width($("#tomain").width()+1000);
+  		$("#parant_div").width($("#tomain").width());
   	});
   </script>
-</html>

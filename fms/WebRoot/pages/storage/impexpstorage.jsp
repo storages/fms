@@ -1,15 +1,31 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
-	type="text/css"></link>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+
+ <script type="text/javascript">
+  	$(function(){
+  		$("#beginDate").datepicker({
+  			changeYear: true,
+			changeMonth: true,
+			yearRange: '1900:', 
+			dateFormat: 'yy-mm-dd'
+  		});
+  		$("#endDate").datepicker({
+  			changeYear: true,
+			changeMonth: true,
+			yearRange: '1900:', 
+			dateFormat: 'yy-mm-dd'
+  		});
+  		$("#div_scorll").width($("#tomain").width()+1000);
+  		$("#parant_div").width($("#tomain").width());
+  	});
+  </script>
 
      <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
 		<h5>物料＞＞入库</h5>
@@ -66,7 +82,7 @@
 						</thead>
 						<tbody>
 						<c:forEach var="storage" varStatus="index" step="1" items="${storageList}">
-							<tr>
+							<tr <c:if test="${ storage.useFlag==1}">style="color: red;" </c:if>>
 									<td class="center" style="width:30px;" ><input type="checkbox" value="${bom.id}" name="sid" style="width:30px;"/></td>
 									<td class="center"><a href="#">${index.index+1}</a></td>
 									<c:if  test="${ storage.useFlag==0}">
@@ -150,21 +166,3 @@
 		</div>
 	</div>
   </body>
-  <script type="text/javascript">
-  	$(function(){
-  		$("#beginDate").datepicker({
-  			changeYear: true,
-			changeMonth: true,
-			yearRange: '1900:', 
-			dateFormat: 'yy-mm-dd'
-  		});
-  		$("#endDate").datepicker({
-  			changeYear: true,
-			changeMonth: true,
-			yearRange: '1900:', 
-			dateFormat: 'yy-mm-dd'
-  		});
-  		$("#div_scorll").width($("#tomain").width()+1000);
-  		$("#parant_div").width($("#tomain").width());
-  	});
-  </script>

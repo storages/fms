@@ -1,42 +1,22 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'storageedit.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css"> style="border: solid 1px red;"
-	-->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css"
-	type="text/css"></link>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
+
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.core.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/dialog/dialogCss.css" type="text/css"></link>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/dialog/dialogCss.css" type="text/css"></link>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/dialog/dialog.js"></script>
-	<style type="text/css">
+
+<style type="text/css">
 		.required{color:red;}
 		p{margin-bottom: 2px;}
-	</style>
-  </head>
-  <body style="position: relative;">
+</style>
     <input type="hidden" id="flag" value="${materinfo.id}"/><!-- 为了判断是新增还是修改 -->
     <div class="page-header position-relative" style="margin-bottom: 0px;">
     	<c:if test="${storage.id==null}">
@@ -49,276 +29,74 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="row-fluid" id="mybox" style="margin-left: 5px;" >
 		<div class="span12">
 			<p>
-				采购单号<span class="required">*</span><select style="height: 25px;width: 160px;">
-					<option value="">---请选择采购单号---</option>
-					<c:forEach var="b" items="${a}">
-						<option value=""></option>
-					</c:forEach>
-				</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				订单号<span class="required">*</span><select style="height: 25px;width: 160px;">
-					<option value="">---请选择订单号---</option>
-					<c:forEach var="b" items="${a}">
-						<option value=""></option>
-					</c:forEach>
-				</select>
+				<span id="hcode">&nbsp;&nbsp;&nbsp;&nbsp;流水号</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.serialNo" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
+				<span id="useFlag">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.useFlag" >&nbsp;&nbsp;&nbsp;&nbsp;
 			</p>
-			</div>
-				<p style="padding-left: 0px;">
-					入库类型<span class="required">*</span><select style="height: 25px;width: 160px;" name="inStorage.impFlag">
-						<option value="">---请选择入库类型---</option>
-						<c:if test="${inStorage.impFlag=='0'}">
-							<option value="0" selected="selected">采购入库</option>
-						</c:if>
-						<c:if test="${inStorage.impFlag!='0'}">
-							<option value="0">采购入库</option>
-						</c:if>
-						<c:if test="${inStorage.impFlag=='1'}">
-							<option value="1" selected="selected">退货入库</option>
-						</c:if>
-						<c:if test="${inStorage.impFlag!='1'}">
-							<option value="1">退货入库</option>
-						</c:if>
-						<c:if test="${inStorage.impFlag=='2'}">
-							<option value="2" selected="selected">其它入库</option>
-						</c:if>
-						<c:if  test="${inStorage.impFlag!='2'}">
-							<option value="2">其它入库</option>
-						</c:if>
+			<p>
+				<span id="inStorageNo">&nbsp;&nbsp;入库单号</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.inStorageNo" >&nbsp;&nbsp;&nbsp;&nbsp;
+				<span id="orderNo">&nbsp;&nbsp;&nbsp;订单号</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.orderNo" >&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+			<p>
+				<span id="inStorageNo">&nbsp;&nbsp;采购单号</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.purchaseNo" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
+				<span id="orderNo">&nbsp;物料编码</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.material.hsCode" ><img alt="选择物料" src="${pageContext.request.contextPath}/images/search.gif" id="dgMaterQuery" style="cursor: pointer;">&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+			<p>
+				<span id="inStorageNo">&nbsp;&nbsp;物料名称</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.HsName" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
+				<span id="orderNo">&nbsp;规格型号</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.material.model" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+			<p>
+				<span id="inStorageNo">&nbsp;&nbsp;颜&nbsp;&nbsp;&nbsp;&nbsp;色</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.material.color" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
+				<span id="orderNo">&nbsp;数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.inQty" >&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+			<p>
+				&nbsp;&nbsp;单&nbsp;&nbsp;&nbsp;&nbsp;位<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="unit">
+						<option value="">---请选择单位---</option>
+						<c:forEach var="unit" items="${units}">
+							<option value="${unit.id}" <c:if test="${unit.name==inStorage.material.unit.name}"> selected="selected"</c:if>>${unit.name}</option>
+						</c:forEach>
+					</select>
+				<span id="orderNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;批次号</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.betchNo" >&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+			<p>
+				<span id="inStorageNo">&nbsp;数量/(包)</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.specQty">&nbsp;&nbsp;&nbsp;&nbsp;
+				<span id="orderNo">件&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.pkgs" >&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+			<p>
+				供应商名称<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="scmcoc">
+						<option value="">---请选择供应商名称---</option>
+						<c:forEach var="scmc" items="${scmcocs}">
+							<option value="${scmc.id}" <c:if test="${scmc.name==inStorage.scmcoc.name}"> selected="selected"</c:if>>${scmc.name}</option>
+						</c:forEach>
 					</select>&nbsp;&nbsp;&nbsp;&nbsp;
-					物料类型<span class="required">*</span><select style="height: 25px;width: 160px;" name="inStorage.materialType.typeName">
-						<option value="">---请选择物料类型---</option>
-						<c:forEach var="type" items="${types}">
-							<c:if test="${inStorage.materialType.typeName==type.typeName}">
-								<option value="${type.id}" selected="selected">${type.typeName}</option>
-							</c:if>
-							<c:if test="${inStorage.materialType.typeName!=type.typeName}">
-								<option value="${type.id}">${type.typeName}</option>
-							</c:if>
+					仓库名称<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="stock">
+						<option value="">---请选择仓库名称---</option>
+						<c:forEach var="stock" items="${stocks}">
+							<option value="${stock.id}" <c:if test="${stock.name==inStorage.stock.name}"> selected="selected"</c:if>>${stock.name}</option>
+						</c:forEach>
+					</select>
+			</p>
+			<p style="padding-left: 0px;">
+					&nbsp;&nbsp;货物标志<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="imgexgflag">
+						<option value="">---请选择---</option>
+						<option value="I" <c:if test="${inStorage.imgExgFlag==imgExgFlag}">selected="selected"</c:if>>原料</option>
+						<option value="E" <c:if test="${inStorage.imgExgFlag==imgExgFlag}">selected="selected"</c:if>>成品</option>
+					</select>&nbsp;&nbsp;&nbsp;&nbsp;
+					入库类型<span class="required">*</span><select style="height: 25px;width: 160px; font-size: 12px;" name="inStorage.impFlag">
+						<option value="">---请选择入库类型---</option>
+						<c:forEach var="impexptype" items="${impexptypes}">
+							<option value="${impexptype.code}" <c:if test="${inStorage.impFlag==impexptype.code}"> selected="selected"</c:if>>${impexptype.name}</option>
 						</c:forEach>
 					</select>
 				</p>
-				<p style="padding-left: 0px;">
-					货物标志<span class="required">*</span><select style="height: 25px;width: 160px;" name="" id="imgexgflag">
-						<option value="">---请选择---</option>
-						<option value="">原料</option>
-						<option value="">成品</option>
+			<p style="padding-left: 0px;">
+					&nbsp;&nbsp;物料类型<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="inStorage.materialType.typeName">
+						<option value="">---请选择物料类型---</option>
+						<c:forEach var="mtype" items="${types}">
+								<option value="${mtype.id}" <c:if test="${inStorage.materialType.typeName==mtype.typeName}">selected="selected"</c:if>>${mtype.typeName}</option>
+						</c:forEach>
 					</select>&nbsp;&nbsp;&nbsp;&nbsp;
-					<span id="hcode">物料编码<span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="" readonly="readonly"><img alt="" style="cursor: pointer; margin-top: -5px;" id="showDialogForm" src="${pageContext.request.contextPath}/images/search.gif"></span>
-					<span id="pcode" style="display: none;">商品编码<span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="" readonly="readonly"><img alt="" style="cursor: pointer; margin-top: -5px;" id="showDialogForm1" src="${pageContext.request.contextPath}/images/search.gif"></span>
-				</p>
-				<div class="dialog" id="dialog" title="货物选择">
-					<p style="height: 28px;"><input style="height: 25px;width: 160px;" type="text" name=""/><input class="btn btn-small btn-danger" style="height: 25px; margin-top: -10px;border-top-width: 1px;" data-toggle="button" type="submit" value="查询"/></p>
-					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
-						<thead>
-							<tr align="center">
-								<th class="center" style="width:30px;">选择</th>
-								<th class="center">序号</th>
-								<th class="center">编号</th>
-								<th class="center">客户名称</th>
-								<th class="hidden-480 center">客户联系电话</th>
-								<th class="hidden-phone center">客户网络联系方式</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-							<tr>
-								<td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
-									<input type="radio" value="${scmcoc.id}" name="sid" style="width:30px;"/>
-								</td>
-								<td class="center"><a href="#">${index.index+1}</a></td>
-								<td class="center">DG23790　</td>
-								<td class="center">东莞方滨兴塑胶　</td>
-								<td class="hidden-480 center">0769-66239081　</td>
-								<td class="hidden-480 center">QQ:398012390　</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<p style="padding-left: 0px;">
-					物料名称<span class="required">*</span><input type="text" readonly="readonly" style="height: 25px;width: 160px;" name="inStorage.material.hsName" id="materialName" value="${inStorage.material.hsName}"/>&nbsp;&nbsp;&nbsp;&nbsp;
-					规格型号<span class="required">*</span><input type="text" readonly="readonly" style="height: 25px;width: 160px;" name="inStorage.material.hsName" id="materialName" value=""/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</p>
-				<p style="padding-left: 30px;">
-					颜色<input type="text" style="height: 25px;width: 160px;" readonly="readonly" readonly="readonly" name="inStorage.material.color"/>&nbsp;&nbsp;&nbsp;&nbsp;
-					入库数量<span class="required">*</span><input type="text" style="height: 25px;width: 160px;" id="inqty" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" name="inStorage.inQty"/>
-					<!-- <input type="text" style="height: 25px;"/>&nbsp;&nbsp;&nbsp;&nbsp; -->
-				</p>
-				<p style="padding-left: 0px;">
-					计量单位<span class="required">*</span><input type="text" readonly="readonly" style="height: 25px;width: 160px;" name="inStorage.material.unit.name"/>
-					每件包装数量<span class="required">*</span><input type="text" style="height: 25px;width: 160px;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" name="inStorage.specQty"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</p>
-				<p style="padding-left: 30px;">
-					件数<input type="text" readonly="readonly" style="height: 25px;width: 160px;" readonly="readonly" name="inStorage.pkgs"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					批次号<span class="required">*</span><input type="text" style="height: 25px;width: 160px;" name="inStorage.material.batchNO"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</p>
-				<p style="padding-left: 7px;">
-					入库日期<input type="text" readonly="readonly" id="inDate" style="height: 25px;width: 160px;" name="inStorage.impDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					备注<input type="text" style="height: 25px;width: 160px;" name="inStorage.note"/>
-				</p>
-				<p style="padding-left: 210px;">
-					<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="submit" value="保存"/>&nbsp;&nbsp;&nbsp;
-					&nbsp;&nbsp;<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="reset" value="取消" style="margin-left: 10px;"/>
+					<span id="note">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.note" >
 				</p>
 		</div>
-  </body>
-  <script type="text/javascript">
-  	$(function(){
-  		$("#inDate").datepicker({
-  			changeYear: true,
-			changeMonth: true,
-			yearRange: '1900:', 
-			dateFormat: 'yy-mm-dd'
-  		});
-  		$('#imgexgflag').change(function(){
-  			var flag = $(this).find("option:selected").text(); 
-  			if('原料'==flag){
-  				$('#hcode').show();
-  				$('#pcode').hide();
-  			}else if('成品'==flag){
-  				$('#hcode').hide();
-  				$('#pcode').show();
-  			}
-  		});
-  	});
-  	
-  </script>
-</html>
+	</div>
+  

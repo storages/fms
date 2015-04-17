@@ -22,7 +22,7 @@ public interface MaterialDao extends BaseDao {
 
 	public List<Material> findMaterialById(String[] ids);
 
-	public Material checkMaterial(String hsName, String model, String batchNO);
+	public Material checkMaterial(String hsName, String model, String hsCode);
 
 	void deleteMaterial(String[] ids);
 

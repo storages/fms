@@ -101,9 +101,9 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 		return (Material) this.findUniqueResult("select a from Material a left join fetch a.unit left join fetch a.materialType where a.id = ? ", new Object[] { id });
 	}
 
-	public Material checkMaterial(String hsName, String model, String batchNO) {
-		String hql = "select a from Material a where a.hsName = ? and a.model =? and a.batchNO =? ";
-		return (Material) this.uniqueResult(hql, new Object[] { hsName, model, batchNO });
+	public Material checkMaterial(String hsName, String model, String hsCode) {
+		String hql = "select a from Material a where a.hsName = ? and a.model =? and a.hsCode =? ";
+		return (Material) this.uniqueResult(hql, new Object[] { hsName, model, hsCode });
 	}
 
 	public void deleteMaterial(String[] ids) {

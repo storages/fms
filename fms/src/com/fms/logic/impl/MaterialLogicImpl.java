@@ -59,8 +59,8 @@ public class MaterialLogicImpl implements MaterialLogic {
 		return materialDao.findMaterialById(id);
 	}
 
-	public Material checkMaterial(AclUser loginUser, String hsName, String model, String batchNO) {
-		return materialDao.checkMaterial(hsName, model, batchNO);
+	public Material checkMaterial(AclUser loginUser, String hsName, String model, String hsCode) {
+		return materialDao.checkMaterial(hsName, model, hsCode);
 	}
 
 	public void saveOrUpdate(AclUser loginUser, Material material) {
@@ -159,9 +159,6 @@ public class MaterialLogicImpl implements MaterialLogic {
 				} else if (uMap.get(temp.getUnit()) == null) {
 					builder.append("计量单位在系统中不存在! ");
 				}
-				if (null == temp.getBatchNO() || "".equals(temp.getBatchNO())) {
-					builder.append("批次号不能为空! ");
-				}
 				if (null == temp.getLowerQty() || "".equals(temp.getLowerQty())) {
 					builder.append("最低库存不能为空! ");
 				} else if (temp.getLowerQty() - (-1.0) == 0.0) {
@@ -177,20 +174,20 @@ public class MaterialLogicImpl implements MaterialLogic {
 	 * 保存excel导入的数据
 	 */
 	public Boolean doSaveExcelData(List<TempMater> data, AclUser loginUser) {
-		if(data!=null && data.size()>0){
+		if (data != null && data.size() > 0) {
 			for (TempMater tm : data) {
 				if (tm.getErrorInfo() != null && !"".equals(tm.getErrorInfo())) {
 					return false;
 				}
 			}
 		}
-		try{
-		List<Material> resultL = null;
-		if (null != data && data.size() > 0) {
-			resultL = convertMaterial(data, loginUser);
-			this.materialDao.batchSaveOrUpdate(resultL);
-		}
-		}catch(Exception e){
+		try {
+			List<Material> resultL = null;
+			if (null != data && data.size() > 0) {
+				resultL = convertMaterial(data, loginUser);
+				this.materialDao.batchSaveOrUpdate(resultL);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return true;
@@ -217,7 +214,6 @@ public class MaterialLogicImpl implements MaterialLogic {
 				material.setImgExgFlag(ImgExgFlag.parseValue(tmp.getImgExgFlag()));
 				material.setColor(tmp.getColor());
 				material.setUnit(uMap.get(tmp.getUnit()));
-				material.setBatchNO(tmp.getBatchNO());
 				material.setLowerQty(tmp.getLowerQty());
 				material.setMaterialType(typeMap.get(tmp.getMaterialType()));
 				mlist.add(material);

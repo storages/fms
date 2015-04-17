@@ -24,7 +24,7 @@ public interface MaterialLogic {
 
 	public List<Material> findMaterialById(AclUser loginUser, String[] ids);
 
-	public Material checkMaterial(AclUser loginUser, String hsName, String model, String batchNO);
+	public Material checkMaterial(AclUser loginUser, String hsName, String model, String haCode);
 
 	public void saveOrUpdate(AclUser loginUser, Material material);
 

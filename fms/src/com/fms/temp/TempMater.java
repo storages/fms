@@ -28,8 +28,6 @@ public class TempMater implements Serializable {
 	private String model;
 	// 成品或原料标记("I"原料，"E"成品)
 	private String imgExgFlag;
-	// 批次号
-	private String batchNO;
 	// 最低库存
 	private Double lowerQty;
 	// 备注
@@ -97,14 +95,6 @@ public class TempMater implements Serializable {
 
 	public void setImgExgFlag(String imgExgFlag) {
 		this.imgExgFlag = imgExgFlag;
-	}
-
-	public String getBatchNO() {
-		return batchNO;
-	}
-
-	public void setBatchNO(String batchNO) {
-		this.batchNO = batchNO;
 	}
 
 	public Double getLowerQty() {

@@ -47,8 +47,6 @@ public class MaterialAction extends BaseAction {
 	private String model;
 	// 成品或原料标记("I"原料，"E"成品)
 	private String imgExgFlag;
-	// 批次号
-	private String batchNO;
 	// 最低库存
 	private String lowerQty;
 	// 备注
@@ -145,7 +143,6 @@ public class MaterialAction extends BaseAction {
 			m.setImgExgFlag(imgExgFlag);
 			m.setQty((qty == null || "".equals(qty)) ? 0.0 : Double.parseDouble(qty));
 			m.setModel(this.parseValue(model));
-			m.setBatchNO(batchNO);
 			m.setLowerQty((lowerQty == null || "".equals(lowerQty)) ? 0.0 : Double.parseDouble(lowerQty));
 			m.setNote(this.parseValue(note));
 			List<Unit> list = this.materLogic.findAllUnit(getLoginUser());
@@ -202,7 +199,7 @@ public class MaterialAction extends BaseAction {
 	}
 
 	/**
-	 * 验证物料信息是否重复【名称+规格+批次号】
+	 * 验证物料信息是否重复【名称+规格】
 	 */
 	public void checkMaterial() {
 		PrintWriter out = null;
@@ -211,10 +208,10 @@ public class MaterialAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			Material material = this.materLogic.checkMaterial(getLoginUser(), hsName, model, batchNO);
+			Material material = this.materLogic.checkMaterial(getLoginUser(), parseValue(hsName), model, hsCode);
 			if (null != material) {
 				result.setSuccess(false);
-				result.setMsg("该物料已存在！【名称+规格+批次号】都相同");
+				result.setMsg("该物料已存在！【名称+规格】都相同");
 			} else {
 				result.setSuccess(true);
 			}
@@ -274,7 +271,7 @@ public class MaterialAction extends BaseAction {
 		result.setSuccess(false);
 		try {
 			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
-			String[] title = new String[9];
+			String[] title = new String[8];
 			title[0] = content[0][0];
 			title[1] = content[0][1];
 			title[2] = content[0][2];
@@ -283,9 +280,8 @@ public class MaterialAction extends BaseAction {
 			title[5] = content[0][5];
 			title[6] = content[0][6];
 			title[7] = content[0][7];
-			title[8] = content[0][8];
 			if (!"物料标记".equals(title[0]) || !"物料编码".equals(title[1]) || !"物料名称".equals(title[2]) || !"物料规格".equals(title[3]) || !"颜色".equals(title[4]) || !"物料类别".equals(title[5])
-					|| !"计量单位".equals(title[6]) || !"批次号".equals(title[7]) || !"最低库存".equals(title[8])) {
+					|| !"计量单位".equals(title[6]) || !"最低库存".equals(title[7])) {
 				result.setSuccess(false);
 				result.setMsg("导入的excel文件内容不正确!");
 			} else {
@@ -299,11 +295,10 @@ public class MaterialAction extends BaseAction {
 					mater.setColor(content[i][4]);
 					mater.setMaterialType(content[i][5]);
 					mater.setUnit(content[i][6]);
-					mater.setBatchNO(content[i][7]);
-					if (!isNumeric(content[i][8])) {
+					if (!isNumeric(content[i][7])) {
 						mater.setLowerQty(-1.0);
 					} else {
-						mater.setLowerQty(Double.parseDouble(content[i][8]));
+						mater.setLowerQty(Double.parseDouble(content[i][7]));
 					}
 					tempMaters.add(mater);
 				}
@@ -465,14 +460,6 @@ public class MaterialAction extends BaseAction {
 
 	public void setImgExgFlag(String imgExgFlag) {
 		this.imgExgFlag = imgExgFlag;
-	}
-
-	public String getBatchNO() {
-		return batchNO;
-	}
-
-	public void setBatchNO(String batchNO) {
-		this.batchNO = batchNO;
 	}
 
 	public String getLowerQty() {

@@ -45,7 +45,7 @@
 			</p>
 			<p>
 				<span id="inStorageNo">&nbsp;&nbsp;颜&nbsp;&nbsp;&nbsp;&nbsp;色</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.material.color" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
-				<span id="orderNo">&nbsp;数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.inQty" >&nbsp;&nbsp;&nbsp;&nbsp;
+				<span id="orderNo">&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;量</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.inQty" >&nbsp;&nbsp;&nbsp;&nbsp;
 			</p>
 			<p>
 				&nbsp;&nbsp;单&nbsp;&nbsp;&nbsp;&nbsp;位<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="unit">

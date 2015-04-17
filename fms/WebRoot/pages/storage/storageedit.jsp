@@ -11,7 +11,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dialog/dialogCss.css" type="text/css"></link>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/dialog/dialog.js"></script>
 
 <style type="text/css">
 		.required{color:red;}

@@ -35,7 +35,7 @@
 								<th class="center">物料类别</th>
 								<th class="center">计量单位</th>
 								<!-- <th class="center">数量</th> -->
-								<th class="center">批次号</th>
+								<!-- <th class="center">批次号</th> -->
 								<th class="center">最低库存</th>
 								<th class="center">备注</th>
 								<th class="center">操作</th>
@@ -61,7 +61,7 @@
 									<td class="center">${info.materialType.typeName}　</td>
 									<td class="center">${info.unit.name}　</td>
 									<%-- <td class="center">${info.qty}　</td> --%>
-									<td class="center">${info.batchNO}　</td>
+									<%-- <td class="center">${info.batchNO}　</td> --%>
 									<td class="center">${info.lowerQty}　</td>
 									<td class="center">${info.note}　</td>
 									<td class="center">

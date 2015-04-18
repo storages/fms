@@ -80,7 +80,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 			}
 		}
 		if(null!=empl.getId()&&empl.getId().length()>0){
-			operaterLogsDao.saveEditLogs(loginUser, empl, empl.getId(),Employee.class);
+			operaterLogsDao.saveEditLogs(loginUser, empl, empl.getId());
 		}else{
 			operaterLogsDao.saveNewLogs(loginUser, empl);
 		}
@@ -137,7 +137,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		// TODO Auto-generated method stub
 	    Employee employee= (Employee) employeeDao.get(Employee.class, key);
 	    employee.setWfloginUser(param);
-	    operaterLogsDao.saveEditLogs(logUser, employee, key,Employee.class);
+	    operaterLogsDao.saveEditLogs(logUser, employee, key);
 	    employeeDao.saveOrUpdate(employee);
 	}
 

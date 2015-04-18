@@ -24,13 +24,13 @@ public class Employee extends BaseEntity {
 	/**
 	 * 员工号
 	 */
-	@CnFileName(name="员工编号")
+	@CnFileName(name="员工编号",isMustRecord="T")
 	private String code;
 
 	/**
 	 * 姓名
 	 */
-	@CnFileName(name="姓名")
+	@CnFileName(name="姓名",isMustRecord="T")
 	private String name;
 	
 	/**
@@ -120,6 +120,7 @@ public class Employee extends BaseEntity {
 	/**
 	 * 所属部门【对象】
 	 */
+	@CnFileName(name="部门",isObjectModal="T")
 	private Department department;
 	/**
 	 * 职位名称

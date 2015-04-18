@@ -79,7 +79,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 				throw new Exception("登录用户名已存在");
 			}
 		}
-		if(null!=empl.getId()){
+		if(null!=empl.getId()&&empl.getId().length()>0){
 			operaterLogsDao.saveEditLogs(loginUser, empl, empl.getId(),Employee.class);
 		}else{
 			operaterLogsDao.saveNewLogs(loginUser, empl);

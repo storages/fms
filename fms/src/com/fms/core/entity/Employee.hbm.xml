@@ -17,7 +17,7 @@
 		<property name="nickName" column="NICKNAME"/>
 		<property name="age" column="AGE"/>
 		<property name="gender" column="GENDER" />
-		<property name="birthday" column="BIRTHDAY" />
+		<property name="birthday" column="BIRTHDAY" type="date" />
 		<property name="identityCard" column="IDENTITYCARD" />
 		<property name="nation" column="NATION" />
 		<property name="origo" column="ORIGO" />
@@ -27,7 +27,7 @@
 		<property name="linkPhone" column="LINKPHONE" />
 		<property name="networkLink" column="NETWORKLINK" />
 		<property name="photo" column="PHOTO" />
-		<property name="entryDate" column="ENTRYDATE" />
+		<property name="entryDate" column="ENTRYDATE" type="date" />
 		<property name="jobStatus" column="JOBSTATUS" />
 		<many-to-one  fetch="join" lazy="false"   name="department" column="DEPARTMENT" 
 			class="com.fms.core.entity.Department" />

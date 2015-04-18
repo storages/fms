@@ -10,7 +10,8 @@ import java.lang.annotation.Documented;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CnFileName {
 	 public String name()default "";
-
+	 public String isMustRecord() default"F";
+	 public String isObjectModal() default"F";
 }
 
 

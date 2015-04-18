@@ -11,6 +11,7 @@ import com.fms.base.entity.BaseEntity;
  * @author Administrator
  *
  */
+ @CnFileName(name="登陆用户")
 public class AclUser extends BaseEntity {
 
 	/**

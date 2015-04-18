@@ -6,5 +6,5 @@ import com.fms.core.entity.AclUser;
 public interface OperateLogsDao extends BaseDao {
 	
 	public void saveNewLogs(AclUser logUser,Object obj);
-	public void saveEditLogs(AclUser logUser, Object newObj, String id,Class modalClass);
+	public void saveEditLogs(AclUser logUser, Object newObj, String id);
 }

@@ -45,7 +45,7 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 		this.saveOrUpdate(logs);
 	}
 
-	public void saveEditLogs(AclUser logUser, Object newObj, String id,Class modalClass) {
+	public void saveEditLogs(AclUser logUser, Object newObj, String id) {
 
 		Object obj = this.get(newObj.getClass(), id);
 

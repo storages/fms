@@ -95,7 +95,29 @@ public class AppBillLogicImpl implements AppBillLogic {
 	}
 
 	public List<AppBillHead> betchSaveAppBillHead(AclUser loginUser, List<AppBillHead> datas) {
-		return this.appBillDao.betchSaveAppBillHead(datas);
+		datas = this.appBillDao.betchSaveAppBillHead(datas);
+		refreshItems(loginUser, datas);
+		return datas;
+	}
+
+	/**
+	 * 更新表体中的表头
+	 * 
+	 * @param loginUser
+	 * @param datas
+	 */
+	private void refreshItems(AclUser loginUser, List<AppBillHead> datas) {
+		if (!datas.isEmpty()) {
+			List<AppBillItem> newItems = new ArrayList<AppBillItem>();
+			for (AppBillHead head : datas) {
+				List<AppBillItem> items = this.findItemByHid(loginUser, head.getId(), null, null, null, null);
+				for (AppBillItem item : items) {
+					item.setHead(head);
+					newItems.add(item);
+				}
+			}
+			this.betchSaveAppBillItem(loginUser, newItems);
+		}
 	}
 
 	public List<AppBillItem> betchSaveAppBillItem(AclUser loginUser, List<AppBillItem> datas) {

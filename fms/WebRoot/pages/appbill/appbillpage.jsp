@@ -45,6 +45,7 @@
 						<th class="center" style="width:40px;">流水号</th>
 						<th class="center" style="width:71px;">申请单状态</th>
 						<th class="center" style="width:91px;">申请单号</th>
+						<th class="center" style="width:91px;">订单号</th>
 						<th class="center" style="width:91px;">项数</th>
 						<th class="center" style="width:71px;">总数量</th>
 						<th class="center" style="width:71px;">总金额</th>
@@ -78,6 +79,7 @@
 											<td class="center" style="width:70px;">&nbsp;</td>
 										</c:if>
 										<td class="center" style="width:91px;">${head.appNo}&nbsp;</td>
+										<td class="center" style="width:91px;">${head.orderNo}&nbsp;</td>
 										<td class="center" style="width:91px;">${head.itemQty}&nbsp;</td>
 										<td class="center" style="width:71px;">${head.totalQty}&nbsp;</td>
 										<td class="center" style="width:65px;">${head.totalAmount}&nbsp;</td>
@@ -86,6 +88,12 @@
 										<td class="center" style="width:53px;">${head.approvaledQty}&nbsp;</td>
 										<td class="center" style="width:57px;">${head.unApprovalQty}&nbsp;</td>
 										<td class="center" style="width:164px;">
+											<c:if test="${head.appStatus==0 || head.appStatus==3}">
+												<a href="javascript:void(0);" onclick="edit(this,'5')">修改</a>｜
+											</c:if>
+											<c:if test="${head.appStatus==1 || head.appStatus==2}">
+												<span style="color:gray;" title="<c:if test='${head.appStatus==1}'>待审批状态，不能修改</c:if><c:if test='${head.appStatus==2}'>审批通过状态，不能修改</c:if>">修改｜</span>
+											</c:if>
 											<a href="javascript:void(0);" onclick="adddetail('${head.id}');">详细</a>｜
 											<c:if test="${head.appStatus==0 || head.appStatus==3}"><a href="javascript:void(0);" onclick="delData('${head.id}','AppBillHead')"><span style="color: red;">删除</span></a></c:if>
 											<c:if test="${head.appStatus==1 || head.appStatus==2}">
@@ -275,7 +283,6 @@ var win = true;
 		     cache: false,
 		     success:function(data){
 		     var result=jQuery.parseJSON(data);
-		     alert(result.msg);
 		     if(result.success){
 		     	url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
 		     	toMain(url);
@@ -285,5 +292,35 @@ var win = true;
 		      }
 	});
 	}
+	//修改
+	function edit(obj,arr){
+		showTableEdit(obj,arr);
+	}
 	
+	//保存修改的数据
+	function saveData(){
+		var jsonstr = getModifyData();
+		if(jsonstr==""){
+			alert("没有数据保存!");
+			return;
+		}
+		var url = "${pageContext.request.contextPath}/appbill_saveApplyBillHead.action";
+		$.ajax({
+			     type: "POST",
+			     url:url,
+			     data:{jsonstr:jsonstr},
+			     async: false,
+			     cache: false,
+			     success:function(args){
+			     var result=jQuery.parseJSON(args);
+			     if(!result.success){
+			     		alert(result.msg);
+			     	}else{
+			     		toMain("${pageContext.request.contextPath}/appbill_findAppBillHeads.action");
+			     	}
+			     },error:function(){
+			        	alert("程序异常，请重新启动程序！");
+			      }
+			  	});
+	}	
 </script>

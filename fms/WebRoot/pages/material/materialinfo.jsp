@@ -1,6 +1,58 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
+
+  <script type="text/javascript">
+		function gototag(pageSize){
+			var n = $("#gonum option:selected").val();
+			gotoPage(n, pageSize);
+		}
+		
+		/**
+	 * 转到指定页码
+	 * @param {Object} pageNum 要转到第几页        currIndex
+	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
+	 */
+	function gotoPage(pageNum, pageSize) {
+		var likeStr = $("#search").val(); 
+		var flag = $('input[name="materialType"]:checked').val();
+		// 拼接URL
+		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+"&imgExgFlag="+flag;
+		// 在本窗口中显示指定URL的页面
+		toMain(url);
+	}
+	
+	function parse(str){
+		return encodeURI(encodeURI(str));  
+	}
+	function toadd(){
+		var item = $('input[name=materialType][checked]').val();
+		var url = "${pageContext.request.contextPath}/materInfo_add.action?imgExgFlag="+item;
+		toMain(url);
+	}
+	function toedit(id){
+		var url = "${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids="+id;
+		toMain("${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids=");
+	}
+	function showImport(){
+		var flag = $('input[name="materialType"]:checked').val();
+	  	var url = "${pageContext.request.contextPath}/materInfo_showImport.action?imgExgFlag="+flag;
+	  	toMain(url);
+  	}
+  	function changematerialtype(flag){
+  	var str = $('#search').val();
+  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
+  		toMain(url);
+  	}
+  	function search(){
+  		var str = $('#search').val();
+  		var flag = $('input:radio:checked').val();
+  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
+  		toMain(url);
+  	}
+  	
+</script>
+
      <div class="page-header position-relative" style="margin-bottom: 0px;">
 		<h5 style="margin: 0px;">物料＞＞物料清单</h5>
 		<input type="hidden" id="impexpflag"/>
@@ -9,12 +61,12 @@
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 		 <c:if test="${imgexgflag=='I'}">
-		 	<input type="radio" name="materialType" value="I" style="margin-top: -5px;" onchange="changematerialtype('I')" value="I" checked="checked"/>&nbsp;原料　
-		 	<input type="radio" name="materialType" value="E" style="margin-top: -5px;" onchange="changematerialtype('E')"  value="E"/>&nbsp;成品
+		 	<input type="radio"  name="materialType" value="I" style="margin-top: -5px; width:15px;" onchange="changematerialtype('I')" value="I" checked="checked"/>&nbsp;原料　
+		 	<input type="radio" name="materialType" value="E" style="margin-top: -5px; width:15px;" onchange="changematerialtype('E')"  value="E"/>&nbsp;成品
 		 </c:if>
 		 <c:if test="${imgexgflag=='E'}">
-		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('I')" value="I"/>&nbsp;原料　
-		 	<input type="radio" name="materialType" style="margin-top: -5px;" onchange="changematerialtype('E')" value="E" checked="checked"/>&nbsp;成品
+		 	<input type="radio" name="materialType" style="margin-top: -5px; width:15px;" onchange="changematerialtype('I')" value="I"/>&nbsp;原料　
+		 	<input type="radio" name="materialType" style="margin-top: -5px; width:15px;" onchange="changematerialtype('E')" value="E" checked="checked"/>&nbsp;成品
 		 </c:if>
 	</div>
 	<div class="row-fluid" >
@@ -26,8 +78,8 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;">
 						<thead>
 							<tr>
-								<th class="center" style="width:30px;"><input type="checkbox" title="全选" id="checkAll"/></th>
-								<th class="center">行号</th>
+								<th class="center" ><input type="checkbox" title="全选" id="checkAll"  style="width:30px;"/></th>
+								<th class="center"  style="width:30px;">行号</th>
 								<th class="center">物料标记</th>
 								<th class="center">物料编码</th>
 								<th class="center">物料名称</th>
@@ -113,53 +165,4 @@
 			</div>
 		</div>
 	</div>
-  <script type="text/javascript">
-		function gototag(pageSize){
-			var n = $("#gonum option:selected").val();
-			gotoPage(n, pageSize);
-		}
-		
-		/**
-	 * 转到指定页码
-	 * @param {Object} pageNum 要转到第几页        currIndex
-	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
-	 */
-	function gotoPage(pageNum, pageSize) {
-		var likeStr = $("#search").val(); 
-		var flag = $('input[name="materialType"]:checked').val();
-		// 拼接URL
-		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + "&searchStr="+parse(likeStr)+"&imgExgFlag="+flag;
-		// 在本窗口中显示指定URL的页面
-		toMain(url);
-	}
-	
-	function parse(str){
-		return encodeURI(encodeURI(str));  
-	}
-	function toadd(){
-		var item = $('input[name=materialType][checked]').val();
-		var url = "${pageContext.request.contextPath}/materInfo_add.action?imgExgFlag="+item;
-		toMain(url);
-	}
-	function toedit(id){
-		var url = "${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids="+id;
-		toMain("${pageContext.request.contextPath}/materInfo_findMaterialById.action?ids=");
-	}
-	function showImport(){
-		var flag = $('input[name="materialType"]:checked').val();
-	  	var url = "${pageContext.request.contextPath}/materInfo_showImport.action?imgExgFlag="+flag;
-	  	toMain(url);
-  	}
-  	function changematerialtype(flag){
-  	var str = $('#search').val();
-  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
-  		toMain(url);
-  	}
-  	function search(){
-  		var str = $('#search').val();
-  		var flag = $('input:radio:checked').val();
-  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
-  		toMain(url);
-  	}
-  	
-</script>
+

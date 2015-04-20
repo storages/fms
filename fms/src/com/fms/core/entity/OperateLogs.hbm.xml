@@ -14,6 +14,6 @@
 		<property name="msg" column="MSG" type="text"/>
 			<!--  员工一对一单项关联配置-->
 		<!-- <many-to-one name="employee" column="EMPLOYEEID" cascade="none" class="Employee" unique="true" /> -->
-		<many-to-one name="orgUser" column="ORGID" class="AclUser"/>
+		<many-to-one name="orgUser" column="ORGID" lazy="false" fetch="join"  class="AclUser"/>
 	</class>
 </hibernate-mapping>

@@ -44,6 +44,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		// TODO Auto-generated method stub
 		userDao.deleteAclUserByEmpId(ids);
 		String hql = "delete Employee a where 1=1 and ";
+		operaterLogsDao.saveDeleteLogs(loginUser, ids, Employee.class);
 		for(int i=0 ; i<ids.length; i++){
 			hql+=" a.id = ? or ";
 		}

@@ -2,6 +2,7 @@ package com.fms.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -92,15 +93,18 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 						for(int z=0;z<subNewFields.length;z++){
 							CnFileName submeta = subNewFields[z].getAnnotation(CnFileName.class);
 						     if(null!=submeta){
-						    		String strVal = subclzz
+						    	 if(meta.isMustRecord().toString().equals("T"))
+									{
+						    		   String strVal = subclzz
 											.getMethod("get" + change(subFields[z].getName()),
 													null).invoke(subObj, null).toString();
-									String newStrVal = subclzz
+									   String newStrVal = subclzz
 											.getMethod("get" + change(subNewFields[z].getName()),
 													null).invoke(subNewObj, null).toString();
-									if(!strVal.equals(newStrVal)){
-										subBuffer.append(meta.name() + ":" + "{" + strVal + "}改成{"
+									   if(!strVal.equals(newStrVal)){
+										    subBuffer.append(meta.name() + ":" + "{" + strVal + "}改成{"
 												+ newStrVal + "}" + ",");
+									     }
 									}
 						     }
 						}
@@ -142,6 +146,49 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 
 	}
 
+	
+	public void saveDeleteLogs(AclUser logUser,String[] ids, Class clazz) {
+		// TODO Auto-generated method stub
+		OperateLogs logs = new OperateLogs();
+		logs.setCreateDate(new Date());
+		logs.setOrgUser(logUser);
+		logs.setModifyDate(new Date());
+		logs.setOrgType(OperateLogs.REMOVE_OPERATE);
+		StringBuffer strBuffer = new StringBuffer();
+		CnFileName clameta= (CnFileName) clazz.getAnnotation(CnFileName.class);
+		strBuffer.append(clameta.name());
+		for(String id:ids){
+			strBuffer.append("[");
+			Object obj = this.get(clazz, id);
+			Field[] fields=	clazz.getDeclaredFields();
+			StringBuffer	subBuffer  = new StringBuffer();
+			for (int x = 0; x < fields.length; x++) {
+				subBuffer.append("{");
+				CnFileName meta = fields[x].getAnnotation(CnFileName.class);
+				if (meta != null) {
+					 if(meta.isMustRecord().toString().equals("T"))
+						{
+						   try {
+							String strVal = clazz
+										.getMethod("get" + change(fields[x].getName()),
+												null).invoke(obj, null).toString();
+							strBuffer.append(meta.name()+":"+strVal);	
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
+						}
+				}
+				subBuffer.append("}");
+			}
+			strBuffer.append("]");
+		}
+		logs.setMsg(strBuffer.toString());
+		this.saveOrUpdate(logs);
+	}
+
+	
+	
 	public static String change(String src) {
 		if (src != null) {
 			StringBuffer sb = new StringBuffer(src);
@@ -151,5 +198,6 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 			return null;
 		}
 	}
+
 
 }

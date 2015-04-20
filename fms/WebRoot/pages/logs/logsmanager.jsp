@@ -104,11 +104,8 @@ ul {
 							
 						</script>
 						<script type="text/javascript">
-							var maxPageCount = $
-							{
-								pagecount
-							};
-							var DATA_ROWS = 10;
+							var maxPageCount = ${pagecount};
+							var DATA_ROWS = 2;
 							var names = '${names}';
 						</script>
 						<link rel="stylesheet" href="<%=path%>/css/page/canvas.css"
@@ -192,7 +189,7 @@ ul {
 		<!--PAGE CONTENT ENDS-->
 	</div>
 	<script type="text/javascript"
-		src="<%=path%>/js/page/emplmanager-page.js">
+		src="<%=path%>/js/page/logsmanager-page.js">
 		
 	</script>
 </body>
@@ -204,7 +201,6 @@ ul {
 </td>
 <td class="center">{{= orgType}}</td>
 <td class="center">{{= orgUser.userName}}</td>
-<td class="hidden-480 center">{{= name}}　</td>
 <td class="hidden-480 center">{{= msg}}　</td>
 <td class="center">
 	<a href="javascript:void(0);"  delete-emp="{{= id}}">查看</a>

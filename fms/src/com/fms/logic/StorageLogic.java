@@ -38,4 +38,13 @@ public interface StorageLogic {
 	 * @return
 	 */
 	Integer findDataCount(String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag);
+
+	/**
+	 * (根据物料标志【原料】或【成品】) 获取最大流水号
+	 * 
+	 * @param user
+	 * @param impExpFlag
+	 * @return
+	 */
+	Integer findMaxSerialNo(AclUser user, String entityName, String imgExgFlag);
 }

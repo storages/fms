@@ -30,4 +30,8 @@ public class StorageLogicImpl implements StorageLogic {
 		}
 		return null;
 	}
+
+	public Integer findMaxSerialNo(AclUser user, String entityName, String imgExgFlag) {
+		return this.storageDao.findMaxSerialNo(entityName, imgExgFlag);
+	}
 }

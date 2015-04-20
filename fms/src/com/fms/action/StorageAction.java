@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.InStorage;
 import com.fms.core.entity.OutStorage;
@@ -94,7 +96,12 @@ public class StorageAction extends BaseAction {
 	 * @return
 	 */
 	public String editStorage() {
-
+		if (StringUtils.isNotBlank(impExpFlag)) {
+			Integer maxSerialNo = this.storageLogic.findMaxSerialNo(getLoginUser(), "InStorage", impExpFlag);
+			if (null == maxSerialNo || maxSerialNo == 0) {
+				Integer serialNo = 1;
+			}
+		}
 		return "edit";
 	}
 

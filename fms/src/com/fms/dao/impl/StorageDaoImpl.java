@@ -80,4 +80,8 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 		return this.count(sql.toString(), params.toArray());
 	}
 
+	public Integer findMaxSerialNo(String entityName, String imgExgFlag) {
+		return (Integer) this.uniqueResult("select max(a.serialNo) from " + entityName.trim() + " a where a.imgExgFlag =? ", new Object[] { imgExgFlag });
+	}
+
 }

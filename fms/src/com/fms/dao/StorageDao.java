@@ -38,4 +38,12 @@ public interface StorageDao extends BaseDao {
 	 * @return
 	 */
 	Integer findDataCount(String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag);
+
+	/**
+	 * (根据物料标志【原料】或【成品】) 获取最大流水号
+	 * 
+	 * @param impExpFlag
+	 * @return
+	 */
+	Integer findMaxSerialNo(String entityName, String imgExgFlag);
 }

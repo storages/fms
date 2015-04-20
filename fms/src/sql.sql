@@ -8,6 +8,9 @@ select * from quotation where material='402881fb49cb98400149cb99412f0000' and sc
 																					  402881fb479090c501479093052a000e
 
 
+alter table OperateLogs alter column msg varchar(1000)
+select * from OperateLogs
+
 select max(serialNo) from quotation
 update quotation set serialNo = 2 where id='402881fb49e0fc1a0149e108602a0003'
 update quotation set effectDate = '2014-11-13' where id='402881e949b3bad70149b3be0fb20000'

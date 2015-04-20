@@ -13,10 +13,35 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dialog/dialogCss.css" type="text/css"></link>
 
 <style type="text/css">
-		.required{color:red;}
-		p{margin-bottom: 2px;}
 </style>
-    <input type="hidden" id="flag" value="${materinfo.id}"/><!-- 为了判断是新增还是修改 -->
+
+<script type="text/javascript">
+	$(function(){
+		initUi();
+		//货物标志改变事件
+		$("#imgexgflag").change(function(){
+			initUi();
+		});
+	});
+	
+	function initUi(){
+		var val = $("#imgexgflag").val();
+		if("I"==val){
+			$("#purchNo").show();
+			$("#orderNo").hide();
+			$("#captionsc").html("供应商名称");
+			$("#tishi").html("--请选择供应商名称--");
+		}else if("E"==val){
+			$("#purchNo").hide();
+			$("#orderNo").show();
+			$("#captionsc").html("&nbsp;客户名称&nbsp;");
+			$("#tishi").html("--请选择客户名称--");
+		}
+	}
+	
+	
+</script>
+    <input type="hidden" id="flag" value="${storage.id}"/><!-- 为了判断是新增还是修改 -->
     <div class="page-header position-relative" style="margin-bottom: 0px;">
     	<c:if test="${storage.id==null}">
 			<h5>物料＞＞<a href="">入库</a>＞＞新增</h5>
@@ -25,77 +50,92 @@
 			<h5>物料＞＞<a href="">出库</a>＞＞修改</h5>
 		</c:if>
 	</div>
-	<div class="row-fluid" id="mybox" style="margin-left: 5px;" >
-		<div class="span12">
-			<p>
-				<span id="hcode">&nbsp;&nbsp;&nbsp;&nbsp;流水号</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.serialNo" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
-				<span id="useFlag">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.useFlag"  readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-			<p>
-				&nbsp;&nbsp;货物标志<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="imgexgflag">
-						<option value="">---请选择---</option>
-						<option value="I" <c:if test="${inStorage.imgExgFlag==imgExgFlag}">selected="selected"</c:if>>原料</option>
-						<option value="E" <c:if test="${inStorage.imgExgFlag==imgExgFlag}">selected="selected"</c:if>>成品</option>
-					</select>&nbsp;&nbsp;&nbsp;&nbsp;
-				<span id="inStorageNo">入库单号</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.inStorageNo" >&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-			<p>
-				<span id="inStorageNo">&nbsp;&nbsp;采购单号</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.purchaseNo" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
-				<span id="orderNo">&nbsp;&nbsp;&nbsp;订单号</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.orderNo" >&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-			<p>
-				<span id="inStorageNo">&nbsp;&nbsp;物料名称</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.HsName" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
-				<span id="orderNo">&nbsp;物料编码</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.material.hsCode" ><img alt="选择物料" src="${pageContext.request.contextPath}/images/search.gif" id="dgMaterQuery" style="cursor: pointer;">&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-			<p>
-				<span id="inStorageNo">&nbsp;&nbsp;颜&nbsp;&nbsp;&nbsp;&nbsp;色</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.material.color" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
-				<span id="orderNo">&nbsp;规格型号</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.material.model" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-			<p>
-				&nbsp;&nbsp;单&nbsp;&nbsp;&nbsp;&nbsp;位<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="unit">
-						<option value="">---请选择单位---</option>
-						<c:forEach var="unit" items="${units}">
-							<option value="${unit.id}" <c:if test="${unit.name==inStorage.material.unit.name}"> selected="selected"</c:if>>${unit.name}</option>
-						</c:forEach>
+	<div>
+		<table id="sample-table-1" class="table table-striped table-bordered "  style=" font-size: 12px; width:600px; border: 0px;">
+			<tr style="border:0px;">
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">流水号</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;" readonly="readonly"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库类型</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
+				<td style="width: 150px;border:0px;padding:0px;">
+					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
+						<option value="0">A</option>
+						<option value="1">B</option>
 					</select>
-				<span id="orderNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;量</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.inQty" >&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-			<p>
-				<span id="orderNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;批次号</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.betchNo" >&nbsp;
-				<span id="inStorageNo">&nbsp;&nbsp;数量/(包)</span><span class="required">*</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.specQty">&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-			<p>
-				<span id="orderNo">&nbsp;&nbsp;&nbsp;&nbsp;件&nbsp;&nbsp;&nbsp;数</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.pkgs" >&nbsp;&nbsp;
-				供应商名称<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="scmcoc">
-						<option value="">---请选择供应商名称---</option>
-						<c:forEach var="scmc" items="${scmcocs}">
-							<option value="${scmc.id}" <c:if test="${scmc.name==inStorage.scmcoc.name}"> selected="selected"</c:if>>${scmc.name}</option>
-						</c:forEach>
-					</select>&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-			<p style="padding-left: 0px;">
-					&nbsp;&nbsp;入库类型<span class="required">*</span><select style="height: 25px;width: 160px; font-size: 12px;" name="inStorage.impFlag">
-						<option value="">---请选择入库类型---</option>
-						<c:forEach var="impexptype" items="${impexptypes}">
-							<option value="${impexptype.code}" <c:if test="${inStorage.impFlag==impexptype.code}"> selected="selected"</c:if>>${impexptype.name}</option>
-						</c:forEach>
+				</td>
+				<td style="width: 10px;border:0px;padding:0px;"></td>
+			</tr>
+			<tr style="border:0px;">
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料标志</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
+				<td style="width: 150px;border:0px;padding:0px;">
+					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
+						<option value="I">原料</option>
+						<option value="E">成品</option>
 					</select>
-					&nbsp;&nbsp;&nbsp;&nbsp;仓库名称<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="" id="stock">
-						<option value="">---请选择仓库名称---</option>
-						<c:forEach var="stock" items="${stocks}">
-							<option value="${stock.id}" <c:if test="${stock.name==inStorage.stock.name}"> selected="selected"</c:if>>${stock.name}</option>
-						</c:forEach>
-					</select>
-				</p>
-			<p style="padding-left: 0px;">
-					&nbsp;&nbsp;物料类型<span class="required">*</span><select style="height: 25px;width: 160px;font-size: 12px;" name="inStorage.materialType.typeName">
-						<option value="">---请选择物料类型---</option>
-						<c:forEach var="mtype" items="${types}">
-								<option value="${mtype.id}" <c:if test="${inStorage.materialType.typeName==mtype.typeName}">selected="selected"</c:if>>${mtype.typeName}</option>
-						</c:forEach>
-					</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<span id="note">备&nbsp;&nbsp;&nbsp;注</span><input style="height: 25px;width: 160px;" type="text" name="inStorage.note" >
-				</p>
-		</div>
+				</td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">采购单号</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
+				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;"/></td>
+			</tr>
+			<tr style="border:0px;">
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库单号</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">订单号</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;"/></td>
+			</tr>
+			<tr style="border:0px;">
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">供应商名称</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料编码</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
+				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;"/></td>
+			</tr>
+			<tr style="border:0px;">
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料名称</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">规格型号</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+			</tr>
+			<tr style="border:0px;">
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">计量单位</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库数量</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+			</tr>
+			<tr style="border:0px;">
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">每件包装数</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">件数</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"  readonly="readonly"/></td>
+			</tr>
+			<tr style="border:0px;">
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">仓库名称</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">备注</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+			</tr>
+			<tr style="border:0px;text-align:center; ">
+				<td colspan="6" style="border:0px;text-align:center;">
+					<button class="btn btn-small btn-danger " data-toggle="button" type="button" onclick="">保存</button>
+					<button class="btn btn-small btn-danger " data-toggle="button" type="button" onclick="">取消</button>
+				</td>
+			</tr>
+		</table>
 	</div>
   

@@ -8,9 +8,9 @@
 <a href="javascript:location.replace(url)"></a>
 <!-- 左边菜单树 -->
 <div class="navbar">
-	<%--<div class="navbar-inner" style=" background-image: url('${pageContext.request.contextPath}/images/head_bg.png'); background-size:100%; background-repeat:no-repeat;" id="setcss">
+	<div class="navbar-inner" style=" background-image: url('${pageContext.request.contextPath}/images/head_bg.png'); background-size:100%; background-repeat:no-repeat;" id="setcss">
 		<!-- <div class="container-fluid"></div> -->
-			 <img alt="公司标志" src="${pageContext.request.contextPath}/imges/ls_logo.png" style="width: 60px; height:50px; margin-top:5px; margin-bottom:5px;  margin-left:25px; float:left;"> 
+			 <%-- <img alt="公司标志" src="${pageContext.request.contextPath}/imges/ls_logo.png" style="width: 60px; height:50px; margin-top:5px; margin-bottom:5px;  margin-left:25px; float:left;">  --%>
 				<!--/.brand-->
 				
 				<ul style="float: right;height:auto; margin: 0px 5px 0px 0px; padding:0px;">
@@ -26,7 +26,7 @@
 					</c:if>
 					<li style="list-style: none; line-height:60px; color: white; font-size: 12px;float: left;"><a href="${pageContext.request.contextPath}/test.jsp">去测试页面</a></li>
 				</ul>
-	</div>--%>
+	</div>
 </div>
 <div class="sidebar" id="sidebar" style="left: 2px; margin-top: 70px;">
 	<div id="main" style=" height:100%; overflow:auto;">

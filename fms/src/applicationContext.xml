@@ -365,6 +365,12 @@
 			<ref bean="purchaseBillDao" />
 		</property>
 	</bean>
+<!-- 采购单 -->
+	<bean id="loglogic" class="com.fms.logic.impl.OperateLogsLogicImpl">
+		<property name="logDao">
+			<ref bean="operaterLogsDao" />
+		</property>
+	</bean>
 
 
 
@@ -537,7 +543,13 @@
 		</property>
 	</bean>
 
-
+	<!-- 日志 -->
+	<bean id="logsAction" class="com.fms.action.LogAction"
+		scope="prototype">
+		<property name="operLogic">
+			<ref bean="loglogic" />
+		</property>
+	</bean>
 
 
 

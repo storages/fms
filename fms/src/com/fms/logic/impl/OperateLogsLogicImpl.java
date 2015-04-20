@@ -30,10 +30,10 @@ public class OperateLogsLogicImpl implements OperateLogsLogic {
 		this.logDao = logDao;
 	}
 
-	public int countListEmpl(AclUser loginUser, String str) {
+	public int countListLogs(AclUser loginUser, String str) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-		String hql = "select count(id) from Employee a where 1=1";
+		String hql = "select count(id) from OperateLogs a where 1=1";
 		List param = new ArrayList();
 		if(null!=str && !"".equals(str)){
 			hql+=" and a.name like '%"+str+"%'";

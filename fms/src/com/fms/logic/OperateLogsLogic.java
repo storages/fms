@@ -11,5 +11,5 @@ public interface OperateLogsLogic {
 
 	public OperateLogs getEmplById(AclUser loginUser,String id);
 	
-	public int countListEmpl(AclUser loginUser,String str);
+	public int countListLogs(AclUser loginUser,String str);
 }

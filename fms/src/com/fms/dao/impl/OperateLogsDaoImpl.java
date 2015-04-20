@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -197,6 +198,18 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 		} else {
 			return null;
 		}
+	}
+
+	public List<OperateLogs> findAllLogs(String likeStr, Integer index,
+			Integer length) {
+		// TODO Auto-generated method stub
+		String hql = "select a from OperateLogs a where 1=1";
+		List param = new ArrayList();
+		if(null!=likeStr && !"".equals(likeStr)){
+			hql+=" and a.name like '%"+likeStr+"%'";
+			//param.add("'%"+ likeStr +"%'");
+		}
+		return this.findPageList(hql, param.toArray(),index,length);
 	}
 
 

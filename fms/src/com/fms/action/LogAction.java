@@ -19,14 +19,14 @@ public class LogAction  extends BaseAction{
     
     private int pageindex;
     
-	private int pageReows=10;
+	private int pageReows=2;
     
     private String names;
     
     
 	public String logs(){
 		 List list =operLogic.findAllEmpl(getLoginUser(),names, 1, pageReows);
-		 int count= operLogic.countListEmpl(getLoginUser(),names);
+		 int count= operLogic.countListLogs(getLoginUser(),names);
 		 request.put("pagecount",count);
 		 request.put("logs", list);
 		 request.put("names", names);

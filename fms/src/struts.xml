@@ -168,6 +168,11 @@
 			<result name="detail">/pages/purchase/purchaseItem.jsp</result>
 		</action>
 		
+			<!-- 日志 -->
+		<action name="log_*" class="logsAction" method="{1}">
+			<result name="manager">/pages/logs/logsmanager.jsp</result>
+			<!-- <result name="detail">/pages/purchase/purchaseItem.jsp</result> -->
+		</action>
 		
 		
 		

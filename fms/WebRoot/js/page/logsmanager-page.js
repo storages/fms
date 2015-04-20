@@ -22,6 +22,9 @@ $(function(){
 		 var json=$.parseJSON(result);
 		 if(json.success){
 			 $("#tbody tr").remove();
+			 for(var x=0;x<json.obj.length;x++){
+				 json.obj[x].msg=submax10(json.obj[x].msg);
+			 }
 				 $("#SXrow").tmpl(json.obj).appendTo("#tbody");  
 				  initEditfun();
 				  initDeletefun();
@@ -208,5 +211,12 @@ $(function(){
 			}
 		});
 	} 
+	
+	function submax10(str){
+		if(str.length>0){
+			str=str.substring(0,30)+"......";
+		}
+		return str;
+	}
 	
 });

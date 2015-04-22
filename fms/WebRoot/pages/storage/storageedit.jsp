@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dialog/dialogCss.css" type="text/css"></link>
 
 <style type="text/css">
+
 </style>
 
 <script type="text/javascript">
@@ -22,20 +23,46 @@
 		$("#imgexgflag").change(function(){
 			initUi();
 		});
+		
+		$("#imgexgflag").change(function(){
+			var val = $("#imgexgflag").val();
+			var url ="${pageContext.request.contextPath}/storage_loadImpExpType.action";
+			$.ajax({
+				type: "POST",
+				url:url,
+				data:{impExpFlag:val},
+				async: false,
+				cache: false,
+				success:function(args){
+					var result=jQuery.parseJSON(args);
+					if(result.success){
+						$("#impExpType").empty(); 
+							var mylist = result.obj;
+							var options = "";
+							 for(var i=0; i<mylist.length; i++){
+								options += "<option value='"+mylist[i].code+"'>"+ mylist[i].name +"</option>";
+							}
+							 $("#impExpType").html(options); 
+					}
+				}
+			});
+		});
 	});
 	
 	function initUi(){
 		var val = $("#imgexgflag").val();
 		if("I"==val){
-			$("#purchNo").show();
-			$("#orderNo").hide();
-			$("#captionsc").html("供应商名称");
-			$("#tishi").html("--请选择供应商名称--");
+			$("#purchNo").html("*");
+			$("#purchQuery").show();
+			$("#captionScm").html("供应商名称");
+			$("#orderNo").html("");
+			$("#orderQuery").hide();
 		}else if("E"==val){
-			$("#purchNo").hide();
-			$("#orderNo").show();
-			$("#captionsc").html("&nbsp;客户名称&nbsp;");
-			$("#tishi").html("--请选择客户名称--");
+			$("#orderNo").html("*");
+			$("#orderQuery").show();
+			$("#captionScm").html("客户名称");
+			$("#purchNo").html("");
+			$("#purchQuery").hide();
 		}
 	}
 	
@@ -59,9 +86,10 @@
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库类型</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;">
-					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
-						<option value="0">A</option>
-						<option value="1">B</option>
+					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" id="impExpType" >
+						<c:forEach var="mattype" items="${impexptypes}">
+							<option value="${mattype.code}">${mattype.name}</option>
+						</c:forEach>
 					</select>
 				</td>
 				<td style="width: 10px;border:0px;padding:0px;"></td>
@@ -70,27 +98,33 @@
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料标志</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;">
-					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
-						<option value="I">原料</option>
-						<option value="E">成品</option>
+					<select id="imgexgflag" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
+						<c:if test="${imgExgFlag=='I'}">
+							<option value="I" selected="selected">原料</option>
+							<option value="E">成品</option>
+						</c:if>
+						<c:if test="${imgExgFlag=='E'}">
+							<option value="I" >原料</option>
+							<option value="E" selected="selected">成品</option>
+						</c:if>
 					</select>
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">采购单号</td>
-				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;" id="purchNo">*</td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
-				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;"/></td>
+				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="purchQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">订单号</td>
-				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
-				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;"/></td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"  id="orderNo">*</td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
+				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="orderQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
-				<td style="width: 60px;border:0px;text-align: right;padding:0px;">供应商名称</td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;" id="captionScm">供应商名称</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料编码</td>
@@ -125,7 +159,12 @@
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">仓库名称</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;">
+					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
+						<option value="0">A</option>
+						<option value="1">B</option>
+					</select>
+				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">备注</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
@@ -138,4 +177,3 @@
 			</tr>
 		</table>
 	</div>
-  

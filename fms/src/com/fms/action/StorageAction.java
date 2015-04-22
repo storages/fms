@@ -1,18 +1,26 @@
 package com.fms.action;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.action.BaseAction;
+import com.fms.commons.ImgExgFlag;
+import com.fms.commons.ImpExpType;
 import com.fms.core.entity.InStorage;
 import com.fms.core.entity.OutStorage;
+import com.fms.core.entity.Stock;
+import com.fms.core.vo.entity.TempEntity;
 import com.fms.logic.MaterialTypeLogic;
 import com.fms.logic.ScmcocLogic;
+import com.fms.logic.StockLogic;
 import com.fms.logic.StorageLogic;
 import com.fms.logic.UnitLogic;
+import com.fms.utils.AjaxResult;
+import com.url.ajax.json.JSONObject;
 
 /**
  * 进出库
@@ -31,6 +39,7 @@ public class StorageAction extends BaseAction {
 	protected MaterialTypeLogic logic;// 物料类型逻辑
 	protected UnitLogic unitLogic;// 计量单位逻辑
 	protected ScmcocLogic scmcocLogic;// 客户供应商逻辑
+	protected StockLogic stockLogic;// 仓库逻辑
 
 	/********* 分页用的属性 ***********/
 	private Integer dataTotal;// 总记录数
@@ -101,8 +110,32 @@ public class StorageAction extends BaseAction {
 			if (null == maxSerialNo || maxSerialNo == 0) {
 				Integer serialNo = 1;
 			}
+			String imgExgFlag = "0".equals(impExpFlag) ? ImgExgFlag.EXG : ImgExgFlag.IMG;
+			List<TempEntity> typeList = ImpExpType.getImgTypeByMaterialType(imgExgFlag);
+			List<Stock> stockList = stockLogic.findAllStock(getLoginUser(), null, -1, -1);
+			this.request.put("imgExgFlag", imgExgFlag);
+			this.request.put("impexptypes", typeList);
+			this.request.put("stockList", stockList);
 		}
 		return "edit";
+	}
+
+	public void loadImpExpType() {
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		try {
+			List<TempEntity> typeList = ImpExpType.getImgTypeByMaterialType(impExpFlag);
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			result.setObj(typeList);
+			result.setSuccess(true);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String save() {
@@ -262,6 +295,14 @@ public class StorageAction extends BaseAction {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public StockLogic getStockLogic() {
+		return stockLogic;
+	}
+
+	public void setStockLogic(StockLogic stockLogic) {
+		this.stockLogic = stockLogic;
 	}
 
 }

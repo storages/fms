@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.fms.core.vo.entity.TempEntity;
+
 /**
  * 进出库类型
  * 
@@ -165,24 +167,24 @@ public class ImpExpType {
 	 * @param materialType
 	 * @return
 	 */
-	public static List<Object[]> getImgTypeByMaterialType(String materialType) {
-		List<Object[]> typeList = new ArrayList<Object[]>();
+	public static List<TempEntity> getImgTypeByMaterialType(String materialType) {
+		List<TempEntity> typeList = new ArrayList<TempEntity>();
 		if (StringUtils.isNotBlank(materialType)) {
 			if (ImgExgFlag.EXG.equals(materialType)) {
-				typeList.add(new Object[] { parseVal(getImpExpType(3)), getImpExpType(3) });
-				typeList.add(new Object[] { parseVal(getImpExpType(5)), getImpExpType(5) });
-				typeList.add(new Object[] { parseVal(getImpExpType(7)), getImpExpType(7) });
-				typeList.add(new Object[] { parseVal(getImpExpType(10)), getImpExpType(10) });
-				typeList.add(new Object[] { parseVal(getImpExpType(11)), getImpExpType(11) });
-				typeList.add(new Object[] { parseVal(getImpExpType(13)), getImpExpType(13) });
+				typeList.add(new TempEntity(parseVal(getImpExpType(11)), getImpExpType(11)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(3)), getImpExpType(3)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(5)), getImpExpType(5)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(7)), getImpExpType(7)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(10)), getImpExpType(10)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(13)), getImpExpType(13)));
 			} else if (ImgExgFlag.IMG.equals(materialType)) {
-				typeList.add(new Object[] { parseVal(getImpExpType(1)), getImpExpType(1) });
-				typeList.add(new Object[] { parseVal(getImpExpType(2)), getImpExpType(2) });
-				typeList.add(new Object[] { parseVal(getImpExpType(4)), getImpExpType(4) });
-				typeList.add(new Object[] { parseVal(getImpExpType(6)), getImpExpType(6) });
-				typeList.add(new Object[] { parseVal(getImpExpType(8)), getImpExpType(8) });
-				typeList.add(new Object[] { parseVal(getImpExpType(9)), getImpExpType(9) });
-				typeList.add(new Object[] { parseVal(getImpExpType(12)), getImpExpType(12) });
+				typeList.add(new TempEntity(parseVal(getImpExpType(12)), getImpExpType(12)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(1)), getImpExpType(1)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(2)), getImpExpType(2)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(4)), getImpExpType(4)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(6)), getImpExpType(6)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(8)), getImpExpType(8)));
+				typeList.add(new TempEntity(parseVal(getImpExpType(9)), getImpExpType(9)));
 			}
 		}
 

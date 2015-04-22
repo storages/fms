@@ -47,7 +47,13 @@
 				}
 			});
 		});
+		
+		//上一页面
+		$("#goback").click(function(){
+			toMain("${pageContext.request.contextPath}/storage_findAllInStorage.action");
+		});
 	});
+			
 	
 	function initUi(){
 		var val = $("#imgexgflag").val();
@@ -71,7 +77,7 @@
     <input type="hidden" id="flag" value="${storage.id}"/><!-- 为了判断是新增还是修改 -->
     <div class="page-header position-relative" style="margin-bottom: 0px;">
     	<c:if test="${storage.id==null}">
-			<h5>物料＞＞<a href="">入库</a>＞＞新增</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="goback">入库</a>＞＞新增</h5>
 		</c:if>
     	<c:if test="${storage.id!=null}">
 			<h5>物料＞＞<a href="">出库</a>＞＞修改</h5>
@@ -145,7 +151,7 @@
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
 				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库数量</td>
-				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
 			</tr>
 			<tr style="border:0px;">
@@ -161,8 +167,9 @@
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
 				<td style="width: 150px;border:0px;padding:0px;">
 					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
-						<option value="0">A</option>
-						<option value="1">B</option>
+						<c:forEach var="stock" items="${stockList}">
+							<option value="${stock.id}">${stock.name}</option>
+						</c:forEach>
 					</select>
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">备注</td>

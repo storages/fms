@@ -173,6 +173,13 @@
 		</property>
 	</bean>
 
+	<!-- 订单 -->
+	<bean id="orderDao" class="com.fms.dao.impl.OrderDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
 	<!-- 进出库 -->
 	<bean id="storageDao" class="com.fms.dao.impl.StorageDaoImpl">
 		<property name="sessionFactory">
@@ -320,6 +327,13 @@
 		</property>
 		<property name="materialDao">
 			<ref bean="materialDao" />
+		</property>
+	</bean>
+
+	<!-- 订单 -->
+	<bean id="orderLogic" class="com.fms.logic.impl.OrderLogicImpl">
+		<property name="orderDao">
+			<ref bean="orderDao" />
 		</property>
 	</bean>
 
@@ -484,9 +498,19 @@
 			<ref bean="materLogic" />
 		</property>
 	</bean>
+	
+	<!-- 订单 -->
+	<bean id="orderAction" class="com.fms.action.OrderAction" scope="prototype">
+		<property name="orderLogic">
+			<ref bean="orderLogic" />
+		</property>
+		<property name="scmcocLogic">
+			<ref bean="scmcocLogic" />
+		</property>
+	</bean>
+	
 	<!-- 进出库 -->
-	<bean id="storageAction" class="com.fms.action.StorageAction"
-		scope="prototype">
+	<bean id="storageAction" class="com.fms.action.StorageAction" scope="prototype">
 		<property name="storageLogic">
 			<ref bean="storageLogic" />
 		</property>

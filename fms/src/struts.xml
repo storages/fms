@@ -142,6 +142,13 @@
 			<result name="tlist">/pages/material/bomPage.jsp</result>
 			<param name="path">/upload</param>
 		</action>
+		
+		<!-- 订单 -->
+		<action name="order_*" class="orderAction" method="{1}">
+			<result name="success">/pages/order/orderPage.jsp</result>
+		</action>
+		
+		
 		<!-- 进出库 -->
 		<action name="storage_*" class="storageAction" method="{1}">
 			<result name="success">/pages/storage/impexpstorage.jsp</result>

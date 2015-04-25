@@ -66,9 +66,9 @@ public class OrderHead extends BaseEntity {
 	@CnFileName(name = " 业务员")
 	private String salesman;
 	/**
-	 * 是否结单(isFinish)
+	 * 是否结案(isFinish)
 	 */
-	@CnFileName(name = " 是否结单")
+	@CnFileName(name = " 是否结案")
 	private Boolean isFinish = Boolean.FALSE;
 
 	/**

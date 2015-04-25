@@ -58,7 +58,7 @@
 				</thead>
 						<tbody id="headmodel">
 							<c:forEach var="head" items="${heads}" varStatus="index" step="1">
-								<tr">
+								<tr>
 									<td class="center" style="width:20px;" >
 										<input type="checkbox" value="${head.id}" name="sid" style="width:20px;"/>
 									</td>

@@ -141,16 +141,17 @@ function delMoreMater(flag){
  */
 function delData(ids,flag){
 	var splitStr = "";
-	$('input[name="sid"]:checked').each(function(){
-		splitStr+=$(this).val()+',';
-	}); 
+	if(ids==""){
+		$('input[name="sid"]:checked').each(function(){
+			splitStr+=$(this).val()+',';
+		}); 
+	}else{
+		splitStr = ids+",";
+	}
 	if(splitStr=="" && ids==""){
 		alert("请选择要删除的内容!");
 		return;
 	}
-	/*else if(ids!=""){
-		splitStr = ids+",";
-	}*/
 	splitStr = splitStr.substring(0, splitStr.length-1);
 	var resultUrl = getUrl(flag);
 	var url = resultUrl[0];
@@ -173,7 +174,6 @@ function delData(ids,flag){
 		    		alert(result.msg);
 		    		return;
 		    	}
-		    	alert(result.msg);
 		     },error:function(){
 		        	$("#mess").html("程序异常，请重新启动程序！");
 		        	return false;
@@ -247,14 +247,20 @@ function getUrl(flag){
 			var id = $('#head').val();
 			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillItem.action";
 			url[1] = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
+			//删除成品BOM
 		case "BomExg":
 			url[0] = "${pageContext.request.contextPath}/bom_delBomExg.action";
 			url[1] = "${pageContext.request.contextPath}/bom_findBomExg.action";
 			break;
+			//删除料件BOM
 		case "BomImg":
 			var verNo = $("#form-field-select-1").find("option:selected").text();
 			url[0] = "${pageContext.request.contextPath}/bom_delBomImg.action?verNo="+verNo;
 			url[1] = "${pageContext.request.contextPath}/bom_detailList.action?ids="+$("#hid").val()+"&verNo="+verNo;
+			break;
+		case "OrderHead":
+			url[0] = "${pageContext.request.contextPath}/order_delOrderHead.action";
+			url[1] = "${pageContext.request.contextPath}/order_findOrderPageList.action";
 			break;
 	}
 	return url;

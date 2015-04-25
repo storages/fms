@@ -64,7 +64,7 @@
 				<li><span class="file"><a href="javascript:void(0);" >出库</a></span></li>
 			</ul>
 		</li>
-		<li><span class="file"><a href="javascript:void(0);" data-url="#" >订单管理</a></span></li>
+		<li><span class="file"><a href="javascript:void(0);" data-url="/order_findOrderPageList.action" >订单管理</a></span></li>
 		<li><span class="file"><a href="javascript:void(0);" data-url="/appbill_findAppBillHeads.action" >申请单</a></span></li>
 		<li><span class="file"><a href="javascript:void(0);" data-url="/purchase_findPurchaseHeads.action" >采购单</a></span></li>
 		

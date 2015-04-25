@@ -136,9 +136,7 @@ public class OrderAction extends BaseAction {
 			Object[] arrData = jsonStr.toArray();
 			OrderHead head = null;
 			for (int i = 0; i < arrData.length; i = i + 6) {
-				if (i % 6 == 0) {
-					head = this.orderLogic.load(OrderHead.class, arrData[i].toString());
-				}
+				head = this.orderLogic.load(OrderHead.class, arrData[i].toString());
 				Scmcoc scmcoc = this.scmcocLogic.findScmcocById(getLoginUser(), arrData[i + 1].toString());
 				head.setScmcoc(scmcoc);
 				if (null != arrData[i + 2].toString() && !"".equals(arrData[i + 2].toString())) {

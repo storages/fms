@@ -35,9 +35,9 @@ public class OrderLogicImpl implements OrderLogic {
 		Integer ser = this.orderDao.getSerialNo(aclUser);
 		head.setCreateDate(new Date());
 		head.setSerialNo(ser);
-		String orderNo = "O";
+		String orderNo = "OR";
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddmmss");
-		orderNo = df.format(new Date());
+		orderNo += df.format(new Date());
 		head.setOrderNo(orderNo + ser);
 		return (OrderHead) this.orderDao.saveOrUpdateNoCache(head);
 	}

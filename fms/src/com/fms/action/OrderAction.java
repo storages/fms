@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.Scmcoc;
+import com.fms.core.vo.entity.TempEntity;
 import com.fms.logic.OrderLogic;
 import com.fms.logic.ScmcocLogic;
 import com.fms.utils.AjaxResult;
@@ -90,6 +91,10 @@ public class OrderAction extends BaseAction {
 			List<OrderHead> orderList = this.orderLogic.findOrderPageList(getLoginUser(), orderNo, parseValue(scmCocName), salesman, date, date2, date3, date4, (curr - 1) * DEFAULT_PAGESIZE,
 					DEFAULT_PAGESIZE);
 			List<Scmcoc> scmList = this.scmcocLogic.findAllScmcoc(getLoginUser(), true, null, -1, -1);
+			List<TempEntity> salesmans = new ArrayList<TempEntity>();
+			for (int i = 0; i < orderList.size(); i++) {
+				salesmans.add(new TempEntity(i, orderList.get(i).getSalesman()));
+			}
 			this.request.put("orderList", orderList);
 			this.request.put("scmList", scmList);
 			this.request.put("hBeginPlaceOrderDate", beginPlaceOrderDate);
@@ -98,6 +103,7 @@ public class OrderAction extends BaseAction {
 			this.request.put("hEndDeliveryDate", endDeliveryDate);
 			this.request.put("scmCocName", parseValue(scmCocName));
 			this.request.put("salesman", salesman);
+			this.request.put("salesmans", salesmans);
 			this.request.put("orderNo", orderNo);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
@@ -110,7 +116,7 @@ public class OrderAction extends BaseAction {
 	}
 
 	/**
-	 * 新增订单
+	 * 新增订单表头
 	 * 
 	 * @return
 	 */

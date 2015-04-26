@@ -74,6 +74,12 @@ $(function(){
 	});
 	
 });
+	
+	//跳转到详细清单页面
+	function toDetail(hid){
+		var url = "${pageContext.request.contextPath}/order_findOrderItems.action?hid="+hid;
+		toMain(url);
+	}
 
 
 function gototag(pageSize){
@@ -108,7 +114,7 @@ function gototag(pageSize){
 
 
 
-<div class="page-header position-relative" style="margin-bottom: 0px;">
+<div class="page-header position-relative" style="margin: 0px;padding:0px;">
 	<h5 style="margin: 0px;">订单＞＞订单列表</h5>
 </div>
 <div class="modal-footer"  style="text-align: left; padding-top: 5px; padding-bottom: 0px;">
@@ -175,7 +181,7 @@ function gototag(pageSize){
 										</c:if>
 									</td>
 									<td  class="center" style="width:31px;">
-										<a href="javascript:toMain()">详细</a>｜
+										<a href="javascript:void(0);" onclick="toDetail('${order.id}')">详细</a>｜
 										<a href="javascript:void(0);" onclick="delData('${order.id}','OrderHead');">删除</a>
 									</td>
 								</tr>

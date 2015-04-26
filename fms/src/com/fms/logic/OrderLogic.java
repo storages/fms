@@ -101,7 +101,7 @@ public interface OrderLogic {
 	 * @param hids
 	 * @return
 	 */
-	public List<OrderItem> findOrderItemsByHeadId(String[] hids);
+	public List<OrderItem> findOrderItemsByHeadId(String[] hids, String hsCode, String hsName, int index, int length);
 
 	/**
 	 * 删除订单表体
@@ -110,4 +110,12 @@ public interface OrderLogic {
 	 * @param items
 	 */
 	public void delOrderItem(AclUser aclUser, List<OrderItem> items);
+
+	/**
+	 * 根据订单表头id查询对应的表体的记录数
+	 * 
+	 * @param hids
+	 * @return
+	 */
+	public int countOrderItemsByHeadId(String[] hids, String hsCode, String hsName);
 }

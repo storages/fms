@@ -108,9 +108,9 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 		this.batchUpdateOrDelete(hql, params.toArray());
 	}
 
-	public List<OrderItem> findOrderItemsByHeadId(String[] hids) {
+	public List<OrderItem> findOrderItemsByHeadId(String[] hids, String hsCode, String hsName, int index, int length) {
 		List params = new ArrayList();
-		String hql = "SELECT a FROM OrderItem a LEFT JOIN a.orderHead b WHERE b.id =? ";
+		String hql = "SELECT a FROM OrderItem a LEFT JOIN a.orderHead b WHERE (b.id =? ";
 		params.add(hids[0]);
 		if (hids != null && hids.length > 1) {
 			for (int i = 1; i < hids.length; i++) {
@@ -118,7 +118,16 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 				params.add(hids[i]);
 			}
 		}
-		return this.find(hql, params.toArray());
+		hql += " )";
+		if (StringUtils.isNotBlank(hsCode)) {
+			hql += " AND a.hsCode =? ";
+			params.add(hsCode);
+		}
+		if (StringUtils.isNotBlank(hsName)) {
+			hql += " AND a.hsName =? ";
+			params.add(hsName);
+		}
+		return this.findPageList(hql, params.toArray(), index, length);
 	}
 
 	public void delOrderItem(AclUser aclUser, String[] ids) {
@@ -132,6 +141,28 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 			}
 		}
 		this.batchUpdateOrDelete(hql, params.toArray());
+	}
+
+	public int countOrderItemsByHeadId(String[] hids, String hsCode, String hsName) {
+		List params = new ArrayList();
+		String hql = "SELECT COUNT(a.id) FROM OrderItem a LEFT JOIN a.orderHead b WHERE (b.id =? ";
+		params.add(hids[0]);
+		if (hids != null && hids.length > 1) {
+			for (int i = 1; i < hids.length; i++) {
+				hql += " OR b.id=? ";
+				params.add(hids[i]);
+			}
+		}
+		hql += " )";
+		if (StringUtils.isNotBlank(hsCode)) {
+			hql += " AND a.hsCode =? ";
+			params.add(hsCode);
+		}
+		if (StringUtils.isNotBlank(hsName)) {
+			hql += " AND a.hsName =? ";
+			params.add(hsName);
+		}
+		return count(hql, params.toArray());
 	}
 
 }

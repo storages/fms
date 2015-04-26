@@ -94,7 +94,15 @@ public interface OrderDao extends BaseDao {
 	 * @param hids
 	 * @return
 	 */
-	public List<OrderItem> findOrderItemsByHeadId(String[] hids);
+	public List<OrderItem> findOrderItemsByHeadId(String[] hids, String hsCode, String hsName, int index, int length);
+
+	/**
+	 * 根据订单表头id查询对应的表体的记录数
+	 * 
+	 * @param hids
+	 * @return
+	 */
+	public int countOrderItemsByHeadId(String[] hids, String hsCode, String hsName);
 
 	/**
 	 * 根据id删除订单表体

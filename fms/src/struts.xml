@@ -146,6 +146,7 @@
 		<!-- 订单 -->
 		<action name="order_*" class="orderAction" method="{1}">
 			<result name="success">/pages/order/orderPage.jsp</result>
+			<result name="items">/pages/order/orderItem.jsp</result>
 		</action>
 		
 		

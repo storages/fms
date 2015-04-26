@@ -54,7 +54,7 @@ public class OrderLogicImpl implements OrderLogic {
 	public void delOrderHead(AclUser aclUser, String[] ids) {
 		try {
 			// 先删除对应的表体
-			List<OrderItem> items = findOrderItemsByHeadId(ids);
+			List<OrderItem> items = findOrderItemsByHeadId(ids, null, null, -1, -1);
 			delOrderItem(aclUser, items);
 			// 再删除表头
 			this.orderDao.delOrderHead(aclUser, ids);
@@ -63,11 +63,21 @@ public class OrderLogicImpl implements OrderLogic {
 		}
 	}
 
-	public List<OrderItem> findOrderItemsByHeadId(String[] hids) {
-		return this.orderDao.findOrderItemsByHeadId(hids);
+	public List<OrderItem> findOrderItemsByHeadId(String[] hids, String hsCode, String hsName, int index, int length) {
+		return this.orderDao.findOrderItemsByHeadId(hids, hsCode, hsName, index, length);
 	}
 
 	public void delOrderItem(AclUser aclUser, List<OrderItem> items) {
 		this.orderDao.deleteAll(items);
+	}
+
+	/**
+	 * 根据订单表头id查询对应的表体的记录数
+	 * 
+	 * @param hids
+	 * @return
+	 */
+	public int countOrderItemsByHeadId(String[] hids, String hsCode, String hsName) {
+		return this.orderDao.countOrderItemsByHeadId(hids, hsCode, hsName);
 	}
 }

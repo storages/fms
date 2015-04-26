@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.OrderHead;
+import com.fms.core.entity.OrderItem;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.vo.entity.TempEntity;
 import com.fms.logic.OrderLogic;
@@ -42,6 +43,9 @@ public class OrderAction extends BaseAction {
 	protected String endDeliveryDate;// 交货日期（结束）
 	protected String scmCocName;// 客户名称
 	protected String salesman;// 业务员
+
+	protected String hsCode;// 商品编码
+	protected String hsName;// 商品名称
 
 	/********* 分页用的属性 ***********/
 	private Integer dataTotal;// 总记录数
@@ -189,6 +193,31 @@ public class OrderAction extends BaseAction {
 		}
 	}
 
+	/**
+	 * 显示订单详细清单(分页)
+	 * 
+	 * @return
+	 */
+	public String findOrderItems() {
+		try {
+			if (StringUtils.isNotBlank(hid)) {
+				String[] hidArr = hid.split(",");
+				Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
+				Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
+				dataTotal = this.orderLogic.countOrderItemsByHeadId(hidArr, hsCode, hsName);
+				List<OrderItem> itemList = this.orderLogic.findOrderItemsByHeadId(hidArr, hsCode, parseValue(hsName), (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
+				this.request.put("itemList", itemList);
+				this.request.put("hid", hid);
+				this.request.put("currIndex", curr);
+				this.request.put("maxIndex", max);
+				this.request.put("pageNums", pageCount(max, dataTotal));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "items";
+	}
+
 	private Integer pageCount(Integer maxIndex, Integer dataTotal) {
 		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // 总页数
 		if (pageNums == 0) {
@@ -331,6 +360,14 @@ public class OrderAction extends BaseAction {
 
 	public void setEditData(String editData) {
 		this.editData = editData;
+	}
+
+	public String getHsName() {
+		return hsName;
+	}
+
+	public void setHsName(String hsName) {
+		this.hsName = hsName;
 	}
 
 }

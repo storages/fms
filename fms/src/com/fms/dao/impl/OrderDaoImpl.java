@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.OrderHead;
+import com.fms.core.entity.OrderItem;
 import com.fms.dao.OrderDao;
 import com.fms.utils.FmsDateUtils;
 
@@ -97,6 +98,32 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 	public void delOrderHead(AclUser aclUser, String[] ids) {
 		List params = new ArrayList();
 		String hql = "DELETE FROM OrderHead a WHERE a.id =? ";
+		params.add(ids[0]);
+		if (ids != null && ids.length > 1) {
+			for (int i = 1; i < ids.length; i++) {
+				hql += " OR a.id=? ";
+				params.add(ids[i]);
+			}
+		}
+		this.batchUpdateOrDelete(hql, params.toArray());
+	}
+
+	public List<OrderItem> findOrderItemsByHeadId(String[] hids) {
+		List params = new ArrayList();
+		String hql = "SELECT a FROM OrderItem a LEFT JOIN a.orderHead b WHERE b.id =? ";
+		params.add(hids[0]);
+		if (hids != null && hids.length > 1) {
+			for (int i = 1; i < hids.length; i++) {
+				hql += " OR b.id=? ";
+				params.add(hids[i]);
+			}
+		}
+		return this.find(hql, params.toArray());
+	}
+
+	public void delOrderItem(AclUser aclUser, String[] ids) {
+		List params = new ArrayList();
+		String hql = "DELETE FROM OrderItem a WHERE a.id =? ";
 		params.add(ids[0]);
 		if (ids != null && ids.length > 1) {
 			for (int i = 1; i < ids.length; i++) {

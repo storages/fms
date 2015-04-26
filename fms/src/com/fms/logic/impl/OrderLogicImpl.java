@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.OrderHead;
+import com.fms.core.entity.OrderItem;
 import com.fms.dao.OrderDao;
 import com.fms.logic.OrderLogic;
 
@@ -51,6 +52,22 @@ public class OrderLogicImpl implements OrderLogic {
 	}
 
 	public void delOrderHead(AclUser aclUser, String[] ids) {
-		this.orderDao.delOrderHead(aclUser, ids);
+		try {
+			// 先删除对应的表体
+			List<OrderItem> items = findOrderItemsByHeadId(ids);
+			delOrderItem(aclUser, items);
+			// 再删除表头
+			this.orderDao.delOrderHead(aclUser, ids);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<OrderItem> findOrderItemsByHeadId(String[] hids) {
+		return this.orderDao.findOrderItemsByHeadId(hids);
+	}
+
+	public void delOrderItem(AclUser aclUser, List<OrderItem> items) {
+		this.orderDao.deleteAll(items);
 	}
 }

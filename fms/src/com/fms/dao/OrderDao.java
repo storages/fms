@@ -6,6 +6,7 @@ import java.util.List;
 import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.OrderHead;
+import com.fms.core.entity.OrderItem;
 
 /**
  * 订单Dao
@@ -86,4 +87,20 @@ public interface OrderDao extends BaseDao {
 	 * @param ids
 	 */
 	public void delOrderHead(AclUser aclUser, String[] ids);
+
+	/**
+	 * 根据订单表头id查询对应的表体
+	 * 
+	 * @param hids
+	 * @return
+	 */
+	public List<OrderItem> findOrderItemsByHeadId(String[] hids);
+
+	/**
+	 * 根据id删除订单表体
+	 * 
+	 * @param aclUser
+	 * @param items
+	 */
+	public void delOrderItem(AclUser aclUser, String[] ids);
 }

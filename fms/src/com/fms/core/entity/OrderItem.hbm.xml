@@ -21,5 +21,6 @@
 		<property name="price" column="PRICE" />
 		<property name="amount" column="AMOUNT" />
 		<property name="note" column="NOTE" />
+		<many-to-one name="orderHead" class="OrderHead" column="ORDERHEAD"/>
 	</class>
 </hibernate-mapping>

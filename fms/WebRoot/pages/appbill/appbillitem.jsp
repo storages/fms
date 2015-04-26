@@ -71,12 +71,13 @@
 	<select id="appStatus" style="width:100px;"> 
 		<c:if test="${u.userFlag=='P'}"><option value="-1" <c:if test="${appStatus=='-1'}">selected="selected"</c:if> >全部</option></c:if>
 		<c:if test="${u.userFlag=='P'}"><option value="0" <c:if test="${appStatus=='0'}">selected="selected"</c:if> >未申请</option></c:if>
+		<option value=""  selected="selected">审批状态</option>
 		<option value="1" <c:if test="${appStatus=='1'}">selected="selected"</c:if> >待审批</option>
 		<option value="2" <c:if test="${appStatus=='2'}">selected="selected"</c:if> >审批通过</option>
 		<c:if test="${u.userFlag=='P'}"><option value="3" <c:if test="${appStatus=='3'&& u.userFlag=='P'}">selected="selected"</c:if> >审批不通过</option></c:if>
 	</select>
-	<span class="">申请日期</span><input type="text" id="begineffectDate" value="${beginappDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
-	<input type="text" id="endeffectDate" class="datebox" value="${endappDate}" style="height:25px;width:100px;"/>
+	<span class="">申请日期</span><input type="text" name="qdate" id="begineffectDate" value="${beginappDate}" style="height:25px;width:100px;" class="datebox" /><span>至</span>
+	<input type="text" id="endeffectDate" class="datebox" name="qdate"  value="${endappDate}" style="height:25px;width:100px;"/>
 				<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询"
 					style="height:25px; border: 2px; width:45px; margin-top:-10px;" id="btn_query"/>
 			</div>
@@ -211,6 +212,14 @@
 	</body>	
 		<script type="text/javascript">
 			$(function(){
+			
+			$("input[name='qdate']").datepicker({
+				changeYear: true,
+				changeMonth: true,
+				yearRange: '1900:', 
+				dateFormat: 'yy-mm-dd'
+			});
+			
 				$("#add").click(function(){
 				var hid = $('#head').val();
 					//检查是否可以新增(待审批和审批 通过状态不能新增)

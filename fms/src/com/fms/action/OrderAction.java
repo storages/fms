@@ -1,5 +1,6 @@
 package com.fms.action;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,13 +11,17 @@ import net.sf.json.JSONArray;
 import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.action.BaseAction;
+import com.fms.commons.ImgExgFlag;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.OrderItem;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.vo.entity.TempEntity;
+import com.fms.logic.MaterialLogic;
 import com.fms.logic.OrderLogic;
 import com.fms.logic.ScmcocLogic;
 import com.fms.utils.AjaxResult;
+import com.fms.utils.MathUtils;
 import com.url.ajax.json.JSONObject;
 
 /**
@@ -34,6 +39,7 @@ public class OrderAction extends BaseAction {
 
 	protected OrderLogic orderLogic;
 	protected ScmcocLogic scmcocLogic;
+	protected MaterialLogic materialLogic;
 
 	/********* 搜索条件 ***********/
 	protected String orderNo;// 订单号码
@@ -136,9 +142,9 @@ public class OrderAction extends BaseAction {
 
 	@SuppressWarnings("unused")
 	public void saveOrder() {
+		AjaxResult result = new AjaxResult();
 		try {
 			this.out = response.getWriter();
-			AjaxResult result = new AjaxResult();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
 			List<OrderHead> orderList = new ArrayList<OrderHead>();
@@ -161,13 +167,15 @@ public class OrderAction extends BaseAction {
 				orderList.add(head);
 			}
 			this.orderLogic.beatchSaveOrUpData(getLoginUser(), orderList);
+			result.setSuccess(true);
 		} catch (Exception e) {
 			e.printStackTrace();
+			result.setSuccess(false);
+		} finally {
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
 		}
-		result.setSuccess(true);
-		JSONObject json = new JSONObject(result);
-		out.println(json.toString());
-		out.flush();
 	}
 
 	/**
@@ -210,12 +218,125 @@ public class OrderAction extends BaseAction {
 				this.request.put("hid", hid);
 				this.request.put("currIndex", curr);
 				this.request.put("maxIndex", max);
+				this.request.put("hsCode", hsCode);
+				this.request.put("hsName", hsName);
 				this.request.put("pageNums", pageCount(max, dataTotal));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "items";
+	}
+
+	public String findMaterial() {
+		List<Material> mlist = materialLogic.findAllMaterialInfoByHsCode(hsCode, ImgExgFlag.EXG, -1, -1);
+		this.request.put("mlist", mlist);
+		this.request.put("hsCode", hsCode);
+		return "dialog";
+	}
+
+	/**
+	 * ids 选择的物料多个id
+	 * 
+	 * @return
+	 */
+	public String findMaterialByIds() {
+		try {
+			if (null != ids && !"".equals(ids)) {
+				String[] idArr = ids.split("/");
+				List<Material> mList = materialLogic.findMaterialById(getLoginUser(), idArr);// 查物料
+				OrderHead head = this.orderLogic.load(OrderHead.class, hid);// 查询OrderHead
+				List<OrderItem> items = new ArrayList<OrderItem>();
+				for (Material m : mList) {
+					OrderItem item = new OrderItem();
+					item.setOrderHead(head);
+					item.setHsCode(m.getHsCode());
+					item.setHsModel(m.getModel());
+					item.setHsName(m.getHsName());
+					item.setUnit(m.getUnit());
+					item.setSerialNo(orderLogic.getOrderItemSerialNo());
+					if (item.getPrice() != null && item.getQty() != null) {
+						item.setAmount(item.getPrice() * item.getQty());
+					}
+					items.add(item);
+				}
+				items = this.orderLogic.beatchSaveOrUpDataItems(getLoginUser(), items);
+				findOrderItems();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "items";
+	}
+
+	/**
+	 * 保存订单表体
+	 */
+	public void saveOrderItem() {
+		AjaxResult result = new AjaxResult();
+		String errValue = "";
+		try {
+			this.out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			List<OrderItem> orderItemList = new ArrayList<OrderItem>();
+			JSONArray jsonStr = JSONArray.fromObject(editData);
+			Object[] arrData = jsonStr.toArray();
+			OrderItem item = null;
+			for (int i = 0; i < arrData.length; i = i + 5) {
+				item = this.orderLogic.findOrderItemById(arrData[i].toString());
+				if (null != arrData[i + 1] && !"".equals(arrData[i + 1])) {
+					errValue = arrData[i + 1].toString();
+					item.setQty(Double.parseDouble(arrData[i + 1].toString()));
+				}
+				if (null != arrData[i + 2] && !"".equals(arrData[i + 2])) {
+					errValue = arrData[i + 2].toString();
+					item.setPrice(Double.parseDouble(arrData[i + 2].toString()));
+				}
+				if (item.getQty() != null && item.getPrice() != null) {
+					item.setAmount(MathUtils.multiply(item.getQty(), item.getPrice()));
+				}
+				if (null != arrData[i + 4] && !"".equals(arrData[i + 4])) {
+					item.setNote(arrData[i + 4].toString());
+				}
+				orderItemList.add(item);
+			}
+			orderItemList = this.orderLogic.beatchSaveOrUpDataItems(getLoginUser(), orderItemList);
+			result.setSuccess(true);
+		} catch (NumberFormatException ex) {
+			result.setSuccess(false);
+			result.setMsg("输入数字" + errValue + "非法!");
+		} catch (IOException e) {
+			result.setMsg("数据处理异常!");
+			result.setSuccess(false);
+		} finally {
+			JSONObject json = new JSONObject(result);
+			this.out.println(json.toString());
+			this.out.flush();
+		}
+	}
+
+	/**
+	 * 删除订单表体
+	 */
+	public void delOrderItems() {
+		AjaxResult result = new AjaxResult();
+		try {
+			this.out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			if (StringUtils.isNotBlank(ids)) {
+				String[] idArr = ids.split(",");
+				this.orderLogic.delOrderItemByIds(getLoginUser(), idArr);
+				result.setSuccess(true);
+			}
+		} catch (Exception e) {
+			result.setSuccess(false);
+		} finally {
+			JSONObject json = new JSONObject(result);
+			this.out.println(json.toString());
+			this.out.flush();
+		}
 	}
 
 	private Integer pageCount(Integer maxIndex, Integer dataTotal) {
@@ -368,6 +489,22 @@ public class OrderAction extends BaseAction {
 
 	public void setHsName(String hsName) {
 		this.hsName = hsName;
+	}
+
+	public MaterialLogic getMaterialLogic() {
+		return materialLogic;
+	}
+
+	public void setMaterialLogic(MaterialLogic materialLogic) {
+		this.materialLogic = materialLogic;
+	}
+
+	public String getHsCode() {
+		return hsCode;
+	}
+
+	public void setHsCode(String hsCode) {
+		this.hsCode = hsCode;
 	}
 
 }

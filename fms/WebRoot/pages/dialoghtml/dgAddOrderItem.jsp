@@ -10,7 +10,7 @@ $("#checkAlls").click(function(){
 });
 
 $("#btnDgQuery").click(function(){
-	$("#dg_content").load("${pageContext.request.contextPath}/bom_findMaterial.action?hsCode="+$("#tfHsCode").val());
+	$("#dg_content").load("${pageContext.request.contextPath}/order_findMaterial.action?hsCode="+$("#tfHsCode").val());
 });
 </script>
 <div class="modal-footer" style="text-align: left;padding:0px; height:29px; position: static;" >

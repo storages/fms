@@ -13,8 +13,8 @@
 
 
 <script type="text/javascript">
+var dataStatus="";
 $(function(){
-	
 	$("input[name='qdate']").datepicker({
 		changeYear: true,
 		changeMonth: true,
@@ -43,10 +43,15 @@ $(function(){
 			$(this).attr("disabled",false);
 			$(this).css("border","solid 1px red");
 		 });
+		 dataStatus = "edit";
 	});
 	
 	//保存按钮
 	$("#btnSave").click(function(){
+	if(dataStatus!="edit"){
+			alert("没有要保存的数据!");
+			return;
+		}
 		var modifyData = [];
 		$("#sample-table-1 tr td").children().each(function(){
 			var obj = this.tagName;

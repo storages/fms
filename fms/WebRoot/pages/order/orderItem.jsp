@@ -1,3 +1,4 @@
+<jsp:include page="/pages/templet/dialog.jsp"></jsp:include>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -11,26 +12,118 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 
 <script type="text/javascript">
+	var dataStatus="";
 	$(function(){
+		
+		$(".numberText").keyup(function () {
+        //如果输入非数字，则替换为''，如果输入数字，则在每4位之后添加一个空格分隔
+        this.value = this. value.replace(/[^\d.]/g,'');
+    	});
+		
 		//上一页面
 		$("#goback").click(function(){
 			toMain("${pageContext.request.contextPath}/order_findOrderPageList.action");
 		});
-		function gototag(pageSize){
-	var n = $("#gonum option:selected").val();
-	gotoPage(n, pageSize);
-}
+	
+		//新增按钮
+		$("#add").click(function(){
+			showDialog('选择商品','dgAddOrderItem.jsp');
+			$("#dg_content").load("${pageContext.request.contextPath}/order_findMaterial.action");
+		});
 		
+		//修改按钮
+	$("#btnEdit ").click(function(){
+		$("#sample-table-1 :input[name='qty']").each(function(){
+			$(this).attr("disabled",false);
+			$(this).css("border","solid 1px red");
+		 });
+		$("#sample-table-1 :input[name='price']").each(function(){
+			$(this).attr("disabled",false);
+			$(this).css("border","solid 1px red");
+		 });
+		$("#sample-table-1 :input[name='amount']").each(function(){
+			$(this).attr("disabled",false);
+			$(this).css("border","solid 1px red");
+		 });
+		$("#sample-table-1 :input[name='note']").each(function(){
+			$(this).attr("disabled",false);
+			$(this).css("border","solid 1px red");
+		 });
+		 dataStatus = "edit";
+	});
+		
+		//行后面的修改
+		$(".rowEdit").bind("click",function(){
+			var tr = $(this).parent().parent();
+			tr.children('td').each(function(){
+				var _input = $(this).children('input');
+				_input.attr("disabled",false);
+				_input.css("border","solid 1px red");
+			});
+			 dataStatus = "edit";
+		});
+		
+		//对话框确定按钮
+	$("#btnSure").click(function(){
+		var paramstr = "";      
+		 $('input[name="mid"]:checked').each(function(){//遍历每一个名字为materid的复选框，其中选中的执行函数      
+		 	paramstr+=$(this).val()+"/";//将选中的值组装成一个以'/'分割的字符串
+		 }); 
+		 if(paramstr==""){
+		 	alert("请选择物料");
+		 	return;
+		 }
+		 toMain("${pageContext.request.contextPath}/order_findMaterialByIds.action?ids="+paramstr+"&hid="+$("#hid").val());
+		});
+		
+		//保存按钮
+	$("#btnSave").click(function(){
+		if(dataStatus!="edit"){
+			alert("没有要保存的数据!");
+			return;
+		}
+		var modifyData = [];
+		$("#sample-table-1 tr td").children().each(function(){
+			var obj = this.tagName;
+			if(obj=="INPUT" || obj=="SELECT"){
+				modifyData.push($(this).val());
+			}
+		});
+		var url = "${pageContext.request.contextPath}/order_saveOrderItem.action";
+		var jsonstr = JSON.stringify(modifyData);
+		$.ajax({
+			type: "POST",
+			url:url,
+			data:{editData:jsonstr},
+			async: false,
+			cache: false,
+			success:function(args){
+				var result=jQuery.parseJSON(args);
+				if(result.success){
+					toMain("${pageContext.request.contextPath}/order_findOrderItems.action?hid="+$("#hid").val());
+				}else{
+					alert("保存失败!原因："+result.msg);
+				}
+			}
+		});
+	});
+		
+	});
+		
+    function gototag(pageSize){
+		var n = $("#gonum option:selected").val();
+		gotoPage(n, pageSize);
+	}
+	
 		/**
 	 * 转到指定页码
 	 * @param {Object} pageNum 要转到第几页        currIndex
 	 * @param {Object} pageSize 每页显示多少条数据    maxIndex 
 	 */
 	function gotoPage(pageNum, pageSize) {
-	alert(1);
 		var hid = $("#hid").val();
 		var hsCode = $("#hsCode").val();
-		var hsName = $("#hsCode").val();
+		var hsName = $("#hsName").val();
 		var queryStr = "&hid="+hid+"&hsCode="+hsCode+"&hsName="+parse(hsName);
 		// 拼接URL
 		var url = "${pageContext.request.contextPath}/order_findOrderItems.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + queryStr;
@@ -41,8 +134,6 @@
 	function parse(str){
 		return encodeURI(encodeURI(str));  
 	}
-		
-	});
 </script>
 
 <input type="hidden" value="${hid}" id="hid"/>
@@ -67,11 +158,11 @@
 						<th class="center" style="width:40px;padding:0px;margin:0px;">流水号</th>
 						<th class="center" style="width:91px;">商品编码</th>
 						<th class="center" style="width:130px;">商品名称</th>
-						<th class="center" style="width:51px;">规格型号</th>
+						<th class="center" style="width:91px;">规格型号</th>
 						<th class="center" style="width:71px;">订单数量</th>
 						<th class="center" style="width:71px;">计量单位</th>
-						<th class="center" style="width:90px;">单价</th>
-						<th class="center" style="width:90px;">总价</th>
+						<th class="center" style="width:90px;">单价/元</th>
+						<th class="center" style="width:90px;">总价/元</th>
 						<th class="center" style="width:90px;">备注</th>
 						<th class="center"  style="width: 164px;">操作</th>
 					</tr>
@@ -84,13 +175,13 @@
 									<td class="center" style="width:20px;" >${item.hsCode}</td>
 									<td class="center" style="width:20px;" >${item.hsName}</td>
 									<td class="center" style="width:20px;" >${item.hsModel}</td>
-									<td class="center" style="width:20px;" >${item.qty}</td>
+									<td class="center" style="width:20px;padding:0px;" ><input class="numberText" name="qty" type="text" value="${item.qty}" style="width:90px;margin: 2px 0px;height: 30px;border: 0px;"  disabled="disabled"/></td>
 									<td class="center" style="width:20px;" >${item.unit.name}</td>
-									<td class="center" style="width:20px;" >${item.price}</td>
-									<td class="center" style="width:20px;" >${item.amount}</td>
-									<td class="center" style="width:20px;" >${item.note}</td>
+									<td class="center" style="width:20px;padding:0px;" ><input type="text"  class="numberText" name="price" value="${item.price}"  style="width:100px;margin: 2px 0px;height: 30px;border: 0px;" disabled="disabled"/></td>
+									<td class="center" style="width:20px;padding:0px;" ><input type="text"  class="numberText" name="amount" value="${item.amount}" style="width:100px;margin: 2px 0px;height: 30px;border: 0px;"  disabled="disabled"/></td>
+									<td class="center" style="width:20px;padding:0px;" ><input type="text" name="note" value="${item.note}" style="width:150px;margin: 2px 0px;height: 30px;border: 0px;" disabled="disabled" /></td>
 									<td class="center" style="width:20px;" >
-										<a href="javascript:void(0);" onclick="">修改</a>
+										<a href="javascript:void(0);"  class="rowEdit">修改</a>|
 										<a href="javascript:void(0);" onclick="delData('${item.id}','OrderItem');">删除</a>
 									</td>
 								</tr>
@@ -105,7 +196,7 @@
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btnEdit">修改</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btnSave">保存</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','OrderHead')">批量删除</button>
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','OrderItem')">批量删除</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" >Excel导入</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">

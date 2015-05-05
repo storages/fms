@@ -15,9 +15,10 @@
 	display:none;
 }
 .dialog{
-	width:60%;
-	height:60%;
+	width:65%;
+	height:80%;
 	border:solid #999 2px;
+	margin:0px;
 	position:absolute;
 	left:auto;
 	top:auto;
@@ -26,12 +27,16 @@
 	display:none;
 }
 .dg_title{
-	width:100%;
+	width:99.5%;
 	height:40px;
 	border-bottom:solid 2px #999;
-	text-align:left
-	margin-left:5px;
+	border-top:0px;
+	border-left:0px;
+	border-right:0px;
+	text-align:left;
+	padding-left:5px;
 	line-height:40px;
+	background-color: #99CCFF;
 }
 .ti_css{
 	width:auto;
@@ -41,14 +46,16 @@
 	line-height:40px;
 }
 .dg_content{
-	width:100%;
-	height:78%;
+	width:98%;
+	height:83%;
 	overflow:auto;
 	text-align:center;
+	padding-left:5px;
+	padding-right:0px;
 }
 .dg_toolbar{
 	width:100%;
-	height:40px;;
+	height:15%;
 	border-top:solid 1px #999;
 	text-align:center;
 	line-height:40px;
@@ -67,13 +74,14 @@
 			dgForm[i].style.display = "block";
 		}
 		document.getElementById("ti_mess").innerHTML = title;
-		var _height = window.screen.availHeight-220;
-		var _width = document.body.scrollWidth-220;
-		var dg_height = document.getElementById("dialog_div").offsetHeight;
-		var dg_width = document.getElementById("dialog_div").offsetWidth;
-		document.getElementById("dialog_div").style.marginLeft = (_width-dg_width)/2+"px";
-		document.getElementById("dialog_div").style.marginTop = (_height-dg_height)/2+"px";
-		
+		var _height = window.screen.availHeight-280;
+		var _width = document.body.scrollWidth-520;
+		//var dg_height = document.getElementById("dialog_div").offsetHeight;
+		//var dg_width = document.getElementById("dialog_div").offsetWidth;
+		//document.getElementById("dialog_div").style.marginLeft = (_width-dg_width)/2+"px";
+		document.getElementById("dialog_div").style.marginTop ="0px";
+		document.getElementById("dialog_div").style.width=_width;
+		document.getElementById("dialog_div").style.height=_height;
 		//加载dialog要显示的内容
 		var url = "${pageContext.request.contextPath}/pages/dialoghtml/"+loadJsp;
 		$("#dg_content").load(url);
@@ -90,8 +98,7 @@
 		closeDialog();
 	});
 </script>
-<!--<input type="text" value="" id="mes"/><input type="button" value="查询" id="btnQuery" onclick="query('测试Dialog');"/>-->
-<div class="bg_lock" name="dg_div"></div>
+<div class="bg_lock" name="dg_div" id="dg_side"></div>
  <div class="dialog" id="dialog_div"  name="dg_div">
  	<div class="dg_title"><span class="ti_css" id="ti_mess"></span><span id="ico_close" onclick="closeDialog();">X</span></div>
     <div class="dg_content" id="dg_content">

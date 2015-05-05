@@ -41,7 +41,7 @@ public class OrderItem extends BaseEntity {
 	 * 订单数量(qty)
 	 */
 	@CnFileName(name = "订单数量")
-	private String qty;
+	private Double qty;
 	/**
 	 * 计量单位实体(Unit)
 	 */
@@ -101,11 +101,11 @@ public class OrderItem extends BaseEntity {
 		this.hsModel = hsModel;
 	}
 
-	public String getQty() {
+	public Double getQty() {
 		return qty;
 	}
 
-	public void setQty(String qty) {
+	public void setQty(Double qty) {
 		this.qty = qty;
 	}
 

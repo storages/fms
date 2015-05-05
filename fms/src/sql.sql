@@ -35,3 +35,5 @@ select * from bomimg a
 	delete bomversion
 	
 select * from orderhead a left join scmcoc b on a.scmcoc = b.id
+
+delete from orderitem

@@ -3,6 +3,7 @@ function parse(str){
 	return encodeURI(encodeURI(str));  
 }
 
+
 /**
  * 获取浏览器类型
  */
@@ -261,6 +262,11 @@ function getUrl(flag){
 		case "OrderHead":
 			url[0] = "${pageContext.request.contextPath}/order_delOrderHead.action";
 			url[1] = "${pageContext.request.contextPath}/order_findOrderPageList.action";
+			break;
+		case "OrderItem":
+			var hid = $("#hid").val();
+			url[0] = "${pageContext.request.contextPath}/order_delOrderItems.action";
+			url[1] = "${pageContext.request.contextPath}/order_findOrderItems.action?hid="+hid;
 			break;
 	}
 	return url;

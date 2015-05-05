@@ -110,7 +110,7 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 
 	public List<OrderItem> findOrderItemsByHeadId(String[] hids, String hsCode, String hsName, int index, int length) {
 		List params = new ArrayList();
-		String hql = "SELECT a FROM OrderItem a LEFT JOIN a.orderHead b WHERE (b.id =? ";
+		String hql = "SELECT a FROM OrderItem a LEFT JOIN FETCH a.orderHead b LEFT JOIN FETCH a.unit WHERE (b.id =? ";
 		params.add(hids[0]);
 		if (hids != null && hids.length > 1) {
 			for (int i = 1; i < hids.length; i++) {
@@ -120,12 +120,12 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 		}
 		hql += " )";
 		if (StringUtils.isNotBlank(hsCode)) {
-			hql += " AND a.hsCode =? ";
-			params.add(hsCode);
+			hql += " AND a.hsCode like ? ";
+			params.add("%" + hsCode + "%");
 		}
 		if (StringUtils.isNotBlank(hsName)) {
-			hql += " AND a.hsName =? ";
-			params.add(hsName);
+			hql += " AND a.hsName like ? ";
+			params.add("%" + hsName + "%");
 		}
 		return this.findPageList(hql, params.toArray(), index, length);
 	}
@@ -155,14 +155,35 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 		}
 		hql += " )";
 		if (StringUtils.isNotBlank(hsCode)) {
-			hql += " AND a.hsCode =? ";
-			params.add(hsCode);
+			hql += " AND a.hsCode like ? ";
+			params.add("%" + hsCode + "%");
 		}
 		if (StringUtils.isNotBlank(hsName)) {
-			hql += " AND a.hsName =? ";
-			params.add(hsName);
+			hql += " AND a.hsName like ? ";
+			params.add("%" + hsName + "%");
 		}
 		return count(hql, params.toArray());
+	}
+
+	public Integer getOrderItemSerialNo() {
+		return (Integer) this.uniqueResult("select max(a.serialNo) from OrderItem a", new Object[] {});
+	}
+
+	public OrderItem findOrderItemById(String itemId) {
+		return (OrderItem) this.uniqueResult("select a from OrderItem a left join fetch a.unit b left join fetch a.orderHead c where a.id=? ", new Object[] { itemId });
+	}
+
+	public void delOrderItemByIds(String[] ids) {
+		List params = new ArrayList();
+		String hql = "delete from OrderItem a where a.id = ? ";
+		params.add(ids[0]);
+		if (ids.length > 1) {
+			for (int i = 1; i < ids.length; i++) {
+				hql += " or a.id =? ";
+				params.add(ids[i]);
+			}
+		}
+		this.batchUpdateOrDelete(hql, params.toArray());
 	}
 
 }

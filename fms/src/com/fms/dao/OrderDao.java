@@ -111,4 +111,27 @@ public interface OrderDao extends BaseDao {
 	 * @param items
 	 */
 	public void delOrderItem(AclUser aclUser, String[] ids);
+
+	/**
+	 * 获取订单表体的流水号
+	 * 
+	 * @return
+	 */
+	public Integer getOrderItemSerialNo();
+
+	/**
+	 * 根据id查找订单表体
+	 * 
+	 * @param itemId
+	 * @return
+	 */
+	public OrderItem findOrderItemById(String itemId);
+
+	/**
+	 * 根据多个id删除订单表体
+	 * 
+	 * @param aclUser
+	 * @param ids
+	 */
+	public void delOrderItemByIds(String[] ids);
 }

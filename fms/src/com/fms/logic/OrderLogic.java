@@ -118,4 +118,37 @@ public interface OrderLogic {
 	 * @return
 	 */
 	public int countOrderItemsByHeadId(String[] hids, String hsCode, String hsName);
+
+	/**
+	 * 获取订单表体的流水号
+	 * 
+	 * @return
+	 */
+	public Integer getOrderItemSerialNo();
+
+	/**
+	 * 批量保存订单表体
+	 * 
+	 * @param aclUser
+	 * @param items
+	 * @return
+	 */
+	public List<OrderItem> beatchSaveOrUpDataItems(AclUser aclUser, List<OrderItem> items);
+
+	/**
+	 * 根据id查找订单表体
+	 * 
+	 * @param itemId
+	 * @return
+	 */
+	public OrderItem findOrderItemById(String itemId);
+
+	/**
+	 * 根据多个id删除订单表体
+	 * 
+	 * @param aclUser
+	 * @param ids
+	 */
+	public void delOrderItemByIds(AclUser aclUser, String[] ids);
+
 }

@@ -80,4 +80,53 @@ public class OrderLogicImpl implements OrderLogic {
 	public int countOrderItemsByHeadId(String[] hids, String hsCode, String hsName) {
 		return this.orderDao.countOrderItemsByHeadId(hids, hsCode, hsName);
 	}
+
+	public Integer getOrderItemSerialNo() {
+		Integer serialNo = this.orderDao.getOrderItemSerialNo();
+		if (serialNo == null || serialNo == 0) {
+			serialNo = 1;
+		} else {
+			serialNo += 1;
+		}
+		return serialNo;
+	}
+
+	public List<OrderItem> beatchSaveOrUpDataItems(AclUser aclUser, List<OrderItem> items) {
+		items = this.orderDao.batchSaveOrUpdate(items);
+		items = this.findOrderItemsByHeadId(new String[] { items.get(0).getOrderHead().getId() }, null, null, -1, -1);
+		refreshOrderHead(items);
+		return items;
+	}
+
+	/**
+	 * 刷新订单表头
+	 * 
+	 * @param items
+	 */
+	private void refreshOrderHead(List<OrderItem> items) {
+		OrderHead head = null;
+		if (!items.isEmpty()) {
+			head = items.get(0).getOrderHead();
+			Double amount = 0d;
+			Integer totalItems = 0;
+			Double totalQty = 0d;
+			for (OrderItem item : items) {
+				amount += item.getAmount() == null ? 0d : item.getAmount();
+				totalItems += 1;
+				totalQty += item.getQty() == null ? 0d : item.getQty();
+			}
+			head.setTotalAmount(amount);
+			head.setTotalQty(totalQty);
+			head.setItemQty(totalItems);
+			this.orderDao.saveOrUpdate(head);
+		}
+	}
+
+	public OrderItem findOrderItemById(String itemId) {
+		return this.orderDao.findOrderItemById(itemId);
+	}
+
+	public void delOrderItemByIds(AclUser aclUser, String[] ids) {
+		this.orderDao.delOrderItemByIds(ids);
+	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.OrderItem;
+import com.fms.temp.TempOrder;
 
 /**
  * 订单Logic
@@ -151,4 +152,20 @@ public interface OrderLogic {
 	 */
 	public void delOrderItemByIds(AclUser aclUser, String[] ids);
 
+	/**
+	 * 验证 EXCEL导入的数据是否有效
+	 * 
+	 * @param tempOrders
+	 * @return
+	 */
+	List<TempOrder> doValidata(List<TempOrder> tempOrders);
+
+	/**
+	 * 保存正确的Excel导入数据
+	 * 
+	 * @param aclUser
+	 * @param data
+	 * @return
+	 */
+	Boolean doSaveExcelData(AclUser aclUser, List<TempOrder> data);
 }

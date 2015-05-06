@@ -148,6 +148,8 @@
 			<result name="success">/pages/order/orderPage.jsp</result>
 			<result name="items">/pages/order/orderItem.jsp</result>
 			<result name="dialog">/pages/dialoghtml/dgAddOrderItem.jsp</result>
+			<result name="import">/pages/import/orderimport.jsp</result>
+			<param name="path">/upload</param>
 		</action>
 		
 		

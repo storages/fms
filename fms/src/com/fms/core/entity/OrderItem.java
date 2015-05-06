@@ -23,9 +23,9 @@ public class OrderItem extends BaseEntity {
 	@CnFileName(name = "流水号")
 	private Integer serialNo;
 	/**
-	 * 商品编码(hsCode)
+	 * 物料编码(hsCode)
 	 */
-	@CnFileName(name = "商品编码")
+	@CnFileName(name = "物料编码")
 	private String hsCode;
 	/**
 	 * 商品名称(hsName)

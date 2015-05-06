@@ -1,12 +1,17 @@
 package com.fms.action;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -20,8 +25,12 @@ import com.fms.core.vo.entity.TempEntity;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.OrderLogic;
 import com.fms.logic.ScmcocLogic;
+import com.fms.temp.TempOrder;
 import com.fms.utils.AjaxResult;
+import com.fms.utils.ExcelUtil;
 import com.fms.utils.MathUtils;
+import com.google.gson.Gson;
+import com.url.ajax.json.JSONException;
 import com.url.ajax.json.JSONObject;
 
 /**
@@ -60,6 +69,12 @@ public class OrderAction extends BaseAction {
 	private Integer pageNums;// 共有多少页
 	private String className = "OrderHead";// 表名称
 	private static final Integer DEFAULT_PAGESIZE = 10;
+
+	/********* 获取前台选择的文件 ***********/
+	private File uploadFile; // 上传的文件 名称是Form 对应的name
+	private String uploadFileContentType; // 文件的类型
+	private String uploadFileFileName; // 文件的名称
+	private String sendStr;
 
 	/********* 其它属性 ***********/
 	private String hid;
@@ -339,6 +354,194 @@ public class OrderAction extends BaseAction {
 		}
 	}
 
+	/**
+	 * 显示导入Excel界面
+	 * 
+	 * @return
+	 */
+	public String showImport() {
+		return "import";
+	}
+
+	/**
+	 * 解析excel数据，并验证数据有效性
+	 * 
+	 * @return
+	 */
+	public void importData() {
+		AjaxResult result = new AjaxResult();
+		result.setSuccess(false);
+		try {
+			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
+			String[] title = new String[9];
+			title[0] = content[0][0];
+			title[1] = content[0][1];
+			title[2] = content[0][2];
+			title[3] = content[0][3];
+			title[4] = content[0][4];
+			title[5] = content[0][5];
+			title[6] = content[0][6];
+			title[7] = content[0][7];
+			title[8] = content[0][8];
+			if (!"订单号码".equals(title[0]) || !"客户全称".equals(title[1]) || !"下单日期".equals(title[2]) || !"交货日期".equals(title[3]) || !"业务员".equals(title[4]) || !"物料编码".equals(title[5])
+					|| !"订单数量".equals(title[6]) || !"单价".equals(title[7]) || !"备注".equals(title[8])) {
+				result.setSuccess(false);
+				result.setMsg("导入的excel文件内容不正确!");
+			} else {
+				List<TempOrder> tempOrders = new ArrayList<TempOrder>();
+				for (int i = 1; i < content.length; i++) {
+					tempOrders.add(convertData(content[i]));
+				}
+				List tlist = this.orderLogic.doValidata(tempOrders);
+				result.setSuccess(true);
+				result.setObj(tlist);
+			}
+		} catch (Exception e) {
+			result.setSuccess(false);
+			result.setMsg("操作错误" + e.getMessage());
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		String str = gson.toJson(result);
+		try {
+			Writer writer = response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 把导入的内容转换成临时类
+	 * 
+	 * @param arr
+	 * @return
+	 */
+	private TempOrder convertData(Object[] arr) {
+		TempOrder tmp = new TempOrder();
+		try {
+			if (null != arr[0] && !"".equals(arr[0])) {
+				tmp.setOrderNo(arr[0].toString());
+			}
+			if (null != arr[1] && !"".equals(arr[1])) {
+				tmp.setScmCocName(arr[1].toString());
+			}
+			if (null != arr[2] && !"".equals(arr[2])) {
+				tmp.setPlaceOrderDate(new SimpleDateFormat("yyyy-MM-dd").parse(arr[2].toString()));
+			}
+			if (null != arr[3] && !"".equals(arr[3])) {
+				tmp.setDeliveryDate(new SimpleDateFormat("yyyy-MM-dd").parse(arr[3].toString()));
+			}
+			if (null != arr[4] && !"".equals(arr[4])) {
+				tmp.setSalesman(arr[4].toString());
+			}
+			if (null != arr[5] && !"".equals(arr[5])) {
+				tmp.setHsCode(arr[5].toString());
+			}
+			if (null != arr[6] && !"".equals(arr[6])) {
+				tmp.setQty(Double.valueOf(arr[6].toString()));
+			}
+			if (null != arr[7] && !"".equals(arr[7])) {
+				tmp.setPrice(Double.valueOf(arr[7].toString()));
+			}
+			if (null != arr[8] && !"".equals(arr[8])) {
+				tmp.setNote(arr[8].toString());
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return tmp;
+	}
+
+	/**
+	 * 清除错误的数据
+	 * 
+	 * @return
+	 */
+	public void clearErrorData() {
+		List errorList = new ArrayList();
+		AjaxResult result = new AjaxResult();
+		result.setSuccess(false);
+		net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(sendStr);
+		List list = net.sf.json.JSONArray.toList(jsonArray, new TempOrder(), new JsonConfig());
+		if (null != list && list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+				TempOrder order = (TempOrder) list.get(i);
+				if (null != order.getErrorInfo() && !"".equals(order.getErrorInfo().trim())) {
+					errorList.add(order);
+				}
+			}
+			list.removeAll(errorList);
+		}
+		Gson gson = new Gson();
+		result.setObj(list);
+		result.setSuccess(true);
+		String str = gson.toJson(result);
+		Writer writer;
+		try {
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			writer = response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 保存正确的excel数据
+	 * 
+	 * @throws JSONException
+	 */
+	@SuppressWarnings("unchecked")
+	public String saveExcelData() {
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		try {
+			net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(sendStr);
+			List<TempOrder> list = net.sf.json.JSONArray.toList(jsonArray, new TempOrder(), new JsonConfig());
+			if (null == list || list.size() <= 0) {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("没有数据可保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+			if (!this.orderLogic.doSaveExcelData(getLoginUser(), list)) {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("保存的数据中有错误，请点击【删除错误】按钮后再保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			} else {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(true);
+				result.setMsg("成功保存" + list.size() + "条数据！");
+				session.put("tlist", null);
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return this.SUCCESS;
+	}
+
 	private Integer pageCount(Integer maxIndex, Integer dataTotal) {
 		pageNums = (dataTotal / DEFAULT_PAGESIZE) + (dataTotal % DEFAULT_PAGESIZE > 0 ? 1 : 0); // 总页数
 		if (pageNums == 0) {
@@ -505,6 +708,38 @@ public class OrderAction extends BaseAction {
 
 	public void setHsCode(String hsCode) {
 		this.hsCode = hsCode;
+	}
+
+	public File getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(File uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public String getUploadFileContentType() {
+		return uploadFileContentType;
+	}
+
+	public void setUploadFileContentType(String uploadFileContentType) {
+		this.uploadFileContentType = uploadFileContentType;
+	}
+
+	public String getUploadFileFileName() {
+		return uploadFileFileName;
+	}
+
+	public void setUploadFileFileName(String uploadFileFileName) {
+		this.uploadFileFileName = uploadFileFileName;
+	}
+
+	public String getSendStr() {
+		return sendStr;
+	}
+
+	public void setSendStr(String sendStr) {
+		this.sendStr = sendStr;
 	}
 
 }

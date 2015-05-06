@@ -73,6 +73,9 @@ public class FileDownLoad extends ActionSupport {
 		} else if ("materTemp".equals(fileFlag)) {
 			this.fileName = "物料信息表【导入】模板.xls";
 			this.inputPath = ROOTPATH + "materTemplate.xls";
+		} else if ("orderTemp".equals(fileFlag)) {
+			this.fileName = "订单管理【导入】模板.xls";
+			this.inputPath = ROOTPATH + "orderTemplate.xls";
 		}
 		// 解乱码
 		this.fileName = new String(this.fileName.getBytes("UTF-8"), "ISO-8859-1");

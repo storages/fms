@@ -335,6 +335,15 @@
 		<property name="orderDao">
 			<ref bean="orderDao" />
 		</property>
+		<property name="scmcocDao">
+			<ref bean="scmcocDao" />
+		</property>
+		<property name="materialDao">
+			<ref bean="materialDao" />
+		</property>
+		<property name="employeeDao">
+			<ref bean="employeeDao" />
+		</property>
 	</bean>
 
 	<!-- 进出库 -->

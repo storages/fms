@@ -46,6 +46,11 @@ $(function(){
 		 dataStatus = "edit";
 	});
 	
+	//导入订单按钮
+	$('#btnImport').click(function(){
+			toMain("${pageContext.request.contextPath}/order_showImport.action");
+	});
+	
 	//保存按钮
 	$("#btnSave").click(function(){
 	if(dataStatus!="edit"){
@@ -202,7 +207,7 @@ function gototag(pageSize){
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btnEdit">修改</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btnSave">保存</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','OrderHead')">批量删除</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" >Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button"   id="btnImport">Excel导入</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>

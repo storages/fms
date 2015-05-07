@@ -23,13 +23,13 @@ $(function(){
 	});
 	
 	
-	//新增按钮
+	//新增订单表头按钮
 	$("#add").click(function(){
 		var url = "${pageContext.request.contextPath}/order_addOrder.action";
 		toMain(url);
 	});
 	
-	//修改按钮
+	//修改订单表头按钮
 	$("#btnEdit").click(function(){
 		$("#sample-table-1 :input[name='scmName']").each(function(){
 			$(this).attr("disabled",false);
@@ -51,7 +51,7 @@ $(function(){
 			toMain("${pageContext.request.contextPath}/order_showImport.action");
 	});
 	
-	//保存按钮
+	//保存订单表头按钮
 	$("#btnSave").click(function(){
 	if(dataStatus!="edit"){
 			alert("没有要保存的数据!");
@@ -77,7 +77,7 @@ $(function(){
 				if(result.success){
 					toMain("${pageContext.request.contextPath}/order_findOrderPageList.action");
 				}else{
-					alert("保存失败!");
+					alert(result.msg);
 				}
 			}
 		});
@@ -110,7 +110,7 @@ function gototag(pageSize){
 		var hEndDeliveryDate = $("#hEndDeliveryDate").val();
 		var scmCocName = $("#scmCocName").val();
 		var salesman = $("#salesman option:selected").text();
-		var likeStr = "&orderNo="+orderNo+"&beginPlaceOrderDate="+hBeginPlaceOrderDate+"&endPlaceOrderDate="+hEndPlaceOrderDate+"&beginDeliveryDate="+hBeginDeliveryDate+"&endDeliveryDate="+hEndDeliveryDate+"&scmCocName="+scmCocName+"&salesman="+salesman;
+		var likeStr = "&orderNo="+orderNo+"&beginPlaceOrderDate="+hBeginPlaceOrderDate+"&endPlaceOrderDate="+hEndPlaceOrderDate+"&beginDeliveryDate="+hBeginDeliveryDate+"&endDeliveryDate="+hEndDeliveryDate+"&scmCocName="+parse(scmCocName)+"&salesman="+parse(salesman);
 		// 拼接URL
 		var url = "${pageContext.request.contextPath}/order_findOrderPageList.action?currIndex=" + pageNum + "&maxIndex="+ pageSize + parse(likeStr);
 		// 在本窗口中显示指定URL的页面
@@ -118,7 +118,7 @@ function gototag(pageSize){
 	}
 	
 	function parse(str){
-		return encodeURI(encodeURI(str));  
+		return encodeURI(str);  
 	}
 </script>
 

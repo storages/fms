@@ -79,7 +79,14 @@
 											<td class="center" style="width:70px;">&nbsp;</td>
 										</c:if>
 										<td class="center" style="width:91px;">${head.appNo}&nbsp;</td>
-										<td class="center" style="width:91px;">${head.orderNo}&nbsp;</td>
+										<td class="center" style="width:91px; padding:0px;">
+											<select name="orderno" style="width:170px; margin: 3px 0px; border: 0px;font-size: 12px;" disabled="disabled">
+												<option value=""></option>
+												<c:forEach var="orderHead" items="${orderHeads}">
+													<option value="${orderHead.orderNo}" <c:if test="${head.orderNo==orderHead.orderNo}">selected="selected"</c:if>>${orderHead.orderNo}</option>
+												</c:forEach>
+											</select>
+										</td>
 										<td class="center" style="width:91px;">${head.itemQty}&nbsp;</td>
 										<td class="center" style="width:71px;">${head.totalQty}&nbsp;</td>
 										<td class="center" style="width:65px;">${head.totalAmount}&nbsp;</td>
@@ -89,7 +96,7 @@
 										<td class="center" style="width:57px;">${head.unApprovalQty}&nbsp;</td>
 										<td class="center" style="width:164px;">
 											<c:if test="${head.appStatus==0 || head.appStatus==3}">
-												<a href="javascript:void(0);" onclick="edit(this,'5')">修改</a>｜
+												<a href="javascript:void(0);" class="rowEdit">修改</a>｜
 											</c:if>
 											<c:if test="${head.appStatus==1 || head.appStatus==2}">
 												<span style="color:gray;" title="<c:if test='${head.appStatus==1}'>待审批状态，不能修改</c:if><c:if test='${head.appStatus==2}'>审批通过状态，不能修改</c:if>">修改｜</span>
@@ -152,7 +159,7 @@
 			</div>
 			
 <script type="text/javascript">
-
+var dataStatus="";
 $("#hbeginappDate").datepicker({
 	changeYear: true,
 	changeMonth: true,
@@ -293,14 +300,48 @@ var win = true;
 	});
 	}
 	//修改
-	function edit(obj,arr){
-		showTableEdit(obj,arr);
-	}
+	/**function edit(obj,arr){
+		//showTableEdit(obj,arr);
+		$("#sample-table-1 :input[name='orderno']").each(function(){
+			$(this).attr("disabled",false);
+			$(this).css("border","solid 1px red");
+		 });
+		dataStatus = "edit";0&nbsp;
+	}*/
+	
+	//行后面的修改
+	$(".rowEdit").bind("click",function(){
+		var tr = $(this).parent().parent();
+		var i=0;
+		var flag="";
+		tr.children('td').each(function(){
+			if(i==5 && $(this).html()!="0&nbsp;"){
+				alert("申请单已有详细清单，不允许修改!");
+				flag="n"
+			}
+			i+=1;
+		});
+		if(flag!="n"){
+			tr.children('td').each(function(){
+					var _select = $(this).children('select');
+					_select.attr("disabled",false);
+					_select.css("border","solid 1px red");
+			});
+			 dataStatus = "edit";
+		}
+	});
 	
 	//保存修改的数据
 	function saveData(){
-		var jsonstr = getModifyData();
-		if(jsonstr==""){
+		var ids = "";
+		var jsonstr="";
+		$("select[name='orderno']").each(function(){
+			jsonstr+=$(this).val()+",";
+		 });
+		$("input[name='sid']").each(function(){
+			ids+=$(this).val()+",";
+		});
+		if(jsonstr=="" || dataStatus!="edit"){
 			alert("没有数据保存!");
 			return;
 		}
@@ -308,7 +349,7 @@ var win = true;
 		$.ajax({
 			     type: "POST",
 			     url:url,
-			     data:{jsonstr:jsonstr},
+			     data:{jsonstr:jsonstr,ids:ids},
 			     async: false,
 			     cache: false,
 			     success:function(args){

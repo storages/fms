@@ -108,6 +108,19 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 		this.batchUpdateOrDelete(hql, params.toArray());
 	}
 
+	public List<OrderHead> findHeadByIds(String[] ids) {
+		List params = new ArrayList();
+		String hql = "SELECT a FROM OrderHead a WHERE a.id =? ";
+		params.add(ids[0]);
+		if (ids != null && ids.length > 1) {
+			for (int i = 1; i < ids.length; i++) {
+				hql += " OR a.id=? ";
+				params.add(ids[i]);
+			}
+		}
+		return this.find(hql, params.toArray());
+	}
+
 	public List<OrderItem> findOrderItemsByHeadId(String[] hids, String hsCode, String hsName, int index, int length) {
 		List params = new ArrayList();
 		String hql = "SELECT a FROM OrderItem a LEFT JOIN FETCH a.orderHead b LEFT JOIN FETCH a.unit WHERE (b.id =? ";
@@ -184,6 +197,16 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 			}
 		}
 		this.batchUpdateOrDelete(hql, params.toArray());
+	}
+
+	/**
+	 * 按订单结案状态来查找
+	 * 
+	 * @param isFinish
+	 * @return
+	 */
+	public List<OrderHead> findOrderHeadByStauts(Boolean isFinish) {
+		return this.find("select a from OrderHead a where a.isFinish =?", isFinish);
 	}
 
 }

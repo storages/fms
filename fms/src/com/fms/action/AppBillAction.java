@@ -17,11 +17,13 @@ import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Material;
+import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.logic.AppBillLogic;
 import com.fms.logic.MaterialLogic;
+import com.fms.logic.OrderLogic;
 import com.fms.logic.PurchaseBillLogic;
 import com.fms.logic.QuotationLogic;
 import com.fms.logic.ScmcocLogic;
@@ -40,6 +42,7 @@ public class AppBillAction extends BaseAction {
 	protected ScmcocLogic scmLogic;
 	protected QuotationLogic quotationLogic;
 	protected PurchaseBillLogic purchaseBillLogic;
+	protected OrderLogic orderLogic;
 	/********* 搜索条件 ***********/
 	protected String appNo;// 申请单号码
 	protected String beginappDate;// 申请日期（开始）
@@ -227,6 +230,14 @@ public class AppBillAction extends BaseAction {
 		this.orderNo = orderNo;
 	}
 
+	public OrderLogic getOrderLogic() {
+		return orderLogic;
+	}
+
+	public void setOrderLogic(OrderLogic orderLogic) {
+		this.orderLogic = orderLogic;
+	}
+
 	/**
 	 * 跳转到申请单页面
 	 * 
@@ -258,6 +269,7 @@ public class AppBillAction extends BaseAction {
 			List<AppBillHead> heads = findApplyBillHeads(curr);
 			List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), null, null, -1, -1);
 			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(getLoginUser(), false, null, -1, -1);
+			List<OrderHead> orderHeads = orderLogic.findOrderHeadByStauts(Boolean.FALSE);
 			this.request.put("u", user);
 			this.request.put("scmcocs", scmcocs);
 			this.request.put("heads", heads);
@@ -266,6 +278,7 @@ public class AppBillAction extends BaseAction {
 			this.request.put("maxIndex", max);
 			this.request.put("pageNums", pageCount(max, dataTotal));
 			this.request.put("appNo", appNo);
+			this.request.put("orderHeads", orderHeads);
 			this.request.put("beginappDate", beginappDate == null ? null : beginappDate);
 			this.request.put("endappDate", endappDate == null ? null : endappDate);
 			// findMaterial();
@@ -326,8 +339,10 @@ public class AppBillAction extends BaseAction {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			List<AppBillHead> list = new ArrayList<AppBillHead>();
 			this.appBillLogic.saveAppBillHead(getLoginUser(), head);
+			List<OrderHead> orderHeads = orderLogic.findOrderHeadByStauts(Boolean.FALSE);
 			list = findApplyBillHeads(curr);
 			this.request.put("heads", list);
+			this.request.put("orderHeads", orderHeads);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -350,11 +365,12 @@ public class AppBillAction extends BaseAction {
 				result.setMsg("订单号不能为空!");
 				result.setSuccess(false);
 			} else {
-				List<List<String>> list = this.parseJsonArr(jsonstr);
-				for (List<String> ldata : list) {
-					List contents = ldata;
-					AppBillHead head = this.appBillLogic.findHeadById(this.getLoginUser(), contents.get(0).toString());
-					orderNo = (StringUtils.isBlank(ldata.get(1)) || "empty".equals(ldata.get(1))) ? null : ldata.get(1).toString();
+				// List<List<String>> list = this.parseJsonArr(jsonstr);
+				String[] orderNoArr = jsonstr.split(",");
+				String[] idArr = ids.split(",");
+				for (int i = 0; i < orderNoArr.length; i++) {
+					AppBillHead head = this.appBillLogic.findHeadById(this.getLoginUser(), idArr[i]);
+					orderNo = orderNoArr[i];
 					head.setOrderNo(orderNo);
 					heads.add(head);
 				}

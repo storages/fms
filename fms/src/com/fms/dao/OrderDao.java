@@ -88,6 +88,8 @@ public interface OrderDao extends BaseDao {
 	 */
 	public void delOrderHead(AclUser aclUser, String[] ids);
 
+	public List<OrderHead> findHeadByIds(String[] ids);
+
 	/**
 	 * 根据订单表头id查询对应的表体
 	 * 
@@ -134,4 +136,12 @@ public interface OrderDao extends BaseDao {
 	 * @param ids
 	 */
 	public void delOrderItemByIds(String[] ids);
+
+	/**
+	 * 按订单结案状态来查找
+	 * 
+	 * @param isFinish
+	 * @return
+	 */
+	List<OrderHead> findOrderHeadByStauts(Boolean isFinish);
 }

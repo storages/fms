@@ -99,8 +99,7 @@ public class OrderLogicImpl implements OrderLogic {
 			// 先删除对应的表体
 			List<OrderItem> items = findOrderItemsByHeadId(ids, null, null, -1, -1);
 			delOrderItem(aclUser, items);
-			// 再删除表头
-			this.orderDao.delOrderHead(aclUser, ids);
+			orderDao.deleteAll(this.orderDao.findHeadByIds(ids));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -310,4 +309,9 @@ public class OrderLogicImpl implements OrderLogic {
 		}
 		return items;
 	}
+
+	public List<OrderHead> findOrderHeadByStauts(Boolean isFinish) {
+		return this.orderDao.findOrderHeadByStauts(isFinish);
+	}
+
 }

@@ -8,7 +8,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -17,11 +20,13 @@ import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.action.BaseAction;
 import com.fms.commons.ImgExgFlag;
+import com.fms.core.entity.Employee;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.OrderItem;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.vo.entity.TempEntity;
+import com.fms.logic.EmployeeLogic;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.OrderLogic;
 import com.fms.logic.ScmcocLogic;
@@ -49,6 +54,7 @@ public class OrderAction extends BaseAction {
 	protected OrderLogic orderLogic;
 	protected ScmcocLogic scmcocLogic;
 	protected MaterialLogic materialLogic;
+	protected EmployeeLogic emplLogic;
 
 	/********* 搜索条件 ***********/
 	protected String orderNo;// 订单号码
@@ -111,14 +117,23 @@ public class OrderAction extends BaseAction {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
 
-			dataTotal = this.orderLogic.findCount(orderNo, parseValue(scmCocName), salesman, date, date2, date3, date4);
+			dataTotal = this.orderLogic.findCount(orderNo, parseValue(scmCocName), parseValue(salesman), date, date2, date3, date4);
 
-			List<OrderHead> orderList = this.orderLogic.findOrderPageList(getLoginUser(), orderNo, parseValue(scmCocName), salesman, date, date2, date3, date4, (curr - 1) * DEFAULT_PAGESIZE,
-					DEFAULT_PAGESIZE);
+			List<OrderHead> orderList = this.orderLogic.findOrderPageList(getLoginUser(), orderNo, parseValue(scmCocName), parseValue(salesman), date, date2, date3, date4, (curr - 1)
+					* DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 			List<Scmcoc> scmList = this.scmcocLogic.findAllScmcoc(getLoginUser(), true, null, -1, -1);
-			List<TempEntity> salesmans = new ArrayList<TempEntity>();
+			Map<String, TempEntity> salesMap = new HashMap<String, TempEntity>();
 			for (int i = 0; i < orderList.size(); i++) {
-				salesmans.add(new TempEntity(i, orderList.get(i).getSalesman()));
+				if (StringUtils.isNotBlank(orderList.get(i).getSalesman())) {
+					TempEntity te = new TempEntity();
+					te.setCode(i + 1);
+					te.setName(orderList.get(i).getSalesman());
+					salesMap.put(te.getName(), te);
+				}
+			}
+			List<TempEntity> salesmans = new ArrayList<TempEntity>();
+			for (Entry<String, TempEntity> entry : salesMap.entrySet()) {
+				salesmans.add(entry.getValue());
 			}
 			this.request.put("orderList", orderList);
 			this.request.put("scmList", scmList);
@@ -127,7 +142,8 @@ public class OrderAction extends BaseAction {
 			this.request.put("hBeginDeliveryDate", beginDeliveryDate);
 			this.request.put("hEndDeliveryDate", endDeliveryDate);
 			this.request.put("scmCocName", parseValue(scmCocName));
-			this.request.put("salesman", salesman);
+			System.out.println(scmCocName);
+			this.request.put("salesman", parseValue(salesman));
 			this.request.put("salesmans", salesmans);
 			this.request.put("orderNo", orderNo);
 			this.request.put("currIndex", curr);
@@ -155,10 +171,19 @@ public class OrderAction extends BaseAction {
 		return this.SUCCESS;
 	}
 
+	/**
+	 * 保存订单表头
+	 */
 	@SuppressWarnings("unused")
 	public void saveOrder() {
 		AjaxResult result = new AjaxResult();
+		Map<String, Employee> emplMap = new HashMap<String, Employee>();
+		String err = "";
 		try {
+			List<Employee> empls = this.emplLogic.findAllEmpl();
+			for (Employee em : empls) {
+				emplMap.put(em.getName(), em);
+			}
 			this.out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
@@ -179,10 +204,18 @@ public class OrderAction extends BaseAction {
 				if (StringUtils.isNotBlank(arrData[i + 4].toString())) {
 					head.setSalesman(arrData[i + 4].toString());
 				}
+				if (StringUtils.isNotBlank(head.getSalesman()) && emplMap.get(head.getSalesman()) == null) {
+					err += "业务员" + head.getSalesman() + ",\n";
+				}
 				orderList.add(head);
 			}
-			this.orderLogic.beatchSaveOrUpData(getLoginUser(), orderList);
-			result.setSuccess(true);
+			if (StringUtils.isNotBlank(err)) {
+				result.setSuccess(false);
+				result.setMsg(err.substring(0, err.length() - 2) + "\n在系统中不存在!");
+			} else {
+				this.orderLogic.beatchSaveOrUpData(getLoginUser(), orderList);
+				result.setSuccess(true);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.setSuccess(false);
@@ -740,6 +773,14 @@ public class OrderAction extends BaseAction {
 
 	public void setSendStr(String sendStr) {
 		this.sendStr = sendStr;
+	}
+
+	public EmployeeLogic getEmplLogic() {
+		return emplLogic;
+	}
+
+	public void setEmplLogic(EmployeeLogic emplLogic) {
+		this.emplLogic = emplLogic;
 	}
 
 }

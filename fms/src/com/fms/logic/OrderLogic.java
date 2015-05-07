@@ -168,4 +168,12 @@ public interface OrderLogic {
 	 * @return
 	 */
 	Boolean doSaveExcelData(AclUser aclUser, List<TempOrder> data);
+
+	/**
+	 * 按订单结案状态来查找
+	 * 
+	 * @param isFinish
+	 * @return
+	 */
+	List<OrderHead> findOrderHeadByStauts(Boolean isFinish);
 }

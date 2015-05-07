@@ -519,6 +519,9 @@
 		<property name="materialLogic">
 			<ref bean="materLogic" />
 		</property>
+		<property name="emplLogic">
+			<ref bean="employeeLogic" />
+		</property>
 	</bean>
 	
 	<!-- 进出库 -->
@@ -571,6 +574,9 @@
 		</property>
 		<property name="purchaseBillLogic">
 			<ref bean="purchaseBillLogic" />
+		</property>
+		<property name="orderLogic">
+			<ref bean="orderLogic" />
 		</property>
 	</bean>
 

@@ -274,13 +274,14 @@
 											 	var url = "${pageContext.request.contextPath}/appbill_findMaterial.action?isFromBom="+isFromBom+"&hid="+hid;
 											 	$("#matContent").load(url);
 									 }else{
-											 $("#isFromBom").val(isFromBom);
-										 if(confirm('该申请单没有订单号,将直接从物料清单中调取?') ){
+										 alert("该申请单需要订单号不能为空!");
+											 //$("#isFromBom").val(isFromBom);
+										 //if(confirm('该申请单订单号?') ){
 											//弹出物料对话框
-					  							showDialog();
-											 	var url = "${pageContext.request.contextPath}/appbill_findMaterial.action?isFromBom="+isFromBom+"&hid="+hid;
-											 	$("#matContent").load(url);
-										 }
+					  							//showDialog();
+											 	//var url = "${pageContext.request.contextPath}/appbill_findMaterial.action?isFromBom="+isFromBom+"&hid="+hid;
+											 	//$("#matContent").load(url);
+										 //}
 									 }
 								 }
 							 },error:function(){
@@ -318,7 +319,7 @@
 					var endeffectDate = $("#endeffectDate").val();
 					var param = hid+"&beginappDate="+begineffectDate+"&endappDate="+endeffectDate+"&appStatus="+appStatus;
 					var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+param;
-					window.location.href=url;
+					toMain(url);
 				});
 		
 				//审批
@@ -424,8 +425,7 @@
 					     	}else{
 					     		var id = $('#head').val();
 					     		var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
-					     		window.location.href=url;
-					     		closeform();
+					     		toMain(url);
 					     	}
 					     },error:function(){
 					        	alert("程序异常，请重新启动程序！");

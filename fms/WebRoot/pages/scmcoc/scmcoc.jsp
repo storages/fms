@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="page-header position-relative" style="margin-bottom: 0px; padding-bottom: 2px;">
 	<h5 style="margin-top: 0px; margin-bottom: 0px;">基础资料＞＞供应商管理</h5>
 </div>
@@ -59,9 +60,9 @@ $("#inputExcelBut").click(function(){
 								<th class="center">序号</th>
 								<th class="center">编号</th>
 								<th class="center">供应商名称</th>
-								<th class="hidden-480 center">供应商联系电话</th>
-								<th class="hidden-phone center">供应商网络联系方式</th>
-								<th class="hidden-480 center">供应商联系人</th>
+								<th class="center">联系电话</th>
+								<th class="center">网络联系方式</th>
+								<th class="hidden-480 center">联系人</th>
 								<th class="hidden-480 center">供应商地址</th>
 								<th class="hidden-480 center">结算方式</th>
 								<th class="hidden-480 center">约定结算日期</th>
@@ -77,12 +78,12 @@ $("#inputExcelBut").click(function(){
 										<input type="checkbox" value="${scmcoc.id}" name="sid" style="width:30px;"/>
 									</td>
 
-									<td class="center"><a href="#">${index.index+1}</a>
+									<td class="center"style="width:30px"><a href="#">${index.index+1}</a>
 									</td>
-									<td class="center">${scmcoc.code}</td>
+									<td class="center"style="width:50px">${scmcoc.code}</td>
 									<td class="center">${scmcoc.name}</td>
-									<td class="hidden-480 center">${scmcoc.linkPhone}　</td>
-									<td class="hidden-480 center">${scmcoc.networkLink}　</td>
+									<td class="center" style="width:90px">${scmcoc.linkPhone}　</td>
+									<td class="hidden-480 center"style="width:90px">${scmcoc.networkLink}　</td>
 									<td class="hidden-480 center">${scmcoc.linkMan}　</td>
 									<td class="hidden-480 center">${scmcoc.address}　</td>
 									<td class="hidden-480 center">${scmcoc.settlement.name}　</td>

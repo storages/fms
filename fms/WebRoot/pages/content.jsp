@@ -3,9 +3,12 @@
 <%-- <jsp:include page="/pages/head/head.jsp"></jsp:include> --%>
 <style type="text/css">
 	a:hover{color:green;}
+	#sample-table-1{margin-bottom: 10px;}
 	#sample-table-1 td{padding:3px 0px;}
+	#sample-table-1 tr th{padding:0px;}
 	.modal-footer{padding-top: 0px; padding-bottom: 0px;}
 	#sample-table-1 input{font-size: 12px;}
+	#sample-table-1 thead tr{height:25px;}
 </style>
 
 <a href="javascript:location.replace(url)"></a>

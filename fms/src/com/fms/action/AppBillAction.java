@@ -445,6 +445,7 @@ public class AppBillAction extends BaseAction {
 				this.request.put("beginappDate", beginappDate == null ? null : beginappDate);
 				this.request.put("endappDate", endappDate == null ? null : endappDate);
 				this.request.put("appStatus", appStatus);
+				this.request.put("isFromBom", isFromBom);
 
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -460,7 +461,6 @@ public class AppBillAction extends BaseAction {
 	 */
 	public String findMaterial() {
 		AppBillHead head = this.appBillLogic.findHeadById(getLoginUser(), hid);
-		System.out.println(head.getOrderNo());
 		request.put("mlist", appBillLogic.findAllMaterialByCondent(hsCode, hsName, ImgExgFlag.IMG, isFromBom, head.getOrderNo()));
 		return "mater";
 	}

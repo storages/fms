@@ -181,11 +181,7 @@ function delData(ids,flag){
 		      }
 		  	});
 		var refreshUrl = resultUrl[1];
-		if('AppBillItem'==flag){
-			window.location.href = refreshUrl;
-		}else{
-			toMain(refreshUrl);
-		}
+		toMain(refreshUrl);
 	}
 }
 
@@ -248,6 +244,7 @@ function getUrl(flag){
 			var id = $('#head').val();
 			url[0] = "${pageContext.request.contextPath}/appbill_deleteAppBillItem.action";
 			url[1] = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
+			break;
 			//删除成品BOM
 		case "BomExg":
 			url[0] = "${pageContext.request.contextPath}/bom_delBomExg.action";

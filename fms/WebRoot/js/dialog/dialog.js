@@ -28,7 +28,7 @@ function addTitle(){
 	var num = $('#dialog').children().length;
 	var htmltext = $('#dialog').html();
 	var str = '<div id="titleele" style="height:35px;width:100%;background-color:#99CCFF;" onmouseup="getMousePos()"></div>'
-	var toolbar = '<div style="height:auto; width:100%;" id="tool"><p style="margin-left: 20%;"><input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="确定" id="okbutton"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="取消" style="margin-left: 10px;"  onclick="closeListenler()"/></p></div>';
+	var toolbar = '<div style="height:auto; width:100%;" id="tool"><p style="margin-left: 40%;"><input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="确定" id="okbutton"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" value="取消" style="margin-left: 10px;"  onclick="closeListenler()"/></p></div>';
 	if(num==''){
 		firstele = $('#dialog'); 
 		firstele.append(str);

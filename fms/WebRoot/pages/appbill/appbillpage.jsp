@@ -103,7 +103,7 @@
 											<c:if test="${head.appStatus==1 || head.appStatus==2}">
 												<span style="color:gray;" title="<c:if test='${head.appStatus==1}'>待审批状态，不能修改</c:if><c:if test='${head.appStatus==2}'>审批通过状态，不能修改</c:if>">修改｜</span>
 											</c:if>
-											<a href="javascript:void(0);" onclick="adddetail('${head.id}');">详细</a>｜
+											<a href="javascript:void(0);" onclick="adddetail('${head.id}','${head.orderNo}');">详细</a>｜
 											<c:if test="${head.appStatus==0 || head.appStatus==3}"><a href="javascript:void(0);" onclick="delData('${head.id}','AppBillHead')"><span style="color: red;">删除</span></a></c:if>
 											<c:if test="${head.appStatus==1 || head.appStatus==2}">
 												<span style="color:gray;" title="<c:if test='${head.appStatus==1}'>待审批状态，不能删除</c:if><c:if test='${head.appStatus==2}'>审批通过状态，不能删除</c:if>">删除</span>
@@ -209,8 +209,8 @@ var win = true;
 		toMain(url);
 	}
 	
-	function adddetail(id){
-		var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
+	function adddetail(id,orderNo){
+		var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id+"&orderNo="+orderNo;
 		toMain(url);
 		
 	}

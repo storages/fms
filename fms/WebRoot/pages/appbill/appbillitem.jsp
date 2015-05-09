@@ -53,15 +53,17 @@
 <style type="text/css">
   input{margin:0px;}
   #sample-table-1 th{padding: 0px;}
+  #sample-table-2 td{padding:3px 0px;text-align: center;}
 </style>
 <body>
 <input type="hidden" value="${his}" id="head"/>
+<input type="hidden" value="${orderNo}" id="orderNo"/>
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
 	<%--<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单详细列表</span>--%>
 	<h5 style="margin: 0px;">申请单>><a href="javascript:void(0);"  id="goback">申请单列表</a>>>申请单详细清单</h5>
 </div>
 <div class="modal-footer" style="padding:0px;">
-				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" id="add">新增</button></c:if>
+				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;">新增</button></c:if>
 				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button></c:if>
 				<c:if test="${u.userFlag!='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btn_verify" >审批</button></c:if>
 				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','AppBillItem')">批量删除</button></c:if>
@@ -160,13 +162,17 @@
 	<div class="dialog" id="dialog" title="选择物料" style="display: none;width:70%;">
 		<%-- <input style="height: 25px;width: 160px;" type="text" name="${hsCode}" id="hsCode"/><input class="btn btn-small btn-danger" style="height: 25px; margin-top: -10px;border-top-width: 1px;" data-toggle="button" type="submit" value="查询"/> --%>
 			<p style="height: 28px; margin-bottom: 0px;"><span>供应商</span>
-				<select id="scmcoc">
+				<select id="scmcoc" style="height:28px; width:150px;">
 						<option value="chooice">---请选择供应商---</option>
 					<c:forEach var="scm" items="${scmcocs}">
 						<option value="${scm.id}">${scm.name}</option>
 					</c:forEach>
 				</select>
+				<span>物料编码</span><input type="text" value="${hsCode}" id="hsCode" style="height:28px; width:90px;"/>
+				<span>物料名称</span><input type="text" value="${hsName}"  id="hsName" style="height:28px; width:90px;"/>
+				<button class="btn btn-small btn-danger" data-toggle="button" type="button"  style="margin-left: 10px; height: 25px; border-top-width: 0px; margin-top: -8px; border-bottom-width: 2px; padding-bottom: 0px;" id="btnDialogQuery">查询</button>
 			</p>
+			<div id="matContent">
 					<table id="sample-table-2" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-top:2px;">
 						<thead>
 							<tr align="center">
@@ -200,6 +206,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+				</div>
 		</div>
 		<!-- 审批时显示输入不通过的原因div层 -->
 		<div id="verifyForm" style="width:400px;height:200px;border:solid 1px black; background-color:#F5FFE8; position: absolute; left:400; top:200; display: none; padding:5px;">
@@ -213,6 +220,14 @@
 	</body>	
 		<script type="text/javascript">
 			$(function(){
+				//对话框查询按钮
+				$("#btnDialogQuery").click(function(){
+					var scmid = $("#scmcoc").val();
+					var hsCode = $("#hsCode").val();
+					var hsName = $("#hsName").val();
+					var url = "${pageContext.request.contextPath}/appbill_findMaterial.action?scmid="+scmid+"&hsCode="+hsCode+"&hsName"+parse(hsName);
+					$("#matContent").load(url);
+				});
 				
 				//上一页面
 				$("#goback").click(function(){
@@ -228,7 +243,9 @@
 			});
 			
 				$("#add").click(function(){
-				var hid = $('#head').val();
+					var hid = $('#head').val();
+					var orderNo = $('#orderNo').val();
+					var isFromBom="N";
 					//检查是否可以新增(待审批和审批 通过状态不能新增)
 					var checkUrl = "${pageContext.request.contextPath}/appbill_checkStatus.action?ids="+hid;
 					$.ajax({
@@ -242,9 +259,18 @@
 								 	alert(result.msg);
 								 	return;
 								 }else{
-								 	//弹出物料对话框
-								 	alert(hid);
-		  							showDialog();
+									 if(orderNo!="undefined"&&orderNo!=""){
+										 if(confirm('是否根据BOM表来添加信息?如果这样,首先保证BOM表中有对应信息!') ){
+											 isFromBom = "Y";
+										 }
+									 }else{
+										 if(confirm('该申请单没有订单号,将直接从物料清单中调取?') ){
+											//弹出物料对话框
+					  							showDialog();
+											 	var url = "${pageContext.request.contextPath}/appbill_findMaterial.action?isFromBom="+isFromBom+"&hid="+hid;
+											 	$("#matContent").load(url);
+										 }
+									 }
 								 }
 							 },error:function(){
 							    alert("程序异常，请重新启动程序！");
@@ -268,8 +294,8 @@
 		            		return;
 		            	}
 		            	var url = "${pageContext.request.contextPath}/appbill_findMaterialByIds.action?ids="+paramstr+"&scmid="+scmid+"&hid="+hid;
-		                window.location.href=url;
 						closeListenler();
+		               toMain(url);
 					});
 				});
 			

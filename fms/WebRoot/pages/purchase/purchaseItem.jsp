@@ -38,8 +38,8 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover" style=" font-size: 12px;">
 						<thead>
 					<tr align="center">
-						<th class="center" style="width:30px;"><input type="checkbox" title="全选" id="checkAll"/></th>
-						<th class="center" style="width:40px;">项号</th>
+						<th class="center" style="width:20px;"><input type="checkbox" title="全选" id="checkAll"/></th>
+						<th class="center" style="width:25px;">项号</th>
 						<th class="center" style="width:40px;">物料编号</th>
 						<th class="center" style="width:40px;">物料名称</th>
 						<th class="center" style="width:40px;">规格型号</th>

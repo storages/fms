@@ -74,7 +74,7 @@ public class OrderAction extends BaseAction {
 	private String maxIndex;// 每页显示最多条数
 	private Integer pageNums;// 共有多少页
 	private String className = "OrderHead";// 表名称
-	private static final Integer DEFAULT_PAGESIZE = 10;
+	private static final Integer DEFAULT_PAGESIZE = 15;
 
 	/********* 获取前台选择的文件 ***********/
 	private File uploadFile; // 上传的文件 名称是Form 对应的name

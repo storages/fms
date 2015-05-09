@@ -55,7 +55,7 @@ public class ScmcocAction extends BaseAction {
 	private Integer pageNums;// 共有多少页
 	private String className = "Scmcoc";// 表名称
 	private String searchStr;// 搜索条件
-	private static final Integer DEFAULT_PAGESIZE = 10;
+	private static final Integer DEFAULT_PAGESIZE = 15;
 
 	private File uploadFile; // 上传的文件 名称是Form 对应的name
 	private String uploadFileContentType; // 文件的类型
@@ -75,8 +75,8 @@ public class ScmcocAction extends BaseAction {
 		// 是客户
 		Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 		Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
-		dataTotal = this.scmcocLogic.findDataCount(getLoginUser(),className, Boolean.parseBoolean(isCustom), parseValue(searchStr));
-		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(getLoginUser(),Boolean.parseBoolean(isCustom), parseValue(searchStr), (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
+		dataTotal = this.scmcocLogic.findDataCount(getLoginUser(), className, Boolean.parseBoolean(isCustom), parseValue(searchStr));
+		List<Scmcoc> scmcocs = this.scmcocLogic.findAllScmcoc(getLoginUser(), Boolean.parseBoolean(isCustom), parseValue(searchStr), (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 		this.request.put("scmcocs", scmcocs);
 		this.request.put("currIndex", curr);
 		this.request.put("maxIndex", max);
@@ -104,7 +104,7 @@ public class ScmcocAction extends BaseAction {
 			} else if ("false".equals(isCustom)) {
 				scmcoc.setIsCustom(Boolean.FALSE);
 			}
-			this.scmcocLogic.saveScmcoc(getLoginUser(),this.setProperty(scmcoc));
+			this.scmcocLogic.saveScmcoc(getLoginUser(), this.setProperty(scmcoc));
 			System.out.println("保存成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,7 +122,7 @@ public class ScmcocAction extends BaseAction {
 		response.setContentType("application/text");
 		response.setCharacterEncoding("UTF-8");
 		try {
-			Scmcoc sc = this.scmcocLogic.findScmcocByCode(getLoginUser(),code);
+			Scmcoc sc = this.scmcocLogic.findScmcocByCode(getLoginUser(), code);
 			out = response.getWriter();
 			if (null != sc) {
 				out.write("false");
@@ -175,7 +175,7 @@ public class ScmcocAction extends BaseAction {
 					result.setSuccess(false);
 					result.setMsg("导入的excel文件内容不正确!");
 				}
-				List<Settlement> setList = this.settlementLogic.findAllSettlement(getLoginUser(),null);
+				List<Settlement> setList = this.settlementLogic.findAllSettlement(getLoginUser(), null);
 				Map<String, Settlement> settCache = new HashMap<String, Settlement>();
 				for (Settlement temp : setList) {
 					String key = temp.getName();
@@ -201,7 +201,7 @@ public class ScmcocAction extends BaseAction {
 					s.setNote(content[i][8]);
 					scmcocs.add(s);
 				}
-				List tlist = scmcocLogic.doValidata(getLoginUser(),scmcocs, settCache);
+				List tlist = scmcocLogic.doValidata(getLoginUser(), scmcocs, settCache);
 				result.setSuccess(true);
 				result.setObj(tlist);
 			}
@@ -277,7 +277,7 @@ public class ScmcocAction extends BaseAction {
 				out.flush();
 				out.close();
 			}
-			if (!this.scmcocLogic.doSaveExcelData(getLoginUser(),list, isScmcoc)) {
+			if (!this.scmcocLogic.doSaveExcelData(getLoginUser(), list, isScmcoc)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");
@@ -325,7 +325,7 @@ public class ScmcocAction extends BaseAction {
 		scmcoc.setNote(parseValue(note));
 		if (null != settlementId && !"".equals(settlementId)) {
 			// 查询结算方式
-			Settlement stt = settlementLogic.findSettById(getLoginUser(),settlementId);
+			Settlement stt = settlementLogic.findSettById(getLoginUser(), settlementId);
 			scmcoc.setSettlement(stt);
 		}
 		return scmcoc;
@@ -346,7 +346,7 @@ public class ScmcocAction extends BaseAction {
 					for (String id : arrIds) {
 						list.add(id);
 					}
-					this.scmcocLogic.delete(getLoginUser(),list);
+					this.scmcocLogic.delete(getLoginUser(), list);
 				}
 			}
 			if ("true".equals(isCustom)) {
@@ -366,13 +366,13 @@ public class ScmcocAction extends BaseAction {
 	 */
 	public String findScmcocById() throws Exception {
 		// 查询结算方式
-		List<Settlement> settlements = this.settlementLogic.findAllSettlement(getLoginUser(),"");
+		List<Settlement> settlements = this.settlementLogic.findAllSettlement(getLoginUser(), "");
 		this.request.put("settlements", settlements);
 		if (null != ids && !"".equals(ids)) {
 			String[] arrIds = ids.split(",");
 			if (null != arrIds && arrIds.length > 0) {
 				String id = arrIds[0];
-				Scmcoc scm = this.scmcocLogic.findScmcocById(getLoginUser(),id);
+				Scmcoc scm = this.scmcocLogic.findScmcocById(getLoginUser(), id);
 				if (null != scm) {
 					this.request.put("scmcoc", scm);
 				}

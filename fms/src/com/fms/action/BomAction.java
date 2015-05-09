@@ -43,7 +43,7 @@ public class BomAction extends BaseAction {
 	private Integer pageNums;// 共有多少页
 	private String className = "BomExg";// 表名称
 	private String searchStr;// 搜索条件
-	private static final Integer DEFAULT_PAGESIZE = 10;
+	private static final Integer DEFAULT_PAGESIZE = 15;
 
 	/********* 其它属性 ***********/
 	private String hsCode;

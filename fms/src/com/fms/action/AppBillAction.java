@@ -55,7 +55,7 @@ public class AppBillAction extends BaseAction {
 	private String maxIndex;// 每页显示最多条数
 	private Integer pageNums;// 共有多少页
 	private String className = "AppBillItem";// 表名称
-	private static final Integer DEFAULT_PAGESIZE = 12;
+	private static final Integer DEFAULT_PAGESIZE = 15;
 
 	/********* 其它属性 ***********/
 	protected String ids;// 物料id数组

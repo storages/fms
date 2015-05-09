@@ -42,7 +42,7 @@ public class PurchaseAction extends BaseAction {
 	private String maxIndex;// 每页显示最多条数
 	private Integer pageNums;// 共有多少页
 	private String className = "PurchaseBill";// 表名称
-	private static final Integer DEFAULT_PAGESIZE = 12;
+	private static final Integer DEFAULT_PAGESIZE = 15;
 
 	protected String appBillNo;// 采购 单号码
 	protected String purBeginDate;// 采购单开始日期

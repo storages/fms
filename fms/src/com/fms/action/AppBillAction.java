@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import com.fms.base.action.BaseAction;
 import com.fms.commons.AppBillStatus;
 import com.fms.commons.CommonConstant;
+import com.fms.commons.ImgExgFlag;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
@@ -64,6 +65,9 @@ public class AppBillAction extends BaseAction {
 	protected String verify;// 审批是否通过标记：2表示：通过 3表示不通过
 	protected String noPassReason;// 审批不通过原因
 	protected String orderNo;// 订单号
+	protected String hsCode;
+	protected String hsName;
+	protected String isFromBom;// 是否根据BOM表来加载信息（"Y","N"）
 
 	public String getVerify() {
 		return verify;
@@ -236,6 +240,30 @@ public class AppBillAction extends BaseAction {
 
 	public void setOrderLogic(OrderLogic orderLogic) {
 		this.orderLogic = orderLogic;
+	}
+
+	public String getHsCode() {
+		return hsCode;
+	}
+
+	public void setHsCode(String hsCode) {
+		this.hsCode = hsCode;
+	}
+
+	public String getHsName() {
+		return hsName;
+	}
+
+	public void setHsName(String hsName) {
+		this.hsName = hsName;
+	}
+
+	public String getIsFromBom() {
+		return isFromBom;
+	}
+
+	public void setIsFromBom(String isFromBom) {
+		this.isFromBom = isFromBom;
 	}
 
 	/**
@@ -411,8 +439,9 @@ public class AppBillAction extends BaseAction {
 				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(getLoginUser(), false, null, -1, -1);
 				this.request.put("scmcocs", scmcocs);
 				this.request.put("items", items);
-				this.request.put("mlist", mlist);
+				// this.request.put("mlist", mlist);
 				this.request.put("his", ids);
+				this.request.put("orderNo", orderNo);
 				this.request.put("beginappDate", beginappDate == null ? null : beginappDate);
 				this.request.put("endappDate", endappDate == null ? null : endappDate);
 				this.request.put("appStatus", appStatus);
@@ -422,6 +451,18 @@ public class AppBillAction extends BaseAction {
 			}
 		}
 		return "item";
+	}
+
+	/**
+	 * 申请单表体新增时调出的物料来源
+	 * 
+	 * @return
+	 */
+	public String findMaterial() {
+		AppBillHead head = this.appBillLogic.findHeadById(getLoginUser(), hid);
+		System.out.println(head.getOrderNo());
+		request.put("mlist", appBillLogic.findAllMaterialByCondent(hsCode, hsName, ImgExgFlag.IMG, isFromBom, head.getOrderNo()));
+		return "mater";
 	}
 
 	/**

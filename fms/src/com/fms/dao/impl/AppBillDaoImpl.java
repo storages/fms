@@ -18,7 +18,7 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao {
 		String hql = "select item from AppBillItem item left join fetch item.head h left join fetch item.material m left join fetch item.scmcoc scm " + " where h.appDate >= ? " + " and scm.name = ? "
 				+ " and m.hsCode = ? " + " and m.hsName = ? " + " and m.model = ? ";
 		List list = new ArrayList();
-		list.add(q.getEffectDate());
+		list.add(FmsDateUtils.getStartDate(q.getEffectDate()));
 		list.add(q.getScmcoc().getName());
 		list.add(q.getMaterial().getHsCode());
 		list.add(q.getMaterial().getHsName());
@@ -56,11 +56,11 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao {
 		}
 		if (null != beginappDate) {
 			hql += " and a.appDate >=? ";
-			params.add(beginappDate);
+			params.add(FmsDateUtils.getStartDate(beginappDate));
 		}
 		if (null != endappDate) {
 			hql += " and a.appDate <=? ";
-			params.add(endappDate);
+			params.add(FmsDateUtils.getEndDate(endappDate));
 		}
 		if (null != appStatus && !"".equals(appStatus) && !"-1".equals(appStatus)) {
 			hql += " and a.appStatus=? ";
@@ -97,11 +97,11 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao {
 		list.add(hid);
 		if (null != beginappDate && !"".equals(beginappDate)) {
 			hql += " and item.appDate>=?";
-			list.add(beginappDate);
+			list.add(FmsDateUtils.getStartDate(beginappDate));
 		}
 		if (null != endappDate && !"".equals(endappDate)) {
 			hql += " and item.appDate<=?";
-			list.add(endappDate);
+			list.add(FmsDateUtils.getEndDate(endappDate));
 		}
 		if (null != appStatus && !"".equals(appStatus)) {
 			// if (user.getUserFlag().equals("S")) {

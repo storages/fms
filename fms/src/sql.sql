@@ -16,7 +16,7 @@ update quotation set serialNo = 2 where id='402881fb49e0fc1a0149e108602a0003'
 update quotation set effectDate = '2014-11-13' where id='402881e949b3bad70149b3be0fb20000'
 
 select * from appbillitem
-select * from appbillHead
+select * from appbillHead    R201505072023
 
 select itemNo from PurchaseBill
 select * from Purchaseitem

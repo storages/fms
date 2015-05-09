@@ -27,7 +27,7 @@ public class FmsDateUtils {
 	}
 
 	/**
-	 * 获取起始时间
+	 * 获取起始时间(注意：hql查询日期条件一定要用这个方法)
 	 * 
 	 * @param date
 	 * @return
@@ -35,6 +35,7 @@ public class FmsDateUtils {
 	 */
 	public static Date getStartDate(Date date) {
 		Calendar todayStart = Calendar.getInstance();
+		todayStart.setTime(date);
 		todayStart.set(Calendar.HOUR, 0);
 		todayStart.set(Calendar.MINUTE, 0);
 		todayStart.set(Calendar.SECOND, 0);
@@ -43,7 +44,7 @@ public class FmsDateUtils {
 	}
 
 	/**
-	 * 获取结束时间
+	 * 获取结束时间(注意：hql查询日期条件一定要用这个方法)
 	 * 
 	 * @param date
 	 * @return
@@ -51,6 +52,7 @@ public class FmsDateUtils {
 	 */
 	public static Date getEndDate(Date date) {
 		Calendar todayEnd = Calendar.getInstance();
+		todayEnd.setTime(date);
 		todayEnd.set(Calendar.HOUR, 23);
 		todayEnd.set(Calendar.MINUTE, 59);
 		todayEnd.set(Calendar.SECOND, 59);

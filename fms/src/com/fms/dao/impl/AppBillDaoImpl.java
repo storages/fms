@@ -1,5 +1,6 @@
 package com.fms.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
 import com.fms.core.entity.Quotation;
 import com.fms.dao.AppBillDao;
+import com.fms.utils.FmsDateUtils;
 
 public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao {
 
@@ -75,13 +77,14 @@ public class AppBillDaoImpl extends BaseDaoImpl implements AppBillDao {
 			hql += " and a.appNo like ? ";
 			params.add(appNo.trim());
 		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		if (null != beginappDate) {
-			hql += " and a.appDate >=? ";
-			params.add(beginappDate);
+			hql += " and a.appDate >=?";
+			params.add(FmsDateUtils.getStartDate(beginappDate));
 		}
 		if (null != endappDate) {
-			hql += " and a.appDate <=? ";
-			params.add(endappDate);
+			hql += " and a.appDate <=?";
+			params.add(FmsDateUtils.getEndDate(endappDate));
 		}
 		if (null != appStatus && !"-1".equals(appStatus)) {
 			hql += " and a.appStatus=? ";

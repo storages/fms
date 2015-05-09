@@ -84,7 +84,7 @@ public class BomDaoImpl extends BaseDaoImpl implements BomDao {
 			builder.append(" and mat.hsName like ? ");
 			params.add("%" + hsName + "%");
 		}
-		if (hsCode != null && !"".equals(hsCode) && !"undefined".equals(hsName)) {
+		if (hsCode != null && !"".equals(hsCode) && !"undefined".equals(hsCode)) {
 			builder.append(" and mat.hsCode like ? ");
 			params.add("%" + hsCode + "%");
 		}
@@ -251,4 +251,39 @@ public class BomDaoImpl extends BaseDaoImpl implements BomDao {
 		}
 		return null;
 	}
+
+	public List<BomImg> findBomImgByHsCodes(String[] exgCodes, String imgCode, String imgName) {
+		List params = new ArrayList();
+		StringBuilder builder = new StringBuilder();
+		builder.append(" select img from BomImg img ");
+		builder.append(" left join fetch img.material mat ");
+		builder.append(" left join fetch mat.materialType tp ");
+		builder.append(" left join fetch img.bomVersion ver ");
+		builder.append(" left join fetch ver.bomExg exg ");
+		builder.append(" left join fetch exg.material m ");
+		builder.append(" left join fetch mat.unit un where 1=1 ");
+		if (null != exgCodes && exgCodes.length > 0) {
+			for (int i = 0; i < exgCodes.length; i++) {
+				if (i == 0) {
+					builder.append(" and (m.hsCode =? ");
+				} else if (exgCodes.length > 1 && i == exgCodes.length - 1) {
+					builder.append(" or m.hsCode =? )");
+				} else {
+					builder.append(" or m.hsCode =? ");
+				}
+				params.add(exgCodes[i]);
+			}
+		}
+
+		if (imgName != null && !"".equals(imgName) && !"undefined".equals(imgName)) {
+			builder.append(" and mat.hsName like ? ");
+			params.add("%" + imgName + "%");
+		}
+		if (imgCode != null && !"".equals(imgCode) && !"undefined".equals(imgCode)) {
+			builder.append(" and mat.hsCode like ? ");
+			params.add("%" + imgCode + "%");
+		}
+		return this.find(builder.toString(), params.toArray());
+	}
+
 }

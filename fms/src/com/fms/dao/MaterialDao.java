@@ -31,4 +31,5 @@ public interface MaterialDao extends BaseDao {
 	public Material findMaterialByHsCode(String hsCode);
 
 	public List<Material> findAllMaterialExgs(String hsCode, String hsName, String hsModel, String imgExgFlag, Integer index, Integer length);
+
 }

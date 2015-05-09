@@ -13,7 +13,7 @@ import com.fms.dao.PurchaseBillDao;
 public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao {
 
 	public List<PurchaseBill> findPurchaseBill(Quotation q) {
-		String hql = "select a from PurchaseItem a left join fetch a.purchaseBill b left join fetch a.material m left join fetch b.scmcoc scm " + " where a.purchaseDate >= ? " + " and scm.name = ? "
+		String hql = "select b from PurchaseItem a left join  a.purchaseBill b left join  a.material m left join  b.scmcoc scm " + " where a.purchaseDate >= ? " + " and scm.name = ? "
 				+ " and m.hsCode = ? " + " and m.hsName = ? " + " and m.model = ? ";
 		List list = new ArrayList();
 		list.add(q.getEffectDate());

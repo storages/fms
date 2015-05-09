@@ -380,6 +380,15 @@
 		<property name="purchaseBillDao">
 			<ref bean="purchaseBillDao" />
 		</property>
+		<property name="materialDao">
+			<ref bean="materialDao" />
+		</property>
+		<property name="orderDao">
+			<ref bean="orderDao" />
+		</property>
+		<property name="bomDao">
+			<ref bean="bomDao" />
+		</property>
 	</bean>
 
 	<!-- 采购单 -->

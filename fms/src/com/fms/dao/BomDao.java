@@ -138,4 +138,14 @@ public interface BomDao extends BaseDao {
 	 * @return
 	 */
 	public List<BomVersion> findBomVerSionByExgBomIds(String[] ids);
+
+	/**
+	 * 根据
+	 * 
+	 * @param exgCodes
+	 * @param imgCode
+	 * @param imgName成品编码查找BomImg
+	 * @return
+	 */
+	List<BomImg> findBomImgByHsCodes(String[] exgCodes, String imgCode, String imgName);
 }

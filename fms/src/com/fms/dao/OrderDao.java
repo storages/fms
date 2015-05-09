@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fms.base.dao.BaseDao;
 import com.fms.core.entity.AclUser;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.OrderItem;
 
@@ -144,4 +145,12 @@ public interface OrderDao extends BaseDao {
 	 * @return
 	 */
 	List<OrderHead> findOrderHeadByStauts(Boolean isFinish);
+
+	/**
+	 * 根据订单号查找成品
+	 * 
+	 * @param orderNo
+	 * @return
+	 */
+	List<Material> findAllExgByOrderNo(String orderNo);
 }

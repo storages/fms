@@ -13,12 +13,16 @@ import com.fms.commons.AppBillStatus;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.AppBillHead;
 import com.fms.core.entity.AppBillItem;
+import com.fms.core.entity.BomImg;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
 import com.fms.core.entity.Scmcoc;
 import com.fms.dao.AppBillDao;
+import com.fms.dao.BomDao;
+import com.fms.dao.MaterialDao;
+import com.fms.dao.OrderDao;
 import com.fms.dao.PurchaseBillDao;
 import com.fms.logic.AppBillLogic;
 
@@ -26,6 +30,9 @@ public class AppBillLogicImpl implements AppBillLogic {
 
 	private AppBillDao appBillDao;
 	private PurchaseBillDao purchaseBillDao;
+	private MaterialDao materialDao;
+	private OrderDao orderDao;
+	private BomDao bomDao;
 
 	public List<AppBillItem> findAppBillItem(AclUser loginUser, Quotation q) {
 		return appBillDao.findAppBillItem(q);
@@ -45,6 +52,30 @@ public class AppBillLogicImpl implements AppBillLogic {
 
 	public void setPurchaseBillDao(PurchaseBillDao purchaseBillDao) {
 		this.purchaseBillDao = purchaseBillDao;
+	}
+
+	public MaterialDao getMaterialDao() {
+		return materialDao;
+	}
+
+	public void setMaterialDao(MaterialDao materialDao) {
+		this.materialDao = materialDao;
+	}
+
+	public OrderDao getOrderDao() {
+		return orderDao;
+	}
+
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
+	}
+
+	public BomDao getBomDao() {
+		return bomDao;
+	}
+
+	public void setBomDao(BomDao bomDao) {
+		this.bomDao = bomDao;
 	}
 
 	public AppBillHead saveAppBillHead(AclUser loginUser, AppBillHead head) {
@@ -403,5 +434,30 @@ public class AppBillLogicImpl implements AppBillLogic {
 		if (null != heads && heads.size() >= 0) {
 			this.purchaseBillDao.deleteAll(heads);
 		}
+	}
+
+	public List<Material> findAllMaterialByCondent(String hsCode, String hsName, String imgExgFlag, String isFromBom, String orderNo) {
+		try {
+			if ("N".equals(isFromBom)) {
+				return this.materialDao.findAllMaterialExgs(hsCode, hsName, null, imgExgFlag, -1, -1);
+			} else if ("Y".equals(isFromBom)) {
+				List<Material> imgList = new ArrayList<Material>();
+				// 首先根据订单号查询出所有的成品
+				List<Material> exgMaterials = this.orderDao.findAllExgByOrderNo(orderNo);
+				String[] exgCodes = new String[exgMaterials.size()];
+				for (int i = 0; i < exgMaterials.size(); i++) {
+					exgCodes[i] = exgMaterials.get(i).getHsCode();
+				}
+				// 根据成品到BOM表中查找对应的原料
+				List<BomImg> bomImgs = this.bomDao.findBomImgByHsCodes(exgCodes, hsCode, hsName);
+				for (BomImg bi : bomImgs) {
+					imgList.add(bi.getMaterial());
+				}
+				return imgList;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

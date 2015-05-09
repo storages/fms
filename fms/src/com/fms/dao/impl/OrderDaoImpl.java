@@ -7,7 +7,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.dao.BaseDaoImpl;
+import com.fms.commons.ImgExgFlag;
 import com.fms.core.entity.AclUser;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.OrderItem;
 import com.fms.dao.OrderDao;
@@ -207,6 +209,28 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 	 */
 	public List<OrderHead> findOrderHeadByStauts(Boolean isFinish) {
 		return this.find("select a from OrderHead a where a.isFinish =?", isFinish);
+	}
+
+	public List<Material> findAllExgByOrderNo(String orderNo) {
+		String hql = "select distinct a.hsCode from OrderItem a left join  a.orderHead b where b.orderNo=?";
+		List<String> exgHsCodes = this.find(hql, orderNo);
+		if (!exgHsCodes.isEmpty()) {
+			hql = "select a from Material a left join fetch a.unit left join  a.materialType where  a.imgExgFlag=? ";
+			List params = new ArrayList();
+			params.add(ImgExgFlag.EXG);
+			for (int i = 0; i < exgHsCodes.size(); i++) {
+				if (i == 0) {
+					hql += " and (a.hsCode =? ";
+				} else if (exgHsCodes.size() > 1 && i == exgHsCodes.size() - 1) {
+					hql += " or a.hsCode =? )";
+				} else {
+					hql += " or a.hsCode =? ";
+				}
+				params.add(exgHsCodes.get(i));
+			}
+			return this.find(hql, params.toArray());
+		}
+		return null;
 	}
 
 }

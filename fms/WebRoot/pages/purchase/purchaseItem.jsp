@@ -49,7 +49,7 @@
 						<th class="center" style="width:40px;">单价</th>
 						<th class="center" style="width:40px;">金额</th>
 						<th class="center" style="width:40px;">采购日期</th>
-						<th class="center" style="width:40px;">交货日期</th>
+						<th class="center" style="width:60px;">交货日期</th>
 						<th class="center" style="width:40px;">是否下单</th>
 						<th class="center"  style="width: 90px;">操作</th>
 					</tr>
@@ -68,8 +68,8 @@
 									<td class="center" style="width:20px;" >${item.price}&nbsp;</td>
 									<td class="center" style="width:20px;" >${item.amount}&nbsp;</td>
 									<td class="center" style="width:60px;" ><fmt:formatDate value="${item.purchaseDate}" type="date"/>&nbsp;</td>
-									<td class="center" style="width:20px;" >${item.deliveryDate}&nbsp;</td>
-									<td class="center" style="width:20px;" ><input type="checkbox" DISABLED value="${item.isBuy }" <c:if test="${item.isBuy }">checked="checked"</c:if>/></td>
+									<td class="center" style="width:60px;" >${item.deliveryDate}&nbsp;</td>
+									<td class="center" style="width:20px;" ><input type="checkbox" readonly="readonly" disabled="disabled" value="${item.isBuy }" <c:if test="${item.isBuy }">checked="checked"</c:if>/></td>
 									<td class="center" style="width:20px;" >
 											<c:if test="${!item.isBuy}"><a href="javascript:void(0);"  onclick="edit(this,'13')"><span style="color: green;">修改</span></a>｜</c:if>
 											<c:if test="${item.isBuy}"><span style="color:gray;" title="<c:if test='${head.appStatus==1}'>已下单，不能修改</c:if>">修改</span>｜</c:if>

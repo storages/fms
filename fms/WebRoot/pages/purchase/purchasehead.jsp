@@ -38,15 +38,15 @@
 						<th class="center" style="width:30px;">选择</th>
 						<th class="center" style="width:40px;">流水号</th>
 						<th class="center" style="width:91px;">采购单号</th>
-						<th class="center" style="width:50px;">采购单状态</th>
+						<th class="center" style="width:50px;">状态</th>
 						<th class="center" style="width:91px;">申请单号</th>
-						<th class="center" style="width:91px;">采购单项数</th>
-						<th class="center" style="width:50px;">供应商编码</th>
+						<th class="center" style="width:41px;">项数</th>
+						<th class="center" style="width:70px;">供应商编码</th>
 						<th class="center" style="width:150px;">供应商名称</th>
-						<th class="center" style="width:70px;">采购单总金额</th>
+						<th class="center" style="width:70px;">总金额</th>
 						<th class="center" style="width:50px;">打印次数</th>
 						<th class="center" style="width:90px;">采购时间</th>
-						<th class="center" style="width:50px;">是否完结</th>
+						<th class="center" style="width:50px;">完结否</th>
 						<th class="center" style="width:160px;">特别说明</th>
 						<th class="center"  style="width: 90px;">操作</th>
 					</tr>
@@ -66,17 +66,17 @@
 											<td class="center" style="width:70px;">生效&nbsp;</td>
 										</c:if>
 										<td class="center" style="width:91px;">${head.appBillNo}&nbsp;</td>
-										<td class="center" style="width:71px;">${head.itemNo}&nbsp;</td>
+										<td class="center" style="width:41px;">${head.itemNo}&nbsp;</td>
 										<td class="center" style="width:65px;">${head.scmcoc.code}&nbsp;</td>
 										<td class="center" style="width:65px;">${head.scmcoc.name}&nbsp;</td>
 										<td class="center" style="width:65px;">${head.totalAmount}&nbsp;</td>
 										<td class="center" style="width:65px;">${head.printCount}&nbsp;</td>
 										<td class="center" style="width:92px;"><fmt:formatDate value="${head.purchDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
 										<c:if test="${head.isComplete}">
-											<td class="center" style="width:53px;">已完成&nbsp;</td>
+											<td class="center" style="width:53px;">已完结&nbsp;</td>
 										</c:if>
 										<c:if test="${!head.isComplete}">
-											<td class="center" style="width:53px;">未完成&nbsp;</td>
+											<td class="center" style="width:53px;">未完结&nbsp;</td>
 										</c:if>
 										<td class="center" style="width:65px;">${head.specialNote}&nbsp;</td>
 										<td class="center" style="width:164px;">

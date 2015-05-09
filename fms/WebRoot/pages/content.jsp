@@ -7,7 +7,7 @@
 	#sample-table-1 td{padding:3px 0px;}
 	#sample-table-1 tr th{padding:0px;}
 	.modal-footer{padding-top: 0px; padding-bottom: 0px;}
-	#sample-table-1 input{font-size: 12px;}
+	#sample-table-1 input{font-size: 12px;padding:0px;}
 	#sample-table-1 thead tr{height:25px;}
 </style>
 

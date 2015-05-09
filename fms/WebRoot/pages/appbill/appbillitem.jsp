@@ -58,6 +58,7 @@
 <body>
 <input type="hidden" value="${his}" id="head"/>
 <input type="hidden" value="${orderNo}" id="orderNo"/>
+<input type="hidden" value="${isFromBom}" id="isFromBom"/>
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
 	<%--<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单详细列表</span>--%>
 	<h5 style="margin: 0px;">申请单>><a href="javascript:void(0);"  id="goback">申请单列表</a>>>申请单详细清单</h5>
@@ -170,7 +171,7 @@
 				</select>
 				<span>物料编码</span><input type="text" value="${hsCode}" id="hsCode" style="height:28px; width:90px;"/>
 				<span>物料名称</span><input type="text" value="${hsName}"  id="hsName" style="height:28px; width:90px;"/>
-				<button class="btn btn-small btn-danger" data-toggle="button" type="button"  style="margin-left: 10px; height: 25px; border-top-width: 0px; margin-top: -8px; border-bottom-width: 2px; padding-bottom: 0px;" id="btnDialogQuery">查询</button>
+				<button class="btn btn-small btn-danger" data-toggle="button" type="button"  style="margin-left: 10px; height: 25px; border-top-width: 0px; margin-top: -8px; border-bottom-width: 2px; padding-bottom: 0px;" onclick="queryMater();">查询</button>
 			</p>
 			<div id="matContent">
 					<table id="sample-table-2" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-top:2px;">
@@ -219,15 +220,19 @@
 		</div>
 	</body>	
 		<script type="text/javascript">
-			$(function(){
 				//对话框查询按钮
-				$("#btnDialogQuery").click(function(){
+			function queryMater(){
 					var scmid = $("#scmcoc").val();
+					var hid = $('#head').val();
 					var hsCode = $("#hsCode").val();
 					var hsName = $("#hsName").val();
-					var url = "${pageContext.request.contextPath}/appbill_findMaterial.action?scmid="+scmid+"&hsCode="+hsCode+"&hsName"+parse(hsName);
+					var isFromBom = $("#isFromBom").val();
+					var url = "${pageContext.request.contextPath}/appbill_findMaterial.action?scmid="+scmid+"&hsCode="+hsCode+"&hsName"+parse(hsName)+"&hid="+hid+"&isFromBom="+isFromBom;
 					$("#matContent").load(url);
-				});
+			}
+			
+			$(function(){
+				
 				
 				//上一页面
 				$("#goback").click(function(){
@@ -263,7 +268,13 @@
 										 if(confirm('是否根据BOM表来添加信息?如果这样,首先保证BOM表中有对应信息!') ){
 											 isFromBom = "Y";
 										 }
+											 $("#isFromBom").val(isFromBom);
+											 //弹出物料对话框
+					  							showDialog();
+											 	var url = "${pageContext.request.contextPath}/appbill_findMaterial.action?isFromBom="+isFromBom+"&hid="+hid;
+											 	$("#matContent").load(url);
 									 }else{
+											 $("#isFromBom").val(isFromBom);
 										 if(confirm('该申请单没有订单号,将直接从物料清单中调取?') ){
 											//弹出物料对话框
 					  							showDialog();

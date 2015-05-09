@@ -97,7 +97,7 @@
 						<th class="center" style="width:40px;">行号</th>
 						<th class="center" style="width:71px;">状态</th>
 						<th class="center" style="width:65px;">供应商编码</th>
-						<th class="center" style="width:135px;">供应商名称</th>
+						<th class="center" style="width:95px;">供应商名称</th>
 						<th class="center" style="width:75px;">物料编码</th>
 						<th class="center" style="width:115px;">物料名称</th>
 						<th class="center" style="width:95px;">物料规格型号</th>
@@ -107,8 +107,8 @@
 						<th class="center" style="width:40px;">金额</th>
 						<th class="center" style="width:95px;">申请日期</th>
 						<th class="center" style="width:75px;">不通过原因</th>
-						<th class="center" style="width:5px;">备注</th>
-						<c:if test="${u.userFlag=='P'}"><th class="center" style="width:90px;">操作</th></c:if>
+						<th class="center" style="width:75px;">备注</th>
+						<c:if test="${u.userFlag=='P'}"><th class="center" style="width:60px;">操作</th></c:if>
 					</tr>
 				</thead>
 						<tbody>

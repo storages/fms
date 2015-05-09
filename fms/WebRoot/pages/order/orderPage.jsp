@@ -172,7 +172,7 @@ function gototag(pageSize){
 								<tr>
 									<td class="center" style="width:20px;" ><input type="checkbox" value="${order.id}" name="sid" style="width:20px;"/></td>
 									<td class="center" style="width:31px;">${order.serialNo}&nbsp;</td>
-									<td class="center" style="width:31px;">${order.orderNo}&nbsp;</td>
+									<td class="center" style="width:91px;">${order.orderNo}&nbsp;</td>
 									<td class="center" style="width:31px; padding:0px;">
 										<select name="scmName"  disabled="disabled" style="width:130px;margin: 0px;border: 0px; padding:0px; font-size: 12px;">
 											<c:forEach var="scm" items="${scmList}">
@@ -183,9 +183,9 @@ function gototag(pageSize){
 									<td class="center" style="width:31px;">${order.itemQty}&nbsp;</td>
 									<td class="center" style="width:31px;">${order.totalQty}&nbsp;</td>
 									<td class="center" style="width:31px;">${order.totalAmount}&nbsp;</td>
-									<td class="center" style="width:31px;padding:0px;"><input type="text" name="qdate"  value="<fmt:formatDate value="${order.placeOrderDate}" pattern='yyyy-MM-dd'/>" style="width:83px;margin-top: 5px;border: 0px;" disabled="disabled"/>&nbsp;</td>
-									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="qdate"  value="<fmt:formatDate value="${order.deliveryDate}" pattern='yyyy-MM-dd'/>" style="width:83px;margin-top: 5px;border: 0px;" disabled="disabled"/>&nbsp;</td>
-									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="sale" value="${order.salesman}" style="width:83px;margin: 0px;border: 0px;" disabled="disabled"/>&nbsp;</td>
+									<td class="center" style="width:31px;padding:0px;"><input type="text" name="qdate"  value="<fmt:formatDate value="${order.placeOrderDate}" pattern='yyyy-MM-dd'/>" style="width:90px;margin-top: 5px;border: 0px;" disabled="disabled"/>&nbsp;</td>
+									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="qdate"  value="<fmt:formatDate value="${order.deliveryDate}" pattern='yyyy-MM-dd'/>" style="width:90px;margin-top: 5px;border: 0px;" disabled="disabled"/>&nbsp;</td>
+									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="sale" value="${order.salesman}" style="width:90px;margin: 0px;border: 0px;" disabled="disabled"/>&nbsp;</td>
 									<td class="center" style="width:31px;">
 										<c:if test="${order.isFinish}">
 											<input type="checkbox"  checked="checked"  disabled="disabled"/>

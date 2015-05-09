@@ -11,6 +11,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 
+<style type="text/css">
+	#sample-table-1 select{height:25px;margin:0px;}
+	#sample-table-1 input{height:20px;margin:0px;}
+</style>
+
 <script type="text/javascript">
 	var dataStatus="";
 	$(function(){
@@ -175,11 +180,11 @@
 									<td class="center" style="width:20px;" >${item.hsCode}</td>
 									<td class="center" style="width:20px;" >${item.hsName}</td>
 									<td class="center" style="width:20px;" >${item.hsModel}</td>
-									<td class="center" style="width:20px;padding:0px;" ><input class="numberText" name="qty" type="text" value="${item.qty}" style="width:90px;margin: 2px 0px;height: 30px;border: 0px;"  disabled="disabled"/></td>
+									<td class="center" style="width:20px;padding:0px;" ><input class="numberText" name="qty" type="text" value="${item.qty}" style="width:90px;margin: 2px 0px;border: 0px;"  disabled="disabled"/></td>
 									<td class="center" style="width:20px;" >${item.unit.name}</td>
-									<td class="center" style="width:20px;padding:0px;" ><input type="text"  class="numberText" name="price" value="${item.price}"  style="width:100px;margin: 2px 0px;height: 30px;border: 0px;" disabled="disabled"/></td>
-									<td class="center" style="width:20px;padding:0px;" ><input type="text"  class="numberText" name="amount" value="${item.amount}" style="width:100px;margin: 2px 0px;height: 30px;border: 0px;"  disabled="disabled"/></td>
-									<td class="center" style="width:20px;padding:0px;" ><input type="text" name="note" value="${item.note}" style="width:150px;margin: 2px 0px;height: 30px;border: 0px;" disabled="disabled" /></td>
+									<td class="center" style="width:20px;padding:0px;" ><input type="text"  class="numberText" name="price" value="${item.price}"  style="width:100px;margin: 2px 0px;border: 0px;" disabled="disabled"/></td>
+									<td class="center" style="width:20px;padding:0px;" ><input type="text"  class="numberText" name="amount" value="${item.amount}" style="width:100px;margin: 2px 0px;border: 0px;"  disabled="disabled"/></td>
+									<td class="center" style="width:20px;padding:0px;" ><input type="text" name="note" value="${item.note}" style="width:150px;margin: 2px 0px;border: 0px;" disabled="disabled" /></td>
 									<td class="center" style="width:20px;" >
 										<a href="javascript:void(0);"  class="rowEdit">修改</a>|
 										<a href="javascript:void(0);" onclick="delData('${item.id}','OrderItem');">删除</a>

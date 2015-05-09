@@ -57,7 +57,8 @@
 <body>
 <input type="hidden" value="${his}" id="head"/>
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
-	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单详细列表</span>
+	<%--<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单详细列表</span>--%>
+	<h5 style="margin: 0px;">申请单>><a href="javascript:void(0);"  id="goback">申请单列表</a>>>申请单详细清单</h5>
 </div>
 <div class="modal-footer" style="padding:0px;">
 				<c:if test="${u.userFlag=='P'}"><button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" id="add">新增</button></c:if>
@@ -89,22 +90,22 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;margin-bottom: 0px;">
 						<thead>
 					<tr align="center">
-						<th class="center" style="width:30px;">选择</th>
+						<th class="center" style="width:15px;"><input id="checkAll" type="checkbox"/></th>
 						<th class="center" style="width:40px;">行号</th>
-						<th class="center" style="width:71px;">申请单状态</th>
+						<th class="center" style="width:71px;">状态</th>
 						<th class="center" style="width:65px;">供应商编码</th>
-						<th class="center" style="width:95px;">供应商名称</th>
-						<th class="center" style="width:55px;">物料编码</th>
+						<th class="center" style="width:135px;">供应商名称</th>
+						<th class="center" style="width:75px;">物料编码</th>
 						<th class="center" style="width:115px;">物料名称</th>
 						<th class="center" style="width:95px;">物料规格型号</th>
 						<th class="center" style="width:40px;">单价</th>
 						<th class="center" style="width:55px;">申请数量</th>
 						<th class="center" style="width:50px;">单位</th>
 						<th class="center" style="width:40px;">金额</th>
-						<th class="center" style="width:55px;">申请日期</th>
-						<th class="center" style="width:75px;">审批不通过原因</th>
-						<th class="center">备注</th>
-						<c:if test="${u.userFlag=='P'}"><th class="center" style="width:70px;">操作</th></c:if>
+						<th class="center" style="width:95px;">申请日期</th>
+						<th class="center" style="width:75px;">不通过原因</th>
+						<th class="center" style="width:5px;">备注</th>
+						<c:if test="${u.userFlag=='P'}"><th class="center" style="width:90px;">操作</th></c:if>
 					</tr>
 				</thead>
 						<tbody>
@@ -212,6 +213,12 @@
 	</body>	
 		<script type="text/javascript">
 			$(function(){
+				
+				//上一页面
+				$("#goback").click(function(){
+					toMain("${pageContext.request.contextPath}/appbill_findAppBillHeads.action");
+				});
+				
 			
 			$("input[name='qdate']").datepicker({
 				changeYear: true,
@@ -306,7 +313,6 @@
 		           });
 		           //
 				});
-				
 			});
 			//审批时显示输入不通过的原因div层【取消按钮】
 			$("#btn_cancel").click(function(){
@@ -356,10 +362,6 @@
 				}
 			});
 			
-			function closeform(){
-				window.close();
-			}
-			
 			//修改
 			function edit(obj,arr){
 				showTableEdit(obj,arr);
@@ -393,9 +395,4 @@
 					      }
 					  	});
 			}	
-			//退出页面时提醒
-    		function quitForm(){
-    			window.returnValue=false;
-    			closeform();
-    		}
 		</script>

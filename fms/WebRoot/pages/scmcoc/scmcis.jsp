@@ -1,8 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="page-header position-relative"
-	style="margin-bottom: 0px; height:30px;">
-	<h5>基础资料＞＞客户管理</h5>
+	style="margin-bottom: 0px; padding-bottom: 2px;">
+	<h5 style="margin-top: 0px; margin-bottom: 0px;">基础资料＞＞客户管理</h5>
 </div>
 <div class="modal-footer" style="text-align: left;">
 	<span class="">客户名称</span><input type="text" id="search"

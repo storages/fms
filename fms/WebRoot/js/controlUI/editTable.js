@@ -59,7 +59,7 @@ function showTableEdit(obj, array) {
 							+ i
 							+ "_"
 							+ j
-							+ "' style='height:36px;width:"
+							+ "' style='height:25px;width:"
 							+ (currWidth+35)
 							+ "px;margin:0px;padding:0px;background-color: #FFFFCC;font-size:12px;color:black;'/>";
 					var ele = $("#" + i + "_" + j);

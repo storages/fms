@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="page-header position-relative" style="margin-bottom: 0px;">
-	<h5>基础资料＞＞供应商管理</h5>
+<div class="page-header position-relative" style="margin-bottom: 0px; padding-bottom: 2px;">
+	<h5 style="margin-top: 0px; margin-bottom: 0px;">基础资料＞＞供应商管理</h5>
 </div>
 <script type="text/javascript">
 $("#inputExcelBut").click(function(){
@@ -14,7 +14,9 @@ $("#inputExcelBut").click(function(){
 			var n = $("#gonum option:selected").val();
 			gotoPage(n, pageSize);
 		}
-		
+		function parse(str){
+			return encodeURI(encodeURI(str));  
+		}
 		/**
 	 * 转到指定页码
 	 * @param {Object} pageNum 要转到第几页        currIndex
@@ -37,7 +39,7 @@ $("#inputExcelBut").click(function(){
 		toMain(url);
 	}
 </script>
-<div class="modal-footer" style="text-align: left;">
+<div class="modal-footer" style="text-align: left; padding-top: 0px; padding-bottom: 0px;">
 	<span class="">供应商名称</span><input type="text" id="search"
 		value="${searchStr}" style="height:25px;" class="" /> <input
 		class="btn btn-small btn-danger" data-toggle="button" type="button"

@@ -13,6 +13,8 @@
 <style type="text/css">
   input{margin:0px;}
   #sample-table-1 th{padding: 0px;}
+  #sample-table-1 select{height:25px;margin:0px;}
+	#sample-table-1 input{height:20px;margin:0px;}
 </style>
 
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
@@ -80,8 +82,8 @@
 										</c:if>
 										<td class="center" style="width:91px;">${head.appNo}&nbsp;</td>
 										<td class="center" style="width:91px; padding:0px;">
-											<select name="orderno" style="width:170px; margin: 3px 0px; border: 0px;font-size: 12px;" disabled="disabled">
-												<option value=""></option>
+											<select name="orderno" style="width:170px;  border: 0px;font-size: 12px;" disabled="disabled">
+												<option value="-1">----请选择订单号----</option>
 												<c:forEach var="orderHead" items="${orderHeads}">
 													<option value="${orderHead.orderNo}" <c:if test="${head.orderNo==orderHead.orderNo}">selected="selected"</c:if>>${orderHead.orderNo}</option>
 												</c:forEach>
@@ -208,21 +210,8 @@ var win = true;
 	}
 	
 	function adddetail(id){
-			var do_height = getTotalHeight()-1000;
-			var do_width = getTotalWidth()+1000;
-			var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
-			if(win!=false && win!=undefined){
-				if(getBrowserType()=="chrome"){
-					win = window.open ( url , "_blank" ,"dialogHeight="+ do_height +"px;dialogWidth="+ do_width +"px;scrollbars=no;location=no;resizable=no;channelmode=1;top="+ (do_height-(do_height-200))/2 +";left="+(do_width-(do_width-100))/2 ) ;
-				}else{
-					win = window.showModalDialog ( url , "_blank" ,"dialogHeight=600;dialogWidth=1500;scrollbars=no;location=no;resizable=no;channelmode=1;top="+ (do_height-(do_height-200))/2 +";left="+(do_width-(do_width-100))/2 );
-				}
-				win = false;
-			}else{
-				var url = "${pageContext.request.contextPath}/appbill_findAppBillHeads.action";
-				toMain(url);
-			}
-		
+		var url = "${pageContext.request.contextPath}/appbill_findItemByHid.action?ids="+id;
+		toMain(url);
 		
 	}
 	
@@ -335,9 +324,16 @@ var win = true;
 	function saveData(){
 		var ids = "";
 		var jsonstr="";
+		var isEffvef = "true";
 		$("select[name='orderno']").each(function(){
-			jsonstr+=$(this).val()+",";
+			if($(this).val()=="-1"){
+				alert("请选择订单号!");
+				isEffvef = "false";
+			}else{
+				jsonstr+=$(this).val()+",";
+			}
 		 });
+		if(isEffvef=="true"){
 		$("input[name='sid']").each(function(){
 			ids+=$(this).val()+",";
 		});
@@ -363,5 +359,6 @@ var win = true;
 			        	alert("程序异常，请重新启动程序！");
 			      }
 			  	});
+		}
 	}	
 </script>

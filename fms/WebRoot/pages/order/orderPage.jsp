@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+ <%@page import="java.text.SimpleDateFormat"%>
+ <%@page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -10,7 +12,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker/jquery.ui.datepicker-zh-CN.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/dialog/dialog.js"></script>
-
+<style type="text/css">
+	#sample-table-1 select{height:25px;margin:0px;}
+	#sample-table-1 input{height:20px;margin:0px;}
+</style>
 
 <script type="text/javascript">
 var dataStatus="";
@@ -123,7 +128,6 @@ function gototag(pageSize){
 </script>
 
 
-
 <div class="page-header position-relative" style="margin: 0px;padding:0px;">
 	<h5 style="margin: 0px;">订单＞＞订单列表</h5>
 </div>
@@ -179,9 +183,9 @@ function gototag(pageSize){
 									<td class="center" style="width:31px;">${order.itemQty}&nbsp;</td>
 									<td class="center" style="width:31px;">${order.totalQty}&nbsp;</td>
 									<td class="center" style="width:31px;">${order.totalAmount}&nbsp;</td>
-									<td class="center" style="width:31px;padding:0px;"><input type="text" name="qdate" value="${order.placeOrderDate}" style="width:90px;margin: 0px;height: 36px;border: 0px;" disabled="disabled"/>&nbsp;</td>
-									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="qdate"  value="${order.deliveryDate}" style="width:90px;margin: 0px;height: 36px;border: 0px;" disabled="disabled"/>&nbsp;</td>
-									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="sale" value="${order.salesman}" style="width:90px;margin: 0px;height: 36px;border: 0px;" disabled="disabled"/>&nbsp;</td>
+									<td class="center" style="width:31px;padding:0px;"><input type="text" name="qdate"  value="<fmt:formatDate value="${order.placeOrderDate}" pattern='yyyy-MM-dd'/>" style="width:90px;margin-top: 5px;border: 0px;" disabled="disabled"/>&nbsp;</td>
+									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="qdate"  value="<fmt:formatDate value="${order.deliveryDate}" pattern='yyyy-MM-dd'/>" style="width:90px;margin-top: 5px;border: 0px;" disabled="disabled"/>&nbsp;</td>
+									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="sale" value="${order.salesman}" style="width:90px;margin: 0px;border: 0px;" disabled="disabled"/>&nbsp;</td>
 									<td class="center" style="width:31px;">
 										<c:if test="${order.isFinish}">
 											<input type="checkbox"  checked="checked"  disabled="disabled"/>

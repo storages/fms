@@ -568,7 +568,10 @@ public class AppBillAction extends BaseAction {
 					try {
 						String msg = "";
 						AppBillItem item = this.appBillLogic.findItemById(getLoginUser(), contents.get(0));
-						if (contents.get(1) == null || "".equals(contents.get(1)) || "".equals(contents.get(1).trim()) || "null".equals(contents.get(1).trim())) {
+						if (!isNumeric(contents.get(1).trim())) {
+							msg = "申请单价必须是数字";
+						}
+						if (contents.get(2) == null || "".equals(contents.get(2)) || "".equals(contents.get(2).trim()) || "null".equals(contents.get(2).trim())) {
 							msg = "申请数量不能为空";
 						} else if (!isNumeric(contents.get(1).trim())) {
 							msg = "申请数量必须是数字";
@@ -580,11 +583,13 @@ public class AppBillAction extends BaseAction {
 						response.setContentType("application/text");
 						response.setCharacterEncoding("UTF-8");
 						if ("".equals(msg)) {
-							item.setTotalQty(contents.get(1) == null || "".equals(contents.get(1)) || "".equals(contents.get(1).trim()) || "null".equals(contents.get(1).trim()) ? null : Double
-									.parseDouble(contents.get(1).trim()));// 申请数量
-							item.setNote((contents.get(2) == null || "".equals(contents.get(2)) || "".equals(contents.get(2).trim()) || "null".equals(contents.get(2).trim()) ? null
-									: parseValue(contents.get(2).trim())));// 备注
-							item.setAmount(item.getPrice() * (item.getTotalQty() == null ? 0d : item.getTotalQty()));
+							item.setPrice(contents.get(1) == null || "".equals(contents.get(1)) || "".equals(contents.get(1).trim()) || "null".equals(contents.get(1).trim()) ? null : Double
+									.parseDouble(contents.get(1).trim()));// 申请单价
+							item.setTotalQty(contents.get(2) == null || "".equals(contents.get(2)) || "".equals(contents.get(2).trim()) || "null".equals(contents.get(2).trim()) ? null : Double
+									.parseDouble(contents.get(2).trim()));// 申请数量
+							item.setNote((contents.get(3) == null || "".equals(contents.get(3)) || "".equals(contents.get(3).trim()) || "null".equals(contents.get(3).trim()) ? null
+									: parseValue(contents.get(3).trim())));// 备注
+							item.setAmount((item.getPrice() == null ? 0d : item.getPrice()) * (item.getTotalQty() == null ? 0d : item.getTotalQty()));
 							editData.add(item);
 							result.setSuccess(true);
 							this.appBillLogic.betchSaveAppBillItem(getLoginUser(), editData);

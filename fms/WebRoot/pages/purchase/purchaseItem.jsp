@@ -141,5 +141,4 @@ $(function(){
 			<div class="modal-footer" style="padding:0px;">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btnEdit">修改</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="btnSave">保存</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','PurchaseItem')">批量删除</button>
 				</div>

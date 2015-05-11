@@ -139,7 +139,7 @@
 										<c:if test="${u.userFlag=='P'}">
 										<c:if test="${item.appStatus==0 || item.appStatus==3}">
 											<td class="center">
-												<a href="javascript:void(0);" onclick="edit(this,'10,15')">修改</a>|
+												<a href="javascript:void(0);" onclick="edit(this,'9,10,15')">修改</a>|
 												<a href="javascript:void(0);" onclick="delData('${item.id}','AppBillItem')">删除</a>
 											</td>
 										</c:if>

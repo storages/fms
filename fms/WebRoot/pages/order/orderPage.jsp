@@ -183,8 +183,8 @@ function gototag(pageSize){
 									<td class="center" style="width:31px;">${order.itemQty}&nbsp;</td>
 									<td class="center" style="width:31px;">${order.totalQty}&nbsp;</td>
 									<td class="center" style="width:31px;">${order.totalAmount}&nbsp;</td>
-									<td class="center" style="width:31px;padding:0px;"><input type="text" name="qdate"  value="<fmt:formatDate value="${order.placeOrderDate}" pattern='yyyy-MM-dd'/>" style="width:90px;margin-top: 5px;border: 0px;" disabled="disabled"/>&nbsp;</td>
-									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="qdate"  value="<fmt:formatDate value="${order.deliveryDate}" pattern='yyyy-MM-dd'/>" style="width:90px;margin-top: 5px;border: 0px;" disabled="disabled"/>&nbsp;</td>
+									<td class="center" style="width:31px;padding:0px;"><input type="text" name="qdate"  value="<fmt:formatDate value="${order.placeOrderDate}" pattern='yyyy-MM-dd'/>" style="width:90px;margin-top: 5px;border: 0px;" disabled="disabled"/></td>
+									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="qdate"  value="<fmt:formatDate value="${order.deliveryDate}" pattern='yyyy-MM-dd'/>" style="width:90px;margin-top: 5px;border: 0px;" disabled="disabled"/></td>
 									<td class="center" style="width:31px;padding:0px;"><input type="text"  name="sale" value="${order.salesman}" style="width:90px;margin: 0px;border: 0px;" disabled="disabled"/>&nbsp;</td>
 									<td class="center" style="width:31px;">
 										<c:if test="${order.isFinish}">

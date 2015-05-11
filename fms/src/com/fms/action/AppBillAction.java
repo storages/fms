@@ -547,6 +547,7 @@ public class AppBillAction extends BaseAction {
 				if (null != itemList && itemList.size() > 0) {
 					this.request.put("his", itemList.get(0).getHead().getId());
 				}
+				request.put("orderNo", head.getOrderNo());
 			}
 		}
 		return "item";

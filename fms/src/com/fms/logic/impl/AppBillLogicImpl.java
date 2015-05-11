@@ -444,14 +444,16 @@ public class AppBillLogicImpl implements AppBillLogic {
 				List<Material> imgList = new ArrayList<Material>();
 				// 首先根据订单号查询出所有的成品
 				List<Material> exgMaterials = this.orderDao.findAllExgByOrderNo(orderNo);
-				String[] exgCodes = new String[exgMaterials.size()];
-				for (int i = 0; i < exgMaterials.size(); i++) {
-					exgCodes[i] = exgMaterials.get(i).getHsCode();
-				}
-				// 根据成品到BOM表中查找对应的原料
-				List<BomImg> bomImgs = this.bomDao.findBomImgByHsCodes(exgCodes, hsCode, hsName);
-				for (BomImg bi : bomImgs) {
-					imgList.add(bi.getMaterial());
+				if (null != exgMaterials && exgMaterials.size() > 0) {
+					String[] exgCodes = new String[exgMaterials.size()];
+					for (int i = 0; i < exgMaterials.size(); i++) {
+						exgCodes[i] = exgMaterials.get(i).getHsCode();
+					}
+					// 根据成品到BOM表中查找对应的原料
+					List<BomImg> bomImgs = this.bomDao.findBomImgByHsCodes(exgCodes, hsCode, hsName);
+					for (BomImg bi : bomImgs) {
+						imgList.add(bi.getMaterial());
+					}
 				}
 				return imgList;
 			}

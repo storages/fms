@@ -99,4 +99,21 @@ public interface PurchaseBillLogic {
 	 * @return
 	 */
 	public Boolean purchEffect(AclUser loginUser, String[] hid, Boolean flag);
+
+	/**
+	 * 根据id查找采购单表体
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public PurchaseItem findPurchaseItemById(String id);
+
+	/**
+	 * 批量保存采购单表体
+	 * 
+	 * @param loginUser
+	 * @param items
+	 * @return
+	 */
+	public List<PurchaseItem> betchSavePurchaseItems(AclUser loginUser, List<PurchaseItem> items);
 }

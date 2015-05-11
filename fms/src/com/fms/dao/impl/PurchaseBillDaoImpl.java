@@ -160,4 +160,9 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 		}
 		return null;
 	}
+
+	public PurchaseItem findPurchaseItemById(String id) {
+		String hql = "select a from PurchaseItem a left join fetch a.purchaseBill b left join fetch a.material c left join fetch c.unit d where a.id=?";
+		return (PurchaseItem) this.uniqueResult(hql, new Object[] { id });
+	}
 }

@@ -138,4 +138,12 @@ public interface PurchaseBillDao extends BaseDao {
 
 	public List<PurchaseBill> findPurchaseBillByIds(String[] hid);
 
+	/**
+	 * 根据id查找采购单表体
+	 * 
+	 * @param id
+	 * @return
+	 */
+	PurchaseItem findPurchaseItemById(String id);
+
 }

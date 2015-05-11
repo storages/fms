@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fms.base.action.BaseAction;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
@@ -199,6 +201,31 @@ public class PurchaseAction extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String savePurchaseItems() {
+		try {
+			if (StringUtils.isNotBlank(jsonstr)) {
+				List<PurchaseItem> items = new ArrayList<PurchaseItem>();
+				String[] dataArr = jsonstr.split(",");
+				for (int i = 1; i < dataArr.length; i = i + 3) {
+					PurchaseItem item = this.purchaseBillLogic.findPurchaseItemById(dataArr[i]);
+					Date date = null;
+					if (StringUtils.isNotBlank(dataArr[i + 1])) {
+						date = SimpleDateFormat.getDateInstance().parse(dataArr[i + 1]);
+						item.setDeliveryDate(date);
+					}
+					items.add(item);
+				}
+				items = this.purchaseBillLogic.betchSavePurchaseItems(getLoginUser(), items);
+				List<PurchaseItem> itemList = this.purchaseBillLogic.findItemByHid(getLoginUser(), hid, null);
+				this.request.put("itemList", itemList);
+				this.request.put("hid", hid);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "detail";
 	}
 
 	public Integer getDataTotal() {

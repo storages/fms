@@ -267,7 +267,33 @@ $("#hendDate").datepicker({
 		
 		//导出采购单
 		$('#print').click(function(){
-			alert('打印采购单');
+			var url = "${pageContext.request.contextPath}/purchase_exportPurchase.action";
+			var splitStr = "";
+			$('input[name="sid"]:checked').each(function(){
+				splitStr+=$(this).val()+',';
+			  }); 
+			if(splitStr==""){
+				alert("请选择要导出的采购单!");
+				return;
+			}
+			splitStr = splitStr.substring(0, splitStr.length-1);
+			$.ajax({
+			 	type: "POST",
+				url:url,
+				data:{ids:splitStr},
+				async: false,
+				cache: false,
+				success:function(args){
+					var result=jQuery.parseJSON(args);
+					if(result.success){
+						alert(result.msg);
+					}else{
+						alert(result.msg);
+					}
+				},error:function(){
+				    	alert("程序异常，请重新启动程序！");
+				  }
+			});
 		});
 	});
 	

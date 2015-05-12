@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.action.BaseAction;
+import com.fms.commons.PurchaseBillStatus;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.logic.PurchaseBillLogic;
@@ -80,7 +81,6 @@ public class PurchaseAction extends BaseAction {
 
 			List<PurchaseBill> headList = this.purchaseBillLogic.findPurchaseHeads(getLoginUser(), appBillNo, (purBeginDate == null || "".equals(purBeginDate)) ? null : date,
 					(purEndDate == null || "".equals(purEndDate)) ? null : date2, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
-
 			this.request.put("headList", headList);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
@@ -93,6 +93,28 @@ public class PurchaseAction extends BaseAction {
 			throw new RuntimeException(e.getMessage());
 		}
 		return this.SUCCESS;
+	}
+
+	private String checkData(String[] ids, String flag) {
+		String err = "";
+		List<PurchaseBill> headList = this.purchaseBillLogic.findPurchaseBillByIds(ids);
+		if (!headList.isEmpty()) {
+			String[] headIds = new String[headList.size()];
+			for (int i = 0; i < headList.size(); i++) {
+				headIds[i] = headList.get(i).getId();
+				if (PurchaseBillStatus.EFFECTED.equals(headList.get(i).getPurchStatus()) && "true".equals(flag)) {
+					err += "你选择生效的采购单中包含已生效的信息!";
+					return err;
+				}
+			}
+			List<PurchaseItem> items = this.purchaseBillLogic.findItemByHids(getLoginUser(), headIds);
+			for (PurchaseItem item : items) {
+				if (item.getDeliveryDate() == null) {
+					err += "　" + item.getPurchaseBill().getPurchaseNo() + ",\n";
+				}
+			}
+		}
+		return err;
 	}
 
 	/**
@@ -188,6 +210,19 @@ public class PurchaseAction extends BaseAction {
 						return;
 					}
 				}
+				String err = checkData(idArr, flag);
+				if (!"".equals(err)) {
+					if (err.contains("已生效")) {
+						result.setMsg(err);
+					} else {
+						result.setMsg("采购单号\n" + err + "\n对应的清单没有交货日期，不能生效!");
+					}
+					result.setSuccess(false);
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					return;
+				}
 				Boolean isSuccess = this.purchaseBillLogic.purchEffect(getLoginUser(), idArr, Boolean.parseBoolean(flag));
 				if (Boolean.TRUE.equals(isSuccess)) {
 					result.setSuccess(true);
@@ -214,6 +249,8 @@ public class PurchaseAction extends BaseAction {
 					if (StringUtils.isNotBlank(dataArr[i + 1])) {
 						date = SimpleDateFormat.getDateInstance().parse(dataArr[i + 1]);
 						item.setDeliveryDate(date);
+					} else {
+						item.setDeliveryDate(null);
 					}
 					items.add(item);
 				}
@@ -226,6 +263,24 @@ public class PurchaseAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return "detail";
+	}
+
+	/**
+	 * 导出采购单
+	 */
+	public void exportPurchase() {
+		try {
+			PrintWriter out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			AjaxResult result = new AjaxResult();
+			if (ids != null && !"".equals(ids)) {
+				String[] idArr = ids.split(",");
+				String mess = this.purchaseBillLogic.exportPurchase(idArr);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Integer getDataTotal() {

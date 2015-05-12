@@ -101,4 +101,13 @@ public class PurchaseBillLogicImpl implements PurchaseBillLogic {
 	public List<PurchaseItem> betchSavePurchaseItems(AclUser loginUser, List<PurchaseItem> items) {
 		return this.purchaseBillDao.batchSaveOrUpdate(items);
 	}
+
+	public List<PurchaseBill> findPurchaseBillByIds(String[] hid) {
+		return this.purchaseBillDao.findPurchaseBillByIds(hid);
+	}
+
+	public String exportPurchase(String[] hid) {
+
+		return null;
+	}
 }

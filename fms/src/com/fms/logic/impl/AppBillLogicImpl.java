@@ -319,6 +319,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 		List<PurchaseItem> PurchaseItems = new ArrayList<PurchaseItem>();
 		Map<String, PurchaseBill> PurchaseMap = new HashMap<String, PurchaseBill>();
 		if (null != data && data.size() > 0) {
+			int no = 0;
 			for (AppBillItem item : data) {
 				if (item.getAppStatus().equals(AppBillStatus.APPROVEDNOT)) {
 					continue;
@@ -339,8 +340,8 @@ public class AppBillLogicImpl implements AppBillLogic {
 					purch.setSerialNo(serialNo);// 流水号
 
 					String purchaseNo = "";
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmss");
-					purchaseNo = "C" + sdf.format(new Date());
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					purchaseNo = "C" + sdf.format(new Date()) + (no + 1);
 					purch.setPurchaseNo(purchaseNo);// 采购单号
 					purch.setAppBillNo(item.getHead().getAppNo());// 申请单号
 					purch.setScmcoc(item.getScmcoc());// 供应商
@@ -350,6 +351,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 					purchaseBills.add(purch);
 					key = item.getScmcoc().getCode() + "/" + item.getScmcoc().getName();
 					PurchaseMap.put(key, purch);
+					no++;
 				}
 
 				// 创建详细信息

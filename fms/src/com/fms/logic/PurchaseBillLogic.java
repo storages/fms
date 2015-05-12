@@ -116,4 +116,22 @@ public interface PurchaseBillLogic {
 	 * @return
 	 */
 	public List<PurchaseItem> betchSavePurchaseItems(AclUser loginUser, List<PurchaseItem> items);
+
+	/**
+	 * 根据多个采购单表头id查找表头
+	 * 
+	 * @param loginUser
+	 * @param hid
+	 * @return
+	 */
+
+	public List<PurchaseBill> findPurchaseBillByIds(String[] hid);
+
+	/**
+	 * 导出采购单
+	 * 
+	 * @param hid
+	 * @return
+	 */
+	public String exportPurchase(String[] hid);
 }

@@ -146,4 +146,12 @@ public interface PurchaseBillDao extends BaseDao {
 	 */
 	PurchaseItem findPurchaseItemById(String id);
 
+	/**
+	 * 根据多个表头id查询表体
+	 * 
+	 * @param hid
+	 * @return
+	 */
+	List<PurchaseItem> findItemsByHeads(String[] hid);
+
 }

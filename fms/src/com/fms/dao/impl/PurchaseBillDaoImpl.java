@@ -165,4 +165,20 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 		String hql = "select a from PurchaseItem a left join fetch a.purchaseBill b left join fetch a.material c left join fetch c.unit d where a.id=?";
 		return (PurchaseItem) this.uniqueResult(hql, new Object[] { id });
 	}
+
+	public List<PurchaseItem> findItemsByHeads(String[] hid) {
+		String hql = "select a from PurchaseItem a left join fetch a.purchaseBill b left join fetch a.material c left join fetch c.unit d left join fetch b.scmcoc e where 1=1 ";
+		List params = new ArrayList();
+		if (null != hid && hid.length > 0) {
+			hql += " and (b.id =? ";
+			params.add(hid[0]);
+			for (int i = 1; i < hid.length; i++) {
+				hql += " or b.id =? ";
+				params.add(hid[i]);
+			}
+			hql += ")";
+			return this.find(hql, params.toArray());
+		}
+		return null;
+	}
 }

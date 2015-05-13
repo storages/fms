@@ -166,9 +166,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  	});
 			}
 			if(isPass){
+				alert(isPass);
 				var param = "hsCode="+code+"&hsName="+parse(name)+"&color="+parse(color)+"&imgExgFlag="+parse(imgExgFlag)+"&model="+parse(model)+"&unit="+parse(unit)+"&lowerQty="+lowerQty+"&note="+parse(note)+"&ids="+isEdit+"&typeId="+types;
 				var submitUrl = "${pageContext.request.contextPath}/materInfo_save.action?"+param;
-				alert(submitUrl);
 				toMain(submitUrl);
 			}
 			
@@ -182,9 +182,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#note").val("");
 			}else{
 				var mtype = $("#mtype").val();
-				alert(mtype);
-				/* var url = "${pageContext.request.contextPath}/mater_findMaterialById.action?ids="+id;
-				toMain(url); */
 				var url = "${pageContext.request.contextPath}/materInfo_findMaterialById.action?imgExgFlag="+mtype+"&ids="+id;
 				toMain(url);
 			}
@@ -192,7 +189,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		function check(){
 			var id= $('#flag').val();
-			alert(id);
 			if(id=="" || id==null || id==undefined){
 				var code = $("#codes").val();
 				var url = "${pageContext.request.contextPath}/materInfo_findHsCode.action?hsCode="+code;

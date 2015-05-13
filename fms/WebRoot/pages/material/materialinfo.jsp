@@ -83,6 +83,7 @@
 								<th class="center">物料标记</th>
 								<th class="center">物料编码</th>
 								<th class="center">物料名称</th>
+								<th class="center">规格</th>
 								<th class="center">颜色</th>
 								<th class="center">物料类别</th>
 								<th class="center">计量单位</th>
@@ -108,6 +109,7 @@
 									</c:if>
 									<td class="center">${info.hsCode}　</td>
 									<td class="center">${info.hsName}　</td>
+									<td class="center">${info.model}　</td>
 									<td class="center">${info.color}　</td>
 									
 									<td class="center">${info.materialType.typeName}　</td>

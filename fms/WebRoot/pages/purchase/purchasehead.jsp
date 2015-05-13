@@ -267,13 +267,18 @@ $("#hendDate").datepicker({
 		
 		//导出采购单
 		$('#print').click(function(){
+			var n = 0;
 			var url = "${pageContext.request.contextPath}/purchase_exportPurchase.action";
 			var splitStr = "";
 			$('input[name="sid"]:checked').each(function(){
+				n++;
 				splitStr+=$(this).val()+',';
 			  }); 
 			if(splitStr==""){
 				alert("请选择要导出的采购单!");
+				return;
+			}else if(n>1){
+				alert("请选择单笔数据导出采购单!");
 				return;
 			}
 			splitStr = splitStr.substring(0, splitStr.length-1);

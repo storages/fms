@@ -100,13 +100,13 @@ $(function(){
 						<thead>
 					<tr align="center">
 						<th class="center" style="width:20px;"><input type="checkbox" title="全选" id="checkAll"/></th>
-						<th class="center" style="width:25px;">项号</th>
+						<th class="center" style="width:35px;">项号</th>
 						<th class="center" style="width:120px;">物料编号</th>
 						<th class="center" style="width:120px;">物料名称</th>
 						<th class="center" style="width:40px;">规格型号</th>
 						<%--<th class="center" style="width:40px;">批次号</th>
 						--%><th class="center" style="width:60px;">计量单位</th>
-						<th class="center" style="width:40px;">采购数量</th>
+						<th class="center" style="width:80px;">采购数量</th>
 						<th class="center" style="width:40px;">单价</th>
 						<th class="center" style="width:40px;">金额</th>
 						<th class="center" style="width:40px;">采购日期</th>

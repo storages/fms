@@ -86,13 +86,13 @@
 	<div>
 		<table id="sample-table-1" class="table table-striped table-bordered "  style=" font-size: 12px; width:600px; border: 0px;">
 			<tr style="border:0px;">
-				<td style="width: 60px;border:0px;text-align: right;padding:0px;">流水号</td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px; ">流水号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;" readonly="readonly"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px;  width:100%;" readonly="readonly" /></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库类型</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;">
-					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" id="impExpType" >
+					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;" id="impExpType" >
 						<c:forEach var="mattype" items="${impexptypes}">
 							<option value="${mattype.code}">${mattype.name}</option>
 						</c:forEach>
@@ -104,7 +104,7 @@
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料标志</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;">
-					<select id="imgexgflag" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
+					<select id="imgexgflag" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;" >
 						<c:if test="${imgExgFlag=='I'}">
 							<option value="I" selected="selected">原料</option>
 							<option value="E">成品</option>
@@ -117,13 +117,13 @@
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">采购单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;" id="purchNo">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;  padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
 				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="purchQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">订单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"  id="orderNo">*</td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
@@ -152,12 +152,12 @@
 				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库数量</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">每件包装数</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">件数</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"  readonly="readonly"/></td>
@@ -166,7 +166,7 @@
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">仓库名称</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
 				<td style="width: 150px;border:0px;padding:0px;">
-					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" >
+					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;" >
 						<c:forEach var="stock" items="${stockList}">
 							<option value="${stock.id}">${stock.name}</option>
 						</c:forEach>
@@ -174,7 +174,7 @@
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">备注</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 			</tr>
 			<tr style="border:0px;text-align:center; ">
 				<td colspan="6" style="border:0px;text-align:center;">

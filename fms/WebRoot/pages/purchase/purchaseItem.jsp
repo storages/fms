@@ -73,6 +73,10 @@ $(function(){
 		}
 	});
 	
+	//上一页面
+	$("#goback").click(function(){
+		toMain("${pageContext.request.contextPath}/purchase_findPurchaseHeads.action");
+	});
 	
 });
 	
@@ -82,7 +86,9 @@ $(function(){
 	<input type="hidden" value="${hid}"  id="hid"/>
 	<!-- "1"表示已经向供应商下单，"0"表示没有向供应商下单,用来控制修改按钮是否可用 -->
 	<input type="hidden" value="${isBuy}"  id="xiadan"/>
-	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">采购单详细列表</span>
+	<%--<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">采购单详细列表</span>
+--%>
+	<h5 style="margin: 0px;">采购单>><a href="javascript:void(0);"  id="goback">采购单列表</a>>>采购单详细清单</h5>
 </div>
 
 

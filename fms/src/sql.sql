@@ -6,7 +6,7 @@ select * from unit
 drop table material
 select * from quotation where material='402881fb49cb98400149cb99412f0000' and scmcoc='402881fb479090c501479093052a0000'
 																					  402881fb479090c501479093052a000e
-
+select * from parameterSet
 
 alter table OperateLogs alter column msg varchar(1000)
 select * from OperateLogs
@@ -23,6 +23,8 @@ select * from Purchaseitem
 delete PurchaseBill
 delete Purchaseitem
 delete from acluser where id='402881f24b685286014b685df8140000'
+update PurchaseBill set printCount = 0
+update Purchaseitem set isbuy = 'false'
 
 select * from bomversion
 select * from bomexg

@@ -314,7 +314,7 @@ public class PurchaseAction extends BaseAction {
 							result.setSuccess(false);
 						} else {
 							String mess = this.purchaseBillLogic.exportPurchase(idArr);
-							result.setMsg("导出Excel成功!若要打印，请直接点击Excel中的打印按钮!若要保存，请点击Excel另存为!");
+							result.setMsg("导出Excel成功!\n  1.若要打印，请直接点击Excel中的打印按钮!\n  2.若要保存，请点击Excel另存为!\n  3.如果直接关闭Excel,文件将会消失!");
 							result.setSuccess(true);
 						}
 					}

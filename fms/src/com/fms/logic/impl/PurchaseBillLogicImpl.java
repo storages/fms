@@ -29,6 +29,7 @@ import com.fms.core.vo.entity.ExportPurchaseVo;
 import com.fms.dao.PurchaseBillDao;
 import com.fms.logic.PurchaseBillLogic;
 import com.fms.utils.ExcelUtil;
+import com.fms.utils.MathUtils;
 
 public class PurchaseBillLogicImpl implements PurchaseBillLogic {
 
@@ -93,7 +94,7 @@ public class PurchaseBillLogicImpl implements PurchaseBillLogic {
 	public Boolean purchEffect(AclUser loginUser, String[] hid, Boolean flag) {
 		List<PurchaseItem> items = this.findItemByHids(loginUser, hid);
 		for (PurchaseItem item : items) {
-			item.setIsBuy(flag);
+			// item.setIsBuy(flag);
 			item.setPurchaseDate(new Date());
 		}
 		this.purchaseBillDao.batchSaveOrUpdate(items);
@@ -127,6 +128,13 @@ public class PurchaseBillLogicImpl implements PurchaseBillLogic {
 
 	public String exportPurchase(String[] hid) {
 		List<PurchaseItem> items = this.purchaseBillDao.findItemsByHeads(hid);
+		for (PurchaseItem item : items) {
+			item.getPurchaseBill().setPrintCount(MathUtils.add(item.getPurchaseBill().getPrintCount(), 1));
+			item.setPurchaseDate(new Date());
+			item.getPurchaseBill().setPurchDate(new Date());
+			item.setIsBuy(true);
+		}
+		items = this.purchaseBillDao.batchSaveOrUpdate(items);
 		List<ExportPurchaseVo> exportData = this.convertDataToVo(items);
 		writeDataToExcel(exportData);
 		return null;

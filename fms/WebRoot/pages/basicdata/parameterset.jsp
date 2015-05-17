@@ -42,11 +42,11 @@
 					<td class="captioncss" style="text-align: right; width:100px;">重量保留小数位数</td>
 					<c:if test="${params.weightBits==null}">
 						<td class="hidden-480 addcss"><input type="text" value="3" id="weight"
-							name="params.weightBits" id="names" style="height:25px;" /></td>
+							name="params.weightBits"  style="height:25px;" /></td>
 					</c:if>
 					<c:if test="${params.weightBits!=null}">
 						<td class="hidden-480 addcss"><input type="text" id="weight"
-							value="${params.weightBits}" name="params.weightBits" id="names"
+							value="${params.weightBits}" name="params.weightBits"
 							style="height:25px;" /></td>
 					</c:if>
 				</tr>
@@ -54,11 +54,11 @@
 					<td class="captioncss" style="text-align: right; width:100px;">单价保留小数位数</td>
 					<c:if test="${params.priceBits==null}">
 						<td class="hidden-480 addcss"><input type="text" value="3" id="price"
-							name="params.priceBits" id="names" style="height:25px;" /></td>
+							name="params.priceBits" style="height:25px;" /></td>
 					</c:if>
 					<c:if test="${params.priceBits!=null}">
 						<td class="hidden-480 addcss"><input type="text" id="price"
-							value="${params.priceBits}" name="params.priceBits" id="names"
+							value="${params.priceBits}" name="params.priceBits"
 							style="height:25px;" /></td>
 					</c:if>
 				</tr>
@@ -66,11 +66,11 @@
 					<td class="captioncss" style="text-align: right; width:100px;">金额保留小数位数</td>
 					<c:if test="${params.amountBits==null}">
 						<td class="hidden-480 addcss"><input type="text" value="3" id="mount"
-							name="params.amountBits" id="names" style="height:25px;" /></td>
+							name="params.amountBits"  style="height:25px;" /></td>
 					</c:if>
 					<c:if test="${params.amountBits!=null}">
 						<td class="hidden-480 addcss"><input type="text" id="mount"
-							value="${params.amountBits}" name="params.amountBits" id="names"
+							value="${params.amountBits}" name="params.amountBits"
 							style="height:25px;" /></td>
 					</c:if>
 				</tr>
@@ -78,11 +78,11 @@
 					<td class="captioncss" style="text-align: right; width:100px;">采购单打印次数</td>
 					<c:if test="${params.printCount==null}">
 						<td class="hidden-480 addcss"><input type="text" value="1" id="printCount"
-							name="params.printCount" id="names" style="height:25px;" /></td>
+							name="params.printCount"  style="height:25px;" /></td>
 					</c:if>
 					<c:if test="${params.printCount!=null}">
-						<td class="hidden-480 addcss"><input type="text" id="mount"
-							value="${params.printCount}" name="params.printCount" id="names"
+						<td class="hidden-480 addcss"><input type="text" id="printCount" 
+							value="${params.printCount}" name="params.printCount"
 							style="height:25px;" /></td>
 					</c:if>
 				</tr>
@@ -90,6 +90,22 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	$(function(){
+		//浏览状态
+		$("#sample-table-1 input[type='text']").each(function(){
+			$(this).attr("readonly","readonly");
+		});
+	});
+	
+	function edit(){
+		//编辑状态
+		$("#sample-table-1 input[type='text']").each(function(){
+			$(this).removeAttr("readonly");
+			$(this).css("border-color","red");
+		});
+	}
+	
+	//保存
 		function save() {
 			var id = $('#flag').val();
 			var qtyBits = $(":input[name='params.qtyBits']").val();
@@ -122,7 +138,7 @@
 			var subUrl = "${pageContext.request.contextPath}/params_saveParamsValue.action?"
 					+ str;
 			toMain(subUrl);
-			alert("保存成功");
+			//alert("保存成功");
 		}
 
 		//取消按钮
@@ -137,6 +153,8 @@
 			$(":input[name='params.qtyBits']").val("3");
 			$(":input[name='params.priceBits']").val("3");
 			$(":input[name='params.amountBits']").val("3");
+			$(":input[name='params.printCount']").val("1");
+			save();
 		}
 
 		function checkRate() {

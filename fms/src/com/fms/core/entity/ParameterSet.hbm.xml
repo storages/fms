@@ -16,5 +16,6 @@
 		<property name="weightBits" column="WEIGHTBITS" />
 		<property name="priceBits" column="PRICEBITS" />
 		<property name="amountBits" column="AMOUNTBITS" />
+		<property name="printCount" column="PRINTCOUNT" />
 	</class>
 </hibernate-mapping>

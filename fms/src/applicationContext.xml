@@ -595,6 +595,9 @@
 		<property name="purchaseBillLogic">
 			<ref bean="purchaseBillLogic" />
 		</property>
+		<property name="paramsLogic">
+			<ref bean="paramsLogic" />
+		</property>
 	</bean>
 
 	<!-- 日志 -->

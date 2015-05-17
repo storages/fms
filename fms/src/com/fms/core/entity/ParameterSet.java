@@ -38,7 +38,7 @@ public class ParameterSet extends BaseEntity {
 		this.weightBits = weightBits == null ? 3 : weightBits;
 		this.priceBits = priceBits == null ? 3 : priceBits;
 		this.amountBits = amountBits == null ? 3 : amountBits;
-		this.printCount = printCount == null ? 3 : printCount;
+		this.printCount = printCount == null ? 1 : printCount;
 	}
 
 	// 数量保留小数位数

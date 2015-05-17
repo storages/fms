@@ -44,6 +44,12 @@ $(function(){
 	
 	//修改按钮
 	$("#btnEdit").bind("click",function(){
+		var xiadan = $("#xiadan").val();
+		// "1"表示已经向供应商下单，"0"表示没有向供应商下单
+		if("1"==xiadan){
+			alert("已下单状态不能修改!");
+			return;
+		}
 		$("#sample-table-1 :input[name='deliveryDate']").each(function(){
 			$(this).attr("disabled",false);
 			$(this).css("border","solid 1px red");
@@ -74,6 +80,8 @@ $(function(){
 
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
 	<input type="hidden" value="${hid}"  id="hid"/>
+	<!-- "1"表示已经向供应商下单，"0"表示没有向供应商下单,用来控制修改按钮是否可用 -->
+	<input type="hidden" value="${isBuy}"  id="xiadan"/>
 	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">采购单详细列表</span>
 </div>
 

@@ -281,6 +281,9 @@ $("#hendDate").datepicker({
 				alert("请选择单笔数据导出采购单!");
 				return;
 			}
+			if(!confirm("导出采购单，系统就认为您确认向供应商下单，这笔采购单信息将不能做任何修改，您确认吗?")){
+				return;
+			}
 			splitStr = splitStr.substring(0, splitStr.length-1);
 			$.ajax({
 			 	type: "POST",

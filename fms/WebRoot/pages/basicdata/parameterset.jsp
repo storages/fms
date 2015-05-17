@@ -72,6 +72,18 @@
 							style="height:25px;" /></td>
 					</c:if>
 				</tr>
+				<tr>
+					<td class="captioncss" style="text-align: right; width:100px;">采购单打印次数</td>
+					<c:if test="${params.printCount==null}">
+						<td class="hidden-480 addcss"><input type="text" value="1" id="printCount"
+							name="params.printCount" id="names" style="height:25px;" /></td>
+					</c:if>
+					<c:if test="${params.printCount!=null}">
+						<td class="hidden-480 addcss"><input type="text" id="mount"
+							value="${params.printCount}" name="params.printCount" id="names"
+							style="height:25px;" /></td>
+					</c:if>
+				</tr>
 			</table>
 		</div>
 	</div>
@@ -82,6 +94,7 @@
 			var weightBits = $(":input[name='params.weightBits']").val();
 			var priceBits = $(":input[name='params.priceBits']").val();
 			var amountBits = $(":input[name='params.amountBits']").val();
+			var printCount = $(":input[name='params.printCount']").val();
 			if(!checkRate()){
 				return;
 			}
@@ -126,6 +139,7 @@
 			var weightBits = $(":input[name='params.weightBits']").val();
 			var priceBits = $(":input[name='params.priceBits']").val();
 			var amountBits = $(":input[name='params.amountBits']").val();
+			var printCount = $(":input[name='params.printCount']").val();
 			if(isNaN(qtyBits)){
 				alert("数量保留小数位数只能是正整数");
 				return false;
@@ -140,6 +154,10 @@
 			}
 			if(isNaN(amountBits)){
 				alert("金额保留小数位数只能是正整数");
+				return false;
+			}
+			if(isNaN(printCount)){
+				alert("采购单打印次数只能是正整数");
 				return false;
 			}
 			return true;

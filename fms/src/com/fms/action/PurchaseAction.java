@@ -11,10 +11,13 @@ import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.action.BaseAction;
 import com.fms.commons.PurchaseBillStatus;
+import com.fms.core.entity.ParameterSet;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
+import com.fms.logic.ParamsLogic;
 import com.fms.logic.PurchaseBillLogic;
 import com.fms.utils.AjaxResult;
+import com.google.gson.Gson;
 import com.url.ajax.json.JSONObject;
 
 /**
@@ -30,6 +33,7 @@ public class PurchaseAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 1L;
 	protected PurchaseBillLogic purchaseBillLogic;
+	protected ParamsLogic paramsLogic;
 
 	public PurchaseBillLogic getPurchaseBillLogic() {
 		return purchaseBillLogic;
@@ -37,6 +41,14 @@ public class PurchaseAction extends BaseAction {
 
 	public void setPurchaseBillLogic(PurchaseBillLogic purchaseBillLogic) {
 		this.purchaseBillLogic = purchaseBillLogic;
+	}
+
+	public ParamsLogic getParamsLogic() {
+		return paramsLogic;
+	}
+
+	public void setParamsLogic(ParamsLogic paramsLogic) {
+		this.paramsLogic = paramsLogic;
 	}
 
 	/********* 分页用的属性 ***********/
@@ -112,6 +124,11 @@ public class PurchaseAction extends BaseAction {
 				if (item.getDeliveryDate() == null) {
 					err += "　" + item.getPurchaseBill().getPurchaseNo() + ",\n";
 				}
+				if ("false".equals(flag)) {
+					if (item.getIsBuy()) {
+						err += " " + item.getPurchaseBill().getPurchaseNo() + "已经向供应商下单，不能回卷!\n";
+					}
+				}
 			}
 		}
 		return err;
@@ -181,6 +198,9 @@ public class PurchaseAction extends BaseAction {
 			List<PurchaseItem> itemList = this.purchaseBillLogic.findItemByHid(getLoginUser(), hid, hsCode);
 			this.request.put("itemList", itemList);
 			this.request.put("hid", hid);
+			// "1"表示已经向供应商下单，"0"表示没有向供应商下单
+			String flag = (!itemList.isEmpty() && itemList.get(0).getIsBuy()) ? "1" : "0";
+			this.request.put("isBuy", flag);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -214,8 +234,10 @@ public class PurchaseAction extends BaseAction {
 				if (!"".equals(err)) {
 					if (err.contains("已生效")) {
 						result.setMsg(err);
-					} else {
+					} else if ("true".equals(flag)) {
 						result.setMsg("采购单号\n" + err + "\n对应的清单没有交货日期，不能生效!");
+					} else if (err.contains("供应商下单")) {
+						result.setMsg(err);
 					}
 					result.setSuccess(false);
 					JSONObject json = new JSONObject(result);
@@ -276,7 +298,30 @@ public class PurchaseAction extends BaseAction {
 			AjaxResult result = new AjaxResult();
 			if (ids != null && !"".equals(ids)) {
 				String[] idArr = ids.split(",");
-				String mess = this.purchaseBillLogic.exportPurchase(idArr);
+				List<PurchaseBill> heads = this.purchaseBillLogic.findPurchaseBillByIds(idArr);
+				if (!heads.isEmpty()) {
+					ParameterSet param = this.paramsLogic.getParameterValue(getLoginUser());
+					for (PurchaseBill head : heads) {
+						int count = 1;
+						if (param != null && param.getPrintCount() != null) {
+							count = param.getPrintCount();
+						}
+						if (PurchaseBillStatus.UNEFFECT.equals(head.getPurchStatus())) {
+							result.setMsg("采购单没有生效，不能导出打印!");
+							result.setSuccess(false);
+						} else if (head.getPrintCount() != null && head.getPrintCount() >= count) {
+							result.setMsg("只允许打印" + count + "次!");
+							result.setSuccess(false);
+						} else {
+							String mess = this.purchaseBillLogic.exportPurchase(idArr);
+							result.setMsg("导出Excel成功!若要打印，请直接点击Excel中的打印按钮!若要保存，请点击Excel另存为!");
+							result.setSuccess(true);
+						}
+					}
+					Gson g = new Gson();
+					out.write(g.toJson(result));
+					out.flush();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

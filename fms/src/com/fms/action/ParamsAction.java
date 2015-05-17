@@ -12,9 +12,9 @@ public class ParamsAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 
 	private ParamsLogic paramsLogic;
-	
+
 	private String id;
-	
+
 	// 数量保留小数位数
 	private Integer qtyBits;
 
@@ -27,16 +27,19 @@ public class ParamsAction extends BaseAction {
 	// 金额保留小数位数
 	private Integer amountBits;
 
+	// 采购单打印次数
+	private Integer printCount;
+
 	/**
 	 * 查询参数设置的值
 	 * 
 	 * @return
 	 */
 	public String getParameterValue() {
-		try{
+		try {
 			ParameterSet params = paramsLogic.getParameterValue(getLoginUser());
 			request.put("params", params);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return this.SUCCESS;
@@ -44,14 +47,15 @@ public class ParamsAction extends BaseAction {
 
 	/**
 	 * 保存参数
+	 * 
 	 * @return
 	 */
 	public String saveParamsValue() {
-		ParameterSet ps = new ParameterSet(qtyBits,weightBits,priceBits,amountBits);
-		if(id!=null && !"".equals(id)){
+		ParameterSet ps = new ParameterSet(qtyBits, weightBits, priceBits, amountBits, printCount);
+		if (id != null && !"".equals(id)) {
 			ps.setId(id);
 		}
-		this.paramsLogic.saveParameterValue(getLoginUser(),ps);
+		this.paramsLogic.saveParameterValue(getLoginUser(), ps);
 		return "save";
 	}
 
@@ -101,6 +105,14 @@ public class ParamsAction extends BaseAction {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Integer getPrintCount() {
+		return printCount;
+	}
+
+	public void setPrintCount(Integer printCount) {
+		this.printCount = printCount;
 	}
 
 }

@@ -295,6 +295,8 @@ $("#hendDate").datepicker({
 					var result=jQuery.parseJSON(args);
 					if(result.success){
 						alert(result.msg);
+						url = "${pageContext.request.contextPath}/purchase_findPurchaseHeads.action";
+						toMain(url);
 					}else{
 						alert(result.msg);
 					}

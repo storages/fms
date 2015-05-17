@@ -29,6 +29,11 @@
 		toMain(url);
 	}); 
 	
+	//上一页面
+	$("#goback").click(function(){
+		toMain("${pageContext.request.contextPath}/bom_findBomExg.action");
+	});
+	
 	//删除BOM版本
 	$("#btnDelBomVersion").click(function(){
 		var verNo = $("#form-field-select-1").find("option:selected").text();
@@ -141,7 +146,7 @@
 <input type="hidden" value="${hid}" id="hid"/>
 <!-- 页面布局BEGIN -->
 <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
-	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">成品对应的料件BOM表</span>
+	<h5 style="margin: 0px;">物料管理>><a href="javascript:void(0);"  id="goback">物料BOM表管理</a>>>成品对应的料件BOM表</h5>
 </div>
 
 <div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >

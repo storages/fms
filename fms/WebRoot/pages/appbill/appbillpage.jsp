@@ -18,7 +18,7 @@
 </style>
 
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
-	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">申请单</span>
+	<h5 style="margin: 0px;">申请单>>申请单列表</h5>
 </div>
 <input type="hidden" id="d1" value="${beginappDate}"/><input type="hidden" id="d2" value="${endappDate}"/>
 <div class="modal-footer" style="text-align: left;padding:5px;height: 25px;">

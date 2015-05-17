@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-     <div class="page-header position-relative" style="margin-bottom: 0px;">
+     <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
 		<h5>物料＞＞物料类别</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">

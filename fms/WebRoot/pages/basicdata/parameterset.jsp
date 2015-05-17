@@ -4,10 +4,10 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/public/public.js"></script>
 
-	<input type="hidden" id="flag" value="${params.id}" />
 	<!-- 为了判断是新增还是修改 -->
-	<div class="page-header position-relative" style="margin-bottom: 0px;">
-		<h5>用户管理＞＞系统参数设置</h5>
+	<input type="hidden" id="flag" value="${params.id}" />
+	<div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
+	<h5>基础资料＞＞系统参数设置</h5>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-small btn-danger pull-left"

@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/public/public.js"></script>
-    <div class="page-header position-relative" style="margin-bottom: 0px;">
+    <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 20px;">
 		<h5>基础资料＞＞结算方式</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;">

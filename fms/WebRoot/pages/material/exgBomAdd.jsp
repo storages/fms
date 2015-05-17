@@ -11,7 +11,10 @@
 		var n = $("#gonum option:selected").val();
 		gotoPage(n, pageSize);
 	}
-		
+	//上一页面
+	$("#goback").click(function(){
+		toMain("${pageContext.request.contextPath}/bom_findBomExg.action");
+	});
 		/**
 	 * 转到指定页码
 	 * @param {Object} pageNum 要转到第几页        currIndex
@@ -65,7 +68,7 @@
 	});
 </script>
 <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 25px;">
-	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">物料清单-成品</span>
+	<h5 style="margin: 0px;">物料管理>><a href="javascript:void(0);"  id="goback">物料BOM表管理</a>>>(新增)物料清单-成品</h5>
 </div>
 <div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
 	<span class="">成品编码</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 

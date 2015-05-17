@@ -18,7 +18,7 @@
 
 
 
-<div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:15px;line-height: 25px;">
+<div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 20px;">
 	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">报价单</span>
 </div>
 <div class="modal-footer" style="text-align: left;padding:5px;">

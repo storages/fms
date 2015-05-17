@@ -25,12 +25,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   <input type="hidden" id="flag" value="${mater.id}"/><!-- 为了判断是新增还是修改 -->
-  <div class="page-header position-relative" style="margin-bottom: 0px;">
+  <div class="page-header position-relative" style="margin: 0px; height:10px;line-height: 20px;">
     	<c:if test="${mater.id==null}">
-			<h5>物料＞＞物料类别＞＞新增</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="goback">物料类别</a>＞＞新增</h5>
 		</c:if>
     	<c:if test="${mater.id!=null}">
-			<h5>物料＞＞物料类别＞＞修改</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="goback">物料类别</a>＞＞修改</h5>
 		</c:if>
 	</div>
 	<div class="modal-footer">
@@ -102,5 +102,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				toMain(url);
 			}
 		}
+		
+		//上一页面
+		$("#goback").click(function(){
+			toMain("${pageContext.request.contextPath}/mater_findAllMaterialType.action");
+		});
 	</script>
 </html>

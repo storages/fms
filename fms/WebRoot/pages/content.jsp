@@ -39,7 +39,7 @@
 	
 	<p style="font-size:15px; font-weight: bold; margin:5px 0px 0px 5px;"><img style="margin-left: -5px;" src="${pageContext.request.contextPath}/images/treeroot.gif"/>联硕塑胶制品公司</p>
 	<ul id="browser" class="filetree">
-		<li  class="closed"><span class="folder directer" >用户管理</span>
+		<li  class="closed"><span class="folder directer" >系统管理</span>
 			<ul>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/pages/register.jsp" onclick="toMain('${pageContext.request.contextPath}/pages/register.jsp')">添加用户</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="findAllUserByFlag('${u.userFlag}')">用户权限</a></span></li>
@@ -88,12 +88,12 @@
 				<li><span class="file"><a href="">月度付款</a></span></li>
 			</ul>
 		</li>
-			<li  class="closed"><span class="folder directer" >系统管理</span>
+			<%--<li  class="closed"><span class="folder directer" >系统管理</span>
 			<ul>
 			<li><span class="file"><a href="javascript:void(0);" data-url="/log_logs.action">日志管理</a></span></li>
 			</ul>
 		</li>
-	</ul>
+	--%></ul>
 	
 	</div>
 </div>

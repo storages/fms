@@ -66,7 +66,7 @@
 
 
 <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
-	<span style="font-size: 14px; font-weight: bold;margin-left:5px; padding:3px 3px 0px 3px; border:solid 1px gray; border-bottom: 0px;">BOM表管理</span>
+	<h5 style="margin: 0px;">物料管理>>物料BOM表管理</h5>
 </div>
 <div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
 	<span class="">成品编号</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;width:100px;" class="" /> 

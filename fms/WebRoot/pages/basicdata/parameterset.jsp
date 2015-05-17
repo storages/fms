@@ -11,6 +11,8 @@
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-small btn-danger pull-left"
+			data-toggle="button" type="button" onclick="edit()">修改</button>
+		<button class="btn btn-small btn-danger pull-left"
 			data-toggle="button" type="button" onclick="save()">保存</button>
 		<button class="btn btn-small btn-danger pull-left"
 			data-toggle="button" type="button" onclick="cancel()" title="恢复初始状态">取消</button>
@@ -110,10 +112,13 @@
 			if (amountBits == "") {
 				$(":input[name='params.amountBits']").val("3");
 			}
+			if (amountBits == "") {
+				$(":input[name='params.amountBits']").val("1");
+			}
 			//保存
 			var str = "qtyBits=" + qtyBits + "&weightBits=" + weightBits
 					+ "&priceBits=" + priceBits + "&amountBits=" + amountBits
-					+ "&id=" + id;
+					+ "&id=" + id+"&printCount="+printCount;
 			var subUrl = "${pageContext.request.contextPath}/params_saveParamsValue.action?"
 					+ str;
 			toMain(subUrl);

@@ -15,7 +15,7 @@
 <head>
 <base href="<%=basePath%>">
 
-	<title>日志管理</title>
+	<title>权限管理</title>
 
 	<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -106,7 +106,7 @@ ul {
 						<script type="text/javascript">
 							var maxPageCount = ${pagecount};
 							var DATA_ROWS = 2;
-							var names = '${names}';
+							var searchTest = '${searchText}';
 						</script>
 						<link rel="stylesheet" href="<%=path%>/css/page/canvas.css"
 							type="text/css" />
@@ -114,11 +114,11 @@ ul {
 
 <body>
 	<div class="page-header position-relative" style="margin-bottom: 0px;">
-		<h5>日志管理＞＞日志</h5>
+		<h5>权限管理＞＞权限</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left; display: none;">
-		<span class="">员工名称</span><input type="text" id="search"
-			value="${names}" style="height:25px;" class="" /> <input
+		<span class="">关键字</span><input type="text" id="search"
+			value="${searchText}" style="height:25px;" class="" /> <input
 			class="btn btn-small btn-danger" data-toggle="button" type="submit"
 			value="查询" id="searchbutton"
 			style="height:25px; border: 2px; width:45px; margin-top:-10px;" />
@@ -135,23 +135,23 @@ ul {
 						<thead>
 							<tr align="center">
 								<th class="center" style="width:30px;">选择</th>
-								<th class="center">日志类型</th>
-								<th class="hidden-480 center">操作人</th>
-								<th class="hidden-phone center">操作内容</th>
+								<th class="center">权限名称</th>
+								<th class="hidden-480 center">权限代码</th>
+								<th class="hidden-phone center">权限地址</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>
 
 						<tbody id="tbody">
-							<c:forEach var="item" items="${logs}" varStatus="index" step="1">
+							<c:forEach var="item" items="${privileges}" varStatus="index" step="1">
 								<tr>
 									<td class="center" style="width:30px;">
 										<!-- .checkbox input[type="checkbox"] --> <input
 										type="checkbox" value="${item.id}" name="sid"
 										style="width:30px;" /></td>
-									<td class="center">${item.orgType}</td>
-									<td class="center">${item.orgUser.userName}</td>
-									<c:set var="msg" value="${item.msg}" />
+									<td class="center">${item.name}</td>
+									<td class="center">${item.code}</td>
+									<c:set var="msg" value="${item.url}" />
 									<c:choose>
 										<c:when test="${fn:length(msg) >30}">
 												<td class="hidden-480 center"><c:out value="${fn:substring(msg, 0, 30)}......" /></td>
@@ -160,22 +160,22 @@ ul {
 											<td class="hidden-480 center"><c:out value="${msg}" /></td>
 										</c:otherwise>
 									</c:choose>
-								
 									<td class="center"><a href="javascript:void(0);"
-										delete-emp="${item.id}">查看</a></td>
+										delete-emp="${item.id}">删除</a>|<a href="javascript:void(0);"
+										edit-emp="${item.id}">修改</a></td>
 								</tr>
 							</c:forEach>
 					</table>
 				</div>
 			</div>
 
-			<%--<div class="modal-footer">
+			<div class="modal-footer">
 				<a href="javaScript:void;"></a>
-				<button id="addEmpl" class="btn btn-small btn-danger pull-left"
-					data-toggle="button" type="button">增加员工</button>
+				<button id="addPivi" class="btn btn-small btn-danger pull-left"
+					data-toggle="button" type="button">增加权限</button>
 				<button class="btn btn-small btn-danger pull-left"
 					data-dismiss="modal" id="deleteAll">批量删除</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>
+				<%--<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button">Excel导入</button>--%>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 
@@ -185,11 +185,11 @@ ul {
 				</div>
 			</div>
 
-		--%></div>
+		</div>
 		<!--PAGE CONTENT ENDS-->
 	</div>
 	<script type="text/javascript"
-		src="<%=path%>/js/page/logsmanager-page.js">
+		src="<%=path%>/js/page/privilegemanager-page.js">
 		
 	</script>
 </body>
@@ -199,11 +199,12 @@ ul {
 <td class="center" style="width:30px;" ><!-- .checkbox input[type="checkbox"] -->
 	<input type="checkbox" value="{{= id}}" name="sid" style="width:30px;"/>
 </td>
-<td class="center">{{= orgType}}</td>
-<td class="center">{{= orgUser.userName}}</td>
+<td class="center">{{= name}}</td>
+<td class="center">{{= code}}</td>
 <td class="hidden-480 center">{{= msg}}　</td>
 <td class="center">
-	<a href="javascript:void(0);"  delete-emp="{{= id}}">查看</a>
+	<a href="javascript:void(0);"  delete-emp="{{= id}}">删除</a>|
+    <a href="javascript:void(0);"  edit-emp="{{= id}}">修改</a>
 </td>
 </tr>
 </script>

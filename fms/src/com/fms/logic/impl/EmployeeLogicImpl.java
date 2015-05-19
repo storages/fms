@@ -90,21 +90,6 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 
 	}
 
-	public EmployeeDao getEmployeeDao() {
-		return employeeDao;
-	}
-
-	public void setEmployeeDao(EmployeeDao employeeDao) {
-		this.employeeDao = employeeDao;
-	}
-
-	public AclUserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(AclUserDao userDao) {
-		this.userDao = userDao;
-	}
 
 	public int countListEmpl(AclUser loginUser, String str) {
 		// TODO Auto-generated method stub
@@ -142,4 +127,22 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		return employeeDao.findAllEmpl(null, -1, -1);
 	}
 
+	
+	
+	
+	public EmployeeDao getEmployeeDao() {
+		return employeeDao;
+	}
+
+	public void setEmployeeDao(EmployeeDao employeeDao) {
+		this.employeeDao = employeeDao;
+	}
+
+	public AclUserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(AclUserDao userDao) {
+		this.userDao = userDao;
+	}
 }

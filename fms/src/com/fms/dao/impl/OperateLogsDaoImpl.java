@@ -32,10 +32,13 @@ public class OperateLogsDaoImpl extends BaseDaoImpl implements OperateLogsDao {
 			CnFileName meta = f.getAnnotation(CnFileName.class);
 			if (meta != null) {
 				try {
+					if(meta.isMustRecord().toString().equals("T"))
+					{
 					strBuffer.append(meta.name()
 							+ ":"
 							+ clzz.getMethod("get" + change(f.getName()))
 									.invoke(obj, null) + ",");
+					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

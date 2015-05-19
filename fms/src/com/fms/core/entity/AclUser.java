@@ -1,6 +1,8 @@
 ﻿package com.fms.core.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fms.annotation.CnFileName;
 import com.fms.base.entity.BaseEntity;
@@ -52,9 +54,25 @@ public class AclUser extends BaseEntity {
 	 */
 	private Boolean isForbid = false;
 	
+	private Set<UserRole> userRoles=new HashSet<UserRole>();
+	
+	//private Set<Privilege> privileges;
+	
+	
+	
+	
 	
 	public String getLoginName() {
 		return loginName;
+	}
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;

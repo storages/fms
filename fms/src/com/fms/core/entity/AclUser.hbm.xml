@@ -20,5 +20,12 @@
 	    <!--  员工一对一单项关联配置-->
 		<!-- <many-to-one name="employee" column="EMPLOYEEID" cascade="none" class="Employee" unique="true" /> -->
 		<many-to-one name="employee" column="employeeid" class="Employee"/>
+		
+	<!-- 	<set name="userRoles" cascade="save-update" inverse="true">
+		 <key>
+		   <column name="id"></column>
+		 </key>
+		   <one-to-many class="UserRole"/>
+		</set> -->
 	</class>
 </hibernate-mapping>

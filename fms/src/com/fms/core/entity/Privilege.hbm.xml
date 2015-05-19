@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="Privilege" table="PRIVILEGE">
+		<id name="id" column="ID">
+			<generator class="uuid"/>
+		</id>
+		<property name="createDate" column="CREATEDATE"/>
+		<property name="modifyDate" column="MODIFYDATE"/>
+		<property name="code" column="CODE"/>
+		<property name="name" column="NAME"/>
+		<property name="url" column="URL"/>
+		<property name="remakes" column="REMAKES"/>
+		<!-- <set name="rolePrivileges" cascade="save-update" inverse="true">
+		<key>
+		<column name="id"></column>
+		</key>
+		<one-to-many class="RolePrivilege"/>
+		</set> -->
+	</class>
+</hibernate-mapping>

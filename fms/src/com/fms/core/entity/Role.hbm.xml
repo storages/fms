@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.fms.core.entity">
+	<class name="Role" table="ROLE">
+	<id name="id" column="ID">
+			<generator class="uuid"/>
+	</id>
+	<property name="createDate" column="CREATEDATE"/>
+	<property name="modifyDate" column="MODIFYDATE"/>
+	<property name="name" column="NAME"/>
+	<property name="desc" column="desc"/>
+	<!-- 角色用户 -->
+		<set name="userRoles" cascade="save-update" inverse="true">
+		 <key>
+		   <column name="id"></column>
+		 </key>
+		   <one-to-many class="UserRole"/>
+		</set>
+		<!-- 角色权限 -->
+		<set name="rolePrivileges" cascade="save-update" inverse="true">
+		<key>
+		<column name="id"></column>
+		</key>
+		<one-to-many class="RolePrivilege"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -14,7 +14,7 @@
 <a href="javascript:location.replace(url)"></a>
 <!-- 左边菜单树 -->
 <div class="navbar">
-	<div class="navbar-inner" style=" background-image: url('${pageContext.request.contextPath}/images/head_bg.png'); background-size:100%; background-repeat:no-repeat;" id="setcss">
+	<div class="navbar-inner" style="background-image: url('${pageContext.request.contextPath}/images/head_bg.png'); background-size:100%; background-repeat:no-repeat;" id="setcss">
 		<!-- <div class="container-fluid"></div> -->
 			 <%-- <img alt="公司标志" src="${pageContext.request.contextPath}/imges/ls_logo.png" style="width: 60px; height:50px; margin-top:5px; margin-bottom:5px;  margin-left:25px; float:left;">  --%>
 				<!--/.brand-->
@@ -44,7 +44,8 @@
 				<li><span class="file"><a href="javascript:void(0);" data-url="/pages/register.jsp" onclick="toMain('${pageContext.request.contextPath}/pages/register.jsp')">添加用户</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" onclick="findAllUserByFlag('${u.userFlag}')">用户权限</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="">用户分组</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" onclick="">操作日志</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/log_logs.action">操作日志</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);" data-url="/pivi_privileges.action">权限管理</a></span></li>
 			</ul>
 		</li>
 		<li  class="closed"><span class="folder directer">基础资料</span>

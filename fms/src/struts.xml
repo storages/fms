@@ -186,6 +186,13 @@
 			<!-- <result name="detail">/pages/purchase/purchaseItem.jsp</result> -->
 		</action>
 		
+			<!-- 日志 -->
+		<action name="pivi_*" class="privilegeAction" method="{1}">
+			<result name="privileges">/pages/privilege/privilegemanager.jsp</result>
+			<result name="addPivi">/pages/privilege/addprivilege.jsp</result>
+			<!-- <result name="detail">/pages/purchase/purchaseItem.jsp</result> -->
+		</action>
+		
 		
 		
 	</package>

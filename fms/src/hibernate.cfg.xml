@@ -46,6 +46,7 @@
 	<mapping resource="com/fms/core/entity/BomExg.hbm.xml" />
 	<mapping class="com.fms.core.entity.BomExg" />
 	<mapping resource="com/fms/core/entity/BomImg.hbm.xml" />
+	<mapping resource="com/fms/core/entity/Privilege.hbm.xml" />
 </session-factory>
 
 </hibernate-configuration>

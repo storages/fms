@@ -226,6 +226,13 @@
 	</bean>
 
 
+	<!-- 系统启动时，自动加载用户的监听 -->
+	<bean id="privilegeDao" class="com.fms.dao.impl.PrivilegeDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
 
 
 	<!-- ======================Logic类=========================== -->
@@ -404,6 +411,11 @@
 		</property>
 	</bean>
 
+	<bean id="privilegeLogic" class="com.fms.logic.impl.PrivilegeLogicImpl">
+		<property name="privilegeDao">
+			<ref bean="privilegeDao" />
+		</property>
+	</bean>
 
 
 
@@ -607,7 +619,13 @@
 			<ref bean="loglogic" />
 		</property>
 	</bean>
-
+	<!-- 日志 -->
+	<bean id="privilegeAction" class="com.fms.action.PrivilegeAction"
+		scope="prototype">
+		<property name="privilegeLogic">
+			<ref bean="privilegeLogic" />
+		</property>
+	</bean>
 
 
 

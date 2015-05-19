@@ -17,6 +17,7 @@ import com.fms.logic.AclUserLogic;
 import com.fms.logic.DeptLogic;
 import com.fms.logic.EmployeeLogic;
 import com.fms.utils.AjaxResult;
+import com.fms.utils.Contents;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -32,7 +33,7 @@ public class EmployeeAction extends BaseAction {
 	
 	private int pageindex;
 	
-	private int pageReows=2;
+	private int pageReows=Contents.pageRows;
 	
 	private String  ids;
 	
@@ -51,7 +52,7 @@ public class EmployeeAction extends BaseAction {
 	 * @return
 	 */
 	public String employees(){
-		 List list =emplLogic.findAllEmpl(getLoginUser(),names, 1, pageReows);
+		 List list =emplLogic.findAllEmpl(getLoginUser(),names, (Contents.pageIndex-1)*pageReows, pageReows);
 		 int count= emplLogic.countListEmpl(getLoginUser(),names);
 		 request.put("pagecount",count);
 		 request.put("empls", list);
@@ -68,7 +69,7 @@ public class EmployeeAction extends BaseAction {
 		try{
 			writer=response.getWriter();
 		result.setSuccess(false);
-		 List list =emplLogic.findAllEmpl(getLoginUser(),names, pageindex,pageReows);
+		 List list =emplLogic.findAllEmpl(getLoginUser(),names,(pageindex-1)*pageReows,pageReows);
 		 result.setSuccess(true);
 		 result.setObj(list);
 

@@ -2,6 +2,7 @@ package com.fms.action;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class StorageAction extends BaseAction {
 	protected Date endDate;
 	protected String scmcocName;
 	protected String hsName;
+	protected String inOrOutFlag;// 进出库标志
+	protected String id;// 进出库id
 
 	/**
 	 * 获取入库列表数据
@@ -107,15 +110,25 @@ public class StorageAction extends BaseAction {
 	public String editStorage() {
 		if (StringUtils.isNotBlank(impExpFlag)) {
 			Integer maxSerialNo = this.storageLogic.findMaxSerialNo(getLoginUser(), "InStorage", impExpFlag);
+			Integer serialNo = 0;
 			if (null == maxSerialNo || maxSerialNo == 0) {
-				Integer serialNo = 1;
+				serialNo = 1;
 			}
-			String imgExgFlag = "0".equals(impExpFlag) ? ImgExgFlag.EXG : ImgExgFlag.IMG;
-			List<TempEntity> typeList = ImpExpType.getImgTypeByMaterialType(imgExgFlag);
+			InStorage storage = null;
+			if (StringUtils.isBlank(id)) {
+				storage = new InStorage();
+				storage.setSerialNo(serialNo);
+			}
+			// String imgExgFlag = "0".equals(impExpFlag) ? ImgExgFlag.EXG :
+			// ImgExgFlag.IMG;
+			List<TempEntity> typeList = ImpExpType.getImgTypeByMaterialType(impExpFlag);
+			getTypeList(typeList);
 			List<Stock> stockList = stockLogic.findAllStock(getLoginUser(), null, -1, -1);
-			this.request.put("imgExgFlag", imgExgFlag);
+			this.request.put("imgExgFlag", impExpFlag);
 			this.request.put("impexptypes", typeList);
 			this.request.put("stockList", stockList);
+			this.request.put("inOrOutFlag", inOrOutFlag);
+			this.request.put("inStorage", storage);
 		}
 		return "edit";
 	}
@@ -124,7 +137,8 @@ public class StorageAction extends BaseAction {
 		PrintWriter out = null;
 		AjaxResult result = new AjaxResult();
 		try {
-			List<TempEntity> typeList = ImpExpType.getImgTypeByMaterialType(impExpFlag);
+			List<TempEntity> typeList = ImpExpType.getImgTypeByMaterialType(impExpFlag);// "I"/"E"
+			getTypeList(typeList);
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
@@ -136,6 +150,35 @@ public class StorageAction extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void getTypeList(List<TempEntity> typeList) {
+		// String imgExgFlag = "0".equals(impExpFlag) ? ImgExgFlag.EXG :
+		// ImgExgFlag.IMG;
+		List<TempEntity> tempList = new ArrayList<TempEntity>();
+		for (TempEntity en : typeList) {
+			// 成品入库
+			if ("in".equals(inOrOutFlag) && ImgExgFlag.EXG.equals(impExpFlag)) {
+				if (en.getCode() == 7 || en.getCode() == 10 || en.getCode() == 13) {
+					tempList.add(en);
+				}
+				// 成品出库
+			} else if ("out".equals(inOrOutFlag) && ImgExgFlag.EXG.equals(impExpFlag)) {
+				if (en.getCode() != 7 || en.getCode() != 10 || en.getCode() != 13) {
+					tempList.add(en);
+				}
+				// 原料入库
+			} else if ("in".equals(inOrOutFlag) && ImgExgFlag.IMG.equals(impExpFlag)) {
+				if (en.getCode() == 6 || en.getCode() == 8 || en.getCode() == 9 || en.getCode() == 12) {
+					tempList.add(en);
+				}
+			} else if ("out".equals(inOrOutFlag) && ImgExgFlag.IMG.equals(impExpFlag)) {
+				if (en.getCode() != 6 || en.getCode() != 8 || en.getCode() != 9 || en.getCode() != 12) {
+					tempList.add(en);
+				}
+			}
+		}
+		typeList.removeAll(tempList);
 	}
 
 	public String save() {
@@ -303,6 +346,22 @@ public class StorageAction extends BaseAction {
 
 	public void setStockLogic(StockLogic stockLogic) {
 		this.stockLogic = stockLogic;
+	}
+
+	public String getInOrOutFlag() {
+		return inOrOutFlag;
+	}
+
+	public void setInOrOutFlag(String inOrOutFlag) {
+		this.inOrOutFlag = inOrOutFlag;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

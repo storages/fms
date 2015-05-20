@@ -24,6 +24,11 @@
   		});
   		$("#div_scorll").width($("#tomain").width()+1000);
   		$("#parant_div").width($("#tomain").width());
+  		
+  		//查询按钮
+  		$("#btnQuery").bind("click",function(){
+  			alert("查询");
+  		});
   	});
   </script>
 
@@ -34,7 +39,7 @@
 		<span class="">入库日期</span><input type="text" id="beginDate" value="${startDate}" style="height:25px; width:100px;" readonly="readonly" /><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
 		<span class="">供应商名称</span><input type="text" id="scmcocName" value="${endDate}"  style="height:25px; width:100px;" class=""/>
 		<span class="">物料名称</span><input type="text" id="search" value="${hsName}" style="height:25px; width:100px;" class=""/>
-		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
+		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" id="btnQuery" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 		<c:if test="${imgexgflag=='I'}">
 		 	<input type="radio" name="materialType" value="I" style="margin-top: -5px;" onchange="changematerialtype('I')" value="I" checked="checked"/>&nbsp;原料　
 		 	<input type="radio" name="materialType" value="E" style="margin-top: -5px;" onchange="changematerialtype('E')"  value="E"/>&nbsp;成品
@@ -127,7 +132,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/storage_editStorage.action?impExpFlag=0');">新增</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/storage_editStorage.action?impExpFlag=I&inOrOutFlag=in');">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreMater('I')">
 					批量删除
 				</button>

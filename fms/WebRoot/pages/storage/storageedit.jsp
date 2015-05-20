@@ -66,7 +66,10 @@
 		});
 		
 		//上一页面
-		$("#goback").click(function(){
+		$("#addgoback").click(function(){
+			toMain("${pageContext.request.contextPath}/storage_findAllInStorage.action");
+		});
+		$("#editgoback").click(function(){
 			toMain("${pageContext.request.contextPath}/storage_findAllInStorage.action");
 		});
 		
@@ -144,10 +147,10 @@
     <input type="hidden" id="inOrOutFlag" value="${inOrOutFlag}"/>
    <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
     	<c:if test="${storage.id==null}">
-			<h5>物料＞＞<a href="javascript:void(0);" id="goback">入库</a>＞＞新增</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="addgoback">入库</a>＞＞新增</h5>
 		</c:if>
     	<c:if test="${storage.id!=null}">
-			<h5>物料＞＞<a href="">出库</a>＞＞修改</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="editgoback">入库</a>＞＞修改</h5>
 		</c:if>
 	</div>
 	<div>

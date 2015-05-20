@@ -25,13 +25,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <input type="hidden" id="flag" value="${materinfo.id}"/><!-- 为了判断是新增还是修改 -->
-    <input type="hidden" id="mtype" value="${imgExgFlag}"/><!-- 为了判断是新增还是修改 -->
-  <div class="page-header position-relative" style="margin-bottom: 0px;">
+    <input type="hidden" id="mtype" value="${imgExgFlag}"/>
+   <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
     	<c:if test="${materinfo.id==null}">
-			<h5>物料＞＞物料信息＞＞新增</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="addgoback">物料信息</a>＞＞新增</h5>
 		</c:if>
     	<c:if test="${materinfo.id!=null}">
-			<h5>物料＞＞物料信息＞＞修改</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="editgoback">＞＞修改</h5>
 		</c:if>
 	</div>
 	<div class="modal-footer">
@@ -111,7 +111,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   <script type="text/javascript">
   var isPass = true;
-			//名称
+		$(function(){
+			//上一页面
+			$("#addgoback").click(function(){
+				toMain("${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag=I");
+			});
+			//上一页面
+			$("#editgoback").click(function(){
+				toMain("${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag=I");
+			});
+		});
 		function save(){
 			var id= $('#matrId').val();
 			var code= $(":input[name='material.hsCode']").val(); 

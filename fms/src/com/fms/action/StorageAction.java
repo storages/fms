@@ -11,11 +11,14 @@ import org.apache.commons.lang.StringUtils;
 import com.fms.base.action.BaseAction;
 import com.fms.commons.ImgExgFlag;
 import com.fms.commons.ImpExpType;
+import com.fms.commons.PurchaseBillStatus;
 import com.fms.core.entity.InStorage;
 import com.fms.core.entity.OutStorage;
+import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.Stock;
 import com.fms.core.vo.entity.TempEntity;
 import com.fms.logic.MaterialTypeLogic;
+import com.fms.logic.PurchaseBillLogic;
 import com.fms.logic.ScmcocLogic;
 import com.fms.logic.StockLogic;
 import com.fms.logic.StorageLogic;
@@ -41,6 +44,7 @@ public class StorageAction extends BaseAction {
 	protected UnitLogic unitLogic;// 计量单位逻辑
 	protected ScmcocLogic scmcocLogic;// 客户供应商逻辑
 	protected StockLogic stockLogic;// 仓库逻辑
+	protected PurchaseBillLogic purchaseBillLogic;// 采购单逻辑
 
 	/********* 分页用的属性 ***********/
 	private Integer dataTotal;// 总记录数
@@ -179,6 +183,45 @@ public class StorageAction extends BaseAction {
 			}
 		}
 		typeList.removeAll(tempList);
+	}
+
+	/**
+	 * 查询采购单表头
+	 * 
+	 * @return
+	 */
+	public String findPurchaseHead() {
+		try {
+			List<PurchaseBill> heads = this.purchaseBillLogic.findPurchaseBill(Boolean.FALSE, PurchaseBillStatus.EFFECTED);
+			this.request.put("headList", heads);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "dialog";
+	}
+
+	/**
+	 * 根据id获取采购单号
+	 */
+	public void getPurchaseNoById() {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				id = id.split("/")[0];
+			}
+			PurchaseBill bill = this.purchaseBillLogic.findPurchaseById(getLoginUser(), id);
+			PrintWriter out = null;
+			AjaxResult result = new AjaxResult();
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			result.setObj(bill.getPurchaseNo());
+			result.setSuccess(true);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String save() {
@@ -362,6 +405,14 @@ public class StorageAction extends BaseAction {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public PurchaseBillLogic getPurchaseBillLogic() {
+		return purchaseBillLogic;
+	}
+
+	public void setPurchaseBillLogic(PurchaseBillLogic purchaseBillLogic) {
+		this.purchaseBillLogic = purchaseBillLogic;
 	}
 
 }

@@ -181,4 +181,9 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 		}
 		return null;
 	}
+
+	public List<PurchaseBill> findPurchaseBill(Boolean isComplete, String purchStatus) {
+		String hql = "select a from PurchaseBill a left join fetch a.scmcoc b where a.isComplete=? and a.purchStatus=? ";
+		return this.find(hql, new Object[] { isComplete, purchStatus });
+	}
 }

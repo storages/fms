@@ -134,4 +134,13 @@ public interface PurchaseBillLogic {
 	 * @return
 	 */
 	public String exportPurchase(String[] hid);
+
+	/**
+	 * 根据条件查询采购单表头
+	 * 
+	 * @param isComplete
+	 * @param purchStatus
+	 * @return
+	 */
+	public List<PurchaseBill> findPurchaseBill(Boolean isComplete, String purchStatus);
 }

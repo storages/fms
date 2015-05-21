@@ -562,6 +562,9 @@
 		<property name="stockLogic">
 			<ref bean="stockLogic" />
 		</property>
+		<property name="purchaseBillLogic">
+			<ref bean="purchaseBillLogic" />
+		</property>
 	</bean>
 
 	<!-- 报价单 -->

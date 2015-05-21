@@ -238,4 +238,8 @@ public class PurchaseBillLogicImpl implements PurchaseBillLogic {
 		}
 		return mess;
 	}
+
+	public List<PurchaseBill> findPurchaseBill(Boolean isComplete, String purchStatus) {
+		return this.purchaseBillDao.findPurchaseBill(isComplete, purchStatus);
+	}
 }

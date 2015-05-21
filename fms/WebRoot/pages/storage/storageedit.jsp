@@ -1,3 +1,4 @@
+<jsp:include page="/pages/templet/dialog.jsp"></jsp:include>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -121,8 +122,47 @@
 				return;
 			}
 		});
+		
+		//采购单查询
+		$("#purchQuery").bind("click",function(){
+			showDialog('选择采购单','dgPurchaseQuery.jsp');
+			$("#dg_content").load("${pageContext.request.contextPath}/storage_findPurchaseHead.action");
+		});
 	});
-			
+		
+	$("#btnSure").click(function(){
+		var paramstr = "";      
+		 $('input[name="sid"]:checked').each(function(){//遍历每一个名字为materid的复选框，其中选中的执行函数      
+		 	paramstr+=$(this).val()+"/";//将选中的值组装成一个以'/'分割的字符串
+		 }); 
+		 if(paramstr==""){
+		 	alert("请选择物料");
+		 	return;
+		 }
+		 $("#btnSure").click(function(){
+			 var id = "";      
+			 $('input[name="sid"]:checked').each(function(){//遍历每一个名字为materid的复选框，其中选中的执行函数      
+			 	id+=$(this).val()+"/";//将选中的值组装成一个以'/'分割的字符串
+			 }); 
+			 if(id==""){
+			 	alert("请选择采购单");
+			 	return;
+			 }
+			 $.ajax({
+				 url:'${pageContext.request.contextPath}/storage_getPurchaseNoById.action',
+				 data:{id:id},
+				 async: false,
+				 cache: false,
+				 success:function(args){
+					var result=jQuery.parseJSON(args);
+					if(result.success){
+						$("#tfPurchaseNo").val(result.obj);
+						closeDialog();
+					}
+				 }
+			 });
+		 });
+		});
 	
 	function initUi(){
 		var val = $("#imgexgflag").val();
@@ -187,7 +227,7 @@
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">采购单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;" id="purchNo">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" value="${inStorage.purchaseNo}" style="height:25px; width:100%;  padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input id="tfPurchaseNo" type="text" value="${inStorage.purchaseNo}" style="height:25px; width:100%;  padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
 				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="purchQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
@@ -197,7 +237,7 @@
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">订单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"  id="orderNo">*</td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" value="${inStorage.orderNo}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
-				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="orderQuery"/></td>
+				<td style="width: 10px;border:0px;padding:0px;"><img  src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="orderQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;" id="captionScm">供应商名称</td>
@@ -206,7 +246,7 @@
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料编码</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  id="hsCode" value="${inStorage.material.hsCode}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
-				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;"/></td>
+				<td style="width: 10px;border:0px;padding:0px;"><img id="hsCodeQuery" src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料名称</td>

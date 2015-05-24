@@ -34,4 +34,15 @@ public class StorageLogicImpl implements StorageLogic {
 	public Integer findMaxSerialNo(AclUser user, String entityName, String imgExgFlag) {
 		return this.storageDao.findMaxSerialNo(entityName, imgExgFlag);
 	}
+
+	public Object findStorageById(Class clazz, String id) {
+		return this.storageDao.findStorageById(clazz, id);
+	}
+
+	public void saveStorage(Object storage) {
+		if (null != storage) {
+			this.storageDao.saveOrUpdate(storage);
+		}
+
+	}
 }

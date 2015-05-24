@@ -24,10 +24,15 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select a from ");
 		sql.append(entityName.trim());
-		sql.append(" a left join a.material mat ");
-		sql.append(" left join a.scmcoc scm ");
-		sql.append(" left join a.stock stock where a.imgExgFlag= ? ");
-		params.add(flag);
+		sql.append(" a left join fetch a.material mat ");
+		sql.append(" left join fetch a.scmcoc scm ");
+		sql.append(" left join fetch mat.unit u ");
+		sql.append(" left join fetch mat.materialType t ");
+		sql.append(" left join fetch a.stock stock where 1=1 ");
+		if (StringUtils.isNotBlank(flag)) {
+			sql.append(" a.imgExgFlag= ? ");
+			params.add(flag);
+		}
 		if (startDate != null) {
 			sql.append(inOutDate);
 			sql.append(" >= ?");
@@ -56,9 +61,13 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 		sql.append("select count(a.id) from ");
 		sql.append(entityName.trim());
 		sql.append(" a left join a.material mat ");
+		sql.append(" left join mat.unit u ");
 		sql.append(" left join a.scmcoc scm ");
-		sql.append(" left join a.stock stock where a.imgExgFlag= ? ");
-		params.add(flag);
+		sql.append(" left join a.stock stock where 1=1 ");
+		if (StringUtils.isNotBlank(flag)) {
+			sql.append(" a.imgExgFlag= ? ");
+			params.add(flag);
+		}
 		if (startDate != null) {
 			sql.append(inOutDate);
 			sql.append(" >= ?");
@@ -84,4 +93,14 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 		return (Integer) this.uniqueResult("select max(a.serialNo) from " + entityName.trim() + " a where a.imgExgFlag =? ", new Object[] { imgExgFlag });
 	}
 
+	public Object findStorageById(Class clazz, String id) {
+		String hql = "select a from " + clazz.getSimpleName() + " a " //
+				+ " left join fetch a.material b " //
+				+ " left join a.scmcoc c " //
+				+ " left join fetch c.settlement d " //
+				+ " left join fetch b.unit e "//
+				+ " left join fetch b.materialType f  "//
+				+ " where a.id =? ";
+		return this.findUniqueResult(hql, new Object[] { id });
+	}
 }

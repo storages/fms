@@ -47,4 +47,14 @@ public interface StorageLogic {
 	 * @return
 	 */
 	Integer findMaxSerialNo(AclUser user, String entityName, String imgExgFlag);
+
+	/**
+	 * 根据id查询出入库信息
+	 * 
+	 * @param id
+	 * @return
+	 */
+	Object findStorageById(Class clazz, String id);
+
+	void saveStorage(Object storage);
 }

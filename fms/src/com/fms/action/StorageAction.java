@@ -17,6 +17,7 @@ import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.OutStorage;
 import com.fms.core.entity.PurchaseBill;
+import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Stock;
 import com.fms.core.vo.entity.TempEntity;
 import com.fms.logic.MaterialLogic;
@@ -74,6 +75,7 @@ public class StorageAction extends BaseAction {
 	protected Date startDate;
 	protected Date endDate;
 	protected String scmcocName;
+	protected String serialNo;
 	protected String hsName;
 	protected String hsCode;
 	protected String inOrOutFlag;// 进出库标志
@@ -83,6 +85,14 @@ public class StorageAction extends BaseAction {
 	protected String imgExgFlag;// 物料标记
 	protected String inQty;// 入库数量
 	protected String packQty;// 每件包装数
+	protected String model;// 规格
+	protected String unitName;// 计量单位
+	protected String pkgs;// 件数
+	protected String stockName;// 仓库名称
+	protected String impFlag;// 入库类型
+	protected String inStorageNo;// 入库单号
+	protected String stockId;// 仓库id
+	protected String note;// 备注
 
 	/**
 	 * 获取入库列表数据
@@ -96,6 +106,12 @@ public class StorageAction extends BaseAction {
 			dataTotal = this.storageLogic.findDataCount("InStorage", startDate, endDate, scmcocName, hsName, impExpFlag);
 			List storageList = this.storageLogic.findStorage(getLoginUser(), "InStorage", startDate, endDate, impExpFlag, parseValue(scmcocName), parseValue(hsName), (curr - 1) * DEFAULT_PAGESIZE,
 					DEFAULT_PAGESIZE);
+
+			for (Object obj : storageList) {
+				InStorage is = (InStorage) obj;
+				is.setImpFlag(ImpExpType.getImpExpType(Integer.parseInt(is.getImpFlag())));
+			}
+
 			this.request.put("storageList", storageList);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);
@@ -365,11 +381,69 @@ public class StorageAction extends BaseAction {
 		}
 	}
 
-	public String save() {
-		if (inStorage != null) {
+	public void saveInStorage() {
+		try {
+			PrintWriter out = null;
+			AjaxResult result = new AjaxResult();
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
 
+			InStorage inStorage = null;
+			if (StringUtils.isNotBlank(id)) {
+				inStorage = (InStorage) this.storageLogic.findStorageById(InStorage.class, id);
+			} else {
+				inStorage = new InStorage();
+			}
+			int serNo = 0;
+			if (StringUtils.isNotBlank(serialNo) && isNumeric(serialNo)) {
+				serNo = Integer.parseInt(serialNo);
+			} else {
+				serNo++;
+			}
+			inStorage.setSerialNo(serNo);// 流水号
+			inStorage.setImpFlag(impFlag);// 入库类型
+			inStorage.setImgExgFlag(imgExgFlag);// 物料标志
+			inStorage.setPurchaseNo(purchaseNo);// 采购单号
+			inStorage.setInStorageNo(inStorageNo);// 入库单号
+			inStorage.setOrderNo(orderNo);// 订单号
+			Scmcoc scmcoc = this.scmcocLogic.findScmcocByName(this.parseValue(scmcocName));
+			inStorage.setScmcoc(scmcoc);// 供应商
+			Material material = this.materLogic.findMaterialByHsCode(getLoginUser(), hsCode);
+			inStorage.setMaterial(material);// 物料清单
+
+			Double qty = 0d;
+			Double specQty = 0d;
+			Double pcs = 0d;
+			if (StringUtils.isNotBlank(inQty) && isNumeric(inQty)) {
+				qty = Double.parseDouble(inQty);
+			}
+			if (StringUtils.isNotBlank(packQty) && isNumeric(packQty)) {
+				specQty = Double.parseDouble(packQty);
+			}
+			if (StringUtils.isNotBlank(pkgs) && isNumeric(pkgs)) {
+				pcs = Double.parseDouble(pkgs);
+			}
+			inStorage.setInQty(qty);// 入库数量
+			inStorage.setSpecQty(specQty);// 每件包装数量
+			inStorage.setPkgs(pcs);// 件数
+			Stock stock = null;
+			if (StringUtils.isNotBlank(stockId)) {
+				stock = this.stockLogic.findStockById(getLoginUser(), stockId);
+			}
+			inStorage.setStock(stock);// 仓库
+			inStorage.setNote(this.parseValue(note));// 备注
+			inStorage.setUseFlag("0");// 默认启用
+			inStorage.setImpDate(new Date());// 入库日期
+			inStorage.setHandling(this.getLoginUser().getUserName());// 入库人
+			this.storageLogic.saveStorage(inStorage);
+			result.setSuccess(true);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return "save";
 	}
 
 	public StorageLogic getStorageLogic() {
@@ -634,6 +708,78 @@ public class StorageAction extends BaseAction {
 
 	public void setPackQty(String packQty) {
 		this.packQty = packQty;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getUnitName() {
+		return unitName;
+	}
+
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
+
+	public String getPkgs() {
+		return pkgs;
+	}
+
+	public void setPkgs(String pkgs) {
+		this.pkgs = pkgs;
+	}
+
+	public String getStockName() {
+		return stockName;
+	}
+
+	public void setStockName(String stockName) {
+		this.stockName = stockName;
+	}
+
+	public String getSerialNo() {
+		return serialNo;
+	}
+
+	public void setSerialNo(String serialNo) {
+		this.serialNo = serialNo;
+	}
+
+	public String getImpFlag() {
+		return impFlag;
+	}
+
+	public void setImpFlag(String impFlag) {
+		this.impFlag = impFlag;
+	}
+
+	public String getInStorageNo() {
+		return inStorageNo;
+	}
+
+	public void setInStorageNo(String inStorageNo) {
+		this.inStorageNo = inStorageNo;
+	}
+
+	public String getStockId() {
+		return stockId;
+	}
+
+	public void setStockId(String stockId) {
+		this.stockId = stockId;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 }

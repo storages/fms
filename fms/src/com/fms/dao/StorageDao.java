@@ -46,4 +46,12 @@ public interface StorageDao extends BaseDao {
 	 * @return
 	 */
 	Integer findMaxSerialNo(String entityName, String imgExgFlag);
+
+	/**
+	 * 根据id查询出入库信息
+	 * 
+	 * @param id
+	 * @return
+	 */
+	Object findStorageById(Class clazz, String id);
 }

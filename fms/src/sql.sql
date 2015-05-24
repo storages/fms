@@ -39,3 +39,7 @@ select * from bomimg a
 select * from orderhead a left join scmcoc b on a.scmcoc = b.id
 
 delete from orderitem
+
+select * from instorage
+
+delete  from instorage

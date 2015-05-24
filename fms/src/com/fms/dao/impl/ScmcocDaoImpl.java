@@ -9,8 +9,7 @@ import com.fms.dao.ScmcocDao;
 
 public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 
-	public List<Scmcoc> findAllScmcoc(Boolean isCustom, String likeStr,
-			Integer index, Integer length) {
+	public List<Scmcoc> findAllScmcoc(Boolean isCustom, String likeStr, Integer index, Integer length) {
 		String hql = "select a from Scmcoc a left join fetch a.settlement where a.isCustom = ? ";
 		List param = new ArrayList();
 		param.add(isCustom);
@@ -62,8 +61,7 @@ public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 
 	public Integer findDataCount(String className, Boolean isCustom, String name) {
 		try {
-			String hql = "select count(a.id) from " + className.trim()
-					+ " a where a.isCustom = ? ";
+			String hql = "select count(a.id) from " + className.trim() + " a where a.isCustom = ? ";
 			List param = new ArrayList();
 			param.add(isCustom);
 			if (null != name && !"".equals(name)) {
@@ -75,6 +73,13 @@ public class ScmcocDaoImpl extends BaseDaoImpl implements ScmcocDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public Scmcoc findScmcocByName(String name) {
+		String hql = "select a from Scmcoc a left join fetch a.settlement where a.name = ? ";
+		List param = new ArrayList();
+		param.add(name);
+		return (Scmcoc) this.findUniqueResult(hql, param.toArray());
 	}
 
 }

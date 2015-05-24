@@ -18,6 +18,11 @@
 </style>
 
 <script type="text/javascript">
+
+function parse(str){
+	return encodeURI(encodeURI(str));  
+}
+	
 	$(function(){
 		
 		$(".number").keyup(function(){    
@@ -110,7 +115,6 @@
 					return;
 				}
 			}
-			
 			if(serialNo==""){
 				alert("流水号不能为空!");
 				return;
@@ -140,16 +144,46 @@
 				alert("入库数量只能填数字!");
 				return;
 			}
-			if(packQty==""){
+			/*if(packQty==""){
 				alert("每件包装数量不能为空!");
 				return;
-			}
+			}*/
 			if(checkNumber(packQty)){
 				alert("每件包装数量只能填数字!");
 				return;
 			}
 			
+			//提交保存数据
+			var scmcocName = $("#tfScmcoc").val();
+			var hsName = $("#hsName").val();
+			var hsModel = $("#hsModel").val();
+			var unitName = $("#unitName").val();
+			var stockId = $("#stockName").val();
+			var pkgs = $("#pkgs").val();
+			var note = $("#note").val();
+			var id = $("#flag").val();
+			var orderNo = ($("#tfOrderNo").val()==undefined||$("#tfOrderNo").val()=="")?"":$("#tfOrderNo").val();
+			var url = "${pageContext.request.contextPath}/storage_saveInStorage.action";
+			var data = "serialNo="+serialNo+"&impFlag="+impExpType+"&imgExgFlag="+imgexgflag;
+				   data+="&purchaseNo="+purchNo+"&inStorageNo="+inStorageNo+"&orderNo="+orderNo;
+				   data+="&scmcocName="+parse(scmcocName)+"&hsCode="+hsCode+"&hsName="+parse(hsName);
+				   data+="&model="+hsModel+"&unitName="+parse(unitName)+"&inQty="+inQty+"&packQty="+packQty;
+				   data+="&pkgs="+pkgs+"&stockId="+stockId+"&note="+parse(note)+"&id="+id;
+			$.ajax({
+				url:url,
+				type:"POST",
+				data:data,
+				async: false,
+				cache: false,
+				success:function(args){
+					var result=jQuery.parseJSON(args);
+					if(result.success){
+						toMain("${pageContext.request.contextPath}/storage_findAllInStorage.action");
+					}
+				}
+			});
 		});
+		
 		
 		
 		
@@ -402,7 +436,7 @@
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">仓库名称</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
 				<td style="width: 150px;border:0px;padding:0px;">
-					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;" >
+					<select id="stockName"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;" >
 						<c:forEach var="stock" items="${stockList}">
 							<option value="${stock.id}" <c:if test="${inStorage.stock.name==stock.name}">selected="selected"</c:if>>${stock.name}</option>
 						</c:forEach>
@@ -410,7 +444,7 @@
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">备注</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  value="${inStorage.note}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" id="note"  value="${inStorage.note}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 			</tr>
 			<tr style="border:0px;text-align:center; ">
 				<td colspan="6" style="border:0px;text-align:center;">

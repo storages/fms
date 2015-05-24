@@ -73,7 +73,7 @@ public class InStorage extends BaseEntity {
 	 * 启用状态(useFlag) 0、启用 1、作废 系统默认启用
 	 */
 	@CnFileName(name = "启用状态")
-	private String useFlag;
+	private String useFlag = "0";
 
 	/**
 	 * 每件包装数量
@@ -86,9 +86,9 @@ public class InStorage extends BaseEntity {
 	@CnFileName(name = "件数")
 	private Double pkgs;
 	/**
-	 * 货物标志(imgExgFlag)(原料、成品)下拉框选择
+	 * 物料标志(imgExgFlag)(原料、成品)下拉框选择
 	 */
-	@CnFileName(name = "货物标志")
+	@CnFileName(name = "物料标志")
 	private String imgExgFlag;
 	/**
 	 * 入库类型 (0:采购入库 1:退货入库 2:其它入库)下拉框选择

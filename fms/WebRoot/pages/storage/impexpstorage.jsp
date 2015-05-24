@@ -113,10 +113,11 @@
 									<c:if test="${storage.imgExgFlag=='I' }">
 										<td class="hidden-480 center">原料&nbsp;</td>
 									</c:if>
-									<c:if test="${storage.imgExgFlag=='I' }">
+									<c:if test="${storage.imgExgFlag=='E' }">
 										<td class="hidden-480 center">成品&nbsp;</td>
 									</c:if>
 										<td class="hidden-480 center">${storage.impFlag}&nbsp;</td>
+										<td class="hidden-480 center">${storage.material.materialType.typeName}&nbsp;</td>
 										<td class="hidden-480 center">${storage.handling}&nbsp;</td>
 										<td class="hidden-480 center">${storage.impDate}&nbsp;</td>
 										<td class="hidden-480 center">${storage.note}&nbsp;</td>

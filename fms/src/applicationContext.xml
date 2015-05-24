@@ -565,6 +565,12 @@
 		<property name="purchaseBillLogic">
 			<ref bean="purchaseBillLogic" />
 		</property>
+		<property name="orderLogic">
+			<ref bean="orderLogic" />
+		</property>
+		<property name="materLogic">
+			<ref bean="materLogic" />
+		</property>
 	</bean>
 
 	<!-- 报价单 -->

@@ -94,7 +94,7 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 	}
 
 	public OrderHead load(Class clazz, String id) {
-		return (OrderHead) this.uniqueResult("SELECT a FROM " + clazz.getSimpleName() + " a LEFT JOIN a.scmcoc b where a.id = ?", new Object[] { id });
+		return (OrderHead) this.uniqueResult("SELECT a FROM " + clazz.getSimpleName() + " a LEFT JOIN FETCH a.scmcoc b LEFT JOIN FETCH b.settlement c where a.id = ?", new Object[] { id });
 	}
 
 	public void delOrderHead(AclUser aclUser, String[] ids) {
@@ -208,7 +208,7 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 	 * @return
 	 */
 	public List<OrderHead> findOrderHeadByStauts(Boolean isFinish) {
-		return this.find("select a from OrderHead a where a.isFinish =?", isFinish);
+		return this.find("select a from OrderHead a left join fetch a.scmcoc b where a.isFinish =?", isFinish);
 	}
 
 	public List<Material> findAllExgByOrderNo(String orderNo) {
@@ -231,6 +231,31 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 			return this.find(hql, params.toArray());
 		}
 		return null;
+	}
+
+	/**
+	 * 根据订单号，物料编码，物料名称查询订单表体中的物料信息
+	 * 
+	 * @param purchaseNo
+	 * @param hsCode
+	 * @param hsName
+	 * @return
+	 */
+	public List<OrderItem> findOrderItemMaterialByNo(String orderNo, String hsCode, String hsName) {
+		List params = new ArrayList();
+		String hql = "select item from OrderItem item left join fetch item.orderHead head left join fetch item.unit u  where head.orderNo =? ";
+		params.add(orderNo);
+		if (StringUtils.isNotBlank(hsCode)) {
+			hql += " and mat.hsCode like ? ";
+			params.add("%" + hsCode + "%");
+		}
+		if (StringUtils.isNotBlank(hsName)) {
+			hql += " and mat.hsName like ? ";
+			params.add("%" + hsName + "%");
+		}
+		hql += " and head.isFinish =?";
+		params.add(Boolean.FALSE);// 未完结状态
+		return this.find(hql, params.toArray());
 	}
 
 }

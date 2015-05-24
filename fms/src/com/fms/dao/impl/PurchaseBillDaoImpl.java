@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fms.base.dao.BaseDaoImpl;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
@@ -143,7 +146,7 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 	}
 
 	public PurchaseBill findPurchaseById(String id) {
-		return (PurchaseBill) this.findUniqueResult("from PurchaseBill a where a.id =? ", new Object[] { id });
+		return (PurchaseBill) this.findUniqueResult("from PurchaseBill a left join fetch a.scmcoc b left join fetch b.settlement c where a.id =? ", new Object[] { id });
 	}
 
 	public List<PurchaseBill> findPurchaseBillByIds(String[] hid) {
@@ -185,5 +188,20 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 	public List<PurchaseBill> findPurchaseBill(Boolean isComplete, String purchStatus) {
 		String hql = "select a from PurchaseBill a left join fetch a.scmcoc b where a.isComplete=? and a.purchStatus=? ";
 		return this.find(hql, new Object[] { isComplete, purchStatus });
+	}
+
+	public List<Material> findPurchaseItemMaterialByNo(String purchaseNo, String hsCode, String hsName) {
+		List param = new ArrayList();
+		String hql = "select mat from PurchaseItem item left join item.purchaseBill bill left join item.material mat left join bill.scmcoc scm left join fetch mat.unit u left join fetch mat.materialType t where bill.purchaseNo =? ";
+		param.add(purchaseNo);
+		if (StringUtils.isNotBlank(hsCode)) {
+			hql += " and mat.hsCode like ? ";
+			param.add("%" + hsCode + "%");
+		}
+		if (StringUtils.isNotBlank(hsName)) {
+			hql += " and mat.hsName like ? ";
+			param.add("%" + hsName + "%");
+		}
+		return this.find(hql, param.toArray());
 	}
 }

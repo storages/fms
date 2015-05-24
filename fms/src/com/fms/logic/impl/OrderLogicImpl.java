@@ -314,4 +314,23 @@ public class OrderLogicImpl implements OrderLogic {
 		return this.orderDao.findOrderHeadByStauts(isFinish);
 	}
 
+	public List<Material> findOrderItemMaterialByNo(String orderNo, String hsCode, String hsName) {
+		List<OrderItem> olist = this.orderDao.findOrderItemMaterialByNo(orderNo, hsCode, hsName);
+		List<Material> mlist = new ArrayList<Material>();
+		Set<String> set = new HashSet<String>();
+		if (!olist.isEmpty()) {
+			for (OrderItem item : olist) {
+				set.add(item.getHsCode());
+			}
+		}
+		if (!set.isEmpty()) {
+			mlist = materialDao.finsMaterialByHsCode(set.toArray());
+		}
+		return mlist;
+	}
+
+	public OrderHead findOrderHeadById(String id) {
+		return this.orderDao.load(OrderHead.class, id);
+	}
+
 }

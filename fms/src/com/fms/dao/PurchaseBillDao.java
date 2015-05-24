@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Quotation;
@@ -162,5 +163,15 @@ public interface PurchaseBillDao extends BaseDao {
 	 * @return
 	 */
 	public List<PurchaseBill> findPurchaseBill(Boolean isComplete, String purchStatus);
+
+	/**
+	 * 根据采购单号，物料编码，物料名称查询采购单表体中的物料信息
+	 * 
+	 * @param purchaseNo
+	 * @param hsCode
+	 * @param hsName
+	 * @return
+	 */
+	public List<Material> findPurchaseItemMaterialByNo(String purchaseNo, String hsCode, String hsName);
 
 }

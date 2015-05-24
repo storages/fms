@@ -19,8 +19,15 @@
 
 <script type="text/javascript">
 	$(function(){
+		
+		$(".number").keyup(function(){    
+            $(this).val($(this).val().replace(/[^0-9.]/g,''));    
+        }).bind("paste",function(){  //CTR+V事件处理    
+            $(this).val($(this).val().replace(/[^0-9.]/g,''));     
+        }).css("ime-mode", "disabled"); //CSS设置输入法不可用  
+		
 		initUi();
-		//货物标志改变事件
+		//物料标志改变事件
 		$("#imgexgflag").change(function(){
 			initUi();
 		});
@@ -39,6 +46,7 @@
 			}else if("成品其它入库"!=value && "E"==imgExg){
 				$("#orderNo").html("*");
 			}
+			$("#tfScmcoc").val("");
 		});
 		
 		$("#imgexgflag").change(function(){
@@ -81,12 +89,14 @@
 			var imgexgflag = $("#imgexgflag").val();
 			var inStorageNo = $("#inStorageNo").val();
 			var hsCode = $("#hsCode").val();
+			var inQty = $("#inQty").val();
+			var packQty = $("#packQty").val();
 			
 			var imgExg = $("#imgexgflag").val();
 			var value = $("#impExpType").find("option:selected").text();
 			var purchNo;
 			if("原料其它入库"!=value && "I"==imgExg){
-				purchNo = $("#purchNo").val();
+				purchNo = $("#tfPurchaseNo").val();
 				if(purchNo==""){
 					alert("采购单号不能为空!");
 					return;
@@ -94,7 +104,7 @@
 			}
 			var orderNo;
 			if("成品其它入库"!=value && "E"==imgExg){
-				orderNo = $("#orderNo").val();
+				orderNo = $("#tfOrderNo").val();
 				if(orderNo==""){
 					alert("订单号不能为空!");
 					return;
@@ -121,48 +131,134 @@
 				alert("物料编码不能为空!");
 				return;
 			}
+			
+			if(inQty==""){
+				alert("入库数量不能为空!");
+				return;
+			}
+			if(checkNumber(inQty)){
+				alert("入库数量只能填数字!");
+				return;
+			}
+			if(packQty==""){
+				alert("每件包装数量不能为空!");
+				return;
+			}
+			if(checkNumber(packQty)){
+				alert("每件包装数量只能填数字!");
+				return;
+			}
+			
 		});
+		
+		
 		
 		//采购单查询
 		$("#purchQuery").bind("click",function(){
 			showDialog('选择采购单','dgPurchaseQuery.jsp');
 			$("#dg_content").load("${pageContext.request.contextPath}/storage_findPurchaseHead.action");
 		});
-	});
+		//订单查询
+		$("#orderQuery").bind("click",function(){
+			showDialog('选择订单','dgOrderQuery.jsp');
+			$("#dg_content").load("${pageContext.request.contextPath}/storage_findOrderHeadList.action");
+		});
 		
-	$("#btnSure").click(function(){
-		var paramstr = "";      
-		 $('input[name="sid"]:checked').each(function(){//遍历每一个名字为materid的复选框，其中选中的执行函数      
-		 	paramstr+=$(this).val()+"/";//将选中的值组装成一个以'/'分割的字符串
-		 }); 
-		 if(paramstr==""){
-		 	alert("请选择物料");
-		 	return;
-		 }
+		//物料查询
+		$("#hsCodeQuery").bind("click",function(){
+			var purchNo = ($("#tfPurchaseNo").val()==null||$("#tfPurchaseNo").val()=="")?"":$("#tfPurchaseNo").val();
+			var orderNo = ($("#tfOrderNo").val()==null||$("#tfOrderNo").val()=="")?"":$("#tfOrderNo").val();
+			/*if(purchNo==null && orderNo==null){
+				alert("至少要填一个采购单号或订单号!");
+			}else{*/
+				showDialog('选择物料','dgMaterial.jsp');
+				var imgexgflag = $("#imgexgflag").val();
+				$("#dg_content").load("${pageContext.request.contextPath}/storage_findMaterial.action?imgExgFlag="+imgexgflag+"&purchaseNo="+purchNo+"&orderNo="+orderNo);
+			//}
+		});
+		
+		//自动计算件数(入库数量)触发
+		$("#inQty").bind("blur",function(){
+			autoCountPaks();
+		});
+		//自动计算件数(每件包装数量)触发
+		$("#packQty").bind("blur",function(){
+			autoCountPaks();
+		});
+		
+	});
+	
 		 $("#btnSure").click(function(){
-			 var id = "";      
-			 $('input[name="sid"]:checked').each(function(){//遍历每一个名字为materid的复选框，其中选中的执行函数      
+			 var id = "";    
+			 var hideflag = $("#hideflag").val();
+			 $('input[name="materid"]:checked').each(function(){//遍历每一个名字为materid的复选框，其中选中的执行函数      
 			 	id+=$(this).val()+"/";//将选中的值组装成一个以'/'分割的字符串
 			 }); 
 			 if(id==""){
-			 	alert("请选择采购单");
+				 if(hideflag=="material"){
+					 alert("请选择一条物料信息");
+				 }else if(hideflag=="purchase"){
+			 		alert("请选择一条采购单信息");
+				 }else if(hideflag=="order"){
+					 alert("请选择一条订单信息");
+				 }
 			 	return;
 			 }
-			 $.ajax({
-				 url:'${pageContext.request.contextPath}/storage_getPurchaseNoById.action',
-				 data:{id:id},
-				 async: false,
-				 cache: false,
-				 success:function(args){
-					var result=jQuery.parseJSON(args);
-					if(result.success){
-						$("#tfPurchaseNo").val(result.obj);
-						closeDialog();
-					}
-				 }
-			 });
+			 
+			 if(hideflag=="material"){
+				 $.ajax({
+					 url:'${pageContext.request.contextPath}/storage_getHsCodeByMaterialId.action',
+					 data:{id:id},
+					 async: false,
+					 cache: false,
+					 success:function(args){
+						var result=jQuery.parseJSON(args);
+						if(result.success){
+							$("#hsCode").val(result.obj.hsCode);
+							$("#hsName").val(result.obj.hsName);
+							$("#hsModel").val(result.obj.model);
+							$("#unitName").val(result.obj.unit.name);
+							closeDialog();
+						}
+					 }
+				 });
+			 }else if(hideflag=="purchase"){
+				 $.ajax({
+					 url:'${pageContext.request.contextPath}/storage_getPurchaseNoById.action',
+					 data:{id:id},
+					 async: false,
+					 cache: false,
+					 success:function(args){
+						var result=jQuery.parseJSON(args);
+						if(result.success){
+							$("#hsCode").val("");
+							$("#hsName").val("");
+							$("#hsModel").val("");
+							$("#unitName").val("");
+							$("#tfPurchaseNo").val(result.obj.purchaseNo);
+							$("#tfScmcoc").val(result.obj.scmcoc.name);
+							closeDialog();
+						}
+					 }
+				 });
+			 } else if(hideflag=="order"){
+				 $.ajax({
+					 url:'${pageContext.request.contextPath}/storage_getOrderNoById.action',
+					 data:{id:id},
+					 async: false,
+					 cache: false,
+					 success:function(args){
+						var result=jQuery.parseJSON(args);
+						if(result.success){
+							$("#tfOrderNo").val(result.obj.orderNo);
+							$("#tfScmcoc").val(result.obj.scmcoc.name);
+							closeDialog();
+						}
+					 }
+				 });
+			 }
+			 
 		 });
-		});
 	
 	function initUi(){
 		var val = $("#imgexgflag").val();
@@ -172,15 +268,45 @@
 			$("#captionScm").html("供应商名称");
 			$("#orderNo").html("");
 			$("#orderQuery").hide();
+			$("#tfOrderNo").val("");
 		}else if("E"==val){
 			$("#orderNo").html("*");
 			$("#orderQuery").show();
 			$("#captionScm").html("客户名称");
 			$("#purchNo").html("");
 			$("#purchQuery").hide();
+			$("#tfPurchaseNo").val("");
 		}
+			$("#hsCode").val("");
+			$("#hsName").val("");
+			$("#hsModel").val("");
+			$("#unitName").val("");
+			$("#tfScmcoc").val("");
 	}
 	
+	
+	function checkNumber(val){
+		return isNaN(val);
+	}
+	
+	//自动计算件数
+	function autoCountPaks(){
+			var inQty = $("#inQty").val();
+			var packQty = $("#packQty").val();
+			if(inQty!="" && packQty!="" && !checkNumber(inQty) &&!checkNumber(packQty)){
+				var url = '${pageContext.request.contextPath}/storage_conutPaks.action';
+				$.ajax({
+					url:url,
+					data:{inQty:inQty,packQty:packQty},
+					success:function(args){
+						var result=jQuery.parseJSON(args);
+						if(result.success){
+							$("#pkgs").val(result.obj);
+						}
+					}
+				});
+			}	
+	}
 	
 </script>
     <input type="hidden" id="flag" value="${storage.id}"/><!-- 为了判断是新增还是修改 -->
@@ -227,7 +353,7 @@
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">采购单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;" id="purchNo">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input id="tfPurchaseNo" type="text" value="${inStorage.purchaseNo}" style="height:25px; width:100%;  padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input id="tfPurchaseNo" type="text"  value="${inStorage.purchaseNo}" style="height:25px; width:100%;  padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
 				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="purchQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
@@ -236,13 +362,13 @@
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text" value="${inStorage.inStorageNo}"  id="inStorageNo" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">订单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"  id="orderNo">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" value="${inStorage.orderNo}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" id="tfOrderNo" value="${inStorage.orderNo}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
 				<td style="width: 10px;border:0px;padding:0px;"><img  src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="orderQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;" id="captionScm">供应商名称</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  value="${inStorage.scmcoc.name}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" id="tfScmcoc" value="${inStorage.scmcoc.name}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料编码</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  id="hsCode" value="${inStorage.material.hsCode}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
@@ -251,26 +377,26 @@
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料名称</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"   value="${inStorage.material.hsName}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"   value="${inStorage.material.hsName}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" id="hsName"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">规格型号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"   value="${inStorage.material.model}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"  id="hsModel" value="${inStorage.material.model}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">计量单位</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"   value="${inStorage.material.unit.name}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"  id="unitName" value="${inStorage.material.unit.name}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库数量</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"   value="${inStorage.inQty}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  class="number"  id="inQty" value="${inStorage.inQty}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">每件包装数</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"   value="${inStorage.specQty}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  class="number"    id="packQty" value="${inStorage.specQty}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">件数</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"   value="${inStorage.pkgs}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"  readonly="readonly"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  id="pkgs" value="${inStorage.pkgs}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"  readonly="readonly"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">仓库名称</td>

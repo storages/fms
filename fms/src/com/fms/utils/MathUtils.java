@@ -365,6 +365,24 @@ public class MathUtils {
 		return d;
 	}
 
+	/**
+	 * 向上取整或向下取整
+	 * 
+	 * @param d
+	 * @param upOrDown
+	 * @return
+	 */
+	public static int round(Double d, String upOrDown) {
+		if (d != null) {
+			if ("up".equals(upOrDown)) {
+				return (int) Math.ceil(d);
+			} else if ("down".equals(upOrDown)) {
+				return (int) Math.floor(d);
+			}
+		}
+		return 0;
+	}
+
 	public static String format(Number n, Integer len) {
 		n = nullToDefault(n, 0d);
 		BigDecimal decimal = new BigDecimal(n.doubleValue());
@@ -390,5 +408,8 @@ public class MathUtils {
 
 	public static void main(String[] args) {
 		System.out.println(round(1.5132342341, 0));
+		System.out.println(round(1.5132342341, "up"));
+		System.out.println(round(1.5132342341, "down"));
+		System.out.println(round(0d, "down"));
 	}
 }

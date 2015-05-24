@@ -23,6 +23,7 @@ import template.Test;
 
 import com.fms.commons.PurchaseBillStatus;
 import com.fms.core.entity.AclUser;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.vo.entity.ExportPurchaseVo;
@@ -241,5 +242,9 @@ public class PurchaseBillLogicImpl implements PurchaseBillLogic {
 
 	public List<PurchaseBill> findPurchaseBill(Boolean isComplete, String purchStatus) {
 		return this.purchaseBillDao.findPurchaseBill(isComplete, purchStatus);
+	}
+
+	public List<Material> findPurchaseItemMaterialByNo(String purchaseNo, String hsCode, String hsName) {
+		return this.purchaseBillDao.findPurchaseItemMaterialByNo(purchaseNo, hsCode, hsName);
 	}
 }

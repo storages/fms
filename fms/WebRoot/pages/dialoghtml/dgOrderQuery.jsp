@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<input type="hidden" id="hideflag" value="purchase" style="width: 120px;"/>
+<input type="hidden" id="hideflag" value="order" style="width: 120px;"/>
 <div class="row-fluid" >
 		<div class="span12">
 			<!--PAGE CONTENT BEGINS-->
@@ -11,13 +11,12 @@
 						<thead>
 					<tr align="center">
 						<th class="center" style="width:30px;">选择</th>
-						<th class="center" style="width:40px;">流水号</th>
-						<th class="center" style="width:91px;">采购单号</th>
-						<th class="center" style="width:91px;">申请单号</th>
-						<th class="center" style="width:70px;">供应商编码</th>
-						<th class="center" style="width:150px;">供应商名称</th>
-						<th class="center" style="width:90px;">采购时间</th>
-						<th class="center" style="width:160px;">特别说明</th>
+						<th class="center" style="width:40px;padding:0px;margin:0px;">流水号</th>
+						<th class="center" style="width:91px;">订单号</th>
+						<th class="center" style="width:130px;">客户名称</th>
+						<th class="center" style="width:90px;">下单日期</th>
+						<th class="center" style="width:90px;">交货日期</th>
+						<th class="center" style="width:90px;">业务员</th>
 					</tr>
 				</thead>
 						<tbody id="headmodel">
@@ -27,16 +26,14 @@
 										<input type="radio" value="${head.id}" name="materid" style="width:20px;"/>
 									</td>
 										<td class="center" style="width:31px;">${head.serialNo}&nbsp;</td>
-										<td class="center" style="width:91px;">${head.purchaseNo}&nbsp;</td>
-										<td class="center" style="width:91px;">${head.appBillNo}&nbsp;</td>
-										<td class="center" style="width:65px;">${head.scmcoc.code}&nbsp;</td>
+										<td class="center" style="width:91px;">${head.orderNo}&nbsp;</td>
 										<td class="center" style="width:65px;">${head.scmcoc.name}&nbsp;</td>
-										<td class="center" style="width:92px;"><fmt:formatDate value="${head.purchDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
-										<td class="center" style="width:65px;">${head.specialNote}&nbsp;</td>
+										<td class="center" style="width:92px;"><fmt:formatDate value="${head.placeOrderDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
+										<td class="center" style="width:92px;"><fmt:formatDate value="${head.deliveryDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
+										<td class="center" style="width:65px;">${head.salesman}&nbsp;</td>
 								</tr>
 							</c:forEach>
 						</tbody>
-							
 					</table>
 				</div>
 			</div>

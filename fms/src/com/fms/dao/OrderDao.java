@@ -153,4 +153,14 @@ public interface OrderDao extends BaseDao {
 	 * @return
 	 */
 	List<Material> findAllExgByOrderNo(String orderNo);
+
+	/**
+	 * 根据订单号，物料编码，物料名称查询订单表体
+	 * 
+	 * @param purchaseNo
+	 * @param hsCode
+	 * @param hsName
+	 * @return
+	 */
+	public List<OrderItem> findOrderItemMaterialByNo(String orderNo, String hsCode, String hsName);
 }

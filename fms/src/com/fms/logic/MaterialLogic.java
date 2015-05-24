@@ -52,4 +52,6 @@ public interface MaterialLogic {
 	 * @return
 	 */
 	public Boolean doSaveExcelData(List<TempMater> data, AclUser loginUser);
+
+	List<Material> finsMaterialByHsCode(String hsCode, String hsName, String imgExgFlag);
 }

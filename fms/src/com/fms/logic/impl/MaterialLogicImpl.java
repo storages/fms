@@ -221,4 +221,8 @@ public class MaterialLogicImpl implements MaterialLogic {
 		}
 		return mlist;
 	}
+
+	public List<Material> finsMaterialByHsCode(String hsCode, String hsName, String imgExgFlag) {
+		return this.materialDao.finsMaterialByHsCode(hsCode, hsName, imgExgFlag);
+	}
 }

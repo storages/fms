@@ -13,17 +13,22 @@ import com.fms.commons.ImgExgFlag;
 import com.fms.commons.ImpExpType;
 import com.fms.commons.PurchaseBillStatus;
 import com.fms.core.entity.InStorage;
+import com.fms.core.entity.Material;
+import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.OutStorage;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.Stock;
 import com.fms.core.vo.entity.TempEntity;
+import com.fms.logic.MaterialLogic;
 import com.fms.logic.MaterialTypeLogic;
+import com.fms.logic.OrderLogic;
 import com.fms.logic.PurchaseBillLogic;
 import com.fms.logic.ScmcocLogic;
 import com.fms.logic.StockLogic;
 import com.fms.logic.StorageLogic;
 import com.fms.logic.UnitLogic;
 import com.fms.utils.AjaxResult;
+import com.fms.utils.MathUtils;
 import com.url.ajax.json.JSONObject;
 
 /**
@@ -41,10 +46,12 @@ public class StorageAction extends BaseAction {
 
 	protected StorageLogic storageLogic;// 进出库逻辑
 	protected MaterialTypeLogic logic;// 物料类型逻辑
+	protected MaterialLogic materLogic;// 物料逻辑
 	protected UnitLogic unitLogic;// 计量单位逻辑
 	protected ScmcocLogic scmcocLogic;// 客户供应商逻辑
 	protected StockLogic stockLogic;// 仓库逻辑
 	protected PurchaseBillLogic purchaseBillLogic;// 采购单逻辑
+	protected OrderLogic orderLogic;// 订单逻辑
 
 	/********* 分页用的属性 ***********/
 	private Integer dataTotal;// 总记录数
@@ -68,8 +75,14 @@ public class StorageAction extends BaseAction {
 	protected Date endDate;
 	protected String scmcocName;
 	protected String hsName;
+	protected String hsCode;
 	protected String inOrOutFlag;// 进出库标志
 	protected String id;// 进出库id
+	protected String purchaseNo;// 采购单号
+	protected String orderNo;// 订单号
+	protected String imgExgFlag;// 物料标记
+	protected String inQty;// 入库数量
+	protected String packQty;// 每件包装数
 
 	/**
 	 * 获取入库列表数据
@@ -214,7 +227,135 @@ public class StorageAction extends BaseAction {
 			out = response.getWriter();
 			response.setContentType("application/text");
 			response.setCharacterEncoding("UTF-8");
-			result.setObj(bill.getPurchaseNo());
+			result.setObj(bill);
+			result.setSuccess(true);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 获取物料信息（如果有采购单就取采购单表体的物料，如果有订单，就取订单表体的物料，如果都没有，则取物料清单相应类型的所有数据）
+	 * 
+	 * @return
+	 */
+	public String findMaterial() {
+		try {
+			List<Material> mlist = new ArrayList<Material>();
+			// 如果有采购单就取采购单表体的物料
+			if (StringUtils.isNotBlank(purchaseNo)) {
+				mlist = this.purchaseBillLogic.findPurchaseItemMaterialByNo(purchaseNo, hsCode, this.parseValue(hsName));
+			} else if (StringUtils.isNotBlank(orderNo)) {
+				// 如果有订单，就取订单表体的物料
+				mlist = this.orderLogic.findOrderItemMaterialByNo(orderNo, hsCode, this.parseValue(hsName));
+			} else {
+				// 如果都没有，则取物料清单相应类型的所有数据
+				mlist = this.materLogic.finsMaterialByHsCode(hsCode, this.parseValue(hsName), imgExgFlag);
+			}
+			request.put("mlist", mlist);
+			request.put("imgExgFlag", imgExgFlag);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "materdialg";
+	}
+
+	/**
+	 * 选择物料信息
+	 * 
+	 * @return
+	 */
+	public String findMaterialList() {
+		List<Material> mlist = new ArrayList<Material>();
+		mlist = this.materLogic.finsMaterialByHsCode(hsCode, this.parseValue(hsName), imgExgFlag);
+		request.put("mlist", mlist);
+		request.put("hsCode", hsCode);
+		request.put("hsName", this.parseValue(hsName));
+		request.put("imgExgFlag", imgExgFlag);
+		return "materdialg";
+	}
+
+	/**
+	 * 获取订单信息
+	 */
+	public String findOrderHeadList() {
+		List<OrderHead> olist = new ArrayList<OrderHead>();
+		olist = this.orderLogic.findOrderHeadByStauts(false);
+		request.put("headList", olist);
+		return "dgorder";
+	}
+
+	/**
+	 * 根据id获取物料信息
+	 */
+	public void getHsCodeByMaterialId() {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				id = id.split("/")[0];
+			}
+			Material material = this.materLogic.findMaterialById(getLoginUser(), id);
+			PrintWriter out = null;
+			AjaxResult result = new AjaxResult();
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			result.setObj(material);
+			result.setSuccess(true);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 根据id获取订单号
+	 */
+	public void getOrderNoById() {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				id = id.split("/")[0];
+			}
+			OrderHead head = this.orderLogic.findOrderHeadById(id);
+			PrintWriter out = null;
+			AjaxResult result = new AjaxResult();
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			result.setObj(head);
+			result.setSuccess(true);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 自动计算件数
+	 */
+	public void conutPaks() {
+		try {
+			PrintWriter out = null;
+			AjaxResult result = new AjaxResult();
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			Double qty = 0d;
+			Double packQtys = 0d;
+			if (StringUtils.isNotBlank(inQty) && isNumeric(inQty)) {
+				qty = Double.parseDouble(inQty);
+			}
+			if (StringUtils.isNotBlank(packQty) && isNumeric(packQty)) {
+				packQtys = Double.parseDouble(packQty);
+			}
+			int pcs = MathUtils.round(MathUtils.dividend(qty, packQtys), "up");
+			result.setObj(pcs);
 			result.setSuccess(true);
 			JSONObject json = new JSONObject(result);
 			out.println(json.toString());
@@ -413,6 +554,86 @@ public class StorageAction extends BaseAction {
 
 	public void setPurchaseBillLogic(PurchaseBillLogic purchaseBillLogic) {
 		this.purchaseBillLogic = purchaseBillLogic;
+	}
+
+	public MaterialLogic getMaterLogic() {
+		return materLogic;
+	}
+
+	public void setMaterLogic(MaterialLogic materLogic) {
+		this.materLogic = materLogic;
+	}
+
+	public String getPurchaseNo() {
+		return purchaseNo;
+	}
+
+	public void setPurchaseNo(String purchaseNo) {
+		this.purchaseNo = purchaseNo;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public String getHsName() {
+		return hsName;
+	}
+
+	public void setHsName(String hsName) {
+		this.hsName = hsName;
+	}
+
+	public String getScmcocName() {
+		return scmcocName;
+	}
+
+	public void setScmcocName(String scmcocName) {
+		this.scmcocName = scmcocName;
+	}
+
+	public String getHsCode() {
+		return hsCode;
+	}
+
+	public void setHsCode(String hsCode) {
+		this.hsCode = hsCode;
+	}
+
+	public OrderLogic getOrderLogic() {
+		return orderLogic;
+	}
+
+	public void setOrderLogic(OrderLogic orderLogic) {
+		this.orderLogic = orderLogic;
+	}
+
+	public String getImgExgFlag() {
+		return imgExgFlag;
+	}
+
+	public void setImgExgFlag(String imgExgFlag) {
+		this.imgExgFlag = imgExgFlag;
+	}
+
+	public String getInQty() {
+		return inQty;
+	}
+
+	public void setInQty(String inQty) {
+		this.inQty = inQty;
+	}
+
+	public String getPackQty() {
+		return packQty;
+	}
+
+	public void setPackQty(String packQty) {
+		this.packQty = packQty;
 	}
 
 }

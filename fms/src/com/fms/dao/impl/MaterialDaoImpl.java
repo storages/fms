@@ -3,6 +3,8 @@ package com.fms.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fms.base.dao.BaseDaoImpl;
 import com.fms.core.entity.AclUser;
 import com.fms.core.entity.Material;
@@ -178,5 +180,39 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public List<Material> finsMaterialByHsCode(Object[] hsCodes) {
+		List param = new ArrayList();
+		String hql = "select mat from Material mat left join fetch mat.materialType mt left join fetch mat.unit u where mat.hsCode =? ";
+		param.add(hsCodes[0]);
+		if (hsCodes.length > 1) {
+			for (int i = 1; i < hsCodes.length; i++) {
+				hql += " or mat.hsCode =? ";
+				param.add(hsCodes[i]);
+			}
+		}
+		return this.find(hql, param.toArray());
+	}
+
+	public List<Material> finsMaterialByHsCode(String hsCode, String hsName, String imgExgFlag) {
+		try {
+			List param = new ArrayList();
+			String hql = "select mat from Material mat left join fetch mat.materialType mt left join fetch mat.unit u where 1=1";
+			if (StringUtils.isNotBlank(hsCode)) {
+				hql += " and mat.hsCode like ? ";
+				param.add("%" + hsCode + "%");
+			}
+			if (StringUtils.isNotBlank(hsName)) {
+				hql += " and mat.hsName like ? ";
+				param.add("%" + hsName + "%");
+			}
+			hql += " and mat.imgExgFlag =? ";
+			param.add(imgExgFlag);
+			return this.find(hql, param.toArray());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

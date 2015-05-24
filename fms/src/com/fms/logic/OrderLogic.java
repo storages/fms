@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.core.entity.AclUser;
+import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderHead;
 import com.fms.core.entity.OrderItem;
 import com.fms.temp.TempOrder;
@@ -176,4 +177,21 @@ public interface OrderLogic {
 	 * @return
 	 */
 	List<OrderHead> findOrderHeadByStauts(Boolean isFinish);
+
+	/**
+	 * 根据订单号，物料编码，物料名称查询订单表体物料信息
+	 * 
+	 * @param purchaseNo
+	 * @param hsCode
+	 * @param hsName
+	 * @return
+	 */
+	public List<Material> findOrderItemMaterialByNo(String orderNo, String hsCode, String hsName);
+
+	/**
+	 * 根据Id查找订单表头
+	 * 
+	 * @return
+	 */
+	public OrderHead findOrderHeadById(String id);
 }

@@ -101,6 +101,11 @@ public class BaseAction extends ActionSupport {
 		return str.trim().matches(reg);
 	}
 
+	public static void main(String[] args) {
+		System.out.println(isNumeric("a123"));// false
+		System.out.println(isNumeric("123"));// true
+	}
+
 	/**
 	 * 前台传来的json格式字符串
 	 */

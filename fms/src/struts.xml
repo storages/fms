@@ -159,6 +159,8 @@
 			<result name="edit">/pages/storage/storageedit.jsp</result>
 			<result name="save" type="chain">storage_findAllInStorage</result>
 			<result name="dialog">/pages/dialoghtml/dgPurchaseQuery.jsp</result>
+			<result name="materdialg">/pages/dialoghtml/dgMaterial.jsp</result>
+			<result name="dgorder">/pages/dialoghtml/dgOrderQuery.jsp</result>
 		</action>
 		
 		<!-- 报价单 -->

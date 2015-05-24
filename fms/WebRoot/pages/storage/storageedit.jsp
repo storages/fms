@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <jsp:include page="/pages/templet/dialog.jsp"></jsp:include>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -96,12 +97,11 @@ function parse(str){
 			var hsCode = $("#hsCode").val();
 			var inQty = $("#inQty").val();
 			var packQty = $("#packQty").val();
-			
+			var id = $("#flag").val();
 			var imgExg = $("#imgexgflag").val();
 			var value = $("#impExpType").find("option:selected").text();
-			var purchNo;
+			var purchNo=  ($("#tfPurchaseNo").val()==undefined||$("#tfPurchaseNo").val()=="")?"":$("#tfPurchaseNo").val();
 			if("原料其它入库"!=value && "I"==imgExg){
-				purchNo = $("#tfPurchaseNo").val();
 				if(purchNo==""){
 					alert("采购单号不能为空!");
 					return;
@@ -161,7 +161,6 @@ function parse(str){
 			var stockId = $("#stockName").val();
 			var pkgs = $("#pkgs").val();
 			var note = $("#note").val();
-			var id = $("#flag").val();
 			var orderNo = ($("#tfOrderNo").val()==undefined||$("#tfOrderNo").val()=="")?"":$("#tfOrderNo").val();
 			var url = "${pageContext.request.contextPath}/storage_saveInStorage.action";
 			var data = "serialNo="+serialNo+"&impFlag="+impExpType+"&imgExgFlag="+imgexgflag;
@@ -296,26 +295,33 @@ function parse(str){
 	
 	function initUi(){
 		var val = $("#imgexgflag").val();
+		var isClear = $("#isClear").val();
 		if("I"==val){
 			$("#purchNo").html("*");
 			$("#purchQuery").show();
 			$("#captionScm").html("供应商名称");
-			$("#orderNo").html("");
 			$("#orderQuery").hide();
-			$("#tfOrderNo").val("");
+			$("#orderNo").html("");
+			if("false"!=isClear){
+				$("#tfOrderNo").val("");
+			}
 		}else if("E"==val){
 			$("#orderNo").html("*");
 			$("#orderQuery").show();
 			$("#captionScm").html("客户名称");
 			$("#purchNo").html("");
 			$("#purchQuery").hide();
-			$("#tfPurchaseNo").val("");
+			if("false"!=isClear){
+				$("#tfPurchaseNo").val("");
+			}
 		}
+		if("false"!=isClear){
 			$("#hsCode").val("");
 			$("#hsName").val("");
 			$("#hsModel").val("");
 			$("#unitName").val("");
 			$("#tfScmcoc").val("");
+		}
 	}
 	
 	
@@ -343,8 +349,9 @@ function parse(str){
 	}
 	
 </script>
-    <input type="hidden" id="flag" value="${storage.id}"/><!-- 为了判断是新增还是修改 -->
+    <input type="text" id="flag" value="${inStorage.id}"/><!-- 为了判断是新增还是修改 -->
     <input type="hidden" id="inOrOutFlag" value="${inOrOutFlag}"/>
+    <input type="hidden" id="isClear" value="${isClear}"/>
    <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
     	<c:if test="${storage.id==null}">
 			<h5>物料＞＞<a href="javascript:void(0);" id="addgoback">入库</a>＞＞新增</h5>
@@ -442,9 +449,27 @@ function parse(str){
 						</c:forEach>
 					</select>
 				</td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">启用状态</td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
+				<td style="width: 150px;border:0px;padding:0px;">
+					<c:if test="${inStorage.useFlag=='1'}">
+						<input name="useFlag"  type="radio" value="${inStorage.useFlag}" checked="checked" />停用　　
+					</c:if>
+					<c:if test="${inStorage.useFlag!='1'}">
+						<input name="useFlag"  type="radio" value="${inStorage.useFlag}"  />停用　　
+					</c:if>
+					<c:if test="${inStorage.useFlag=='0'}">
+						<input name="useFlag"  type="radio" value="${inStorage.useFlag}" checked="checked" />启用　　
+					</c:if>
+					<c:if test="${inStorage.useFlag!='0'}">
+						<input name="useFlag"  type="radio" value="${inStorage.useFlag}"  />启用　　
+					</c:if>
+				</td>
+			</tr>
+			<tr>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">备注</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" id="note"  value="${inStorage.note}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
+				<td colspan="4"  style="width: 150px;border:0px;padding:0px;"><textarea id="note"   style="resize: none; height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;">${inStorage.note}</textarea></td>
 			</tr>
 			<tr style="border:0px;text-align:center; ">
 				<td colspan="6" style="border:0px;text-align:center;">

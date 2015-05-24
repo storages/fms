@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepicker/jquery-ui-1.8.16.custom.css" type="text/css"></link>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils/chinese-of-spell.js"></script>
@@ -30,6 +31,10 @@
   			alert("查询");
   		});
   	});
+  	
+  	function editData(id){
+  		toMain("${pageContext.request.contextPath}/storage_editStorage.action?id="+ id +"&inOrOutFlag=in");
+  	}
   </script>
 
      <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
@@ -77,7 +82,7 @@
 								<th class="center" width="90px;">供应商名称</th>
 								<th class="center" width="60px;">仓库名称</th>
 								<th class="center" width="60px;">物料标志</th>
-								<th class="center" width="60px;">入库类型</th>
+								<th class="center" width="70px;">入库类型</th>
 								<th class="center" width="60px;">物料类型</th>
 								<th class="center" width="60px;">入库人</th>
 								<th class="center" width="80px;">入库日期</th>
@@ -119,10 +124,10 @@
 										<td class="hidden-480 center">${storage.impFlag}&nbsp;</td>
 										<td class="hidden-480 center">${storage.material.materialType.typeName}&nbsp;</td>
 										<td class="hidden-480 center">${storage.handling}&nbsp;</td>
-										<td class="hidden-480 center">${storage.impDate}&nbsp;</td>
+										<td class="hidden-480 center"><fmt:formatDate value="${storage.impDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
 										<td class="hidden-480 center">${storage.note}&nbsp;</td>
 									<td class="center">
-										<a href="javascript:void(0);" >修改</a>
+										<a href="javascript:void(0);"  onclick="editData('${storage.id}')">修改</a>&nbsp;|
 										<a href="javascript:void(0);" >删除</a>
 									</td>
 								</tr>

@@ -90,16 +90,23 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 	}
 
 	public Integer findMaxSerialNo(String entityName, String imgExgFlag) {
-		return (Integer) this.uniqueResult("select max(a.serialNo) from " + entityName.trim() + " a where a.imgExgFlag =? ", new Object[] { imgExgFlag });
+		List params = new ArrayList();
+		String hql = "select max(a.serialNo) from " + entityName.trim() + " a ";
+		// if (StringUtils.isNotBlank(imgExgFlag)) {
+		// hql += " where a.imgExgFlag =? ";
+		// params.add(imgExgFlag);
+		// }
+		return (Integer) this.uniqueResult(hql, params.toArray());
 	}
 
 	public Object findStorageById(Class clazz, String id) {
 		String hql = "select a from " + clazz.getSimpleName() + " a " //
 				+ " left join fetch a.material b " //
-				+ " left join a.scmcoc c " //
+				+ " left join fetch a.scmcoc c " //
 				+ " left join fetch c.settlement d " //
 				+ " left join fetch b.unit e "//
 				+ " left join fetch b.materialType f  "//
+				+ " left join fetch a.stock g  "//
 				+ " where a.id =? ";
 		return this.findUniqueResult(hql, new Object[] { id });
 	}

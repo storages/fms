@@ -141,19 +141,25 @@ public class StorageAction extends BaseAction {
 	 * @return
 	 */
 	public String editStorage() {
-		if (StringUtils.isNotBlank(impExpFlag)) {
+		try {
+			// if (StringUtils.isNotBlank(impExpFlag)) {
 			Integer maxSerialNo = this.storageLogic.findMaxSerialNo(getLoginUser(), "InStorage", impExpFlag);
 			Integer serialNo = 0;
 			if (null == maxSerialNo || maxSerialNo == 0) {
 				serialNo = 1;
+			} else {
+				serialNo = ++maxSerialNo;
 			}
 			InStorage storage = null;
 			if (StringUtils.isBlank(id)) {
 				storage = new InStorage();
 				storage.setSerialNo(serialNo);
+			} else {
+				storage = (InStorage) this.storageLogic.findStorageById(InStorage.class, id);
 			}
 			// String imgExgFlag = "0".equals(impExpFlag) ? ImgExgFlag.EXG :
 			// ImgExgFlag.IMG;
+			this.impExpFlag = this.impExpFlag == null ? storage.getImgExgFlag() : this.impExpFlag;
 			List<TempEntity> typeList = ImpExpType.getImgTypeByMaterialType(impExpFlag);
 			getTypeList(typeList);
 			List<Stock> stockList = stockLogic.findAllStock(getLoginUser(), null, -1, -1);
@@ -162,6 +168,10 @@ public class StorageAction extends BaseAction {
 			this.request.put("stockList", stockList);
 			this.request.put("inOrOutFlag", inOrOutFlag);
 			this.request.put("inStorage", storage);
+			this.request.put("isClear", "false");
+			// }
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return "edit";
 	}
@@ -435,7 +445,7 @@ public class StorageAction extends BaseAction {
 			inStorage.setNote(this.parseValue(note));// 备注
 			inStorage.setUseFlag("0");// 默认启用
 			inStorage.setImpDate(new Date());// 入库日期
-			inStorage.setHandling(this.getLoginUser().getUserName());// 入库人
+			inStorage.setHandling(this.getLoginUser().getLoginName());// 入库人
 			this.storageLogic.saveStorage(inStorage);
 			result.setSuccess(true);
 			JSONObject json = new JSONObject(result);

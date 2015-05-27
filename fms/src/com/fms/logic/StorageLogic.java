@@ -56,5 +56,17 @@ public interface StorageLogic {
 	 */
 	Object findStorageById(Class clazz, String id);
 
-	void saveStorage(Object storage);
+	/**
+	 * 保存出入库
+	 * 
+	 * @param storage
+	 */
+	void saveStorage(AclUser user, Object storage);
+
+	/**
+	 * 根据id删除多条出入库
+	 * 
+	 * @param ids
+	 */
+	void deleteStoragesByIds(AclUser user, String entityName, String[] ids);
 }

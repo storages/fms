@@ -927,4 +927,13 @@ public class AppBillAction extends BaseAction {
 		}
 		return isBack;
 	}
+
+	/**
+	 * 调用excel导入页面
+	 * 
+	 * @return
+	 */
+	public String toImportPage() {
+		return "importexcel";
+	}
 }

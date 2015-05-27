@@ -39,10 +39,16 @@ public class StorageLogicImpl implements StorageLogic {
 		return this.storageDao.findStorageById(clazz, id);
 	}
 
-	public void saveStorage(Object storage) {
+	public void saveStorage(AclUser user, Object storage) {
 		if (null != storage) {
 			this.storageDao.saveOrUpdate(storage);
 		}
 
+	}
+
+	public void deleteStoragesByIds(AclUser user, String entityName, String[] ids) {
+		if (null != ids && ids.length > 0) {
+			this.storageDao.deleteStoragesByIds(entityName, ids);
+		}
 	}
 }

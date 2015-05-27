@@ -161,6 +161,7 @@
 			<result name="dialog">/pages/dialoghtml/dgPurchaseQuery.jsp</result>
 			<result name="materdialg">/pages/dialoghtml/dgMaterial.jsp</result>
 			<result name="dgorder">/pages/dialoghtml/dgOrderQuery.jsp</result>
+			<result name="importexcel">/pages/import/storageimport.jsp</result>
 		</action>
 		
 		<!-- 报价单 -->
@@ -175,6 +176,7 @@
 			<result name="success">/pages/appbill/appbillpage.jsp</result>
 			<result name="item">/pages/appbill/appbillitem.jsp</result>
 			<result name="mater">/pages/dialoghtml/dgMaterial.jsp</result>
+			<result name="importexcel">/pages/import/quotationimport.jsp</result>
 		</action>
 		
 		<!-- 采购单 -->
@@ -189,7 +191,7 @@
 			<!-- <result name="detail">/pages/purchase/purchaseItem.jsp</result> -->
 		</action>
 		
-			<!-- 日志 -->
+			<!-- 权限 -->
 		<action name="pivi_*" class="privilegeAction" method="{1}">
 			<result name="privileges">/pages/privilege/privilegemanager.jsp</result>
 			<result name="addPivi">/pages/privilege/addprivilege.jsp</result>

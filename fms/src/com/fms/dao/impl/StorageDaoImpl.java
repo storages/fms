@@ -44,12 +44,12 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 			params.add(FmsDateUtils.getEndDate(endDate));
 		}
 		if (StringUtils.isNotBlank(scmcocName)) {
-			sql.append(" and scm.name =? ");
-			params.add(scmcocName);
+			sql.append(" and scm.name like ? ");
+			params.add("%" + scmcocName + "%");
 		}
 		if (StringUtils.isNotBlank(hsName)) {
-			sql.append(" and mat.hsName =? ");
-			params.add(scmcocName);
+			sql.append(" and mat.hsName like ? ");
+			params.add("%" + hsName + "%");
 		}
 		return this.findPageList(sql.toString(), params.toArray(), index, length);
 	}
@@ -79,12 +79,12 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 			params.add(FmsDateUtils.getEndDate(endDate));
 		}
 		if (StringUtils.isNotBlank(scmcocName)) {
-			sql.append(" and scm.name =? ");
-			params.add(scmcocName);
+			sql.append(" and scm.name like ? ");
+			params.add("%" + scmcocName + "%");
 		}
 		if (StringUtils.isNotBlank(hsName)) {
-			sql.append(" and mat.hsName =? ");
-			params.add(scmcocName);
+			sql.append(" and mat.hsName like ? ");
+			params.add("%" + hsName + "%");
 		}
 		return this.count(sql.toString(), params.toArray());
 	}
@@ -110,4 +110,18 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 				+ " where a.id =? ";
 		return this.findUniqueResult(hql, new Object[] { id });
 	}
+
+	public void deleteStoragesByIds(String entityName, String[] ids) {
+		List param = new ArrayList();
+		if (null != ids && ids.length > 0) {
+			String hql = "DELETE FROM " + entityName + " a WHERE a.id = ? ";
+			param.add(ids[0]);
+			for (int i = 1; i < ids.length; i++) {
+				hql += " OR a.id =? ";
+				param.add(ids[i]);
+			}
+			this.batchUpdateOrDelete(hql, param.toArray());
+		}
+	}
+
 }

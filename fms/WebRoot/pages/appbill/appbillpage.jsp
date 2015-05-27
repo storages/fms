@@ -121,7 +121,7 @@
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="add" style="margin-left: 10px;" onclick="javascript:toMain('${pageContext.request.contextPath}/appbill_addAppBillHead.action')">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" id="save" onclick="saveData()">保存</button>
 				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal"  onclick="delData('','AppBillHead')">批量删除</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/quotation_toImportPage.action')">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/appbill_toImportPage.action')">Excel导入</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="submitBill()">提交申请</button>
 			</c:if>
 				<c:if test="${u.userFlag=='S'||u.userFlag=='L'}">

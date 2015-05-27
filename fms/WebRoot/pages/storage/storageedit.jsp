@@ -35,11 +35,13 @@ function parse(str){
 		initUi();
 		//物料标志改变事件
 		$("#imgexgflag").change(function(){
+			$("#isClear").val("");
 			initUi();
 		});
 		
 		//入库类型改变事件
 		$("#impExpType").change(function(){
+			$("#isClear").val("");
 			var imgExg = $("#imgexgflag").val();
 			var value = $(this).find("option:selected").text();
 			if("原料其它入库"==value && "I"==imgExg){
@@ -52,10 +54,11 @@ function parse(str){
 			}else if("成品其它入库"!=value && "E"==imgExg){
 				$("#orderNo").html("*");
 			}
-			$("#tfScmcoc").val("");
+			initUi();
 		});
 		
 		$("#imgexgflag").change(function(){
+			$("#isClear").val("");
 			var val = $("#imgexgflag").val();
 			var inOrOutFlag = $("#inOrOutFlag").val();
 			var url ="${pageContext.request.contextPath}/storage_loadImpExpType.action";
@@ -302,18 +305,12 @@ function parse(str){
 			$("#captionScm").html("供应商名称");
 			$("#orderQuery").hide();
 			$("#orderNo").html("");
-			if("false"!=isClear){
-				$("#tfOrderNo").val("");
-			}
 		}else if("E"==val){
 			$("#orderNo").html("*");
 			$("#orderQuery").show();
 			$("#captionScm").html("客户名称");
 			$("#purchNo").html("");
 			$("#purchQuery").hide();
-			if("false"!=isClear){
-				$("#tfPurchaseNo").val("");
-			}
 		}
 		if("false"!=isClear){
 			$("#hsCode").val("");
@@ -321,6 +318,8 @@ function parse(str){
 			$("#hsModel").val("");
 			$("#unitName").val("");
 			$("#tfScmcoc").val("");
+			$("#tfPurchaseNo").val("");
+			$("#tfOrderNo").val("");
 		}
 	}
 	
@@ -349,7 +348,7 @@ function parse(str){
 	}
 	
 </script>
-    <input type="text" id="flag" value="${inStorage.id}"/><!-- 为了判断是新增还是修改 -->
+    <input type="hidden" id="flag" value="${inStorage.id}"/><!-- 为了判断是新增还是修改 -->
     <input type="hidden" id="inOrOutFlag" value="${inOrOutFlag}"/>
     <input type="hidden" id="isClear" value="${isClear}"/>
    <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">

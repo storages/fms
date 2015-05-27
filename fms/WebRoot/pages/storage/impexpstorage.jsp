@@ -28,7 +28,29 @@
   		
   		//查询按钮
   		$("#btnQuery").bind("click",function(){
-  			alert("查询");
+  			var startDate = $("#beginDate").val();
+  			var endDate = $("#endDate").val();
+  			var scmcocName = $("#scmcocName").val();
+  			var hsName = $("#hsName").val();
+  			var url = "${pageContext.request.contextPath}/storage_findAllInStorage.action?startDate="+startDate+"&endDate="+endDate+"&scmcocName="+parse(scmcocName)+"&hsName="+parse(hsName);
+  			toMain(url);
+  		});
+  		
+  		//修改按钮
+  		$("#btnEdit").bind("click",function(){
+  			var idsArr = [];
+  			$("#dataBody input[name='sid']:checked").each(function(){
+  				idsArr.push($(this).val());
+  			});
+  			if(idsArr ==null || idsArr.length==0){
+  				alert("请勾选一条信息!");
+  				return;
+  			}
+  			if(idsArr !=null&&idsArr.length>1){
+  				alert("只能勾选一条信息!");
+  				return;
+  			}
+  			editData(idsArr[0]);
   		});
   	});
   	
@@ -41,9 +63,9 @@
 		<h5>物料＞＞入库</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
-		<span class="">入库日期</span><input type="text" id="beginDate" value="${startDate}" style="height:25px; width:100px;" readonly="readonly" /><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
-		<span class="">供应商名称</span><input type="text" id="scmcocName" value="${endDate}"  style="height:25px; width:100px;" class=""/>
-		<span class="">物料名称</span><input type="text" id="search" value="${hsName}" style="height:25px; width:100px;" class=""/>
+		<span class="">入库日期</span><input type="text" id="beginDate" value="${startDate}" style="height:25px; width:100px;"/><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
+		<span class="">供应商名称</span><input type="text" id="scmcocName" value="${scmcocName}"  style="height:25px; width:100px;" class=""/>
+		<span class="">物料名称</span><input type="text" id=hsName value="${hsName}" style="height:25px; width:100px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" id="btnQuery" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 		<c:if test="${imgexgflag=='I'}">
 		 	<input type="radio" name="materialType" value="I" style="margin-top: -5px;" onchange="changematerialtype('I')" value="I" checked="checked"/>&nbsp;原料　
@@ -64,7 +86,7 @@
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover"  style=" font-size: 12px;overflow: scroll;">
 						<thead>
 							<tr>
-								<th class="center" style="width:30px;"><input type="checkbox" title="全选" id="checkAll"/></th>
+								<th class="center" style="width:30px;"><input id="checkAll" type="checkbox"/></th>
 								<th class="center" width="50px;">流水号</th>
 								<th class="center" width="40px;" >状态</th>
 								<th class="center" width="60px;">入库单号</th>
@@ -90,10 +112,10 @@
 								<th class="center" width="60px;">操作</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="dataBody">
 						<c:forEach var="storage" varStatus="index" step="1" items="${storageList}">
 							<tr <c:if test="${ storage.useFlag==1}">style="color: red;" </c:if>>
-									<td class="center" style="width:30px;" ><input type="checkbox" value="${bom.id}" name="sid" style="width:30px;"/></td>
+									<td class="center" style="width:30px;" ><input type="checkbox" value="${storage.id}" name="sid" style="width:30px;"/></td>
 									<td class="center"><a href="#">${index.index+1}</a></td>
 									<c:if  test="${ storage.useFlag==0}">
 										<td class="center">启用</td>
@@ -128,7 +150,7 @@
 										<td class="hidden-480 center">${storage.note}&nbsp;</td>
 									<td class="center">
 										<a href="javascript:void(0);"  onclick="editData('${storage.id}')">修改</a>&nbsp;|
-										<a href="javascript:void(0);" >删除</a>
+										<a href="javascript:void(0);" onclick="delData('${storage.id}','InStorage')"" >删除</a>
 									</td>
 								</tr>
 						</c:forEach>
@@ -139,10 +161,11 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/storage_editStorage.action?impExpFlag=I&inOrOutFlag=in');">新增</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delMoreMater('I')">
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button"  id="btnEdit">修改</button>
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','InStorage')">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="showImport()">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/storage_toImportPage.action')">Excel导入</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>
@@ -177,3 +200,5 @@
 		</div>
 	</div>
   </body>
+
+  

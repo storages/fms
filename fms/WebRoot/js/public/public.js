@@ -137,8 +137,8 @@ function delMoreMater(flag){
 
 /**
  * 删除公共方法
- * @param ids 传过来的id,每行后面的【删除】所传来的id;【批量删除】参数传''即可
- * @param flag 这个参数是为了标识提交的地址，也就是下面getUrl(flag)方法要用到的
+ * @param ids 传过来的id,每行后面的【删除】所传来的id;【批量删除】参数传空''即可
+ * @param flag 这个参数是为了标识提交的地址(删除的表名)，也就是下面getUrl(flag)方法要用到的
  */
 function delData(ids,flag){
 	var splitStr = "";
@@ -264,6 +264,10 @@ function getUrl(flag){
 			var hid = $("#hid").val();
 			url[0] = "${pageContext.request.contextPath}/order_delOrderItems.action";
 			url[1] = "${pageContext.request.contextPath}/order_findOrderItems.action?hid="+hid;
+			break;
+		case "InStorage":
+			url[0] = "${pageContext.request.contextPath}/storage_delStorages.action";
+			url[1] = "${pageContext.request.contextPath}/storage_findAllInStorage.action";
 			break;
 	}
 	return url;

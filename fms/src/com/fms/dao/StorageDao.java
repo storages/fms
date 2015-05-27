@@ -54,4 +54,11 @@ public interface StorageDao extends BaseDao {
 	 * @return
 	 */
 	Object findStorageById(Class clazz, String id);
+
+	/**
+	 * 根据id删除多条出入库
+	 * 
+	 * @param ids
+	 */
+	void deleteStoragesByIds(String entityName, String[] ids);
 }

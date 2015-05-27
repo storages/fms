@@ -2,6 +2,8 @@ package com.fms.action;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,8 +74,8 @@ public class StorageAction extends BaseAction {
 	protected OutStorage outStorage;// 出库
 	protected String entityName;
 	protected String impExpFlag;// 进出标志
-	protected Date startDate;
-	protected Date endDate;
+	protected String startDate;
+	protected String endDate;
 	protected String scmcocName;
 	protected String serialNo;
 	protected String hsName;
@@ -93,6 +95,7 @@ public class StorageAction extends BaseAction {
 	protected String inStorageNo;// 入库单号
 	protected String stockId;// 仓库id
 	protected String note;// 备注
+	protected String ids;// 批量删除时，public.js传过来的多个id以，分割的字符串
 
 	/**
 	 * 获取入库列表数据
@@ -101,10 +104,22 @@ public class StorageAction extends BaseAction {
 	 */
 	public String findAllInStorage() {
 		try {
+			startDate = "".equals(startDate) ? null : startDate;
+			endDate = "".equals(endDate) ? null : endDate;
+			Date date = null;
+			if (null != startDate) {
+				date = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+			}
+			Date date2 = null;
+			if (null != endDate) {
+				date2 = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+			}
+
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
-			dataTotal = this.storageLogic.findDataCount("InStorage", startDate, endDate, scmcocName, hsName, impExpFlag);
-			List storageList = this.storageLogic.findStorage(getLoginUser(), "InStorage", startDate, endDate, impExpFlag, parseValue(scmcocName), parseValue(hsName), (curr - 1) * DEFAULT_PAGESIZE,
+			System.out.println(parseValue(scmcocName));
+			dataTotal = this.storageLogic.findDataCount("InStorage", date, date2, parseValue(scmcocName), parseValue(hsName), impExpFlag);
+			List storageList = this.storageLogic.findStorage(getLoginUser(), "InStorage", date, date2, parseValue(scmcocName), parseValue(hsName), impExpFlag, (curr - 1) * DEFAULT_PAGESIZE,
 					DEFAULT_PAGESIZE);
 
 			for (Object obj : storageList) {
@@ -122,6 +137,8 @@ public class StorageAction extends BaseAction {
 			this.request.put("scmcocName", parseValue(scmcocName));
 			this.request.put("hsName", parseValue(hsName));
 		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return this.SUCCESS;
@@ -446,13 +463,46 @@ public class StorageAction extends BaseAction {
 			inStorage.setUseFlag("0");// 默认启用
 			inStorage.setImpDate(new Date());// 入库日期
 			inStorage.setHandling(this.getLoginUser().getLoginName());// 入库人
-			this.storageLogic.saveStorage(inStorage);
+			this.storageLogic.saveStorage(this.getLoginUser(), inStorage);
 			result.setSuccess(true);
 			JSONObject json = new JSONObject(result);
 			out.println(json.toString());
 			out.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 删除出入库信息
+	 */
+	public void delStorages() {
+		try {
+			if (StringUtils.isNotBlank(ids)) {
+				String[] idsArr = ids.split(",");
+				PrintWriter out = null;
+				AjaxResult result = new AjaxResult();
+				if (idsArr != null && idsArr.length > 0) {
+					out = response.getWriter();
+					response.setContentType("application/text");
+					response.setCharacterEncoding("UTF-8");
+					this.storageLogic.deleteStoragesByIds(getLoginUser(), "InStorage", idsArr);
+					result.setSuccess(true);
+					result.setMsg("删除成功！");
+					JSONObject json = new JSONObject(result);
+					out.println(json.toString());
+					out.flush();
+					out.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.setSuccess(false);
+			result.setMsg("数据被其它地方引用，不能删除！");
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+			out.close();
 		}
 	}
 
@@ -592,19 +642,19 @@ public class StorageAction extends BaseAction {
 		this.entityName = entityName;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
@@ -790,6 +840,14 @@ public class StorageAction extends BaseAction {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 }

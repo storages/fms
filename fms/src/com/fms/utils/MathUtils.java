@@ -411,5 +411,17 @@ public class MathUtils {
 		System.out.println(round(1.5132342341, "up"));
 		System.out.println(round(1.5132342341, "down"));
 		System.out.println(round(0d, "down"));
+		System.out.println(isNumeric("1.2"));
+	}
+
+	/**
+	 * 判断是否是数字
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNumeric(String str) {
+		String reg = "\\d+(\\.\\d+)?";
+		return str.trim().matches(reg);
 	}
 }

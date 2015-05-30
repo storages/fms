@@ -1,14 +1,33 @@
 package com.fms.logic.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.fms.commons.ImgExgFlag;
+import com.fms.commons.ImpExpType;
 import com.fms.core.entity.AclUser;
+import com.fms.core.entity.InStorage;
+import com.fms.core.entity.Material;
+import com.fms.core.entity.OrderItem;
+import com.fms.core.entity.PurchaseItem;
+import com.fms.dao.MaterialDao;
+import com.fms.dao.OrderDao;
+import com.fms.dao.PurchaseBillDao;
 import com.fms.dao.StorageDao;
 import com.fms.logic.StorageLogic;
+import com.fms.temp.TempInStorage;
+import com.fms.utils.MathUtils;
 
 public class StorageLogicImpl implements StorageLogic {
 	protected StorageDao storageDao;
+	protected MaterialDao materialDao;
+	protected OrderDao orderDao;
+	protected PurchaseBillDao purchaseBillDao;
 
 	public StorageDao getStorageDao() {
 		return storageDao;
@@ -16,6 +35,30 @@ public class StorageLogicImpl implements StorageLogic {
 
 	public void setStorageDao(StorageDao storageDao) {
 		this.storageDao = storageDao;
+	}
+
+	public MaterialDao getMaterialDao() {
+		return materialDao;
+	}
+
+	public void setMaterialDao(MaterialDao materialDao) {
+		this.materialDao = materialDao;
+	}
+
+	public OrderDao getOrderDao() {
+		return orderDao;
+	}
+
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
+	}
+
+	public PurchaseBillDao getPurchaseBillDao() {
+		return purchaseBillDao;
+	}
+
+	public void setPurchaseBillDao(PurchaseBillDao purchaseBillDao) {
+		this.purchaseBillDao = purchaseBillDao;
 	}
 
 	public List findStorage(AclUser user, String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag, int index, int length) {
@@ -50,5 +93,163 @@ public class StorageLogicImpl implements StorageLogic {
 		if (null != ids && ids.length > 0) {
 			this.storageDao.deleteStoragesByIds(entityName, ids);
 		}
+	}
+
+	public List doValidata(List<TempInStorage> tempInStorages) {
+		if (!tempInStorages.isEmpty()) {
+			Map<String, Material> matMap = new HashMap<String, Material>();
+			Map<String, OrderItem> orderMap = new HashMap<String, OrderItem>();
+			Map<String, PurchaseItem> purchaseMap = new HashMap<String, PurchaseItem>();
+			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, -1, -1);
+			List<OrderItem> orderList = this.orderDao.findOrderItems();
+			List<PurchaseItem> purchaseItems = this.purchaseBillDao.findPurchaseItems();
+			for (Material m : matList) {
+				String key = m.getHsCode() + "~@~" + m.getImgExgFlag();
+				matMap.put(key, m);
+			}
+			for (OrderItem item : orderList) {
+				orderMap.put(item.getOrderHead().getOrderNo(), item);
+			}
+			for (PurchaseItem item : purchaseItems) {
+				purchaseMap.put(item.getPurchaseBill().getPurchaseNo(), item);
+			}
+			for (TempInStorage tis : tempInStorages) {
+				StringBuilder builder = new StringBuilder();
+				if (StringUtils.isBlank(tis.getImgExgFlag())) {
+					builder.append("物料标志不能为空!");
+					tis.setErrorInfo(builder.toString());
+					continue;
+				} else if (null == ImgExgFlag.parseValue(tis.getImgExgFlag().trim())) {
+					builder.append("物料标志只能是【成品】或【原料】!");
+					tis.setErrorInfo(builder.toString());
+					continue;
+				}
+				if (StringUtils.isBlank(tis.getImpFlag())) {
+					builder.append("入库类型不能为空!");
+					tis.setErrorInfo(builder.toString());
+					continue;
+				} else if (null == ImpExpType.parseVal(tis.getImpFlag().trim())) {
+					builder.append("入库类型不存在，请参照Excel导入模板中的【入库类型】备注!");
+					tis.setErrorInfo(builder.toString());
+					continue;
+				}
+				if (StringUtils.isBlank(tis.getInStorageNo().trim())) {
+					builder.append("入库单号不能为空!");
+					tis.setErrorInfo(builder.toString());
+					continue;
+				}
+				if (StringUtils.isBlank(tis.getInQty().trim())) {
+					builder.append("入库数量不能为空!");
+					tis.setErrorInfo(builder.toString());
+					continue;
+				} else if (!MathUtils.isNumeric(tis.getInQty().trim())) {
+					builder.append("入库数量只能是数字!");
+				} else if (Double.valueOf(tis.getInQty().trim()) <= 0) {
+					builder.append("入库数量必须大于零!");
+				}
+				// 判断物料编码是否有效
+				if (StringUtils.isBlank(tis.getHsCode().trim())) {
+					builder.append("物料编码不能为空!");
+					// 如果入库类型是【原料其它入库】、【成品其它入库】，就检查物料编码在【物料清单】中否存在
+				} else if (ImpExpType.getImpExpType(4).equals(tis.getImpFlag().trim()) || ImpExpType.getImpExpType(10).equals(tis.getImpFlag().trim())) {
+					if (!matMap.containsKey(tis.getHsCode() + "~@~" + ImgExgFlag.parseValue(tis.getImgExgFlag()))) {
+						builder.append(tis.getImgExgFlag() + "对应的物料编码在系统中不存在!");
+					} else {
+						// 这时虽然可以为空，但如果用户还是填了相应的单号，那么还是要验证有效性
+						// 如果物料标记是【成品】
+						if (ImgExgFlag.EXG.equals(ImgExgFlag.parseValue(tis.getImgExgFlag()))) {
+							if (StringUtils.isNotBlank(tis.getOrderNo()) && !orderMap.containsKey(tis.getOrderNo().trim())) {
+								builder.append("订单号码在系统中不存在!");
+							}
+						} else if (ImgExgFlag.IMG.equals(ImgExgFlag.parseValue(tis.getImgExgFlag()))) {
+							if (StringUtils.isNotBlank(tis.getPurchaseNo())) {
+								builder.append("采购单号码在系统中不存在!");
+							}
+						}
+					}
+				} else {
+					if (!matMap.containsKey(tis.getHsCode() + "~@~" + ImgExgFlag.parseValue(tis.getImgExgFlag()))) {
+						String str = ImgExgFlag.parseValue(tis.getImgExgFlag());
+						builder.append(tis.getImgExgFlag() + "对应的物料编码在系统中不存在!");
+					}
+					// 如果入库类型不是【原料其它入库】、【成品其它入库】
+					// 如果物料标记是【成品】,
+					if (ImgExgFlag.EXG.equals(ImgExgFlag.parseValue(tis.getImgExgFlag()))) {
+						// 判断订单号是否为空
+						if (StringUtils.isBlank(tis.getOrderNo().trim())) {
+							builder.append("订单号码不能为空!");
+							// 订单号不为空就检查物料编码在导入的订单中是否存在(根据导入订单号)
+						} else if (!orderMap.containsKey(tis.getOrderNo().trim())) {
+							builder.append("订单号码在系统中不存在!");
+						}
+					} else if (ImgExgFlag.IMG.equals(ImgExgFlag.parseValue(tis.getImgExgFlag()))) {
+						// 判断采购单号是否为空
+						if (StringUtils.isBlank(tis.getPurchaseNo().trim())) {
+							builder.append("采购单号码不能为空!");
+							// 采购单号不为空就检查物料编码在导入的订单中是否存在(根据导入采购单号)
+						} else if (!purchaseMap.containsKey(tis.getPurchaseNo().trim())) {
+							builder.append("采购单号码在系统中不存在!");
+						}
+					}
+				}
+
+				if (StringUtils.isNotBlank(tis.getSpecQty()) && !MathUtils.isNumeric(tis.getSpecQty())) {
+					builder.append("数量/(包装)只能是数字!");
+				}
+				tis.setErrorInfo(builder.toString());
+			}
+		}
+		return tempInStorages;
+	}
+
+	public Boolean doSaveExcelData(List<TempInStorage> list) {
+		if (!list.isEmpty()) {
+			for (TempInStorage tb : list) {
+				if (tb.getErrorInfo() != null && !"".equals(tb.getErrorInfo())) {
+					return false;
+				}
+			}
+			Map<String, Material> matMap = new HashMap<String, Material>();
+			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, -1, -1);
+			for (Material m : matList) {
+				String key = m.getHsCode() + "~@~" + m.getImgExgFlag();
+				matMap.put(key, m);
+			}
+			List<InStorage> inStorages = new ArrayList<InStorage>();
+			Integer serailNo = this.storageDao.getSerialNo("InStorage");
+			for (TempInStorage storage : list) {
+				inStorages.add(convertData(storage, serailNo, matMap));
+			}
+			this.storageDao.batchSaveOrUpdate(inStorages);
+		}
+		return true;
+
+	}
+
+	/**
+	 * 把临时类转换成实体类
+	 * 
+	 * @param tis
+	 * @return
+	 */
+	private InStorage convertData(TempInStorage tis, Integer serailNo, Map<String, Material> matMap) {
+		if (null != tis) {
+			InStorage inStorage = new InStorage();
+			inStorage.setSerialNo(serailNo == null ? 1 : serailNo++);// 流水号
+			inStorage.setInStorageNo(tis.getInStorageNo().trim());// 入库单号
+			inStorage.setPurchaseNo(tis.getPurchaseNo().trim());// 采购单号
+			inStorage.setOrderNo(tis.getOrderNo());// 订单号
+			inStorage.setMaterial(matMap.get(tis.getHsCode() + "~@~" + ImgExgFlag.parseValue(tis.getImgExgFlag())));// 物料清单对象
+			inStorage.setInQty(Double.valueOf(tis.getInQty()));// 入库数量
+			inStorage.setSpecQty(StringUtils.isBlank(tis.getSpecQty()) ? null : Double.valueOf(tis.getSpecQty()));// 数量/(包装)
+			Integer pcs = MathUtils.round((StringUtils.isBlank(tis.getInQty()) || StringUtils.isBlank(tis.getSpecQty())) ? null : MathUtils.dividend(inStorage.getInQty(), inStorage.getSpecQty()),
+					"up");
+			inStorage.setPkgs(null == pcs ? null : Double.valueOf(pcs));// 件数(向上取整)
+			inStorage.setImgExgFlag(ImgExgFlag.parseValue(tis.getImgExgFlag()));// 物料标志
+			inStorage.setImpFlag(ImpExpType.parseVal(tis.getImpFlag()) + "");// 入库类型
+			inStorage.setNote(tis.getNote());// 备注
+			return inStorage;
+		}
+		return null;
 	}
 }

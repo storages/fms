@@ -21,7 +21,7 @@ public class TempInStorage implements Serializable {
 	private String purchaseNo;// 采购单号
 	private String hsCode;// 物料编码
 	private String specQty;// 每包装数量
-	private Integer pkgs;// 件数
+	private String inQty;// 入库数量
 	private String note;// 备注
 
 	public String getErrorInfo() {
@@ -88,12 +88,12 @@ public class TempInStorage implements Serializable {
 		this.specQty = specQty;
 	}
 
-	public Integer getPkgs() {
-		return pkgs;
+	public String getInQty() {
+		return inQty;
 	}
 
-	public void setPkgs(Integer pkgs) {
-		this.pkgs = pkgs;
+	public void setInQty(String inQty) {
+		this.inQty = inQty;
 	}
 
 	public String getNote() {

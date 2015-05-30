@@ -258,4 +258,9 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 		return this.find(hql, params.toArray());
 	}
 
+	public List<OrderItem> findOrderItems() {
+		String hql = "select item from OrderItem item left join fetch item.orderHead head left join fetch item.unit u  ";
+		return this.find(hql);
+	}
+
 }

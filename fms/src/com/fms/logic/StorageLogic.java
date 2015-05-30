@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.core.entity.AclUser;
+import com.fms.temp.TempInStorage;
 
 /**
  * 进出库Logic
@@ -69,4 +70,19 @@ public interface StorageLogic {
 	 * @param ids
 	 */
 	void deleteStoragesByIds(AclUser user, String entityName, String[] ids);
+
+	/**
+	 * 验证导入数据
+	 * 
+	 * @param tempInStorages
+	 * @return
+	 */
+	List doValidata(List<TempInStorage> tempInStorages);
+
+	/**
+	 * 保存Excel导入数据
+	 * 
+	 * @param list
+	 */
+	Boolean doSaveExcelData(List<TempInStorage> list);
 }

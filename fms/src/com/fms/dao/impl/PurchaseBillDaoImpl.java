@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.dao.BaseDaoImpl;
+import com.fms.commons.PurchaseBillStatus;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.PurchaseBill;
 import com.fms.core.entity.PurchaseItem;
@@ -203,5 +204,10 @@ public class PurchaseBillDaoImpl extends BaseDaoImpl implements PurchaseBillDao 
 			param.add("%" + hsName + "%");
 		}
 		return this.find(hql, param.toArray());
+	}
+
+	public List<PurchaseItem> findPurchaseItems() {
+		String hql = "select a from PurchaseItem a left join fetch a.purchaseBill b left join fetch a.material c left join fetch c.unit d left join fetch b.scmcoc e where b.purchStatus =?";
+		return this.find(hql, PurchaseBillStatus.EFFECTED);
 	}
 }

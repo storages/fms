@@ -25,7 +25,7 @@
 		var paremt={};
 		//alert(JSON.stringify(resultdata));
 		paremt["sendStr"]=JSON.stringify(resultdata);
-	      var url = Global+"/storage_saveExcelData.action";
+	      var url = Global+"/storage_saveData.action";
 	      $.post(url,paremt,function(data){
 		    	var result=jQuery.parseJSON(data);
 		    	if(!result.success){
@@ -155,7 +155,6 @@
 								<th class="center">物料编码</th>
 								<th class="center">入库数量</th>
 								<th class="center">数量/(包装)</th>
-								<th class="center">件数</th>
 								<th class="center">备注</th>
 							</tr>
 						</thead>
@@ -180,7 +179,6 @@
 				<td class="center">{{= hsCode}}　</td>
 				<td class="center">{{= inQty}}　</td>
 				<td class="center">{{= specQty}}　</td>
-				<td class="center">{{= pkgs}}　</td>
 				<td class="center">{{= note}}　</td>
 				</tr>
        </script>

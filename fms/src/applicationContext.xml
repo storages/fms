@@ -358,6 +358,15 @@
 		<property name="storageDao">
 			<ref bean="storageDao" />
 		</property>
+		<property name="materialDao">
+			<ref bean="materialDao" />
+		</property>
+		<property name="orderDao">
+			<ref bean="orderDao" />
+		</property>
+		<property name="purchaseBillDao">
+			<ref bean="purchaseBillDao" />
+		</property>
 	</bean>
 
 	<!-- 报价单 -->
@@ -404,13 +413,13 @@
 			<ref bean="purchaseBillDao" />
 		</property>
 	</bean>
-<!-- 采购单 -->
+<!-- 日志 -->
 	<bean id="loglogic" class="com.fms.logic.impl.OperateLogsLogicImpl">
 		<property name="logDao">
 			<ref bean="operaterLogsDao" />
 		</property>
 	</bean>
-
+<!-- 权限 -->
 	<bean id="privilegeLogic" class="com.fms.logic.impl.PrivilegeLogicImpl">
 		<property name="privilegeDao">
 			<ref bean="privilegeDao" />

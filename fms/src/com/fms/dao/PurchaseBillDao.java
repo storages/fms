@@ -174,4 +174,11 @@ public interface PurchaseBillDao extends BaseDao {
 	 */
 	public List<Material> findPurchaseItemMaterialByNo(String purchaseNo, String hsCode, String hsName);
 
+	/**
+	 * 查找采购单
+	 * 
+	 * @return
+	 */
+	public List<PurchaseItem> findPurchaseItems();
+
 }

@@ -1,12 +1,16 @@
 package com.fms.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import net.sf.json.JsonConfig;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -30,8 +34,11 @@ import com.fms.logic.ScmcocLogic;
 import com.fms.logic.StockLogic;
 import com.fms.logic.StorageLogic;
 import com.fms.logic.UnitLogic;
+import com.fms.temp.TempInStorage;
 import com.fms.utils.AjaxResult;
+import com.fms.utils.ExcelUtil;
 import com.fms.utils.MathUtils;
+import com.google.gson.Gson;
 import com.url.ajax.json.JSONObject;
 
 /**
@@ -513,6 +520,148 @@ public class StorageAction extends BaseAction {
 	 */
 	public String toImportPage() {
 		return "importexcel";
+	}
+
+	public void importData() {
+		AjaxResult result = new AjaxResult();
+		result.setSuccess(false);
+		try {
+			// 就这句，如何获取jsp页面传过来的文件
+			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
+			String[] title = new String[9];
+			title[0] = content[0][0];
+			title[1] = content[0][1];
+			title[2] = content[0][2];
+			title[3] = content[0][3];
+			title[4] = content[0][4];
+			title[5] = content[0][5];
+			title[6] = content[0][6];
+			title[7] = content[0][7];
+			title[8] = content[0][8];
+			if (!"物料标志".equals(title[0]) || !"入库类型".equals(title[1]) || !"入库单号".equals(title[2]) //
+					|| !"订单号".equals(title[3]) || !"采购单号".equals(title[4]) || !"入库数量".equals(title[5])//
+					|| !"物料编码".equals(title[6]) || !"数量/(包装)".equals(title[7]) || !"备注".equals(title[8])) {
+				result.setSuccess(false);
+				result.setMsg("导入的excel文件内容不正确!");
+			} else {
+				List<TempInStorage> tempInStor = new ArrayList<TempInStorage>();
+				for (int i = 1; i < content.length; i++) {
+					TempInStorage inStorage = new TempInStorage();
+					inStorage.setImgExgFlag(content[i][0]);
+					inStorage.setImpFlag(content[i][1]);
+					inStorage.setInStorageNo(content[i][2]);
+					inStorage.setOrderNo(content[i][3]);
+					inStorage.setPurchaseNo(content[i][4]);
+					inStorage.setInQty(content[i][5]);
+					inStorage.setHsCode(content[i][6]);
+					inStorage.setSpecQty(content[i][7]);
+					inStorage.setNote(content[i][8]);
+					tempInStor.add(inStorage);
+				}
+				// 开始验证
+				List tlist = this.storageLogic.doValidata(tempInStor);
+				result.setSuccess(true);
+				result.setObj(tlist);
+			}
+
+		} catch (Exception e) {
+			result.setSuccess(false);
+			result.setMsg("程序错误" + e.getMessage());
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		String str = gson.toJson(result);
+		try {
+			Writer writer = response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 清除错误的数据
+	 */
+	public void clearErrorData() {
+		List errorList = new ArrayList();
+		AjaxResult result = new AjaxResult();
+		result.setSuccess(false);
+		net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(sendStr);
+		List list = net.sf.json.JSONArray.toList(jsonArray, new TempInStorage(), new JsonConfig());
+		if (null != list && list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+				TempInStorage tis = (TempInStorage) list.get(i);
+				if (null != tis.getErrorInfo() && !"".equals(tis.getErrorInfo().trim())) {
+					errorList.add(tis);
+				}
+			}
+			list.removeAll(errorList);
+		}
+		Gson gson = new Gson();
+		result.setObj(list);
+		result.setSuccess(true);
+		String str = gson.toJson(result);
+		Writer writer;
+		try {
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			writer = response.getWriter();
+			writer.write(str);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * 保存正确的数据
+	 */
+	public String saveData() {
+		PrintWriter out = null;
+		AjaxResult result = new AjaxResult();
+		try {
+			net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(sendStr);
+			List<TempInStorage> list = net.sf.json.JSONArray.toList(jsonArray, new TempInStorage(), new JsonConfig());
+			if (null == list || list.size() <= 0) {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("没有数据可保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+			if (!this.storageLogic.doSaveExcelData(list)) {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(false);
+				result.setMsg("保存的数据中有错误，请点击【删除错误】按钮后再保存!");
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			} else {
+				out = response.getWriter();
+				response.setContentType("application/text");
+				response.setCharacterEncoding("UTF-8");
+				result.setSuccess(true);
+				result.setMsg("成功保存" + list.size() + "条数据！");
+				session.put("tlist", null);
+				JSONObject json = new JSONObject(result);
+				out.println(json.toString());
+				out.flush();
+				out.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return this.SUCCESS;
 	}
 
 	public StorageLogic getStorageLogic() {

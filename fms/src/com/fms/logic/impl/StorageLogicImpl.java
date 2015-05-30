@@ -15,10 +15,12 @@ import com.fms.core.entity.InStorage;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderItem;
 import com.fms.core.entity.PurchaseItem;
+import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Stock;
 import com.fms.dao.MaterialDao;
 import com.fms.dao.OrderDao;
 import com.fms.dao.PurchaseBillDao;
+import com.fms.dao.ScmcocDao;
 import com.fms.dao.StockDao;
 import com.fms.dao.StorageDao;
 import com.fms.logic.StorageLogic;
@@ -31,6 +33,7 @@ public class StorageLogicImpl implements StorageLogic {
 	protected OrderDao orderDao;
 	protected PurchaseBillDao purchaseBillDao;
 	protected StockDao stockDao;
+	protected ScmcocDao scmcocDao;
 
 	public StorageDao getStorageDao() {
 		return storageDao;
@@ -72,6 +75,14 @@ public class StorageLogicImpl implements StorageLogic {
 		this.stockDao = stockDao;
 	}
 
+	public ScmcocDao getScmcocDao() {
+		return scmcocDao;
+	}
+
+	public void setScmcocDao(ScmcocDao scmcocDao) {
+		this.scmcocDao = scmcocDao;
+	}
+
 	public List findStorage(AclUser user, String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag, int index, int length) {
 		return this.storageDao.findStorage(entityName, startDate, endDate, scmcocName, hsName, flag, index, length);
 	}
@@ -109,15 +120,18 @@ public class StorageLogicImpl implements StorageLogic {
 	public List doValidata(List<TempInStorage> tempInStorages) {
 		if (!tempInStorages.isEmpty()) {
 			Map<String, Material> matMap = new HashMap<String, Material>();
-			Map<String, OrderItem> orderMap = new HashMap<String, OrderItem>();
+			// Map<String, Scmcoc> scmMap = new HashMap<String, Scmcoc>();
 			Map<String, Stock> stockMap = new HashMap<String, Stock>();
 			Map<String, InStorage> sysMap = new HashMap<String, InStorage>();
 			Map<String, TempInStorage> selfMap = new HashMap<String, TempInStorage>();
+			Map<String, OrderItem> orderMap = new HashMap<String, OrderItem>();
 			Map<String, PurchaseItem> purchaseMap = new HashMap<String, PurchaseItem>();
 			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, null, -1, -1);
 			List<InStorage> inStoraList = this.storageDao.findStorage("InStorage", null, null, null, null, null, -1, -1);
 			List<OrderItem> orderList = this.orderDao.findOrderItems();
 			List<PurchaseItem> purchaseItems = this.purchaseBillDao.findPurchaseItems();
+			// List<Scmcoc> scmList = this.scmcocDao.findAllScmcoc(null, null,
+			// -1, -1);
 			List<Stock> stockList = this.stockDao.findAllStock(null, -1, -1);
 			for (Material m : matList) {
 				String key = m.getHsCode() + "~@~" + m.getImgExgFlag();
@@ -136,6 +150,7 @@ public class StorageLogicImpl implements StorageLogic {
 				String key = is.getImgExgFlag() + "~@~" + is.getMaterial().getHsCode() + "~@~" + is.getInStorageNo();
 				sysMap.put(key, is);
 			}
+
 			for (TempInStorage tis : tempInStorages) {
 				StringBuilder builder = new StringBuilder();
 				if (StringUtils.isBlank(tis.getImgExgFlag())) {
@@ -245,9 +260,15 @@ public class StorageLogicImpl implements StorageLogic {
 				}
 			}
 			Map<String, Material> matMap = new HashMap<String, Material>();
+			Map<String, Scmcoc> scmMap = new HashMap<String, Scmcoc>();
 			Map<String, Stock> stockMap = new HashMap<String, Stock>();
+			Map<String, OrderItem> orderMap = new HashMap<String, OrderItem>();
+			Map<String, PurchaseItem> purchaseMap = new HashMap<String, PurchaseItem>();
 			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, null, -1, -1);
 			List<Stock> stockList = this.stockDao.findAllStock(null, -1, -1);
+			List<Scmcoc> scmList = this.scmcocDao.findAllScmcoc(null, null, -1, -1);
+			List<OrderItem> orderList = this.orderDao.findOrderItems();
+			List<PurchaseItem> purchaseItems = this.purchaseBillDao.findPurchaseItems();
 			for (Material m : matList) {
 				String key = m.getHsCode() + "~@~" + m.getImgExgFlag();
 				matMap.put(key, m);
@@ -255,10 +276,19 @@ public class StorageLogicImpl implements StorageLogic {
 			for (Stock stock : stockList) {
 				stockMap.put(stock.getName(), stock);
 			}
+			for (Scmcoc sc : scmList) {
+				scmMap.put(sc.getName(), sc);
+			}
+			for (OrderItem item : orderList) {
+				orderMap.put(item.getOrderHead().getOrderNo(), item);
+			}
+			for (PurchaseItem item : purchaseItems) {
+				purchaseMap.put(item.getPurchaseBill().getPurchaseNo(), item);
+			}
 			List<InStorage> inStorages = new ArrayList<InStorage>();
 			Integer serailNo = this.storageDao.getSerialNo("InStorage");
 			for (TempInStorage storage : list) {
-				inStorages.add(convertData(aclUser, storage, serailNo, matMap, stockMap));
+				inStorages.add(convertData(aclUser, storage, serailNo, matMap, stockMap, scmMap, orderMap, purchaseMap));
 			}
 			this.storageDao.batchSaveOrUpdate(inStorages);
 		}
@@ -272,7 +302,10 @@ public class StorageLogicImpl implements StorageLogic {
 	 * @param tis
 	 * @return
 	 */
-	private InStorage convertData(AclUser aclUser, TempInStorage tis, Integer serailNo, Map<String, Material> matMap, Map<String, Stock> stockMap) {
+	private InStorage convertData(AclUser aclUser, TempInStorage tis, Integer serailNo,//
+			Map<String, Material> matMap, Map<String, Stock> stockMap,//
+			Map<String, Scmcoc> scmMap, Map<String, OrderItem> orderMap,//
+			Map<String, PurchaseItem> purchaseMap) {
 		if (null != tis) {
 			InStorage inStorage = new InStorage();
 			inStorage.setSerialNo(serailNo == null ? 1 : serailNo++);// 流水号
@@ -290,7 +323,17 @@ public class StorageLogicImpl implements StorageLogic {
 			if (StringUtils.isNotBlank(tis.getStockName().trim())) {
 				inStorage.setStock(stockMap.get(tis.getStockName().trim()));
 			}
+			if (ImgExgFlag.EXG.equals(inStorage.getImgExgFlag())) {
+				if (StringUtils.isNotBlank(inStorage.getOrderNo())) {
+					inStorage.setScmcoc(orderMap.get(inStorage.getOrderNo()) == null ? null : orderMap.get(inStorage.getOrderNo()).getOrderHead().getScmcoc());
+				}
+			} else if (ImgExgFlag.IMG.equals(inStorage.getImgExgFlag())) {
+				if (StringUtils.isNotBlank(inStorage.getPurchaseNo())) {
+					inStorage.setScmcoc(purchaseMap.get(inStorage.getPurchaseNo()) == null ? null : purchaseMap.get(inStorage.getPurchaseNo()).getPurchaseBill().getScmcoc());
+				}
+			}
 			inStorage.setNote(tis.getNote());// 备注
+			inStorage.setImpDate(new Date());
 			inStorage.setHandling(aclUser.getLoginName());
 			return inStorage;
 		}

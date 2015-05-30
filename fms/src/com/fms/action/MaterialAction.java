@@ -89,6 +89,7 @@ public class MaterialAction extends BaseAction {
 			this.request.put("maxIndex", max);
 			this.request.put("pageNums", pageCount(max, dataTotal));
 			this.request.put("searchStr", parseValue(searchStr));
+			this.request.put("hsCode", hsCode);
 			this.request.put("imgexgflag", imgExgFlag);
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block

@@ -35,7 +35,7 @@
 		    	}
 		    	$("#waitdiv").hide();
 		    	alert(result.msg);
-		    	var returnUrl = Global +"/storage_";
+		    	var returnUrl = Global +"/storage_findAllInStorage.action";
 		    	toMain(returnUrl);
 		     });
 			

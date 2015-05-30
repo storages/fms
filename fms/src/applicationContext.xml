@@ -370,6 +370,9 @@
 		<property name="stockDao">
 			<ref bean="stockDao" />
 		</property>
+		<property name="scmcocDao">
+			<ref bean="scmcocDao" />
+		</property>
 	</bean>
 
 	<!-- 报价单 -->

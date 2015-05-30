@@ -8,9 +8,21 @@ $(function(){
 		$("input[name='username']").val(getCookie("username"));
 	}
 	if(getCookie("password")!=null){
-	$("input[name='password']").val(getCookie("password"));
-	$("#remenber").prop("checked",true);
+		$("input[name='password']").val(getCookie("password"));
+		$("#remenber").prop("checked",true);
 	}
+	
+	$("#uname").keyup(function(e){
+		if(e.keyCode==13){
+			$("#pass").focus();
+		}
+	});
+	//添加回车自动登录
+	$("#pass").keyup(function(e){
+		if(e.keyCode==13){
+			findUserName();
+		}
+	});
 	
 	 // 登陆按钮
 	$("#login").click(findUserName);  
@@ -21,10 +33,12 @@ $(function(){
 		  	
 		  	if(username.trim().length<=0||username.trim()==""){
 		  		$("#error").html("用户名不能为空");
+		  		$("#uname").focus();
 		  		return;
 		  	}
 		  	if(password.trim().length<=0||password.trim()==""){
 		  		$("#error").html("密码不能为空");
+		  		$("#pass").focus();
 		  		return;
 		  	}
 		  	if(forget){//保存
@@ -46,6 +60,7 @@ $(function(){
 
 		     	if(!result.success){
 		     		$("#error").html(result.msg);
+		     		$("#pass").select();
 		     		return;
 		     	}else{
 		           window.location.href="/fms/pages/main.jsp";
@@ -56,7 +71,6 @@ $(function(){
 		      }
 		  	});
 	  	}
-
 });
 String.prototype.trim=function(){
     return this.replace(/(^\s*)|(\s*$)/g, "");

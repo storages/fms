@@ -528,7 +528,7 @@ public class StorageAction extends BaseAction {
 		try {
 			// 就这句，如何获取jsp页面传过来的文件
 			String[][] content = ExcelUtil.readExcel(uploadFile, 0);
-			String[] title = new String[9];
+			String[] title = new String[10];
 			title[0] = content[0][0];
 			title[1] = content[0][1];
 			title[2] = content[0][2];
@@ -538,9 +538,10 @@ public class StorageAction extends BaseAction {
 			title[6] = content[0][6];
 			title[7] = content[0][7];
 			title[8] = content[0][8];
+			title[9] = content[0][9];
 			if (!"物料标志".equals(title[0]) || !"入库类型".equals(title[1]) || !"入库单号".equals(title[2]) //
 					|| !"订单号".equals(title[3]) || !"采购单号".equals(title[4]) || !"入库数量".equals(title[5])//
-					|| !"物料编码".equals(title[6]) || !"数量/(包装)".equals(title[7]) || !"备注".equals(title[8])) {
+					|| !"物料编码".equals(title[6]) || !"仓库名称".equals(title[7]) || !"数量/(包装)".equals(title[8]) || !"备注".equals(title[9])) {
 				result.setSuccess(false);
 				result.setMsg("导入的excel文件内容不正确!");
 			} else {
@@ -554,8 +555,9 @@ public class StorageAction extends BaseAction {
 					inStorage.setPurchaseNo(content[i][4]);
 					inStorage.setInQty(content[i][5]);
 					inStorage.setHsCode(content[i][6]);
-					inStorage.setSpecQty(content[i][7]);
-					inStorage.setNote(content[i][8]);
+					inStorage.setStockName(content[i][7]);
+					inStorage.setSpecQty(content[i][8]);
+					inStorage.setNote(content[i][9]);
 					tempInStor.add(inStorage);
 				}
 				// 开始验证
@@ -636,7 +638,7 @@ public class StorageAction extends BaseAction {
 				out.flush();
 				out.close();
 			}
-			if (!this.storageLogic.doSaveExcelData(list)) {
+			if (!this.storageLogic.doSaveExcelData(this.getLoginUser(), list)) {
 				out = response.getWriter();
 				response.setContentType("application/text");
 				response.setCharacterEncoding("UTF-8");

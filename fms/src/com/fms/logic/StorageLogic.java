@@ -84,5 +84,5 @@ public interface StorageLogic {
 	 * 
 	 * @param list
 	 */
-	Boolean doSaveExcelData(List<TempInStorage> list);
+	Boolean doSaveExcelData(AclUser aclUser, List<TempInStorage> list);
 }

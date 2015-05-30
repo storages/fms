@@ -15,9 +15,11 @@ import com.fms.core.entity.InStorage;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderItem;
 import com.fms.core.entity.PurchaseItem;
+import com.fms.core.entity.Stock;
 import com.fms.dao.MaterialDao;
 import com.fms.dao.OrderDao;
 import com.fms.dao.PurchaseBillDao;
+import com.fms.dao.StockDao;
 import com.fms.dao.StorageDao;
 import com.fms.logic.StorageLogic;
 import com.fms.temp.TempInStorage;
@@ -28,6 +30,7 @@ public class StorageLogicImpl implements StorageLogic {
 	protected MaterialDao materialDao;
 	protected OrderDao orderDao;
 	protected PurchaseBillDao purchaseBillDao;
+	protected StockDao stockDao;
 
 	public StorageDao getStorageDao() {
 		return storageDao;
@@ -59,6 +62,14 @@ public class StorageLogicImpl implements StorageLogic {
 
 	public void setPurchaseBillDao(PurchaseBillDao purchaseBillDao) {
 		this.purchaseBillDao = purchaseBillDao;
+	}
+
+	public StockDao getStockDao() {
+		return stockDao;
+	}
+
+	public void setStockDao(StockDao stockDao) {
+		this.stockDao = stockDao;
 	}
 
 	public List findStorage(AclUser user, String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag, int index, int length) {
@@ -99,10 +110,15 @@ public class StorageLogicImpl implements StorageLogic {
 		if (!tempInStorages.isEmpty()) {
 			Map<String, Material> matMap = new HashMap<String, Material>();
 			Map<String, OrderItem> orderMap = new HashMap<String, OrderItem>();
+			Map<String, Stock> stockMap = new HashMap<String, Stock>();
+			Map<String, InStorage> sysMap = new HashMap<String, InStorage>();
+			Map<String, TempInStorage> selfMap = new HashMap<String, TempInStorage>();
 			Map<String, PurchaseItem> purchaseMap = new HashMap<String, PurchaseItem>();
 			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, null, -1, -1);
+			List<InStorage> inStoraList = this.storageDao.findStorage("InStorage", null, null, null, null, null, -1, -1);
 			List<OrderItem> orderList = this.orderDao.findOrderItems();
 			List<PurchaseItem> purchaseItems = this.purchaseBillDao.findPurchaseItems();
+			List<Stock> stockList = this.stockDao.findAllStock(null, -1, -1);
 			for (Material m : matList) {
 				String key = m.getHsCode() + "~@~" + m.getImgExgFlag();
 				matMap.put(key, m);
@@ -112,6 +128,13 @@ public class StorageLogicImpl implements StorageLogic {
 			}
 			for (PurchaseItem item : purchaseItems) {
 				purchaseMap.put(item.getPurchaseBill().getPurchaseNo(), item);
+			}
+			for (Stock stock : stockList) {
+				stockMap.put(stock.getName(), stock);
+			}
+			for (InStorage is : inStoraList) {
+				String key = is.getImgExgFlag() + "~@~" + is.getMaterial().getHsCode() + "~@~" + is.getInStorageNo();
+				sysMap.put(key, is);
 			}
 			for (TempInStorage tis : tempInStorages) {
 				StringBuilder builder = new StringBuilder();
@@ -146,6 +169,9 @@ public class StorageLogicImpl implements StorageLogic {
 					builder.append("入库数量只能是数字!");
 				} else if (Double.valueOf(tis.getInQty().trim()) <= 0) {
 					builder.append("入库数量必须大于零!");
+				}
+				if (StringUtils.isNotBlank(tis.getStockName()) && !stockMap.containsKey(tis.getStockName())) {
+					builder.append("仓库名称在系统中不存在!");
 				}
 				// 判断物料编码是否有效
 				if (StringUtils.isBlank(tis.getHsCode().trim())) {
@@ -196,13 +222,22 @@ public class StorageLogicImpl implements StorageLogic {
 				if (StringUtils.isNotBlank(tis.getSpecQty()) && !MathUtils.isNumeric(tis.getSpecQty())) {
 					builder.append("数量/(包装)只能是数字!");
 				}
+				String key = ImgExgFlag.parseValue(tis.getImgExgFlag()) + "~@~" + tis.getHsCode() + "~@~" + tis.getInStorageNo();
+				if (selfMap.containsKey(key)) {
+					builder.append("在导入Excel文件中重复!");
+				} else {
+					selfMap.put(key, tis);
+				}
+				if (sysMap.containsKey(key)) {
+					builder.append("在系统中已存在!");
+				}
 				tis.setErrorInfo(builder.toString());
 			}
 		}
 		return tempInStorages;
 	}
 
-	public Boolean doSaveExcelData(List<TempInStorage> list) {
+	public Boolean doSaveExcelData(AclUser aclUser, List<TempInStorage> list) {
 		if (!list.isEmpty()) {
 			for (TempInStorage tb : list) {
 				if (tb.getErrorInfo() != null && !"".equals(tb.getErrorInfo())) {
@@ -210,15 +245,20 @@ public class StorageLogicImpl implements StorageLogic {
 				}
 			}
 			Map<String, Material> matMap = new HashMap<String, Material>();
+			Map<String, Stock> stockMap = new HashMap<String, Stock>();
 			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, null, -1, -1);
+			List<Stock> stockList = this.stockDao.findAllStock(null, -1, -1);
 			for (Material m : matList) {
 				String key = m.getHsCode() + "~@~" + m.getImgExgFlag();
 				matMap.put(key, m);
 			}
+			for (Stock stock : stockList) {
+				stockMap.put(stock.getName(), stock);
+			}
 			List<InStorage> inStorages = new ArrayList<InStorage>();
 			Integer serailNo = this.storageDao.getSerialNo("InStorage");
 			for (TempInStorage storage : list) {
-				inStorages.add(convertData(storage, serailNo, matMap));
+				inStorages.add(convertData(aclUser, storage, serailNo, matMap, stockMap));
 			}
 			this.storageDao.batchSaveOrUpdate(inStorages);
 		}
@@ -232,7 +272,7 @@ public class StorageLogicImpl implements StorageLogic {
 	 * @param tis
 	 * @return
 	 */
-	private InStorage convertData(TempInStorage tis, Integer serailNo, Map<String, Material> matMap) {
+	private InStorage convertData(AclUser aclUser, TempInStorage tis, Integer serailNo, Map<String, Material> matMap, Map<String, Stock> stockMap) {
 		if (null != tis) {
 			InStorage inStorage = new InStorage();
 			inStorage.setSerialNo(serailNo == null ? 1 : serailNo++);// 流水号
@@ -247,7 +287,11 @@ public class StorageLogicImpl implements StorageLogic {
 			inStorage.setPkgs(null == pcs ? null : Double.valueOf(pcs));// 件数(向上取整)
 			inStorage.setImgExgFlag(ImgExgFlag.parseValue(tis.getImgExgFlag()));// 物料标志
 			inStorage.setImpFlag(ImpExpType.parseVal(tis.getImpFlag()) + "");// 入库类型
+			if (StringUtils.isNotBlank(tis.getStockName().trim())) {
+				inStorage.setStock(stockMap.get(tis.getStockName().trim()));
+			}
 			inStorage.setNote(tis.getNote());// 备注
+			inStorage.setHandling(aclUser.getLoginName());
 			return inStorage;
 		}
 		return null;

@@ -367,6 +367,9 @@
 		<property name="purchaseBillDao">
 			<ref bean="purchaseBillDao" />
 		</property>
+		<property name="stockDao">
+			<ref bean="stockDao" />
+		</property>
 	</bean>
 
 	<!-- 报价单 -->

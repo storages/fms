@@ -31,6 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		.besidebox{width:100%;height:100%;position: relative;}
 		.mess{font-size: 12px; color:red;font-weight: bold; margin-left: 5px;}
 		.info{position: absolute;}
+		tr{height:30px;}
 	</style>
   
   </head>
@@ -39,25 +40,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<img src="${pageContext.request.contextPath}/imges/login.png" id="loginbg" style="z-index: 0px;"/>
   		<div class="info" id="logininfo">
   		<form name="myform" action="${pageContext.request.contextPath}/loginAction_gologin.action" method="post">
-  			<table>
+  			<table  style="margin-top:10px;">
   				<tr>
   					<td>用户名：</td>
-  					<td style="text-align: left;"><input type="text" name="username" style="width: 155px;"/></td>
+  					<td style="text-align: left;"><input type="text" name="username" style="width: 155px;" id="uname"/></td>
   				</tr>
   				<tr>
   					<td>密　码：</td>
-  					<td style="text-align: left;"><input type="password" name="password" style="width: 155px;"/></td>
+  					<td style="text-align: left;"><input type="password" name="password" style="width: 155px;" id="pass"/></td>
   				</tr>
-  				<tr>
+  				<%--<tr>
   					<td>验证码：</td>
   					<td><input type="text" style="width:70px; float:left;"/><a href="javascript:void(0);" onclick="changeImg()"><img src="" style="width:82px; height:25px;float:right; border: 0px;" title="看不清？点击换一个"/></a></td>
   				</tr>
-  				<tr>
+  				--%><tr>
   					<td colspan="3"><input type="checkbox" id="remenber" style="font-size: 12px;"/>记住密码<span class="mess" id="error"></span></td>
   				</tr>
   				<tr>
-  					<td colspan="3">
-  						<input type="button"  id="login" value="登录"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  					<td colspan="3"  style="text-align: center;">
+  						<input type="button"  id="login" value="登录" />&nbsp;&nbsp;&nbsp;
   						<input type="reset" id="cs" value="重置"/>
   					</td>
   				</tr>

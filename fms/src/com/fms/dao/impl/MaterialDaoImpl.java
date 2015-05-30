@@ -16,7 +16,7 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 	/**
 	 * 查询所有物料信息【分页】
 	 */
-	public List<Material> findAllMaterialInfo(String likeStr, String imgExgFlag, Integer index, Integer length) {
+	public List<Material> findAllMaterialInfo(String likeStr, String hsCode, String imgExgFlag, Integer index, Integer length) {
 		try {
 			String hql = "select a from Material a left join fetch a.unit left join fetch a.materialType where 1=1 ";
 			List param = new ArrayList();
@@ -26,6 +26,9 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 			}
 			if (null != likeStr && !"".equals(likeStr)) {
 				hql += " and a.hsName like '%" + likeStr + "%'";
+			}
+			if (null != hsCode && !"".equals(hsCode)) {
+				hql += " and a.hsCode like '%" + hsCode + "%'";
 			}
 			return this.findPageList(hql, param.toArray(), index, length);
 		} catch (Exception e) {
@@ -61,12 +64,15 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 		return null;
 	}
 
-	public Integer findDataCount(String className, String name, String imgExgFlag) {
+	public Integer findDataCount(String className, String name, String hsCode, String imgExgFlag) {
 		Integer num = 0;
 		try {
 			String hql = "select count(id) from " + className.trim() + " a where a.imgExgFlag =? ";
 			if (null != name && !"".equals(name)) {
 				hql += " and a.hsName like '%" + name + "%'";
+			}
+			if (null != hsCode && !"".equals(hsCode)) {
+				hql += " and a.hsCode like '%" + hsCode + "%'";
 			}
 			num = this.count(hql, new Object[] { imgExgFlag });
 		} catch (Exception e) {

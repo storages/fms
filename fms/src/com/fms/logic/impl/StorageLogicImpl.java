@@ -100,7 +100,7 @@ public class StorageLogicImpl implements StorageLogic {
 			Map<String, Material> matMap = new HashMap<String, Material>();
 			Map<String, OrderItem> orderMap = new HashMap<String, OrderItem>();
 			Map<String, PurchaseItem> purchaseMap = new HashMap<String, PurchaseItem>();
-			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, -1, -1);
+			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, null, -1, -1);
 			List<OrderItem> orderList = this.orderDao.findOrderItems();
 			List<PurchaseItem> purchaseItems = this.purchaseBillDao.findPurchaseItems();
 			for (Material m : matList) {
@@ -210,7 +210,7 @@ public class StorageLogicImpl implements StorageLogic {
 				}
 			}
 			Map<String, Material> matMap = new HashMap<String, Material>();
-			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, -1, -1);
+			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, null, -1, -1);
 			for (Material m : matList) {
 				String key = m.getHsCode() + "~@~" + m.getImgExgFlag();
 				matMap.put(key, m);

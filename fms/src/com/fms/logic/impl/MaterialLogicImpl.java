@@ -19,8 +19,8 @@ public class MaterialLogicImpl implements MaterialLogic {
 	private MaterialDao materialDao;
 	private MaterialTypeDao dao;
 
-	public List<Material> findAllMaterialInfo(AclUser loginUser, String likeStr, String imgExgFlag, Integer index, Integer length) {
-		return materialDao.findAllMaterialInfo(likeStr, imgExgFlag, index, length);
+	public List<Material> findAllMaterialInfo(AclUser loginUser, String likeStr, String hsCode, String imgExgFlag, Integer index, Integer length) {
+		return materialDao.findAllMaterialInfo(likeStr, hsCode, imgExgFlag, index, length);
 	}
 
 	public List<Material> findAllMaterialInfoByHsCode(String likeStr, String imgExgFlag, Integer index, Integer length) {
@@ -43,8 +43,8 @@ public class MaterialLogicImpl implements MaterialLogic {
 		this.dao = dao;
 	}
 
-	public Integer findDataCount(AclUser loginUser, String className, String name, String imgExgFlag) {
-		return materialDao.findDataCount(className, name, imgExgFlag);
+	public Integer findDataCount(AclUser loginUser, String className, String name, String hsCode, String imgExgFlag) {
+		return materialDao.findDataCount(className, name, hsCode, imgExgFlag);
 	}
 
 	public Integer findDataCountExgs(AclUser loginUser, String className, String hsName, String hsCode, String hsModel, String imgExgFlag) {
@@ -95,7 +95,7 @@ public class MaterialLogicImpl implements MaterialLogic {
 
 	public List<TempMater> doValidata(List<TempMater> tdata, AclUser loginUser) {
 		// 准备数据
-		List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, -1, -1);
+		List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, null, -1, -1);
 		Map<String, Material> materCodeMap = new HashMap<String, Material>();
 		Map<String, Material> materNameMap = new HashMap<String, Material>();
 		for (Material m : matList) {

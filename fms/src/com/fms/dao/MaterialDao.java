@@ -8,11 +8,11 @@ import com.fms.core.entity.Material;
 import com.fms.core.entity.Unit;
 
 public interface MaterialDao extends BaseDao {
-	public List<Material> findAllMaterialInfo(String likeStr, String imgExgFlag, Integer index, Integer length);
+	public List<Material> findAllMaterialInfo(String likeStr, String hsCode, String imgExgFlag, Integer index, Integer length);
 
 	public List<Material> findAllMaterialInfoByHsCode(String likeStr, String imgExgFlag, Integer index, Integer length);
 
-	public Integer findDataCount(String className, String name, String imgExgFlag);
+	public Integer findDataCount(String className, String name, String hsCode, String imgExgFlag);
 
 	public Integer findDataCountExgs(AclUser loginUser, String className, String hsName, String hsCode, String hsModel, String imgExgFlag);
 

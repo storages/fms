@@ -232,7 +232,7 @@ public class QuotationLogicImpl implements QuotationLogic {
 		List<TempQuotation> tempList = new ArrayList<TempQuotation>();
 		List<Quotation> quoList = this.quotationDao.findQuotations(null, null, null, null, -1, -1);
 		List<Scmcoc> scmcocList = this.scmcocLogic.findAllScmcoc(loginUser, false, null, -1, -1);
-		List<Material> materList = this.materLogic.findAllMaterialInfo(loginUser, null, ImgExgFlag.IMG, -1, -1);
+		List<Material> materList = this.materLogic.findAllMaterialInfo(loginUser, null, null, ImgExgFlag.IMG, -1, -1);
 		Map<String, Scmcoc> scmCache = new HashMap<String, Scmcoc>();
 		Map<String, Quotation> mapCache = new HashMap<String, Quotation>();
 		Map<String, Material> marCache = new HashMap<String, Material>();

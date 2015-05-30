@@ -80,10 +80,10 @@ public class MaterialAction extends BaseAction {
 		try {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
-			dataTotal = this.materLogic.findDataCount(getLoginUser(), className, parseValue(searchStr), imgExgFlag);
+			dataTotal = this.materLogic.findDataCount(getLoginUser(), className, parseValue(searchStr), hsCode, imgExgFlag);
 			// imgExgFlag =
 			// (this.context.getSession().get("imgExgFlag")!=null)?this.context.getSession().get("imgExgFlag").toString():imgExgFlag;
-			List<Material> material = this.materLogic.findAllMaterialInfo(getLoginUser(), parseValue(searchStr), imgExgFlag, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
+			List<Material> material = this.materLogic.findAllMaterialInfo(getLoginUser(), parseValue(searchStr), hsCode, imgExgFlag, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 			this.request.put("materials", material);
 			this.request.put("currIndex", curr);
 			this.request.put("maxIndex", max);

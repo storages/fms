@@ -47,7 +47,7 @@ public class BomLogicImpl implements BomLogic {
 		Map<String, BomImg> imgBomMap = new HashMap<String, BomImg>();
 		Map<String, TempBom> selfBomMap = new HashMap<String, TempBom>();
 		// 准备数据
-		List<Material> matList = this.materialDao.findAllMaterialInfo(null, ImgExgFlag.IMG, -1, -1);
+		List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, ImgExgFlag.IMG, -1, -1);
 		for (Material m : matList) {
 			String key = m.getHsCode() + "~@~" + m.getBatchNO();
 			matMap.put(key, m);
@@ -167,7 +167,7 @@ public class BomLogicImpl implements BomLogic {
 	private List<BomImg> convertBomImg(List<TempBom> data, Integer verNo, String bomExgId) {
 		List<BomImg> bomImgList = new ArrayList<BomImg>();
 		BomVersion bomVersion = this.findBomVersionByVerNo(verNo);
-		List<Material> matL = this.materialDao.findAllMaterialInfo(null, ImgExgFlag.IMG, -1, -1);
+		List<Material> matL = this.materialDao.findAllMaterialInfo(null, null, ImgExgFlag.IMG, -1, -1);
 		Map<String, Material> matMap = new HashMap<String, Material>();
 		for (Material m : matL) {
 			String key = m.getHsCode() + "~@~" + m.getBatchNO();

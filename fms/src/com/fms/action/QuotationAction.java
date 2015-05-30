@@ -90,7 +90,7 @@ public class QuotationAction extends BaseAction {
 					(endeffectDate == null || "".equals(endeffectDate)) ? null : date2);
 			List<Quotation> quotations = this.quotationLogic.findQuotations(getLoginUser(), parseValue(scmCocName), parseValue(hsCode), begineffectDate == null ? null : date,
 					endeffectDate == null ? null : date2, (curr - 1) * DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
-			List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), hsCode, null, -1, -1);
+			List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), hsCode, null, null, -1, -1);
 			List<Scmcoc> scmcocs = quotationLogic.findAll(getLoginUser());
 			this.request.put("scmcocs", scmcocs);
 			this.request.put("quotations", quotations);

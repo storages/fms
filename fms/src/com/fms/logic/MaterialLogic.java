@@ -8,7 +8,7 @@ import com.fms.core.entity.Unit;
 import com.fms.temp.TempMater;
 
 public interface MaterialLogic {
-	public List<Material> findAllMaterialInfo(AclUser loginUser, String likeStr, String imgExgFlag, Integer index, Integer length);
+	public List<Material> findAllMaterialInfo(AclUser loginUser, String likeStr, String hsCode, String imgExgFlag, Integer index, Integer length);
 
 	public List<Material> findAllMaterialInfoByHsCode(String likeStr, String imgExgFlag, Integer index, Integer length);
 
@@ -16,7 +16,7 @@ public interface MaterialLogic {
 
 	public Integer findDataCountExgs(AclUser loginUser, String className, String hsName, String hsCode, String hsModel, String imgExgFlag);
 
-	public Integer findDataCount(AclUser loginUser, String className, String name, String imgExgFlag);
+	public Integer findDataCount(AclUser loginUser, String className, String name, String hsCode, String imgExgFlag);
 
 	public List<Unit> findAllUnit(AclUser loginUser);
 

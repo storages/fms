@@ -295,7 +295,7 @@ public class AppBillAction extends BaseAction {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
 			List<AppBillHead> heads = findApplyBillHeads(curr);
-			List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), null, null, -1, -1);
+			List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), null, null, null, -1, -1);
 			List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(getLoginUser(), false, null, -1, -1);
 			List<OrderHead> orderHeads = orderLogic.findOrderHeadByStauts(Boolean.FALSE);
 			this.request.put("u", user);
@@ -435,7 +435,7 @@ public class AppBillAction extends BaseAction {
 				AclUser user = (AclUser) this.session.get(CommonConstant.LOGINUSER);
 				List<AppBillItem> items = this.appBillLogic.findItemByHid(getLoginUser(), ids, (beginappDate == null || "".equals(beginappDate)) ? null : date,
 						(endappDate == null || "".equals(endappDate)) ? null : date2, appStatus, user);
-				List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), null, null, -1, -1);
+				List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), null, null, null, -1, -1);
 				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(getLoginUser(), false, null, -1, -1);
 				this.request.put("scmcocs", scmcocs);
 				this.request.put("items", items);
@@ -539,7 +539,7 @@ public class AppBillAction extends BaseAction {
 				}
 				itemList = this.appBillLogic.betchSaveAppBillItem(getLoginUser(), itemList);
 				List<AppBillItem> items = this.appBillLogic.findItemByHid(getLoginUser(), hid, null, null, null, user);
-				List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), null, null, -1, -1);
+				List<Material> mlist = materLogic.findAllMaterialInfo(getLoginUser(), null, null, null, -1, -1);
 				List<Scmcoc> scmcocs = scmLogic.findAllScmcoc(getLoginUser(), false, null, -1, -1);
 				this.request.put("scmcocs", scmcocs);
 				this.request.put("items", items);

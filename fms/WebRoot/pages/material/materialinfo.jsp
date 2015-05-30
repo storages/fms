@@ -41,13 +41,15 @@
   	}
   	function changematerialtype(flag){
   	var str = $('#search').val();
-  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
+  	var hsCode = $('#hsCode').val();
+  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str)+"&hsCode="+hsCode;
   		toMain(url);
   	}
   	function search(){
   		var str = $('#search').val();
   		var flag = $('input:radio:checked').val();
-  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str);
+  		var hsCode = $('#hsCode').val();
+  		var url = "${pageContext.request.contextPath}/materInfo_findAllMaterial.action?imgExgFlag="+flag+"&searchStr="+parse(str)+"&hsCode="+hsCode;
   		toMain(url);
   	}
   	
@@ -58,6 +60,7 @@
 		<input type="hidden" id="impexpflag"/>
 	</div>
 	<div class="modal-footer"  style="text-align: left; padding-top: 5px; padding-bottom: 0px;">
+		<span class="">物料编码</span><input type="text" id="hsCode" value="${hsCode}" style="height:25px;" class=""/>
 		<span class="">物料名称</span><input type="text" id="search" value="${searchStr}" style="height:25px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" onclick="search()" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
 		 <c:if test="${imgexgflag=='I'}">

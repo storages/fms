@@ -68,7 +68,7 @@
 				<li><span class="file"><a href="javascript:void(0);" data-url="/materInfo_findAllMaterial.action?imgExgFlag=I">物料清单</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/bom_findBomExg.action">物料BOM表管理</a></span></li>
 				<li><span class="file"><a href="javascript:void(0);" data-url="/storage_findAllInStorage.action">入库</a></span></li>
-				<li><span class="file"><a href="javascript:void(0);" >出库</a></span></li>
+				<li><span class="file"><a href="javascript:void(0);"  data-url="/outstorage_findAllOutStorage.action">出库</a></span></li>
 			</ul>
 		</li>
 		<li><span class="file"><a href="javascript:void(0);" data-url="/order_findOrderPageList.action" >订单管理</a></span></li>

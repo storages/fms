@@ -180,8 +180,14 @@
 		</property>
 	</bean>
 	
-	<!-- 进出库 -->
+	<!-- 进库 -->
 	<bean id="storageDao" class="com.fms.dao.impl.StorageDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 出库 -->
+	<bean id="outStorageDao" class="com.fms.dao.impl.OutStorageDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
@@ -226,7 +232,6 @@
 	</bean>
 
 
-	<!-- 系统启动时，自动加载用户的监听 -->
 	<bean id="privilegeDao" class="com.fms.dao.impl.PrivilegeDaoImpl">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
@@ -353,10 +358,32 @@
 		</property>
 	</bean>
 
-	<!-- 进出库 -->
+	<!-- 进库 -->
 	<bean id="storageLogic" class="com.fms.logic.impl.StorageLogicImpl">
 		<property name="storageDao">
 			<ref bean="storageDao" />
+		</property>
+		<property name="materialDao">
+			<ref bean="materialDao" />
+		</property>
+		<property name="orderDao">
+			<ref bean="orderDao" />
+		</property>
+		<property name="purchaseBillDao">
+			<ref bean="purchaseBillDao" />
+		</property>
+		<property name="stockDao">
+			<ref bean="stockDao" />
+		</property>
+		<property name="scmcocDao">
+			<ref bean="scmcocDao" />
+		</property>
+	</bean>
+	
+	<!-- 出库 -->
+	<bean id="outStorageLogic" class="com.fms.logic.impl.OutStorageLogicImpl">
+		<property name="outStorageDao">
+			<ref bean="outStorageDao" />
 		</property>
 		<property name="materialDao">
 			<ref bean="materialDao" />
@@ -560,7 +587,7 @@
 		</property>
 	</bean>
 	
-	<!-- 进出库 -->
+	<!-- 进库 -->
 	<bean id="storageAction" class="com.fms.action.StorageAction" scope="prototype">
 		<property name="storageLogic">
 			<ref bean="storageLogic" />
@@ -588,6 +615,33 @@
 		</property>
 	</bean>
 
+<!-- 出库 -->
+<bean id="outStorageAction" class="com.fms.action.OutStorageAction" scope="prototype">
+	<property name="outStorageLogic">
+			<ref bean="outStorageLogic" />
+		</property>
+		<property name="logic">
+			<ref bean="logic" />
+		</property>
+		<property name="unitLogic">
+			<ref bean="unitLogic" />
+		</property>
+		<property name="scmcocLogic">
+			<ref bean="scmcocLogic" />
+		</property>
+		<property name="stockLogic">
+			<ref bean="stockLogic" />
+		</property>
+		<property name="purchaseBillLogic">
+			<ref bean="purchaseBillLogic" />
+		</property>
+		<property name="orderLogic">
+			<ref bean="orderLogic" />
+		</property>
+		<property name="materLogic">
+			<ref bean="materLogic" />
+		</property>
+</bean>
 	<!-- 报价单 -->
 	<bean id="quotationAction" class="com.fms.action.QuotationAction"
 		scope="prototype">

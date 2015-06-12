@@ -4,16 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.core.entity.AclUser;
-import com.fms.core.entity.InStorage;
-import com.fms.temp.TempInStorage;
+import com.fms.core.entity.OutStorage;
+import com.fms.temp.TempOutStorage;
 
 /**
- * 进出库Logic
+ * 出库Logic
  * 
  * @author Administrator
  * 
  */
-public interface StorageLogic {
+public interface OutStorageLogic {
 	/**
 	 * 分页查找进出库数据
 	 * 
@@ -51,7 +51,7 @@ public interface StorageLogic {
 	Integer findMaxSerialNo(AclUser user, String entityName, String imgExgFlag);
 
 	/**
-	 * 根据id查询出入库信息
+	 * 根据id查询出出库信息
 	 * 
 	 * @param id
 	 * @return
@@ -59,14 +59,14 @@ public interface StorageLogic {
 	Object findStorageById(Class clazz, String id);
 
 	/**
-	 * 保存出入库
+	 * 保存出出库
 	 * 
 	 * @param storage
 	 */
-	String saveStorage(AclUser user, InStorage storage);
+	String saveStorage(AclUser user, OutStorage storage);
 
 	/**
-	 * 根据id删除多条出入库
+	 * 根据id删除多条出库
 	 * 
 	 * @param ids
 	 */
@@ -75,15 +75,15 @@ public interface StorageLogic {
 	/**
 	 * 验证导入数据
 	 * 
-	 * @param tempInStorages
+	 * @param tempOutStorages
 	 * @return
 	 */
-	List doValidata(List<TempInStorage> tempInStorages);
+	List doValidata(List<TempOutStorage> tempOutStorages);
 
 	/**
 	 * 保存Excel导入数据
 	 * 
 	 * @param list
 	 */
-	Boolean doSaveExcelData(AclUser aclUser, List<TempInStorage> list);
+	Boolean doSaveExcelData(AclUser aclUser, List<TempOutStorage> list);
 }

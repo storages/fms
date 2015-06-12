@@ -11,32 +11,36 @@ import org.apache.commons.lang.StringUtils;
 import com.fms.commons.ImgExgFlag;
 import com.fms.commons.ImpExpType;
 import com.fms.core.entity.AclUser;
-import com.fms.core.entity.InStorage;
 import com.fms.core.entity.Material;
 import com.fms.core.entity.OrderItem;
+import com.fms.core.entity.OutStorage;
 import com.fms.core.entity.PurchaseItem;
 import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Stock;
 import com.fms.dao.MaterialDao;
 import com.fms.dao.OrderDao;
+import com.fms.dao.OutStorageDao;
 import com.fms.dao.PurchaseBillDao;
 import com.fms.dao.ScmcocDao;
 import com.fms.dao.StockDao;
-import com.fms.dao.StorageDao;
-import com.fms.logic.StorageLogic;
-import com.fms.temp.TempInStorage;
+import com.fms.logic.OutStorageLogic;
+import com.fms.temp.TempOutStorage;
 import com.fms.utils.MathUtils;
 
-public class StorageLogicImpl implements StorageLogic {
-	protected StorageDao storageDao;
+public class OutStorageLogicImpl implements OutStorageLogic {
+	protected OutStorageDao outStorageDao;
 	protected MaterialDao materialDao;
 	protected OrderDao orderDao;
 	protected PurchaseBillDao purchaseBillDao;
 	protected StockDao stockDao;
 	protected ScmcocDao scmcocDao;
 
-	public void setStorageDao(StorageDao storageDao) {
-		this.storageDao = storageDao;
+	public OutStorageDao getOutStorageDao() {
+		return outStorageDao;
+	}
+
+	public void setOutStorageDao(OutStorageDao outStorageDao) {
+		this.outStorageDao = outStorageDao;
 	}
 
 	public MaterialDao getMaterialDao() {
@@ -80,12 +84,12 @@ public class StorageLogicImpl implements StorageLogic {
 	}
 
 	public List findStorage(AclUser user, String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag, int index, int length) {
-		return this.storageDao.findStorage(entityName, startDate, endDate, scmcocName, hsName, flag, index, length);
+		return this.outStorageDao.findStorage(entityName, startDate, endDate, scmcocName, hsName, flag, index, length);
 	}
 
 	public Integer findDataCount(String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag) {
 		try {
-			return this.storageDao.findDataCount(entityName, startDate, endDate, scmcocName, hsName, flag);
+			return this.outStorageDao.findDataCount(entityName, startDate, endDate, scmcocName, hsName, flag);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,20 +97,20 @@ public class StorageLogicImpl implements StorageLogic {
 	}
 
 	public Integer findMaxSerialNo(AclUser user, String entityName, String imgExgFlag) {
-		return this.storageDao.findMaxSerialNo(entityName, imgExgFlag);
+		return this.outStorageDao.findMaxSerialNo(entityName, imgExgFlag);
 	}
 
 	public Object findStorageById(Class clazz, String id) {
-		return this.storageDao.findStorageById(clazz, id);
+		return this.outStorageDao.findStorageById(clazz, id);
 	}
 
-	public String saveStorage(AclUser user, InStorage storage) {
+	public String saveStorage(AclUser user, OutStorage storage) {
 		String mess = "";
 		if (null != storage) {
-			// 判断入库数量是否超量
+			// 判断出库数量是否超量
 			mess = checkImgQty(storage);
 			if (StringUtils.isBlank(mess)) {
-				this.storageDao.saveOrUpdate(storage);
+				this.outStorageDao.saveOrUpdate(storage);
 			}
 		}
 		return mess;
@@ -118,29 +122,29 @@ public class StorageLogicImpl implements StorageLogic {
 	 * @param storage
 	 * @return
 	 */
-	private String checkImgQty(InStorage storage) {
+	private String checkImgQty(OutStorage storage) {
 		String mess = "";
-		Double total = 0d;// 入库总数
+		Double total = 0d;// 出库总数
 		Double total2 = 0d;// 采购单或订单表体某项物料的数量
 		Double total3 = 0d;// 出库总数
-		Double yuliang = 0d;// 可入库总数
-		total = caluateQty(storage);// 原料或成品入库汇总
-		// total3 = this.storageDao.countQtyByPurchaseNo(storage)
+		Double yuliang = 0d;// 可出库总数
+		total = caluateQty(storage);// 原料或成品出库汇总
+		// total3 = this.outStorageDao.countQtyByPurchaseNo(storage)
 		if (StringUtils.isNotBlank(storage.getPurchaseNo())) {
 			if (ImgExgFlag.IMG.equals(storage.getImgExgFlag())) {
 				// 原料出库汇总
-				total2 = (Double) this.storageDao.countPurchaseItemQty(storage);
+				total2 = (Double) this.outStorageDao.countPurchaseItemQty(storage);
 			}
 			if (null != total && null != total2) {
 				yuliang = total2 - total + total3;
-				InStorage _storage = (InStorage) this.storageDao.getObjectById("InStorage", storage.getId());
+				OutStorage _storage = (OutStorage) this.outStorageDao.getObjectById("OutStorage", storage.getId());
 				if (StringUtils.isNotBlank(storage.getId()) && _storage.getPurchaseNo().equals(storage.getPurchaseNo())) {
-					if ((yuliang + _storage.getInQty() - storage.getInQty()) < 0) {
-						mess = "超量" + MathUtils.abs((yuliang + _storage.getInQty() - storage.getInQty()));
+					if ((yuliang + _storage.getExpQty() - storage.getExpQty()) < 0) {
+						mess = "超量" + MathUtils.abs((yuliang + _storage.getExpQty() - storage.getExpQty()));
 					}
 				} else {
-					if ((yuliang - storage.getInQty()) < 0) {
-						mess = "超量" + MathUtils.abs((yuliang - storage.getInQty()));
+					if ((yuliang - storage.getExpQty()) < 0) {
+						mess = "超量" + MathUtils.abs((yuliang - storage.getExpQty()));
 					}
 				}
 			}
@@ -148,7 +152,7 @@ public class StorageLogicImpl implements StorageLogic {
 			if (ImgExgFlag.EXG.equals(storage.getImgExgFlag())) {
 				// 成品出库汇总
 				// total2 = (Double)
-				// this.storageDao.countOutQtyByOrderNo(storage);
+				// this.outStorageDao.countOutQtyByOrderNo(storage);
 			}
 
 		}
@@ -156,36 +160,36 @@ public class StorageLogicImpl implements StorageLogic {
 	}
 
 	/**
-	 * 原料或成品入库汇总
+	 * 原料或成品出库汇总
 	 * 
 	 * @param storage
 	 * @return
 	 */
-	public Double caluateQty(InStorage storage) {
+	public Double caluateQty(OutStorage storage) {
 		Double total = 0d;
-		if (storage != null && StringUtils.isNotBlank(storage.getImpFlag()) && StringUtils.isNotBlank(storage.getImgExgFlag())) {
-			total = (Double) this.storageDao.countQtyByPurchaseNo(storage);
+		if (storage != null && StringUtils.isNotBlank(storage.getExpFlag()) && StringUtils.isNotBlank(storage.getImgExgFlag())) {
+			total = (Double) this.outStorageDao.countQtyByPurchaseNo(storage);
 		}
 		return total;
 	}
 
 	public void deleteStoragesByIds(AclUser user, String entityName, String[] ids) {
 		if (null != ids && ids.length > 0) {
-			this.storageDao.deleteStoragesByIds(entityName, ids);
+			this.outStorageDao.deleteStoragesByIds(entityName, ids);
 		}
 	}
 
-	public List doValidata(List<TempInStorage> tempInStorages) {
-		if (!tempInStorages.isEmpty()) {
+	public List doValidata(List<TempOutStorage> tempOutStorages) {
+		if (!tempOutStorages.isEmpty()) {
 			Map<String, Material> matMap = new HashMap<String, Material>();
 			// Map<String, Scmcoc> scmMap = new HashMap<String, Scmcoc>();
 			Map<String, Stock> stockMap = new HashMap<String, Stock>();
-			Map<String, InStorage> sysMap = new HashMap<String, InStorage>();
-			Map<String, TempInStorage> selfMap = new HashMap<String, TempInStorage>();
+			Map<String, OutStorage> sysMap = new HashMap<String, OutStorage>();
+			Map<String, TempOutStorage> selfMap = new HashMap<String, TempOutStorage>();
 			Map<String, OrderItem> orderMap = new HashMap<String, OrderItem>();
 			Map<String, PurchaseItem> purchaseMap = new HashMap<String, PurchaseItem>();
 			List<Material> matList = this.materialDao.findAllMaterialInfo(null, null, null, -1, -1);
-			List<InStorage> inStoraList = this.storageDao.findStorage("InStorage", null, null, null, null, null, -1, -1);
+			List<OutStorage> outStoraList = this.outStorageDao.findStorage("OutStorage", null, null, null, null, null, -1, -1);
 			List<OrderItem> orderList = this.orderDao.findOrderItems();
 			List<PurchaseItem> purchaseItems = this.purchaseBillDao.findPurchaseItems();
 			// List<Scmcoc> scmList = this.scmcocDao.findAllScmcoc(null, null,
@@ -204,12 +208,12 @@ public class StorageLogicImpl implements StorageLogic {
 			for (Stock stock : stockList) {
 				stockMap.put(stock.getName(), stock);
 			}
-			for (InStorage is : inStoraList) {
-				String key = is.getImgExgFlag() + "~@~" + is.getMaterial().getHsCode() + "~@~" + is.getInStorageNo();
+			for (OutStorage is : outStoraList) {
+				String key = is.getImgExgFlag() + "~@~" + is.getMaterial().getHsCode() + "~@~" + is.getOutStorageNo();
 				sysMap.put(key, is);
 			}
 
-			for (TempInStorage tis : tempInStorages) {
+			for (TempOutStorage tis : tempOutStorages) {
 				StringBuilder builder = new StringBuilder();
 				if (StringUtils.isBlank(tis.getImgExgFlag())) {
 					builder.append("物料标志不能为空!");
@@ -220,28 +224,28 @@ public class StorageLogicImpl implements StorageLogic {
 					tis.setErrorInfo(builder.toString());
 					continue;
 				}
-				if (StringUtils.isBlank(tis.getImpFlag())) {
-					builder.append("入库类型不能为空!");
+				if (StringUtils.isBlank(tis.getExpFlag())) {
+					builder.append("出库类型不能为空!");
 					tis.setErrorInfo(builder.toString());
 					continue;
-				} else if (null == ImpExpType.parseVal(tis.getImpFlag().trim())) {
-					builder.append("入库类型不存在，请参照Excel导入模板中的【入库类型】备注!");
-					tis.setErrorInfo(builder.toString());
-					continue;
-				}
-				if (StringUtils.isBlank(tis.getInStorageNo().trim())) {
-					builder.append("入库单号不能为空!");
+				} else if (null == ImpExpType.parseVal(tis.getExpFlag().trim())) {
+					builder.append("出库类型不存在，请参照Excel导入模板中的【出库类型】备注!");
 					tis.setErrorInfo(builder.toString());
 					continue;
 				}
-				if (StringUtils.isBlank(tis.getInQty().trim())) {
-					builder.append("入库数量不能为空!");
+				if (StringUtils.isBlank(tis.getOutStorageNo().trim())) {
+					builder.append("出库单号不能为空!");
 					tis.setErrorInfo(builder.toString());
 					continue;
-				} else if (!MathUtils.isNumeric(tis.getInQty().trim())) {
-					builder.append("入库数量只能是数字!");
-				} else if (Double.valueOf(tis.getInQty().trim()) <= 0) {
-					builder.append("入库数量必须大于零!");
+				}
+				if (StringUtils.isBlank(tis.getExpQty().trim())) {
+					builder.append("出库数量不能为空!");
+					tis.setErrorInfo(builder.toString());
+					continue;
+				} else if (!MathUtils.isNumeric(tis.getExpQty().trim())) {
+					builder.append("出库数量只能是数字!");
+				} else if (Double.valueOf(tis.getExpQty().trim()) <= 0) {
+					builder.append("出库数量必须大于零!");
 				}
 				if (StringUtils.isNotBlank(tis.getStockName()) && !stockMap.containsKey(tis.getStockName())) {
 					builder.append("仓库名称在系统中不存在!");
@@ -249,8 +253,8 @@ public class StorageLogicImpl implements StorageLogic {
 				// 判断物料编码是否有效
 				if (StringUtils.isBlank(tis.getHsCode().trim())) {
 					builder.append("物料编码不能为空!");
-					// 如果入库类型是【原料其它入库】、【成品其它入库】，就检查物料编码在【物料清单】中否存在
-				} else if (ImpExpType.getImpExpType(4).equals(tis.getImpFlag().trim()) || ImpExpType.getImpExpType(10).equals(tis.getImpFlag().trim())) {
+					// 如果出库类型是【原料其它出库】、【成品其它出库】，就检查物料编码在【物料清单】中否存在
+				} else if (ImpExpType.getImpExpType(4).equals(tis.getExpFlag().trim()) || ImpExpType.getImpExpType(10).equals(tis.getExpFlag().trim())) {
 					if (!matMap.containsKey(tis.getHsCode() + "~@~" + ImgExgFlag.parseValue(tis.getImgExgFlag()))) {
 						builder.append(tis.getImgExgFlag() + "对应的物料编码在系统中不存在!");
 					} else {
@@ -271,7 +275,7 @@ public class StorageLogicImpl implements StorageLogic {
 						String str = ImgExgFlag.parseValue(tis.getImgExgFlag());
 						builder.append(tis.getImgExgFlag() + "对应的物料编码在系统中不存在!");
 					}
-					// 如果入库类型不是【原料其它入库】、【成品其它入库】
+					// 如果出库类型不是【原料其它出库】、【成品其它出库】
 					// 如果物料标记是【成品】,
 					if (ImgExgFlag.EXG.equals(ImgExgFlag.parseValue(tis.getImgExgFlag()))) {
 						// 判断订单号是否为空
@@ -295,7 +299,7 @@ public class StorageLogicImpl implements StorageLogic {
 				if (StringUtils.isNotBlank(tis.getSpecQty()) && !MathUtils.isNumeric(tis.getSpecQty())) {
 					builder.append("数量/(包装)只能是数字!");
 				}
-				String key = ImgExgFlag.parseValue(tis.getImgExgFlag()) + "~@~" + tis.getHsCode() + "~@~" + tis.getInStorageNo();
+				String key = ImgExgFlag.parseValue(tis.getImgExgFlag()) + "~@~" + tis.getHsCode() + "~@~" + tis.getOutStorageNo();
 				if (selfMap.containsKey(key)) {
 					builder.append("在导入Excel文件中重复!");
 				} else {
@@ -307,12 +311,12 @@ public class StorageLogicImpl implements StorageLogic {
 				tis.setErrorInfo(builder.toString());
 			}
 		}
-		return tempInStorages;
+		return tempOutStorages;
 	}
 
-	public Boolean doSaveExcelData(AclUser aclUser, List<TempInStorage> list) {
+	public Boolean doSaveExcelData(AclUser aclUser, List<TempOutStorage> list) {
 		if (!list.isEmpty()) {
-			for (TempInStorage tb : list) {
+			for (TempOutStorage tb : list) {
 				if (tb.getErrorInfo() != null && !"".equals(tb.getErrorInfo())) {
 					return false;
 				}
@@ -343,12 +347,12 @@ public class StorageLogicImpl implements StorageLogic {
 			for (PurchaseItem item : purchaseItems) {
 				purchaseMap.put(item.getPurchaseBill().getPurchaseNo(), item);
 			}
-			List<InStorage> inStorages = new ArrayList<InStorage>();
-			Integer serailNo = this.storageDao.getSerialNo("InStorage");
-			for (TempInStorage storage : list) {
-				inStorages.add(convertData(aclUser, storage, serailNo, matMap, stockMap, scmMap, orderMap, purchaseMap));
+			List<OutStorage> outStorages = new ArrayList<OutStorage>();
+			Integer serailNo = this.outStorageDao.getSerialNo("OutStorage");
+			for (TempOutStorage storage : list) {
+				outStorages.add(convertData(aclUser, storage, serailNo, matMap, stockMap, scmMap, orderMap, purchaseMap));
 			}
-			this.storageDao.batchSaveOrUpdate(inStorages);
+			this.outStorageDao.batchSaveOrUpdate(outStorages);
 		}
 		return true;
 
@@ -360,40 +364,40 @@ public class StorageLogicImpl implements StorageLogic {
 	 * @param tis
 	 * @return
 	 */
-	private InStorage convertData(AclUser aclUser, TempInStorage tis, Integer serailNo,//
+	private OutStorage convertData(AclUser aclUser, TempOutStorage tis, Integer serailNo,//
 			Map<String, Material> matMap, Map<String, Stock> stockMap,//
 			Map<String, Scmcoc> scmMap, Map<String, OrderItem> orderMap,//
 			Map<String, PurchaseItem> purchaseMap) {
 		if (null != tis) {
-			InStorage inStorage = new InStorage();
-			inStorage.setSerialNo(serailNo == null ? 1 : serailNo++);// 流水号
-			inStorage.setInStorageNo(tis.getInStorageNo().trim());// 入库单号
-			inStorage.setPurchaseNo(tis.getPurchaseNo().trim());// 采购单号
-			inStorage.setOrderNo(tis.getOrderNo());// 订单号
-			inStorage.setMaterial(matMap.get(tis.getHsCode() + "~@~" + ImgExgFlag.parseValue(tis.getImgExgFlag())));// 物料清单对象
-			inStorage.setInQty(Double.valueOf(tis.getInQty()));// 入库数量
-			inStorage.setSpecQty(StringUtils.isBlank(tis.getSpecQty()) ? null : Double.valueOf(tis.getSpecQty()));// 数量/(包装)
-			Integer pcs = MathUtils.round((StringUtils.isBlank(tis.getInQty()) || StringUtils.isBlank(tis.getSpecQty())) ? null : MathUtils.dividend(inStorage.getInQty(), inStorage.getSpecQty()),
+			OutStorage outStorage = new OutStorage();
+			outStorage.setSerialNo(serailNo == null ? 1 : serailNo++);// 流水号
+			outStorage.setOutStorageNo(tis.getOutStorageNo().trim());// 出库单号
+			outStorage.setPurchaseNo(tis.getPurchaseNo().trim());// 采购单号
+			outStorage.setOrderNo(tis.getOrderNo());// 订单号
+			outStorage.setMaterial(matMap.get(tis.getHsCode() + "~@~" + ImgExgFlag.parseValue(tis.getImgExgFlag())));// 物料清单对象
+			outStorage.setExpQty(Double.valueOf(tis.getExpQty()));// 出库数量
+			outStorage.setSpecQty(StringUtils.isBlank(tis.getSpecQty()) ? null : Double.valueOf(tis.getSpecQty()));// 数量/(包装)
+			Integer pcs = MathUtils.round((StringUtils.isBlank(tis.getExpQty()) || StringUtils.isBlank(tis.getSpecQty())) ? null : MathUtils.dividend(outStorage.getExpQty(), outStorage.getSpecQty()),
 					"up");
-			inStorage.setPkgs(null == pcs ? null : Double.valueOf(pcs));// 件数(向上取整)
-			inStorage.setImgExgFlag(ImgExgFlag.parseValue(tis.getImgExgFlag()));// 物料标志
-			inStorage.setImpFlag(ImpExpType.parseVal(tis.getImpFlag()) + "");// 入库类型
+			outStorage.setPkgs(null == pcs ? null : Double.valueOf(pcs));// 件数(向上取整)
+			outStorage.setImgExgFlag(ImgExgFlag.parseValue(tis.getImgExgFlag()));// 物料标志
+			outStorage.setExpFlag(ImpExpType.parseVal(tis.getExpFlag()) + "");// 出库类型
 			if (StringUtils.isNotBlank(tis.getStockName().trim())) {
-				inStorage.setStock(stockMap.get(tis.getStockName().trim()));
+				outStorage.setStock(stockMap.get(tis.getStockName().trim()));
 			}
-			if (ImgExgFlag.EXG.equals(inStorage.getImgExgFlag())) {
-				if (StringUtils.isNotBlank(inStorage.getOrderNo())) {
-					inStorage.setScmcoc(orderMap.get(inStorage.getOrderNo()) == null ? null : orderMap.get(inStorage.getOrderNo()).getOrderHead().getScmcoc());
+			if (ImgExgFlag.EXG.equals(outStorage.getImgExgFlag())) {
+				if (StringUtils.isNotBlank(outStorage.getOrderNo())) {
+					outStorage.setScmcoc(orderMap.get(outStorage.getOrderNo()) == null ? null : orderMap.get(outStorage.getOrderNo()).getOrderHead().getScmcoc());
 				}
-			} else if (ImgExgFlag.IMG.equals(inStorage.getImgExgFlag())) {
-				if (StringUtils.isNotBlank(inStorage.getPurchaseNo())) {
-					inStorage.setScmcoc(purchaseMap.get(inStorage.getPurchaseNo()) == null ? null : purchaseMap.get(inStorage.getPurchaseNo()).getPurchaseBill().getScmcoc());
+			} else if (ImgExgFlag.IMG.equals(outStorage.getImgExgFlag())) {
+				if (StringUtils.isNotBlank(outStorage.getPurchaseNo())) {
+					outStorage.setScmcoc(purchaseMap.get(outStorage.getPurchaseNo()) == null ? null : purchaseMap.get(outStorage.getPurchaseNo()).getPurchaseBill().getScmcoc());
 				}
 			}
-			inStorage.setNote(tis.getNote());// 备注
-			inStorage.setImpDate(new Date());
-			inStorage.setHandling(aclUser.getLoginName());
-			return inStorage;
+			outStorage.setNote(tis.getNote());// 备注
+			outStorage.setExpDate(new Date());
+			outStorage.setHandling(aclUser.getLoginName());
+			return outStorage;
 		}
 		return null;
 	}

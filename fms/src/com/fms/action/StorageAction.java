@@ -148,7 +148,7 @@ public class StorageAction extends BaseAction {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return this.SUCCESS;
+		return "imp";
 	}
 
 	private Integer pageCount(Integer maxIndex, Integer dataTotal) {
@@ -470,8 +470,13 @@ public class StorageAction extends BaseAction {
 			inStorage.setUseFlag("0");// 默认启用
 			inStorage.setImpDate(new Date());// 入库日期
 			inStorage.setHandling(this.getLoginUser().getLoginName());// 入库人
-			this.storageLogic.saveStorage(this.getLoginUser(), inStorage);
-			result.setSuccess(true);
+			String mess = this.storageLogic.saveStorage(this.getLoginUser(), inStorage);
+			if (StringUtils.isNotBlank(mess)) {
+				result.setSuccess(false);
+				result.setMsg(mess);
+			} else {
+				result.setSuccess(true);
+			}
 			JSONObject json = new JSONObject(result);
 			out.println(json.toString());
 			out.flush();

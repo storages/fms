@@ -8,22 +8,21 @@ import org.apache.commons.lang.StringUtils;
 
 import com.fms.base.dao.BaseDaoImpl;
 import com.fms.commons.ImgExgFlag;
-import com.fms.core.entity.InStorage;
 import com.fms.core.entity.OutStorage;
-import com.fms.dao.StorageDao;
+import com.fms.dao.OutStorageDao;
 import com.fms.utils.FmsDateUtils;
 
 /**
- * 进出库Dao
+ * 出库Dao
  * 
  * @author Administrator
  * 
  */
-public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
+public class OutStorageDaoImpl extends BaseDaoImpl implements OutStorageDao {
 
 	public List findStorage(String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag, int index, int length) {
 		List params = new ArrayList();
-		String inOutDate = "InStorage".equals(entityName) ? "and a.impDate " : "and a.expDate";
+		String inOutDate = "OutStorage".equals(entityName) ? "and a.impDate " : "and a.expDate";
 		StringBuilder sql = new StringBuilder();
 		sql.append("select a from ");
 		sql.append(entityName.trim());
@@ -59,7 +58,7 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 
 	public Integer findDataCount(String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag) {
 		List params = new ArrayList();
-		String inOutDate = "InStorage".equals(entityName) ? "and a.impDate " : "and a.expDate";
+		String inOutDate = "OutStorage".equals(entityName) ? "and a.impDate " : "and a.expDate";
 		StringBuilder sql = new StringBuilder();
 		sql.append("select count(a.id) from ");
 		sql.append(entityName.trim());
@@ -127,7 +126,7 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 		}
 	}
 
-	public Object countPurchaseItemQty(InStorage storage) {
+	public Object countPurchaseItemQty(OutStorage storage) {
 		String hql = "select sum(a.qty) from PurchaseItem a left join  a.purchaseBill b left join  a.material c  where c.hsCode =? and b.purchaseNo =? and c.imgExgFlag =? ";
 		List params = new ArrayList();
 		params.add(storage.getMaterial().getHsCode());
@@ -136,14 +135,14 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 		return this.uniqueResult(hql, params.toArray());
 	}
 
-	public Object countQtyByPurchaseNo(InStorage storage) {
+	public Object countQtyByPurchaseNo(OutStorage storage) {
 		String hql = "";
 		List params = new ArrayList();
 		if (ImgExgFlag.IMG.equals(storage.getImgExgFlag())) {
-			hql = "select sum(a.inQty) from InStorage a left join  a.material b where a.purchaseNo =? and a.imgExgFlag =? and b.hsCode =? and a.impFlag in (1,2)";
+			hql = "select sum(a.expQty) from OutStorage a left join  a.material b where a.purchaseNo =? and a.imgExgFlag =? and b.hsCode =? and a.expFlag in (1,2)";
 			params.add(storage.getPurchaseNo());
 		} else {
-			hql = "select sum(a.inQty) from InStorage a left join  a.material b where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.impFlag in (1,2)";
+			hql = "select sum(a.expQty) from OutStorage a left join  a.material b where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.expFlag in (1,2)";
 			params.add(storage.getOrderNo());
 		}
 		params.add(storage.getImgExgFlag());
@@ -152,7 +151,7 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 	}
 
 	public Object countOutQtyByOrderNo(OutStorage storage) {
-		String hql = "select sum(a.expQty) from OutStorage a left join  a.material b where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.impFlag in (6,8)";
+		String hql = "select sum(a.expQty) from OutStorage a left join  a.material b where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.expFlag in (6,8)";
 		List params = new ArrayList();
 		params.add(storage.getOrderNo());
 		params.add(storage.getImgExgFlag());
@@ -160,8 +159,8 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 		return this.uniqueResult(hql, params.toArray());
 	}
 
-	public Object countOrderItemQty(InStorage storage) {
-		String hql = "select sum(a.inQty) from InStorage a left join fetch a.material b where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.impFlag in (3,11)";
+	public Object countOrderItemQty(OutStorage storage) {
+		String hql = "select sum(a.expQty) from InStorage a left join fetch a.material b where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.expFlag in (3,11)";
 		List params = new ArrayList();
 		params.add(storage.getOrderNo());
 		params.add(storage.getImgExgFlag());

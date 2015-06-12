@@ -4,18 +4,17 @@ import java.util.Date;
 import java.util.List;
 
 import com.fms.base.dao.BaseDao;
-import com.fms.core.entity.InStorage;
 import com.fms.core.entity.OutStorage;
 
 /**
- * 进出库Dao
+ * 出库Dao
  * 
  * @author Administrator
  * 
  */
-public interface StorageDao extends BaseDao {
+public interface OutStorageDao extends BaseDao {
 	/**
-	 * 分页查找进入库数据
+	 * 分页查找进出库数据
 	 * 
 	 * @param entityName
 	 * @param startDate
@@ -50,7 +49,7 @@ public interface StorageDao extends BaseDao {
 	Integer findMaxSerialNo(String entityName, String imgExgFlag);
 
 	/**
-	 * 根据id查询出入库信息
+	 * 根据id查询出出库信息
 	 * 
 	 * @param id
 	 * @return
@@ -58,22 +57,22 @@ public interface StorageDao extends BaseDao {
 	Object findStorageById(Class clazz, String id);
 
 	/**
-	 * 根据id删除多条出入库
+	 * 根据id删除多条出出库
 	 * 
 	 * @param ids
 	 */
 	void deleteStoragesByIds(String entityName, String[] ids);
 
 	/**
-	 * 汇总入库数量
+	 * 汇总出库数量
 	 * 
 	 * @param storage
 	 * @return
 	 */
-	Object countQtyByPurchaseNo(InStorage storage);
+	Object countQtyByPurchaseNo(OutStorage storage);
 
 	/**
-	 * 汇总入库数量
+	 * 汇总出库数量
 	 * 
 	 * @param storage
 	 * @return
@@ -81,20 +80,20 @@ public interface StorageDao extends BaseDao {
 	Object countOutQtyByOrderNo(OutStorage storage);
 
 	/**
-	 * 根据入库信息查询采购单表体某项物料的总数
+	 * 根据出库信息查询采购单表体某项物料的总数
 	 * 
 	 * @param storage
 	 * @return
 	 */
-	Object countPurchaseItemQty(InStorage storage);
+	Object countPurchaseItemQty(OutStorage storage);
 
 	/**
-	 * 根据入库信息查询订单表体某项物料的总数
+	 * 根据出库信息查询订单表体某项物料的总数
 	 * 
 	 * @param storage
 	 * @return
 	 */
-	Object countOrderItemQty(InStorage storage);
+	Object countOrderItemQty(OutStorage storage);
 
 	Object getObjectById(String entityName, String id);
 }

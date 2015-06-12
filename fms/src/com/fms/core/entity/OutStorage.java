@@ -28,6 +28,18 @@ public class OutStorage extends BaseEntity {
 	 */
 	@CnFileName(name = "订单号")
 	private String orderNo;
+
+	/**
+	 * 采购单号(purchaseNo) 从订单表头中抓取订单号(下拉框)
+	 */
+	@CnFileName(name = "采购单号")
+	private String purchaseNo;
+
+	/**
+	 * 启用状态(useFlag) 0、启用 1、作废 系统默认启用
+	 */
+	@CnFileName(name = "启用状态")
+	private String useFlag = "0";
 	/**
 	 * 物料清单对象
 	 */
@@ -73,7 +85,7 @@ public class OutStorage extends BaseEntity {
 	 * 物料类型
 	 */
 	@CnFileName(name = "物料类型")
-	private String materialTypeName;
+	private String imgExgFlag;
 
 	/**
 	 * 客户供应商对象
@@ -158,12 +170,12 @@ public class OutStorage extends BaseEntity {
 		this.pkgs = pkgs;
 	}
 
-	public String getMaterialTypeName() {
-		return materialTypeName;
+	public String getImgExgFlag() {
+		return imgExgFlag;
 	}
 
-	public void setMaterialTypeName(String materialTypeName) {
-		this.materialTypeName = materialTypeName;
+	public void setImgExgFlag(String imgExgFlag) {
+		this.imgExgFlag = imgExgFlag;
 	}
 
 	public String getNote() {
@@ -196,6 +208,22 @@ public class OutStorage extends BaseEntity {
 
 	public void setScmcoc(Scmcoc scmcoc) {
 		this.scmcoc = scmcoc;
+	}
+
+	public String getPurchaseNo() {
+		return purchaseNo;
+	}
+
+	public void setPurchaseNo(String purchaseNo) {
+		this.purchaseNo = purchaseNo;
+	}
+
+	public String getUseFlag() {
+		return useFlag;
+	}
+
+	public void setUseFlag(String useFlag) {
+		this.useFlag = useFlag;
 	}
 
 }

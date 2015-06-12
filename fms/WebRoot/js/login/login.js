@@ -24,6 +24,13 @@ $(function(){
 		}
 	});
 	
+	document.onkeydown = function(e){ 
+	    var ev = document.all ? window.event : e;
+	    if(ev.keyCode==13) {
+	    	findUserName();
+	     }
+	}
+	
 	 // 登陆按钮
 	$("#login").click(findUserName);  
 	function findUserName(){

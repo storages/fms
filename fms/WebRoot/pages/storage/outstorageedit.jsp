@@ -25,7 +25,6 @@ function parse(str){
 }
 	
 	$(function(){
-		
 		$(".number").keyup(function(){    
             $(this).val($(this).val().replace(/[^0-9.]/g,''));    
         }).bind("paste",function(){  //CTR+V事件处理    
@@ -38,30 +37,31 @@ function parse(str){
 			$("#isClear").val("");
 			initUi();
 		});
-		
-		//入库类型改变事件
+		//出库类型改变事件
 		$("#impExpType").change(function(){
-			$("#isClear").val("");
 			var imgExg = $("#imgexgflag").val();
 			var value = $(this).find("option:selected").text();
-			if("原料其它入库"==value && "I"==imgExg){
+			$("#isClear").val("");
+			initUi();
+			if("原料其它出库"==value && "I"==imgExg){
 				$("#purchNo").html("");
-			}else if("原料其它入库"!=value && "I"==imgExg){
+			}else if("原料其它出库"!=value && "I"==imgExg){
 				$("#purchNo").html("*");
 			}
-			if("成品其它入库"==value && "E"==imgExg){
+			if("成品其它出库"==value && "E"==imgExg){
 				$("#orderNo").html("");
-			}else if("成品其它入库"!=value && "E"==imgExg){
+			}else if("成品其它出库"!=value && "E"==imgExg){
 				$("#orderNo").html("*");
+			}else if("原料生产领用"==value){
+				$("#purchNo").html("");
 			}
-			initUi();
 		});
 		
 		$("#imgexgflag").change(function(){
 			$("#isClear").val("");
 			var val = $("#imgexgflag").val();
 			var inOrOutFlag = $("#inOrOutFlag").val();
-			var url ="${pageContext.request.contextPath}/storage_loadImpExpType.action";
+			var url ="${pageContext.request.contextPath}/outstorage_loadImpExpType.action";
 			$.ajax({
 				type: "POST",
 				url:url,
@@ -74,8 +74,14 @@ function parse(str){
 						$("#impExpType").empty(); 
 							var mylist = result.obj;
 							var options = "";
+							var str = "";
 							 for(var i=0; i<mylist.length; i++){
-								options += "<option value='"+mylist[i].code+"'>"+ mylist[i].name +"</option>";
+								 if(i==1){
+									 str = "selected='selected'";
+									 options += "<option value='"+mylist[i].code+"' "+str+">"+ mylist[i].name +"</option>";
+								 }else{
+									options += "<option value='"+mylist[i].code+"'>"+ mylist[i].name +"</option>";
+								 }
 							}
 							 $("#impExpType").html(options); 
 					}
@@ -96,22 +102,22 @@ function parse(str){
 			var serialNo = $("#serialNo").val();
 			var impExpType = $("#impExpType").val();
 			var imgexgflag = $("#imgexgflag").val();
-			var inStorageNo = $("#inStorageNo").val();
+			var outStorageNo = $("#outStorageNo").val();
 			var hsCode = $("#hsCode").val();
-			var inQty = $("#inQty").val();
+			var expQty = $("#expQty").val();
 			var packQty = $("#packQty").val();
 			var id = $("#flag").val();
 			var imgExg = $("#imgexgflag").val();
 			var value = $("#impExpType").find("option:selected").text();
 			var purchNo=  ($("#tfPurchaseNo").val()==undefined||$("#tfPurchaseNo").val()=="")?"":$("#tfPurchaseNo").val();
-			if("原料其它入库"!=value && "I"==imgExg){
+			if("原料其它出库"!=value && "I"==imgExg){
 				if(purchNo==""){
 					alert("采购单号不能为空!");
 					return;
 				}
 			}
 			var orderNo;
-			if("成品其它入库"!=value && "E"==imgExg){
+			if("成品其它出库"!=value && "E"==imgExg){
 				orderNo = $("#tfOrderNo").val();
 				if(orderNo==""){
 					alert("订单号不能为空!");
@@ -123,15 +129,15 @@ function parse(str){
 				return;
 			}
 			if(impExpType==""){
-				alert("入库类型不能为空!");
+				alert("出库类型不能为空!");
 				return;
 			}
 			if(imgexgflag==""){
 				alert("物料标志不能为空!");
 				return;
 			}
-			if(inStorageNo==""){
-				alert("入库单号不能为空!");
+			if(outStorageNo==""){
+				alert("出库单号不能为空!");
 				return;
 			}
 			if(hsCode==""){
@@ -139,12 +145,12 @@ function parse(str){
 				return;
 			}
 			
-			if(inQty==""){
-				alert("入库数量不能为空!");
+			if(expQty==""){
+				alert("出库数量不能为空!");
 				return;
 			}
-			if(checkNumber(inQty)){
-				alert("入库数量只能填数字!");
+			if(checkNumber(expQty)){
+				alert("出库数量只能填数字!");
 				return;
 			}
 			/*if(packQty==""){
@@ -167,9 +173,9 @@ function parse(str){
 			var orderNo = ($("#tfOrderNo").val()==undefined||$("#tfOrderNo").val()=="")?"":$("#tfOrderNo").val();
 			var url = "${pageContext.request.contextPath}/storage_saveInStorage.action";
 			var data = "serialNo="+serialNo+"&impFlag="+impExpType+"&imgExgFlag="+imgexgflag;
-				   data+="&purchaseNo="+purchNo+"&inStorageNo="+inStorageNo+"&orderNo="+orderNo;
+				   data+="&purchaseNo="+purchNo+"&outStorageNo="+outStorageNo+"&orderNo="+orderNo;
 				   data+="&scmcocName="+parse(scmcocName)+"&hsCode="+hsCode+"&hsName="+parse(hsName);
-				   data+="&model="+hsModel+"&unitName="+parse(unitName)+"&inQty="+inQty+"&packQty="+packQty;
+				   data+="&model="+hsModel+"&unitName="+parse(unitName)+"&expQty="+expQty+"&packQty="+packQty;
 				   data+="&pkgs="+pkgs+"&stockId="+stockId+"&note="+parse(note)+"&id="+id;
 			$.ajax({
 				url:url,
@@ -215,8 +221,8 @@ function parse(str){
 			//}
 		});
 		
-		//自动计算件数(入库数量)触发
-		$("#inQty").bind("blur",function(){
+		//自动计算件数(出库数量)触发
+		$("#expQty").bind("blur",function(){
 			autoCountPaks();
 		});
 		//自动计算件数(每件包装数量)触发
@@ -301,6 +307,7 @@ function parse(str){
 	function initUi(){
 		var val = $("#imgexgflag").val();
 		var isClear = $("#isClear").val();
+		var value = $(this).find("option:selected").text();
 		if("I"==val){
 			$("#purchNo").html("*");
 			$("#purchQuery").show();
@@ -314,6 +321,7 @@ function parse(str){
 			$("#purchNo").html("");
 			$("#purchQuery").hide();
 		}
+		
 		if("false"!=isClear){
 			$("#hsCode").val("");
 			$("#hsName").val("");
@@ -323,6 +331,7 @@ function parse(str){
 			$("#tfPurchaseNo").val("");
 			$("#tfOrderNo").val("");
 		}
+		
 	}
 	
 	
@@ -332,13 +341,13 @@ function parse(str){
 	
 	//自动计算件数
 	function autoCountPaks(){
-			var inQty = $("#inQty").val();
+			var expQty = $("#expQty").val();
 			var packQty = $("#packQty").val();
-			if(inQty!="" && packQty!="" && !checkNumber(inQty) &&!checkNumber(packQty)){
+			if(expQty!="" && packQty!="" && !checkNumber(expQty) &&!checkNumber(packQty)){
 				var url = '${pageContext.request.contextPath}/storage_conutPaks.action';
 				$.ajax({
 					url:url,
-					data:{inQty:inQty,packQty:packQty},
+					data:{expQty:expQty,packQty:packQty},
 					success:function(args){
 						var result=jQuery.parseJSON(args);
 						if(result.success){
@@ -350,15 +359,15 @@ function parse(str){
 	}
 	
 </script>
-    <input type="hidden" id="flag" value="${inStorage.id}"/><!-- 为了判断是新增还是修改 -->
+    <input type="hidden" id="flag" value="${outStorage.id}"/><!-- 为了判断是新增还是修改 -->
     <input type="hidden" id="inOrOutFlag" value="${inOrOutFlag}"/>
     <input type="hidden" id="isClear" value="${isClear}"/>
    <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">
     	<c:if test="${storage.id==null}">
-			<h5>物料＞＞<a href="javascript:void(0);" id="addgoback">入库</a>＞＞新增</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="addgoback">出库</a>＞＞新增</h5>
 		</c:if>
     	<c:if test="${storage.id!=null}">
-			<h5>物料＞＞<a href="javascript:void(0);" id="editgoback">入库</a>＞＞修改</h5>
+			<h5>物料＞＞<a href="javascript:void(0);" id="editgoback">出库</a>＞＞修改</h5>
 		</c:if>
 	</div>
 	<div>
@@ -366,13 +375,13 @@ function parse(str){
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px; ">流水号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input id="serialNo" type="text" style="height:25px;  width:100%;" readonly="readonly"  value="${inStorage.serialNo}"/></td>
-				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库类型</td>
+				<td style="width: 150px;border:0px;padding:0px;"><input id="serialNo" type="text" style="height:25px;  width:100%;" readonly="readonly"  value="${outStorage.serialNo}"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">出库类型</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
 				<td style="width: 150px;border:0px;padding:0px;">
 					<select style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;" id="impExpType" >
 						<c:forEach var="mattype" items="${impexptypes}">
-							<option value="${mattype.code}" <c:if test="${inStorage.impFlag==mattype.code}">selected="selected"</c:if>>${mattype.name}</option>
+							<option value="${mattype.code}" <c:if test="${outStorage.expFlag==mattype.code}">selected="selected"</c:if>>${mattype.name}</option>
 						</c:forEach>
 					</select>
 				</td>
@@ -394,51 +403,51 @@ function parse(str){
 					</select>
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">采购单号</td>
-				<td style="width: 3px;border:0px;color:red;padding:0px;" id="purchNo">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input id="tfPurchaseNo" type="text"  value="${inStorage.purchaseNo}" style="height:25px; width:100%;  padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
+				<td style="width: 3px;border:0px;color:red;padding:0px;" id="purchNo"></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input id="tfPurchaseNo" type="text"  value="${outStorage.purchaseNo}" style="height:25px; width:100%;  padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
 				<td style="width: 10px;border:0px;padding:0px;"><img src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="purchQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
-				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库单号</td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">出库单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" value="${inStorage.inStorageNo}"  id="inStorageNo" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" value="${outStorage.outStorageNo}"  id="outStorageNo" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">订单号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"  id="orderNo">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" id="tfOrderNo" value="${inStorage.orderNo}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" id="tfOrderNo" value="${outStorage.orderNo}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
 				<td style="width: 10px;border:0px;padding:0px;"><img  src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;" id="orderQuery"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;" id="captionScm">供应商名称</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text" id="tfScmcoc" value="${inStorage.scmcoc.name}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text" id="tfScmcoc" value="${outStorage.scmcoc.name}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料编码</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  id="hsCode" value="${inStorage.material.hsCode}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  id="hsCode" value="${outStorage.material.hsCode}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" readonly="readonly" /></td>
 				<td style="width: 10px;border:0px;padding:0px;"><img id="hsCodeQuery" src="${pageContext.request.contextPath}/images/search.gif" style="margin-top: 6px; cursor: pointer;"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">物料名称</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"   value="${inStorage.material.hsName}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" id="hsName"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"   value="${outStorage.material.hsName}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;" id="hsName"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">规格型号</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"  id="hsModel" value="${inStorage.material.model}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"  id="hsModel" value="${outStorage.material.model}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">计量单位</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"  id="unitName" value="${inStorage.material.unit.name}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
-				<td style="width: 60px;border:0px;text-align: right;padding:0px;">入库数量</td>
+				<td style="width: 150px;border:0px;padding:0px;"><input readonly="readonly"  id="unitName" value="${outStorage.material.unit.name}" type="text" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"/></td>
+				<td style="width: 60px;border:0px;text-align: right;padding:0px;">出库数量</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;">*</td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  class="number"  id="inQty" value="${inStorage.inQty}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  class="number"  id="expQty" value="${outStorage.expQty}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">每件包装数</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  class="number"    id="packQty" value="${inStorage.specQty}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  class="number"    id="packQty" value="${outStorage.specQty}" style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;"/></td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">件数</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  id="pkgs" value="${inStorage.pkgs}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"  readonly="readonly"/></td>
+				<td style="width: 150px;border:0px;padding:0px;"><input type="text"  id="pkgs" value="${outStorage.pkgs}"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;"  readonly="readonly"/></td>
 			</tr>
 			<tr style="border:0px;">
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">仓库名称</td>
@@ -446,31 +455,31 @@ function parse(str){
 				<td style="width: 150px;border:0px;padding:0px;">
 					<select id="stockName"  style="height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;" >
 						<c:forEach var="stock" items="${stockList}">
-							<option value="${stock.id}" <c:if test="${inStorage.stock.name==stock.name}">selected="selected"</c:if>>${stock.name}</option>
+							<option value="${stock.id}" <c:if test="${outStorage.stock.name==stock.name}">selected="selected"</c:if>>${stock.name}</option>
 						</c:forEach>
 					</select>
 				</td>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">启用状态</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
 				<td style="width: 150px;border:0px;padding:0px;">
-					<c:if test="${inStorage.useFlag=='1'}">
-						<input name="useFlag"  type="radio" value="${inStorage.useFlag}" checked="checked" />停用　　
+					<c:if test="${outStorage.useFlag=='1'}">
+						<input name="useFlag"  type="radio" value="${outStorage.useFlag}" checked="checked" />停用　　
 					</c:if>
-					<c:if test="${inStorage.useFlag!='1'}">
-						<input name="useFlag"  type="radio" value="${inStorage.useFlag}"  />停用　　
+					<c:if test="${outStorage.useFlag!='1'}">
+						<input name="useFlag"  type="radio" value="${outStorage.useFlag}"  />停用　　
 					</c:if>
-					<c:if test="${inStorage.useFlag=='0'}">
-						<input name="useFlag"  type="radio" value="${inStorage.useFlag}" checked="checked" />启用　　
+					<c:if test="${outStorage.useFlag=='0'}">
+						<input name="useFlag"  type="radio" value="${outStorage.useFlag}" checked="checked" />启用　　
 					</c:if>
-					<c:if test="${inStorage.useFlag!='0'}">
-						<input name="useFlag"  type="radio" value="${inStorage.useFlag}"  />启用　　
+					<c:if test="${outStorage.useFlag!='0'}">
+						<input name="useFlag"  type="radio" value="${outStorage.useFlag}"  />启用　　
 					</c:if>
 				</td>
 			</tr>
 			<tr>
 				<td style="width: 60px;border:0px;text-align: right;padding:0px;">备注</td>
 				<td style="width: 3px;border:0px;color:red;padding:0px;"></td>
-				<td colspan="4"  style="width: 150px;border:0px;padding:0px;"><textarea id="note"   style="resize: none; height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;">${inStorage.note}</textarea></td>
+				<td colspan="4"  style="width: 150px;border:0px;padding:0px;"><textarea id="note"   style="resize: none; height:25px; width:100%;padding-top:0px;padding-bottom: 0px;border-color:red;">${outStorage.note}</textarea></td>
 			</tr>
 			<tr style="border:0px;text-align:center; ">
 				<td colspan="6" style="border:0px;text-align:center;">

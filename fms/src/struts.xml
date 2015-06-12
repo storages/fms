@@ -153,9 +153,9 @@
 		</action>
 		
 		
-		<!-- 进出库 -->
+		<!-- 进库 -->
 		<action name="storage_*" class="storageAction" method="{1}">
-			<result name="success">/pages/storage/impexpstorage.jsp</result>
+			<result name="imp">/pages/storage/impstorage.jsp</result>
 			<result name="edit">/pages/storage/storageedit.jsp</result>
 			<result name="save" type="chain">storage_findAllInStorage</result>
 			<result name="dialog">/pages/dialoghtml/dgPurchaseQuery.jsp</result>
@@ -164,6 +164,16 @@
 			<result name="importexcel">/pages/import/storageimport.jsp</result>
 		</action>
 		
+		<!-- 出库 -->
+		<action name="outstorage_*" class="outStorageAction" method="{1}">
+			<result name="exp">/pages/storage/expstorage.jsp</result>
+			<result name="edit">/pages/storage/outstorageedit.jsp</result>
+			<result name="save" type="chain">storage_findAllInStorage</result>
+			<result name="dialog">/pages/dialoghtml/dgPurchaseQuery.jsp</result>
+			<result name="materdialg">/pages/dialoghtml/dgMaterial.jsp</result>
+			<result name="dgorder">/pages/dialoghtml/dgOrderQuery.jsp</result>
+			<result name="importexcel">/pages/import/storageimport.jsp</result>
+		</action>
 		<!-- 报价单 -->
 		<action name="quotation_*" class="quotationAction" method="{1}">
 			<result name="success">/pages/baojia/quotationpage.jsp</result>

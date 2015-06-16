@@ -22,7 +22,7 @@ public class OutStorageDaoImpl extends BaseDaoImpl implements OutStorageDao {
 
 	public List findStorage(String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag, int index, int length) {
 		List params = new ArrayList();
-		String inOutDate = "OutStorage".equals(entityName) ? "and a.impDate " : "and a.expDate";
+		String inOutDate = "OutStorage".equals(entityName) ? " and a.expDate " : " and a.impDate ";
 		StringBuilder sql = new StringBuilder();
 		sql.append("select a from ");
 		sql.append(entityName.trim());
@@ -58,7 +58,7 @@ public class OutStorageDaoImpl extends BaseDaoImpl implements OutStorageDao {
 
 	public Integer findDataCount(String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag) {
 		List params = new ArrayList();
-		String inOutDate = "OutStorage".equals(entityName) ? "and a.impDate " : "and a.expDate";
+		String inOutDate = "OutStorage".equals(entityName) ? " and a.expDate " : " and a.impDate ";
 		StringBuilder sql = new StringBuilder();
 		sql.append("select count(a.id) from ");
 		sql.append(entityName.trim());

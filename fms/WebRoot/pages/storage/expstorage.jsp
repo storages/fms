@@ -32,7 +32,7 @@
   			var endDate = $("#endDate").val();
   			var scmcocName = $("#scmcocName").val();
   			var hsName = $("#hsName").val();
-  			var url = "${pageContext.request.contextPath}/storage_findAllInStorage.action?startDate="+startDate+"&endDate="+endDate+"&scmcocName="+parse(scmcocName)+"&hsName="+parse(hsName);
+  			var url = "${pageContext.request.contextPath}/outstorage_findAllOutStorage.action?startDate="+startDate+"&endDate="+endDate+"&scmcocName="+parse(scmcocName)+"&hsName="+parse(hsName);
   			toMain(url);
   		});
   		
@@ -63,7 +63,7 @@
 		<h5>物料＞＞出库</h5>
 	</div>
 	<div class="modal-footer" style="text-align: left;padding:2px; height:29px;" >
-		<span class="">出库日期</span><input type="text" id="beginDate" value="${startDate}" style="height:25px; width:100px;"/><span class="">至</span><input type="text" id="endDate" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
+		<span class="">出库日期</span><input type="text" id="beginDate" value="${startDate}" style="height:25px; width:100px;"/><span class="">至</span><input type="text" id="endDate" value="${endDate}" value="" style="height:25px; width:100px;" name="it" class="it date-pick"/>
 		<span class="">供应商名称</span><input type="text" id="scmcocName" value="${scmcocName}"  style="height:25px; width:100px;" class=""/>
 		<span class="">物料名称</span><input type="text" id=hsName value="${hsName}" style="height:25px; width:100px;" class=""/>
 		<input class="btn btn-small btn-danger" data-toggle="button" type="button" value="查询" id="btnQuery" style="height:25px; border: 2px; width:45px; margin-top:-10px;"/>
@@ -123,14 +123,14 @@
 									<c:if  test="${ storage.useFlag==1}">
 										<td class="center">停用</td>
 									</c:if>
-									<td class="center">${storage.inStorageNo}&nbsp;</td>
+									<td class="center">${storage.outStorageNo}&nbsp;</td>
 									<td class="center">${storage.orderNo}&nbsp;</td>
 									<td class="center">${storage.purchaseNo}&nbsp;</td>
 									<td class="center">${storage.material.hsCode}&nbsp;</td>
 									<td class="center">${storage.material.hsName}&nbsp;</td>
 									<td class="center">${storage.material.model}&nbsp;</td>
 									<td class="center">${storage.material.color}&nbsp;</td>
-									<td class="center">${storage.inQty}&nbsp;</td>
+									<td class="center">${storage.expQty}&nbsp;</td>
 									<td class="center">${storage.material.unit.name}&nbsp;</td>
 									<td class="center">${storage.material.batchNO}&nbsp;</td>
 									<td class="center">${storage.specQty}&nbsp;</td>
@@ -143,14 +143,14 @@
 									<c:if test="${storage.imgExgFlag=='E' }">
 										<td class="hidden-480 center">成品&nbsp;</td>
 									</c:if>
-										<td class="hidden-480 center">${storage.impFlag}&nbsp;</td>
+										<td class="hidden-480 center">${storage.expFlag}&nbsp;</td>
 										<td class="hidden-480 center">${storage.material.materialType.typeName}&nbsp;</td>
 										<td class="hidden-480 center">${storage.handling}&nbsp;</td>
-										<td class="hidden-480 center"><fmt:formatDate value="${storage.impDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
+										<td class="hidden-480 center"><fmt:formatDate value="${storage.expDate}" pattern="yyyy-MM-dd"/>&nbsp;</td>
 										<td class="hidden-480 center">${storage.note}&nbsp;</td>
 									<td class="center">
 										<a href="javascript:void(0);"  onclick="editData('${storage.id}')">修改</a>&nbsp;|
-										<a href="javascript:void(0);" onclick="delData('${storage.id}','InStorage')"" >删除</a>
+										<a href="javascript:void(0);" onclick="delData('${storage.id}','OutStorage')"" >删除</a>
 									</td>
 								</tr>
 						</c:forEach>
@@ -162,10 +162,10 @@
 			<div class="modal-footer">
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="toMain('${pageContext.request.contextPath}/outstorage_editStorage.action?impExpFlag=E&inOrOutFlag=out');">新增</button>
 				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button"  id="btnEdit">修改</button>
-				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','InStorage')">
+				<button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="delData('','OutStorage')">
 					批量删除
 				</button>
-				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/storage_toImportPage.action')">Excel导入</button>
+				<button class="btn btn-small btn-danger pull-left" data-toggle="button" type="button" onclick="javascript:toMain('${pageContext.request.contextPath}/outstorage_toImportPage.action')">Excel导入</button>
 				<!-- 分页 -->
 				<div class="pagination pull-right no-margin" style="width: 500px;">
 					<ul>

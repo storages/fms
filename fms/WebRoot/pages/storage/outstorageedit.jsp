@@ -91,10 +91,10 @@ function parse(str){
 		
 		//上一页面
 		$("#addgoback").click(function(){
-			toMain("${pageContext.request.contextPath}/storage_findAllInStorage.action");
+			toMain("${pageContext.request.contextPath}/outstorage_findAllOutStorage.action");
 		});
 		$("#editgoback").click(function(){
-			toMain("${pageContext.request.contextPath}/storage_findAllInStorage.action");
+			toMain("${pageContext.request.contextPath}/outstorage_findAllOutStorage.action");
 		});
 		
 		//保存
@@ -171,8 +171,8 @@ function parse(str){
 			var pkgs = $("#pkgs").val();
 			var note = $("#note").val();
 			var orderNo = ($("#tfOrderNo").val()==undefined||$("#tfOrderNo").val()=="")?"":$("#tfOrderNo").val();
-			var url = "${pageContext.request.contextPath}/storage_saveInStorage.action";
-			var data = "serialNo="+serialNo+"&impFlag="+impExpType+"&imgExgFlag="+imgexgflag;
+			var url = "${pageContext.request.contextPath}/outstorage_saveOutStorage.action";
+			var data = "serialNo="+serialNo+"&expFlag="+impExpType+"&imgExgFlag="+imgexgflag;
 				   data+="&purchaseNo="+purchNo+"&outStorageNo="+outStorageNo+"&orderNo="+orderNo;
 				   data+="&scmcocName="+parse(scmcocName)+"&hsCode="+hsCode+"&hsName="+parse(hsName);
 				   data+="&model="+hsModel+"&unitName="+parse(unitName)+"&expQty="+expQty+"&packQty="+packQty;
@@ -186,7 +186,7 @@ function parse(str){
 				success:function(args){
 					var result=jQuery.parseJSON(args);
 					if(result.success){
-						toMain("${pageContext.request.contextPath}/storage_findAllInStorage.action");
+						toMain("${pageContext.request.contextPath}/outstorage_findAllOutStorage.action");
 					}else{
 						alert(result.msg);
 					}
@@ -200,12 +200,12 @@ function parse(str){
 		//采购单查询
 		$("#purchQuery").bind("click",function(){
 			showDialog('选择采购单','dgPurchaseQuery.jsp');
-			$("#dg_content").load("${pageContext.request.contextPath}/storage_findPurchaseHead.action");
+			$("#dg_content").load("${pageContext.request.contextPath}/outstorage_findPurchaseHead.action");
 		});
 		//订单查询
 		$("#orderQuery").bind("click",function(){
 			showDialog('选择订单','dgOrderQuery.jsp');
-			$("#dg_content").load("${pageContext.request.contextPath}/storage_findOrderHeadList.action");
+			$("#dg_content").load("${pageContext.request.contextPath}/outstorage_findOrderHeadList.action");
 		});
 		
 		//物料查询
@@ -217,7 +217,7 @@ function parse(str){
 			}else{*/
 				showDialog('选择物料','dgMaterial.jsp');
 				var imgexgflag = $("#imgexgflag").val();
-				$("#dg_content").load("${pageContext.request.contextPath}/storage_findMaterial.action?imgExgFlag="+imgexgflag+"&purchaseNo="+purchNo+"&orderNo="+orderNo);
+				$("#dg_content").load("${pageContext.request.contextPath}/outstorage_findMaterial.action?imgExgFlag="+imgexgflag+"&purchaseNo="+purchNo+"&orderNo="+orderNo);
 			//}
 		});
 		
@@ -251,7 +251,7 @@ function parse(str){
 			 
 			 if(hideflag=="material"){
 				 $.ajax({
-					 url:'${pageContext.request.contextPath}/storage_getHsCodeByMaterialId.action',
+					 url:'${pageContext.request.contextPath}/outstorage_getHsCodeByMaterialId.action',
 					 data:{id:id},
 					 async: false,
 					 cache: false,
@@ -268,7 +268,7 @@ function parse(str){
 				 });
 			 }else if(hideflag=="purchase"){
 				 $.ajax({
-					 url:'${pageContext.request.contextPath}/storage_getPurchaseNoById.action',
+					 url:'${pageContext.request.contextPath}/outstorage_getPurchaseNoById.action',
 					 data:{id:id},
 					 async: false,
 					 cache: false,
@@ -287,7 +287,7 @@ function parse(str){
 				 });
 			 } else if(hideflag=="order"){
 				 $.ajax({
-					 url:'${pageContext.request.contextPath}/storage_getOrderNoById.action',
+					 url:'${pageContext.request.contextPath}/outstorage_getOrderNoById.action',
 					 data:{id:id},
 					 async: false,
 					 cache: false,
@@ -344,7 +344,7 @@ function parse(str){
 			var expQty = $("#expQty").val();
 			var packQty = $("#packQty").val();
 			if(expQty!="" && packQty!="" && !checkNumber(expQty) &&!checkNumber(packQty)){
-				var url = '${pageContext.request.contextPath}/storage_conutPaks.action';
+				var url = '${pageContext.request.contextPath}/outstorage_conutPaks.action';
 				$.ajax({
 					url:url,
 					data:{expQty:expQty,packQty:packQty},

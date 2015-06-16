@@ -269,6 +269,10 @@ function getUrl(flag){
 			url[0] = "${pageContext.request.contextPath}/storage_delStorages.action";
 			url[1] = "${pageContext.request.contextPath}/storage_findAllInStorage.action";
 			break;
+		case "OutStorage":
+			url[0] = "${pageContext.request.contextPath}/outstorage_delStorages.action";
+			url[1] = "${pageContext.request.contextPath}/outstorage_findAllOutStorage.action";
+			break;
 	}
 	return url;
 }

@@ -41,5 +41,7 @@ select * from orderhead a left join scmcoc b on a.scmcoc = b.id
 delete from orderitem
 
 select * from instorage
+select * from outstorage
 
 delete  from instorage
+delete  from outstorage where id in('402881e84dfc42b4014dfc43baa70000','402881e84dfc42b4014dfc461afc0001','402881e84dfc42b4014dfc4653310002')

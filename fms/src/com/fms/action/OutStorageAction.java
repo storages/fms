@@ -92,7 +92,7 @@ public class OutStorageAction extends BaseAction {
 	protected String purchaseNo;// 采购单号
 	protected String orderNo;// 订单号
 	protected String imgExgFlag;// 物料标记
-	protected String inQty;// 出库数量
+	protected String expQty;// 出库数量
 	protected String packQty;// 每件包装数
 	protected String model;// 规格
 	protected String unitName;// 计量单位
@@ -130,8 +130,8 @@ public class OutStorageAction extends BaseAction {
 					DEFAULT_PAGESIZE);
 
 			for (Object obj : storageList) {
-				OutStorage is = (OutStorage) obj;
-				is.setExpFlag(ImpExpType.getImpExpType(Integer.parseInt(is.getExpFlag())));
+				OutStorage os = (OutStorage) obj;
+				os.setExpFlag(ImpExpType.getImpExpType(Integer.parseInt(os.getExpFlag())));
 			}
 
 			this.request.put("storageList", storageList);
@@ -398,8 +398,8 @@ public class OutStorageAction extends BaseAction {
 			response.setCharacterEncoding("UTF-8");
 			Double qty = 0d;
 			Double packQtys = 0d;
-			if (StringUtils.isNotBlank(inQty) && isNumeric(inQty)) {
-				qty = Double.parseDouble(inQty);
+			if (StringUtils.isNotBlank(expQty) && isNumeric(expQty)) {
+				qty = Double.parseDouble(expQty);
 			}
 			if (StringUtils.isNotBlank(packQty) && isNumeric(packQty)) {
 				packQtys = Double.parseDouble(packQty);
@@ -415,7 +415,10 @@ public class OutStorageAction extends BaseAction {
 		}
 	}
 
-	public void saveInStorage() {
+	/**
+	 * 保存出库信息
+	 */
+	public void saveOutStorage() {
 		try {
 			PrintWriter out = null;
 			AjaxResult result = new AjaxResult();
@@ -449,8 +452,8 @@ public class OutStorageAction extends BaseAction {
 			Double qty = 0d;
 			Double specQty = 0d;
 			Double pcs = 0d;
-			if (StringUtils.isNotBlank(inQty) && isNumeric(inQty)) {
-				qty = Double.parseDouble(inQty);
+			if (StringUtils.isNotBlank(expQty) && isNumeric(expQty)) {
+				qty = Double.parseDouble(expQty);
 			}
 			if (StringUtils.isNotBlank(packQty) && isNumeric(packQty)) {
 				specQty = Double.parseDouble(packQty);
@@ -498,7 +501,7 @@ public class OutStorageAction extends BaseAction {
 					out = response.getWriter();
 					response.setContentType("application/text");
 					response.setCharacterEncoding("UTF-8");
-					this.outStorageLogic.deleteStoragesByIds(getLoginUser(), "InStorage", idsArr);
+					this.outStorageLogic.deleteStoragesByIds(getLoginUser(), "OutStorage", idsArr);
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
 					JSONObject json = new JSONObject(result);
@@ -911,12 +914,12 @@ public class OutStorageAction extends BaseAction {
 		this.imgExgFlag = imgExgFlag;
 	}
 
-	public String getInQty() {
-		return inQty;
+	public String getExpQty() {
+		return expQty;
 	}
 
-	public void setInQty(String inQty) {
-		this.inQty = inQty;
+	public void setExpQty(String expQty) {
+		this.expQty = expQty;
 	}
 
 	public String getPackQty() {

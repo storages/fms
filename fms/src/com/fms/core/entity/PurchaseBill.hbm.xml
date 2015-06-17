@@ -21,6 +21,7 @@
 		<property name="totalAmount" column="TOTALAMOUNT" />
 		<property name="purchDate" column="PURCHDATE" />
 		<property name="printCount" column="PRINTCOUNT" />
+		<many-to-one name="purchaseUser" class="AclUser" column="PURCHASEUSER" lazy="false"/>
 		<property name="isComplete" column="ISCOMPLETE" />
 		<property name="orderNo" column="ORDERNO" />
 		<property name="specialNote" column="SPECIALNOTE" />

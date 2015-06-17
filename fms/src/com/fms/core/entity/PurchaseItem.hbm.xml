@@ -18,6 +18,7 @@
 		<property name="purchaseDate" column="PURCHASEDATE" />
 		<property name="deliveryDate" column="DELIVERYDATE" />
 		<property name="isBuy" column="ISBUY" />
+		<property name="isCompalte" column="ISCOMPALTE" />
 		<property name="linkAppBillItemId" column="LINKAPPBILLITEMID" />
 		<many-to-one name="purchaseBill" class="PurchaseBill" column="PURCHASEBILL" />
 	</class>

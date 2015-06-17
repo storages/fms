@@ -49,6 +49,12 @@ public class PurchaseItem extends BaseEntity {
 	 */
 	@CnFileName(name = "是否已下单")
 	private Boolean isBuy = Boolean.FALSE;
+
+	/**
+	 * 是否已完结
+	 */
+	@CnFileName(name = "是否已完结")
+	private Boolean isCompalte = Boolean.FALSE;
 	/**
 	 * 关联申请单表体id
 	 */
@@ -128,6 +134,14 @@ public class PurchaseItem extends BaseEntity {
 
 	public void setLinkAppBillItemId(String linkAppBillItemId) {
 		this.linkAppBillItemId = linkAppBillItemId;
+	}
+
+	public Boolean getIsCompalte() {
+		return isCompalte;
+	}
+
+	public void setIsCompalte(Boolean isCompalte) {
+		this.isCompalte = isCompalte;
 	}
 
 }

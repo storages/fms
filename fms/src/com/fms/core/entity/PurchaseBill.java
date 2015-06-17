@@ -45,6 +45,13 @@ public class PurchaseBill extends BaseEntity {
 	 */
 	@CnFileName(name = "采购单项数")
 	private Integer itemNo;
+
+	/**
+	 * 采购人
+	 */
+	@CnFileName(name = "采购人")
+	private AclUser purchaseUser;
+
 	/**
 	 * 供应商(实体ScmCoc) 由申请单【审核】后系统抓取申请单
 	 */
@@ -176,6 +183,14 @@ public class PurchaseBill extends BaseEntity {
 
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public AclUser getPurchaseUser() {
+		return purchaseUser;
+	}
+
+	public void setPurchaseUser(AclUser purchaseUser) {
+		this.purchaseUser = purchaseUser;
 	}
 
 }

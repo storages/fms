@@ -19,6 +19,7 @@ import com.fms.core.entity.Scmcoc;
 import com.fms.core.entity.Stock;
 import com.fms.dao.MaterialDao;
 import com.fms.dao.OrderDao;
+import com.fms.dao.OutStorageDao;
 import com.fms.dao.PurchaseBillDao;
 import com.fms.dao.ScmcocDao;
 import com.fms.dao.StockDao;
@@ -34,6 +35,7 @@ public class StorageLogicImpl implements StorageLogic {
 	protected PurchaseBillDao purchaseBillDao;
 	protected StockDao stockDao;
 	protected ScmcocDao scmcocDao;
+	protected OutStorageDao outStorageDao;
 
 	public void setStorageDao(StorageDao storageDao) {
 		this.storageDao = storageDao;
@@ -79,6 +81,18 @@ public class StorageLogicImpl implements StorageLogic {
 		this.scmcocDao = scmcocDao;
 	}
 
+	public OutStorageDao getOutStorageDao() {
+		return outStorageDao;
+	}
+
+	public void setOutStorageDao(OutStorageDao outStorageDao) {
+		this.outStorageDao = outStorageDao;
+	}
+
+	public StorageDao getStorageDao() {
+		return storageDao;
+	}
+
 	public List findStorage(AclUser user, String entityName, Date startDate, Date endDate, String scmcocName, String hsName, String flag, int index, int length) {
 		return this.storageDao.findStorage(entityName, startDate, endDate, scmcocName, hsName, flag, index, length);
 	}
@@ -107,6 +121,33 @@ public class StorageLogicImpl implements StorageLogic {
 			mess = checkImgQty(storage);
 			if (StringUtils.isBlank(mess)) {
 				this.storageDao.saveOrUpdate(storage);
+				// 反写采购单是否完结(入库数量>=采购单数量，即为完结)
+				// 入库总数
+				Double total = (Double) this.storageDao.countQtyByPurchaseNo(storage);
+				// 采购单总数
+				Double total2 = (Double) this.storageDao.countPurchaseItemQty(storage);
+				if (total2 != null && total != null && total >= total2) {
+					List<PurchaseItem> items = this.purchaseBillDao.getPurchaseBill(storage.getPurchaseNo());
+					Boolean isFlag = false;
+					if (items != null && items.size() > 0) {
+						for (int i = 0; i < items.size(); i++) {
+							PurchaseItem item = items.get(i);
+							if (item.getMaterial().getHsCode().equals(storage.getMaterial().getHsCode())) {
+								item.setIsCompalte(true);
+								this.purchaseBillDao.saveOrUpdate(item.getPurchaseBill());
+							}
+							if (null != item.getIsCompalte() && item.getIsCompalte()) {
+								isFlag = true;
+							} else {
+								isFlag = false;
+							}
+						}
+						if (isFlag) {
+							items.get(0).getPurchaseBill().setIsComplete(true);
+							this.purchaseBillDao.saveOrUpdate(items.get(0).getPurchaseBill());
+						}
+					}
+				}
 			}
 		}
 		return mess;
@@ -128,7 +169,7 @@ public class StorageLogicImpl implements StorageLogic {
 		// total3 = this.storageDao.countQtyByPurchaseNo(storage)
 		if (StringUtils.isNotBlank(storage.getPurchaseNo())) {
 			if (ImgExgFlag.IMG.equals(storage.getImgExgFlag())) {
-				// 原料出库汇总
+				// 原料入库汇总
 				total2 = (Double) this.storageDao.countPurchaseItemQty(storage);
 			}
 			if (null != total && null != total2) {
@@ -144,13 +185,6 @@ public class StorageLogicImpl implements StorageLogic {
 					}
 				}
 			}
-		} else if (StringUtils.isNotBlank(storage.getOrderNo())) {
-			if (ImgExgFlag.EXG.equals(storage.getImgExgFlag())) {
-				// 成品出库汇总
-				// total2 = (Double)
-				// this.storageDao.countOutQtyByOrderNo(storage);
-			}
-
 		}
 		return mess;
 	}

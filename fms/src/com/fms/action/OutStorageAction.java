@@ -54,7 +54,7 @@ public class OutStorageAction extends BaseAction {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected OutStorageLogic outStorageLogic;// 进出库逻辑
+	protected OutStorageLogic outStorageLogic;// 出库逻辑
 	protected MaterialTypeLogic logic;// 物料类型逻辑
 	protected MaterialLogic materLogic;// 物料逻辑
 	protected UnitLogic unitLogic;// 计量单位逻辑

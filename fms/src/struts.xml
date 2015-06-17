@@ -201,6 +201,11 @@
 			<!-- <result name="detail">/pages/purchase/purchaseItem.jsp</result> -->
 		</action>
 		
+		<!-- 报表 -->
+		<action name="report_*" class="rePortDataAction" method="{1}">
+			<result name="purchaseReport">/pages/datareport/purchaseport.jsp</result>
+		</action>
+		
 			<!-- 权限 -->
 		<action name="pivi_*" class="privilegeAction" method="{1}">
 			<result name="privileges">/pages/privilege/privilegemanager.jsp</result>

@@ -29,6 +29,7 @@ import com.fms.core.vo.entity.TempEntity;
 import com.fms.logic.MaterialLogic;
 import com.fms.logic.MaterialTypeLogic;
 import com.fms.logic.OrderLogic;
+import com.fms.logic.OutStorageLogic;
 import com.fms.logic.PurchaseBillLogic;
 import com.fms.logic.ScmcocLogic;
 import com.fms.logic.StockLogic;
@@ -54,7 +55,8 @@ public class StorageAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected StorageLogic storageLogic;// 进出库逻辑
+	protected StorageLogic storageLogic;// 进库逻辑
+	protected OutStorageLogic outStorageLogic;// 出库逻辑
 	protected MaterialTypeLogic logic;// 物料类型逻辑
 	protected MaterialLogic materLogic;// 物料逻辑
 	protected UnitLogic unitLogic;// 计量单位逻辑
@@ -62,7 +64,6 @@ public class StorageAction extends BaseAction {
 	protected StockLogic stockLogic;// 仓库逻辑
 	protected PurchaseBillLogic purchaseBillLogic;// 采购单逻辑
 	protected OrderLogic orderLogic;// 订单逻辑
-
 	/********* 分页用的属性 ***********/
 	private Integer dataTotal;// 总记录数
 	private String currIndex;// 当前页码
@@ -677,6 +678,14 @@ public class StorageAction extends BaseAction {
 
 	public void setStorageLogic(StorageLogic storageLogic) {
 		this.storageLogic = storageLogic;
+	}
+
+	public OutStorageLogic getOutStorageLogic() {
+		return outStorageLogic;
+	}
+
+	public void setOutStorageLogic(OutStorageLogic outStorageLogic) {
+		this.outStorageLogic = outStorageLogic;
 	}
 
 	public MaterialTypeLogic getLogic() {

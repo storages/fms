@@ -18,12 +18,12 @@ update quotation set effectDate = '2014-11-13' where id='402881e949b3bad70149b3b
 select * from appbillitem
 select * from appbillHead    R201505072023
 
-select itemNo from PurchaseBill
+select * from PurchaseBill
 select * from Purchaseitem
 delete PurchaseBill
 delete Purchaseitem
 delete from acluser where id='402881f24b685286014b685df8140000'
-update PurchaseBill set printCount = 0
+update PurchaseBill set IsComplete = 'false'
 update Purchaseitem set isbuy = 'false'
 
 select * from bomversion

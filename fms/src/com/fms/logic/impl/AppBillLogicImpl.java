@@ -346,6 +346,7 @@ public class AppBillLogicImpl implements AppBillLogic {
 					purch.setAppBillNo(item.getHead().getAppNo());// 申请单号
 					purch.setScmcoc(item.getScmcoc());// 供应商
 					purch.setOrderNo(item.getHead().getOrderNo());// 订单号
+					purch.setPurchaseUser(item.getHead().getSubmitUser());// 采购人
 					// 先保存采购单表头
 					purch = this.purchaseBillDao.saveOrUpdatePurchaseBill(purch);
 					purchaseBills.add(purch);

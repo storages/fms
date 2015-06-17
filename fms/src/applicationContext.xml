@@ -363,6 +363,9 @@
 		<property name="storageDao">
 			<ref bean="storageDao" />
 		</property>
+		<property name="outStorageDao">
+			<ref bean="outStorageDao" />
+		</property>
 		<property name="materialDao">
 			<ref bean="materialDao" />
 		</property>
@@ -613,6 +616,9 @@
 		<property name="materLogic">
 			<ref bean="materLogic" />
 		</property>
+		<property name="outStorageLogic">
+			<ref bean="outStorageLogic" />
+		</property>
 	</bean>
 
 <!-- 出库 -->
@@ -689,6 +695,10 @@
 			<ref bean="paramsLogic" />
 		</property>
 	</bean>
+
+<bean id="rePortDataAction" class="com.fms.action.RePortDataAction"  scope="prototype">
+	
+</bean>
 
 	<!-- 日志 -->
 	<bean id="logsAction" class="com.fms.action.LogAction"

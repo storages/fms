@@ -117,6 +117,7 @@ $(function(){
 						<th class="center" style="width:40px;">金额</th>
 						<th class="center" style="width:40px;">采购日期</th>
 						<th class="center" style="width:60px;">交货日期</th>
+						<th class="center" style="width:60px;">是否完结</th>
 						<th class="center" style="width:60px;">是否下单</th>
 						<th class="center"  style="width: 90px;">操作</th>
 					</tr>
@@ -136,6 +137,7 @@ $(function(){
 									<td class="center" style="width:20px;" >${item.amount}&nbsp;</td>
 									<td class="center" style="width:60px;" ><fmt:formatDate value="${item.purchaseDate}" type="date"/>&nbsp;</td>
 									<td class="center" style="width:60px;" ><input type="text"  name="deliveryDate" class="datebox" value="<fmt:formatDate value="${item.deliveryDate}" type="date" pattern='yyyy-MM-dd'/>" style="width:73px; margin:0px; border:0px;" disabled="disabled"/></td>
+									<td class="center" style="width:20px;" ><input type="checkbox" readonly="readonly" disabled="disabled" value="${item.isCompalte }" <c:if test="${item.isCompalte }">checked="checked"</c:if>/></td>
 									<td class="center" style="width:20px;" ><input type="checkbox" readonly="readonly" disabled="disabled" value="${item.isBuy }" <c:if test="${item.isBuy }">checked="checked"</c:if>/></td>
 									<td class="center" style="width:20px;" >
 											<c:if test="${!item.isBuy}"><a href="javascript:void(0);" class="btnEdit"><span style="color: green;">修改</span></a></c:if>

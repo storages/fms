@@ -57,6 +57,26 @@
   	function editData(id){
   		toMain("${pageContext.request.contextPath}/storage_editStorage.action?id="+ id +"&inOrOutFlag=in");
   	}
+  	
+  	function gototag(pageSize){
+		var n = $("#gonum option:selected").val();
+		gotoPage(n, pageSize);
+	}
+	
+	/**
+ * 转到指定页码
+ * @param {Object} pageNum 要转到第几页        currIndex
+ * @param {Object} pageSize 每页显示多少条数据    maxIndex 
+ */
+function gotoPage(pageNum, pageSize) {
+	 var startDate = $("#beginDate").val();
+		var endDate = $("#endDate").val();
+		var scmcocName = $("#scmcocName").val();
+		var hsName = $("#hsName").val();
+		var url = "${pageContext.request.contextPath}/storage_findAllInStorage.action?startDate="+startDate+"&endDate="+endDate+"&scmcocName="+parse(scmcocName)+"&hsName="+parse(hsName)+"&currIndex=" + pageNum + "&maxIndex="+ pageSize ;
+	// 在本窗口中显示指定URL的页面
+	toMain(url);
+}
   </script>
 
      <div class="page-header position-relative" style="margin-bottom: 0px; height:10px;margin-top:0px;line-height: 25px;">

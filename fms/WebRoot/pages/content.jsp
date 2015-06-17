@@ -78,7 +78,7 @@
 		
 		<li class="closed"><span class="folder directer">报表查询</span>
 			<ul>
-				<li><span class="file"><a href="#">采购统计</a></span></li>
+				<li><span class="file"><a  href="javascript:void(0);" data-url="/report_getPurchaseReport.action" >采购统计</a></span></li>
 				<li><span class="file"><a href="#">订单统计</a></span></li>
 			</ul>
 		</li>

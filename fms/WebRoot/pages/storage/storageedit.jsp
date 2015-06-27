@@ -165,7 +165,7 @@ function parse(str){
 			var pkgs = $("#pkgs").val();
 			var note = $("#note").val();
 			var orderNo = ($("#tfOrderNo").val()==undefined||$("#tfOrderNo").val()=="")?"":$("#tfOrderNo").val();
-			var url = "${pageContext.request.contextPath}/storage_saveInStorage.action";
+			var url = "${pageContext.request.contextPath}/storage_checkQty.action";
 			var data = "serialNo="+serialNo+"&impFlag="+impExpType+"&imgExgFlag="+imgexgflag;
 				   data+="&purchaseNo="+purchNo+"&inStorageNo="+inStorageNo+"&orderNo="+orderNo;
 				   data+="&scmcocName="+parse(scmcocName)+"&hsCode="+hsCode+"&hsName="+parse(hsName);
@@ -180,9 +180,41 @@ function parse(str){
 				success:function(args){
 					var result=jQuery.parseJSON(args);
 					if(result.success){
-						toMain("${pageContext.request.contextPath}/storage_findAllInStorage.action");
-					}else{
-						alert(result.msg);
+						if(null!=result.msg && ""!=result.msg){
+							if(confirm(result.msg+",确定要保存吗?")){
+								url = "${pageContext.request.contextPath}/storage_saveInStorage.action";
+								$.ajax({
+									url:url,
+									type:"POST",
+									data:data,
+									async: false,
+									cache: false,
+									success:function(args){
+										var result=jQuery.parseJSON(args);
+										if(result.success){
+											url = "${pageContext.request.contextPath}/storage_findAllInStorage.action";
+											toMain(url);
+										}
+									}
+								});
+							}
+						}else{
+							url = "${pageContext.request.contextPath}/storage_saveInStorage.action";
+							$.ajax({
+								url:url,
+								type:"POST",
+								data:data,
+								async: false,
+								cache: false,
+								success:function(args){
+									var result=jQuery.parseJSON(args);
+									if(result.success){
+										url = "${pageContext.request.contextPath}/storage_findAllInStorage.action";
+										toMain(url);
+									}
+								}
+							});
+						}
 					}
 				}
 			});

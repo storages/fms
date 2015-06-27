@@ -114,78 +114,127 @@ public class StorageLogicImpl implements StorageLogic {
 		return this.storageDao.findStorageById(clazz, id);
 	}
 
-	public String saveStorage(AclUser user, InStorage storage) {
+	public String checkQty(InStorage storage) {
 		String mess = "";
 		if (null != storage) {
 			// 判断入库数量是否超量
-			mess = checkImgQty(storage);
-			if (StringUtils.isBlank(mess)) {
-				this.storageDao.saveOrUpdate(storage);
-				// 反写采购单是否完结(入库数量>=采购单数量，即为完结)
-				// 入库总数
-				Double total = (Double) this.storageDao.countQtyByPurchaseNo(storage);
-				// 采购单总数
-				Double total2 = (Double) this.storageDao.countPurchaseItemQty(storage);
-				if (total2 != null && total != null && total >= total2) {
-					List<PurchaseItem> items = this.purchaseBillDao.getPurchaseBill(storage.getPurchaseNo());
-					Boolean isFlag = false;
-					if (items != null && items.size() > 0) {
-						for (int i = 0; i < items.size(); i++) {
-							PurchaseItem item = items.get(i);
-							if (item.getMaterial().getHsCode().equals(storage.getMaterial().getHsCode())) {
-								item.setIsCompalte(true);
-								this.purchaseBillDao.saveOrUpdate(item.getPurchaseBill());
-							}
-							if (null != item.getIsCompalte() && item.getIsCompalte()) {
-								isFlag = true;
-							} else {
-								isFlag = false;
-							}
-						}
-						if (isFlag) {
-							items.get(0).getPurchaseBill().setIsComplete(true);
-							this.purchaseBillDao.saveOrUpdate(items.get(0).getPurchaseBill());
-						}
-					}
-				}
-			}
+			mess = checkImpQty(storage);
 		}
 		return mess;
 	}
 
+	public String saveStorage(AclUser user, InStorage storage) {
+		if (null != storage) {
+			this.storageDao.saveOrUpdate(storage);
+			// 反写采购单是否完结(入库数量>=采购单数量，即为完结)
+			// 入库总数
+			Double total = (Double) this.storageDao.countQtyByPurchaseNo(storage);
+			// 采购单总数
+			Double total2 = (Double) this.storageDao.countPurchaseItemQty(storage);
+			if (total2 != null && total != null && total >= total2) {
+				List<PurchaseItem> items = this.purchaseBillDao.getPurchaseBill(storage.getPurchaseNo());
+				Boolean isFlag = false;
+				if (items != null && items.size() > 0) {
+					for (int i = 0; i < items.size(); i++) {
+						PurchaseItem item = items.get(i);
+						if (item.getMaterial().getHsCode().equals(storage.getMaterial().getHsCode())) {
+							item.setIsCompalte(true);
+							this.purchaseBillDao.saveOrUpdate(item.getPurchaseBill());
+						}
+						if (null != item.getIsCompalte() && item.getIsCompalte()) {
+							isFlag = true;
+						} else {
+							isFlag = false;
+						}
+					}
+					if (isFlag) {
+						items.get(0).getPurchaseBill().setIsComplete(true);
+						this.purchaseBillDao.saveOrUpdate(items.get(0).getPurchaseBill());
+					}
+				}
+			} else {
+				List<PurchaseItem> items = this.purchaseBillDao.getPurchaseBill(storage.getPurchaseNo());
+				if (items != null && items.size() > 0) {
+					for (int i = 0; i < items.size(); i++) {
+						PurchaseItem item = items.get(i);
+						if (item.getMaterial().getHsCode().equals(storage.getMaterial().getHsCode())) {
+							item.setIsCompalte(false);
+							this.purchaseBillDao.saveOrUpdate(item.getPurchaseBill());
+						}
+
+					}
+					items.get(0).getPurchaseBill().setIsComplete(false);
+					this.purchaseBillDao.saveOrUpdate(items.get(0).getPurchaseBill());
+				}
+			}
+		}
+		return null;
+	}
+
 	/**
-	 * 检查数量
+	 * 入库检查数量
 	 * 
 	 * @param storage
 	 * @return
 	 */
-	private String checkImgQty(InStorage storage) {
+	private String checkImpQty(InStorage storage) {
 		String mess = "";
-		Double total = 0d;// 入库总数
-		Double total2 = 0d;// 采购单或订单表体某项物料的数量
-		Double total3 = 0d;// 出库总数
+		Double inToyalQty = 0d;// 入库总数
+		Double outToyalQty = 0d;// 出库总数
+		Double materialQty = 0d;// 采购单或订单表体某项物料的数量
 		Double yuliang = 0d;// 可入库总数
-		total = caluateQty(storage);// 原料或成品入库汇总
-		// total3 = this.storageDao.countQtyByPurchaseNo(storage)
-		if (StringUtils.isNotBlank(storage.getPurchaseNo())) {
+		if (null != storage) {
+			// 原料入库
 			if (ImgExgFlag.IMG.equals(storage.getImgExgFlag())) {
-				// 原料入库汇总
-				total2 = (Double) this.storageDao.countPurchaseItemQty(storage);
-			}
-			if (null != total && null != total2) {
-				yuliang = total2 - total + total3;
-				InStorage _storage = (InStorage) this.storageDao.getObjectById("InStorage", storage.getId());
-				if (StringUtils.isNotBlank(storage.getId()) && _storage.getPurchaseNo().equals(storage.getPurchaseNo())) {
-					if ((yuliang + _storage.getInQty() - storage.getInQty()) < 0) {
-						mess = "超量" + MathUtils.abs((yuliang + _storage.getInQty() - storage.getInQty()));
+				// 根据入库信息查询已入库总数(已经入库数)
+				inToyalQty = (Double) this.storageDao.countQtyByPurchaseNo(storage);
+				// 根据采购单来查找原料出库汇总(已经出库数)
+				outToyalQty = (Double) this.storageDao.countImgExpStorageQty(storage.getPurchaseNo(), storage.getMaterial().getHsCode());
+				// 根据入库信息查询采购单表体某项物料的总数(应该入库数)
+				materialQty = (Double) this.storageDao.findInStorageQty(storage.getPurchaseNo(), storage.getMaterial().getHsCode());
+				if (null != materialQty && null != inToyalQty && null != outToyalQty) {
+					// 计算可入库数量
+					yuliang = materialQty - inToyalQty + outToyalQty;
+				}
+				// 如果是修改
+				if (StringUtils.isNotBlank(storage.getId())) {
+					InStorage _storage = (InStorage) this.storageDao.getObjectById("InStorage", storage.getId());
+					if (_storage.getPurchaseNo().equals(storage.getPurchaseNo())) {
+						if ((yuliang + _storage.getInQty() - storage.getInQty()) < 0) {
+							mess = "超量" + MathUtils.abs((yuliang + _storage.getInQty() - storage.getInQty()));
+						}
 					}
-				} else {
-					if ((yuliang - storage.getInQty()) < 0) {
-						mess = "超量" + MathUtils.abs((yuliang - storage.getInQty()));
+					// 新增时
+				} else if ((yuliang - storage.getInQty()) < 0) {
+					mess = "超量" + MathUtils.abs((yuliang - storage.getInQty()));
+				}
+				// 成品入库
+			} else if (ImgExgFlag.EXG.equals(storage.getImgExgFlag())) {
+				// 根据入库信息查询已入库总数(已经入库数)
+				inToyalQty = (Double) this.storageDao.countQtyByPurchaseNo(storage);
+				// 根据采购单来查找成品出库汇总(已经出库数)
+				outToyalQty = (Double) this.storageDao.countExgExpStorageQty(storage.getOrderNo(), storage.getMaterial().getHsCode());
+				// 根据入库信息查询采购单表体某项物料的总数(应该入库数)
+				materialQty = Double.parseDouble(this.storageDao.findInStorageExgQty(storage.getOrderNo(), storage.getMaterial().getHsCode()).toString());
+				if (null != materialQty && null != inToyalQty && null != outToyalQty) {
+					// 计算可入库数量
+					yuliang = materialQty - inToyalQty + outToyalQty;
+				}
+				// 如果是修改
+				if (StringUtils.isNotBlank(storage.getId())) {
+					InStorage _storage = (InStorage) this.storageDao.getObjectById("InStorage", storage.getId());
+					if (_storage.getOrderNo().equals(storage.getOrderNo())) {
+						if ((yuliang + _storage.getInQty() - storage.getInQty()) < 0) {
+							mess = "超量" + MathUtils.abs(yuliang + _storage.getInQty() - storage.getInQty());
+						}
 					}
+					// 新增时
+				} else if ((yuliang - storage.getInQty()) < 0) {
+					mess = "超量" + MathUtils.abs((yuliang - storage.getInQty()));
 				}
 			}
 		}
+
 		return mess;
 	}
 
@@ -430,5 +479,9 @@ public class StorageLogicImpl implements StorageLogic {
 			return inStorage;
 		}
 		return null;
+	}
+
+	public InStorage findInStorageById(String id) {
+		return this.storageDao.findInStorageById(id);
 	}
 }

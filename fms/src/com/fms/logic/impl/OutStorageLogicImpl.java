@@ -401,4 +401,8 @@ public class OutStorageLogicImpl implements OutStorageLogic {
 		}
 		return null;
 	}
+
+	public Object countExpQty(String imgExgFlag, String purachseNo, String orderNo, String hsCode) {
+		return this.outStorageDao.countExpQty(imgExgFlag, purachseNo, orderNo, hsCode);
+	}
 }

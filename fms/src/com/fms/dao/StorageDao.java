@@ -97,4 +97,42 @@ public interface StorageDao extends BaseDao {
 	Object countOrderItemQty(InStorage storage);
 
 	Object getObjectById(String entityName, String id);
+
+	/**
+	 * 汇总原料出库的数量
+	 * 
+	 * @param purachseNo
+	 * @param hsCode
+	 * @return
+	 */
+	Object countImgExpStorageQty(String purachseNo, String hsCode);
+
+	/**
+	 * 汇总成品出库的数量
+	 * 
+	 * @param purachseNo
+	 * @param hsCode
+	 * @return
+	 */
+	public Object countExgExpStorageQty(String orderNo, String hsCode);
+
+	/**
+	 * 根据入库的物料查询采购单中采购数量【原料】
+	 * 
+	 * @param purachseNo
+	 * @param hsCode
+	 * @return
+	 */
+	Object findInStorageQty(String purachseNo, String hsCode);
+
+	/**
+	 * 根据入库的物料查询采购单中采购数量【成品】
+	 * 
+	 * @param purachseNo
+	 * @param hsCode
+	 * @return
+	 */
+	public Object findInStorageExgQty(String orderNo, String hsCode);
+
+	InStorage findInStorageById(String id);
 }

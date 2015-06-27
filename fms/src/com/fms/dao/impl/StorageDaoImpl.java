@@ -143,12 +143,13 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 			hql = "select sum(a.inQty) from InStorage a left join  a.material b where a.purchaseNo =? and a.imgExgFlag =? and b.hsCode =? and a.impFlag in (1,2)";
 			params.add(storage.getPurchaseNo());
 		} else {
-			hql = "select sum(a.inQty) from InStorage a left join  a.material b where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.impFlag in (1,2)";
+			hql = "select sum(a.inQty) from InStorage a left join  a.material b where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.impFlag in (3,11)";
 			params.add(storage.getOrderNo());
 		}
 		params.add(storage.getImgExgFlag());
 		params.add(storage.getMaterial().getHsCode());
-		return this.uniqueResult(hql, params.toArray());
+		Object o = this.uniqueResult(hql, params.toArray());
+		return o == null ? 0d : o;
 	}
 
 	public Object countOutQtyByOrderNo(OutStorage storage) {
@@ -173,4 +174,71 @@ public class StorageDaoImpl extends BaseDaoImpl implements StorageDao {
 		return this.uniqueResult("from " + entityName + " a where a.id=?", new Object[] { id });
 	}
 
+	/**
+	 * 汇总原料出库的数量
+	 * 
+	 * @param purachseNo
+	 * @param hsCode
+	 * @return
+	 */
+	public Object countImgExpStorageQty(String purachseNo, String hsCode) {
+		if (StringUtils.isNotBlank(purachseNo) && StringUtils.isNotBlank(hsCode)) {
+			StringBuilder builder = new StringBuilder("select count(os.expQty) from OutStorage os left join os.material m where os.purchaseNo =? and m.hsCode=? ");
+			Object result = this.uniqueResult(builder.toString(), new Object[] { purachseNo, hsCode });
+			return (Long) result == 0 ? 0d : result;
+		}
+		return 0;
+	}
+
+	/**
+	 * 汇总成品出库的数量
+	 * 
+	 * @param purachseNo
+	 * @param hsCode
+	 * @return
+	 */
+	public Object countExgExpStorageQty(String orderNo, String hsCode) {
+		if (StringUtils.isNotBlank(orderNo) && StringUtils.isNotBlank(hsCode)) {
+			StringBuilder builder = new StringBuilder("select sum(os.expQty) from OutStorage os left join os.material m where os.orderNo =? and m.hsCode=? ");
+			Object result = this.uniqueResult(builder.toString(), new Object[] { orderNo, hsCode });
+			Number n = result == null ? 0d : (Number) result;
+			return (Double) n;
+		}
+		return 0;
+	}
+
+	/**
+	 * 根据入库的物料查询采购单中采购数量【原料】
+	 * 
+	 * @param purachseNo
+	 * @param hsCode
+	 * @return
+	 */
+	public Object findInStorageQty(String purachseNo, String hsCode) {
+		if (StringUtils.isNotBlank(purachseNo) && StringUtils.isNotBlank(hsCode)) {
+			StringBuilder builder = new StringBuilder("select item.qty from PurchaseItem item left join item.purchaseBill head left join item.material m where head.purchaseNo =? and m.hsCode=? ");
+			return this.uniqueResult(builder.toString(), new Object[] { purachseNo, hsCode });
+		}
+		return 0;
+	}
+
+	/**
+	 * 根据入库的物料查询采购单中采购数量
+	 * 
+	 * @param purachseNo
+	 * @param hsCode
+	 * @return
+	 */
+	public Object findInStorageExgQty(String orderNo, String hsCode) {
+		if (StringUtils.isNotBlank(orderNo) && StringUtils.isNotBlank(hsCode)) {
+			StringBuilder builder = new StringBuilder("select item.qty from OrderItem item left join item.orderHead head where head.orderNo =? and item.hsCode=? ");
+			return this.uniqueResult(builder.toString(), new Object[] { orderNo, hsCode });
+		}
+		return 0;
+	}
+
+	public InStorage findInStorageById(String id) {
+		String hql = "select a from InStorage a left join a.material b left join b.materialType c left join a.scmcoc d left join b.unit e where a.id =? ";
+		return (InStorage) this.uniqueResult(hql, new Object[] { id });
+	}
 }

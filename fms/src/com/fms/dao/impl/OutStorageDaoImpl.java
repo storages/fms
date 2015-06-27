@@ -172,4 +172,20 @@ public class OutStorageDaoImpl extends BaseDaoImpl implements OutStorageDao {
 		return this.uniqueResult("from " + entityName + " a where a.id=?", new Object[] { id });
 	}
 
+	public Object countExpQty(String imgExgFlag, String purachseNo, String orderNo, String hsCode) {
+		List params = new ArrayList();
+		String hql = " select count(a.expQty) from OutStorage a left join  a.material b where a.imgExgFlag =? and  b. hsCode =? ";
+		params.add(imgExgFlag);
+		params.add(hsCode);
+		if (StringUtils.isNotBlank(purachseNo)) {
+			hql += " and a.purchaseNo =? ";
+			params.add(purachseNo);
+		}
+		if (StringUtils.isNotBlank(orderNo)) {
+			hql += " and a.orderNo =? ";
+			params.add(orderNo);
+		}
+		hql += " and a.expFlag in (6,8)";
+		return this.uniqueResult(hql, params.toArray());
+	}
 }

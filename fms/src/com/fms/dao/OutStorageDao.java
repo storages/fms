@@ -96,4 +96,18 @@ public interface OutStorageDao extends BaseDao {
 	Object countOrderItemQty(OutStorage storage);
 
 	Object getObjectById(String entityName, String id);
+
+	/**
+	 * 
+	 * @param imgExgFlag
+	 *            物料标志
+	 * @param purachseNo
+	 *            采购单号
+	 * @param orderNo
+	 *            订单号
+	 * @param hsCode
+	 *            物料编码
+	 * @return
+	 */
+	Object countExpQty(String imgExgFlag, String purachseNo, String orderNo, String hsCode);
 }

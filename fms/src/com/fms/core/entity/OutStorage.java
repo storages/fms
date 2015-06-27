@@ -24,13 +24,13 @@ public class OutStorage extends BaseEntity {
 	@CnFileName(name = "出库单号")
 	private String outStorageNo;
 	/**
-	 * 订单号(orderNo) 从订单表头中抓取订单号(下拉框)
+	 * 订单号(orderNo)
 	 */
 	@CnFileName(name = "订单号")
 	private String orderNo;
 
 	/**
-	 * 采购单号(purchaseNo) 从订单表头中抓取订单号(下拉框)
+	 * 采购单号(purchaseNo)
 	 */
 	@CnFileName(name = "采购单号")
 	private String purchaseNo;

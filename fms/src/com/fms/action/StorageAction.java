@@ -416,7 +416,7 @@ public class StorageAction extends BaseAction {
 		}
 	}
 
-	public void saveInStorage() {
+	public void checkQty() {
 		try {
 			PrintWriter out = null;
 			AjaxResult result = new AjaxResult();
@@ -426,7 +426,7 @@ public class StorageAction extends BaseAction {
 
 			InStorage inStorage = null;
 			if (StringUtils.isNotBlank(id)) {
-				inStorage = (InStorage) this.storageLogic.findStorageById(InStorage.class, id);
+				inStorage = (InStorage) this.storageLogic.findInStorageById(id);
 			} else {
 				inStorage = new InStorage();
 			}
@@ -436,7 +436,7 @@ public class StorageAction extends BaseAction {
 			} else {
 				serNo++;
 			}
-			inStorage.setSerialNo(serNo);// 流水号
+			inStorage.setSerialNo(serNo);// 流水号7
 			inStorage.setImpFlag(impFlag);// 入库类型
 			inStorage.setImgExgFlag(imgExgFlag);// 物料标志
 			inStorage.setPurchaseNo(purchaseNo);// 采购单号
@@ -471,13 +471,43 @@ public class StorageAction extends BaseAction {
 			inStorage.setUseFlag("0");// 默认启用
 			inStorage.setImpDate(new Date());// 入库日期
 			inStorage.setHandling(this.getLoginUser().getLoginName());// 入库人
-			String mess = this.storageLogic.saveStorage(this.getLoginUser(), inStorage);
-			if (StringUtils.isNotBlank(mess)) {
-				result.setSuccess(false);
-				result.setMsg(mess);
-			} else {
-				result.setSuccess(true);
-			}
+			String mess = this.storageLogic.checkQty(inStorage);
+			this.session.put("inStorage", inStorage);
+			// if (StringUtils.isNotBlank(mess)) {
+			result.setSuccess(true);
+			result.setMsg(mess);
+			result.setObj(inStorage);
+			JSONObject json = new JSONObject(result);
+			out.println(json.toString());
+			out.flush();
+			// } else {
+			// saveInStorage();
+			// }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String saveInstraoges() {
+		InStorage inStorage = (InStorage) this.session.get("inStorage");
+		// InStorage inStorage = (InStorage)
+		// net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(sendStr));
+		this.storageLogic.saveStorage(this.getLoginUser(), inStorage);
+		return "save";
+	}
+
+	public void saveInStorage() {
+		try {
+			PrintWriter out = null;
+			AjaxResult result = new AjaxResult();
+			out = response.getWriter();
+			response.setContentType("application/text");
+			response.setCharacterEncoding("UTF-8");
+			InStorage inStorage = (InStorage) this.session.get("inStorage");
+			// InStorage inStorage = (InStorage)
+			// net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(sendStr));
+			this.storageLogic.saveStorage(this.getLoginUser(), inStorage);
+			result.setSuccess(true);
 			JSONObject json = new JSONObject(result);
 			out.println(json.toString());
 			out.flush();

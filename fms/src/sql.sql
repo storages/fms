@@ -41,7 +41,15 @@ select * from orderhead a left join scmcoc b on a.scmcoc = b.id
 delete from orderitem
 
 select * from instorage
+update instorage set inqty = 123.0 where orderno = 'OR2015050521522'
 select * from outstorage
 
 delete  from instorage
 delete  from outstorage where id in('402881e84dfc42b4014dfc43baa70000','402881e84dfc42b4014dfc461afc0001','402881e84dfc42b4014dfc4653310002')
+
+select a.qty from PurchaseItem a left join  purchaseBill b on a.purchaseBill = b.id
+ left join  material c on a.material = c.id where c.hsCode ='1013915A' and b.purchaseNo ='C201505122210092' and c.imgExgFlag ='I'
+ 
+ select sum(a.inQty) from InStorage a left join  material b on a.material = b.id where a.orderNo =? and a.imgExgFlag =? and b.hsCode =? and a.impFlag in (1,2)
+ 
+ 

@@ -152,7 +152,7 @@ public class MaterialDaoImpl extends BaseDaoImpl implements MaterialDao {
 	}
 
 	public Material findMaterialByHsCode(String hsCode) {
-		return (Material) this.uniqueResult("select a from Material a where a.hsCode = ? ", new Object[] { hsCode });
+		return (Material) this.uniqueResult("select a from Material a left join fetch a.unit b left join fetch a.materialType c where a.hsCode = ? ", new Object[] { hsCode });
 	}
 
 	/**

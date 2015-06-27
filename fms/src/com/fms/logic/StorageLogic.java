@@ -58,6 +58,8 @@ public interface StorageLogic {
 	 */
 	Object findStorageById(Class clazz, String id);
 
+	public String checkQty(InStorage storage);
+
 	/**
 	 * 保存出入库
 	 * 
@@ -86,4 +88,6 @@ public interface StorageLogic {
 	 * @param list
 	 */
 	Boolean doSaveExcelData(AclUser aclUser, List<TempInStorage> list);
+
+	InStorage findInStorageById(String id);
 }

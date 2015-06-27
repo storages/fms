@@ -117,9 +117,9 @@ public class OrderAction extends BaseAction {
 			Integer curr = (null == currIndex || "".equals(currIndex)) ? 1 : Integer.parseInt(currIndex);// 当前第几页
 			Integer max = (null == maxIndex || "".equals(maxIndex)) ? 1 : Integer.parseInt(currIndex);// 每页最多显示条数
 
-			dataTotal = this.orderLogic.findCount(orderNo, parseValue(scmCocName), parseValue(salesman), date, date2, date3, date4);
+			dataTotal = this.orderLogic.findCount(orderNo.trim(), parseValue(scmCocName), parseValue(salesman), date, date2, date3, date4);
 
-			List<OrderHead> orderList = this.orderLogic.findOrderPageList(getLoginUser(), orderNo, parseValue(scmCocName), parseValue(salesman), date, date2, date3, date4, (curr - 1)
+			List<OrderHead> orderList = this.orderLogic.findOrderPageList(getLoginUser(), orderNo.trim(), parseValue(scmCocName), parseValue(salesman), date, date2, date3, date4, (curr - 1)
 					* DEFAULT_PAGESIZE, DEFAULT_PAGESIZE);
 			List<Scmcoc> scmList = this.scmcocLogic.findAllScmcoc(getLoginUser(), true, null, -1, -1);
 			Map<String, TempEntity> salesMap = new HashMap<String, TempEntity>();

@@ -157,20 +157,27 @@ public class OrderLogicImpl implements OrderLogic {
 	private void refreshOrderHead(List<OrderItem> items) {
 		OrderHead head = null;
 		if (!items.isEmpty()) {
-			head = items.get(0).getOrderHead();
 			Double amount = 0d;
 			Integer totalItems = 0;
 			Double totalQty = 0d;
 			Map<String, OrderHead> headMap = new HashMap<String, OrderHead>();
 			for (OrderItem item : items) {
-				headMap.put(item.getOrderHead().getId(), item.getOrderHead());
-				if (headMap.get(item.getOrderHead().getId()) != null) {
-					amount = item.getAmount() == null ? 0d : MathUtils.add(item.getAmount(), headMap.get(item.getOrderHead().getId()).getTotalAmount());
+				head = items.get(0).getOrderHead();
+				if (headMap.get(head.getId()) != null) {
+					amount = item.getAmount() == null ? 0d : MathUtils.add(item.getAmount(), headMap.get(head.getId()).getTotalAmount());
 					totalItems = MathUtils.add(headMap.get(item.getOrderHead().getId()).getItemQty(), 1);
-					totalQty = item.getQty() == null ? 0d : MathUtils.add(item.getQty(), headMap.get(item.getOrderHead().getId()).getTotalQty());
-					headMap.get(item.getOrderHead().getId()).setTotalAmount(amount);
-					headMap.get(item.getOrderHead().getId()).setTotalQty(totalQty);
-					headMap.get(item.getOrderHead().getId()).setItemQty(totalItems);
+					totalQty = item.getQty() == null ? 0d : MathUtils.add(item.getQty(), headMap.get(head.getId()).getTotalQty());
+					headMap.get(head.getId()).setTotalAmount(amount);
+					headMap.get(head.getId()).setTotalQty(totalQty);
+					headMap.get(head.getId()).setItemQty(totalItems);
+				} else {
+					headMap.put(head.getId(), item.getOrderHead());
+					amount = item.getAmount() == null ? 0d : MathUtils.add(item.getAmount(), headMap.get(head.getId()).getTotalAmount());
+					totalItems = MathUtils.add(headMap.get(item.getOrderHead().getId()).getItemQty(), 1);
+					totalQty = item.getQty() == null ? 0d : MathUtils.add(item.getQty(), headMap.get(head.getId()).getTotalQty());
+					headMap.get(head.getId()).setTotalAmount(amount);
+					headMap.get(head.getId()).setTotalQty(totalQty);
+					headMap.get(head.getId()).setItemQty(totalItems);
 				}
 			}
 			this.orderDao.saveOrUpdate(head);

@@ -263,4 +263,8 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 		return this.find(hql);
 	}
 
+	public List<OrderItem> findOrderItemsByHead(OrderHead head) {
+		return this.findListNoCache("select a from OrderItem a left join a.orderHead b where b.id =? ", new Object[] { head.getId() });
+	}
+
 }

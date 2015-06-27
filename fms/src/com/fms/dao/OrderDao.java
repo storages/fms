@@ -170,4 +170,6 @@ public interface OrderDao extends BaseDao {
 	 * @return
 	 */
 	public List<OrderItem> findOrderItems();
+
+	public List<OrderItem> findOrderItemsByHead(OrderHead head);
 }

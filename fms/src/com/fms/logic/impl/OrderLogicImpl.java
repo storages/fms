@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -156,31 +157,57 @@ public class OrderLogicImpl implements OrderLogic {
 	 */
 	private void refreshOrderHead(List<OrderItem> items) {
 		OrderHead head = null;
+		List<OrderHead> heads = new ArrayList<OrderHead>();
 		if (!items.isEmpty()) {
-			Double amount = 0d;
-			Integer totalItems = 0;
-			Double totalQty = 0d;
 			Map<String, OrderHead> headMap = new HashMap<String, OrderHead>();
 			for (OrderItem item : items) {
-				head = items.get(0).getOrderHead();
-				if (headMap.get(head.getId()) != null) {
-					amount = item.getAmount() == null ? 0d : MathUtils.add(item.getAmount(), headMap.get(head.getId()).getTotalAmount());
-					totalItems = MathUtils.add(headMap.get(item.getOrderHead().getId()).getItemQty(), 1);
-					totalQty = item.getQty() == null ? 0d : MathUtils.add(item.getQty(), headMap.get(head.getId()).getTotalQty());
-					headMap.get(head.getId()).setTotalAmount(amount);
-					headMap.get(head.getId()).setTotalQty(totalQty);
-					headMap.get(head.getId()).setItemQty(totalItems);
-				} else {
-					headMap.put(head.getId(), item.getOrderHead());
-					amount = item.getAmount() == null ? 0d : MathUtils.add(item.getAmount(), headMap.get(head.getId()).getTotalAmount());
-					totalItems = MathUtils.add(headMap.get(item.getOrderHead().getId()).getItemQty(), 1);
-					totalQty = item.getQty() == null ? 0d : MathUtils.add(item.getQty(), headMap.get(head.getId()).getTotalQty());
-					headMap.get(head.getId()).setTotalAmount(amount);
-					headMap.get(head.getId()).setTotalQty(totalQty);
-					headMap.get(head.getId()).setItemQty(totalItems);
-				}
+				headMap.put(item.getOrderHead().getId(), item.getOrderHead());
 			}
-			this.orderDao.saveOrUpdate(head);
+
+			for (Entry<String, OrderHead> entry : headMap.entrySet()) {
+				Double totalAmount = 0d;
+				Integer totalItems = 0;
+				Double totalQty = 0d;
+				items = this.orderDao.findOrderItemsByHead(entry.getValue());
+				for (OrderItem item : items) {
+					totalAmount += item.getAmount();
+					totalItems += 1;
+					totalQty += item.getQty();
+				}
+				entry.getValue().setTotalAmount(totalAmount);
+				entry.getValue().setTotalQty(totalQty);
+				entry.getValue().setItemQty(totalItems);
+				heads.add(entry.getValue());
+			}
+			this.orderDao.batchSaveOrUpdate(heads);
+			/*
+			 * Double amount = 0d; Integer totalItems = 0; Double totalQty = 0d;
+			 * Map<String, OrderHead> headMap = new HashMap<String,
+			 * OrderHead>(); for (OrderItem item : items) { head =
+			 * items.get(0).getOrderHead(); if (headMap.get(head.getId()) !=
+			 * null) { amount = item.getAmount() == null ? 0d :
+			 * MathUtils.add(item.getAmount(),
+			 * headMap.get(head.getId()).getTotalAmount()); totalItems =
+			 * MathUtils
+			 * .add(headMap.get(item.getOrderHead().getId()).getItemQty(), 1);
+			 * totalQty = item.getQty() == null ? 0d :
+			 * MathUtils.add(item.getQty(),
+			 * headMap.get(head.getId()).getTotalQty());
+			 * headMap.get(head.getId()).setTotalAmount(amount);
+			 * headMap.get(head.getId()).setTotalQty(totalQty);
+			 * headMap.get(head.getId()).setItemQty(totalItems); } else {
+			 * headMap.put(head.getId(), item.getOrderHead()); amount =
+			 * item.getAmount() == null ? 0d : MathUtils.add(item.getAmount(),
+			 * headMap.get(head.getId()).getTotalAmount()); totalItems =
+			 * MathUtils
+			 * .add(headMap.get(item.getOrderHead().getId()).getItemQty(), 1);
+			 * totalQty = item.getQty() == null ? 0d :
+			 * MathUtils.add(item.getQty(),
+			 * headMap.get(head.getId()).getTotalQty());
+			 * headMap.get(head.getId()).setTotalAmount(amount);
+			 * headMap.get(head.getId()).setTotalQty(totalQty);
+			 * headMap.get(head.getId()).setItemQty(totalItems); } }
+			 */
 		}
 	}
 
